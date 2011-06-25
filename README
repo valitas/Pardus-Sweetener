@@ -1,0 +1,20 @@
+This is a Google Chrome extension which enhances the user interface of
+the online space game Pardus.
+
+THIS SOFTWARE IS UNDER DEVELOPMENT AND NOT READY FOR PRODUCTION USE.
+Install at your own risk.
+
+The main feature is an audible combat notifier, which Firefox users
+have had for long, but was unavailable for Chrome.  Besides that, it
+includes functionality already available through other means, but as
+Greasemonkey scripts, which is not optimal for Chrome, and anyway lack
+easy configuration from an options screen.
+
+This is the full list of features planned for the first public
+release:
+
+ * Audible alarm on user-configurable game events
+ * Desktop notifications on user-configurable game events
+ * Clocks for different "ticks", a la Pardus Clock
+ * A robot autofiller in the combat screen
+ * A missile autoselecter in the combat screen
