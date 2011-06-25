@@ -1,0 +1,257 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <title>Pardus Sweetener Options</title>
+  <style type="text/css">
+
+/* Clone the look and feel of "chrome://" pages. */
+body {
+  background-color: white;
+  color: black;
+  margin: 10px;
+  cursor: default;
+  font-size: 13px;
+  font-family: Arial, sans-serif
+}
+
+h1 { font-size: 156% }
+
+h1 img {
+  margin: 1px 5px 0 1px;
+  vertical-align: middle
+}
+
+h2 {
+  border-top: 1px solid #9cc2ef;
+  background-color: #ebeff9;
+  padding: 3px 5px;
+  font-size: 100%
+}
+
+div.section { margin: 10px 10px 20px 10px }
+div.section div { margin: 10px 0 }
+div.compact { margin: 0 }
+div.compact div { margin: 0 }
+
+  </style>
+  <script type="text/javascript" src="options.js"></script>
+ </head>
+ <body onload="init();">
+  <h1 style="vertical-align: middle">
+   <img src="64.png" alt="" />
+   Pardus Sweetener Options
+  </h1>
+
+  <h2>Alarm</h2>
+  <div class="section">
+
+   <div>
+    The audible alarm can draw your attention back to your computer
+    when important events occur.  It may also compel your roommates or
+    family members to appease your computer with a BFH, if you leave
+    it logged into Pardus while you are not around to snooze it.
+   </div>
+
+   <div>
+    Alarm sound:
+    <select id="alarm_sound_select" name="alarm_sound_select"
+            onchange="ps_opts.updateAlarmSound();">
+     <option value="-1">no sounds</option>
+    </select>
+    <input id="alarm_test" name="alarm_test" type="button" value="Test"
+           onclick="ps_opts.testAlarm();" />
+   </div>
+
+   <div>
+    <input type="checkbox" id="alarm_combat" name="alarm_combat"
+           onclick="ps_opts.updateAlarmEvents();" />
+    <label for="alarm_combat">Sound the alarm on combat</label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="alarm_warn" name="alarm_warn"
+           onclick="ps_opts.updateAlarmEvents();" />
+    <label for="alarm_warn">
+     Sound the alarm when warning messages are displayed (e.g. "new ACS
+     entries")
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="alarm_ally" name="alarm_ally"
+           onclick="ps_opts.updateAlarmEvents();" />
+    <label for="alarm_ally">
+     Sound the alarm when alliance messages arrive
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="alarm_pm" name="alarm_pm"
+           onclick="ps_opts.updateAlarmEvents();" />
+    <label for="alarm_pm">
+     Sound the alarm when private messages arrive
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="alarm_trade" name="alarm_trade"
+           onclick="ps_opts.updateAlarmEvents();" />
+    <label for="alarm_trade">Sound the alarm on payments and trades</label>
+   </div>
+  </div>
+
+  <h2>Desktop notifications</h2>
+  <div class="section">
+
+   <div>
+    Desktop notifications are subtler than the alarm, and convenient
+    when you are at your computer but doing something else.
+   </div>
+
+   <div>
+    <input id="desktop_test" name="desktop_test" type="button"
+           value="See a sample desktop notification"
+           onclick="ps_opts.testNotification();" />
+   </div>
+
+   <div>
+    <input type="checkbox" id="desktop_combat" name="desktop_combat"
+           onclick="ps_opts.updateDesktopEvents();" />
+    <label for="desktop_combat">
+     Show a desktop notification in case of combat
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="desktop_warn" name="desktop_warn"
+           onclick="ps_opts.updateDesktopEvents();" />
+    <label for="desktop_warn">
+     Show a desktop notification when warning messages are displayed
+     (e.g. "new ACS entries")
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="desktop_ally" name="desktop_ally"
+           onclick="ps_opts.updateDesktopEvents();" />
+    <label for="desktop_ally">
+     Show a desktop notification when alliance messages arrive
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="desktop_pm" name="desktop_pm"
+           onclick="ps_opts.updateDesktopEvents();" />
+    <label for="desktop_pm">
+     Show a desktop notification when private messages arrive
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="desktop_trade" name="desktop_trade"
+           onclick="ps_opts.updateDesktopEvents();" />
+    <label for="desktop_trade">
+     Show a desktop notification on payments and trades
+    </label>
+   </div>
+  </div>
+
+  <h2>Clock</h2>
+  <div class="section">
+   <div>
+    Display time countdowns to several recurring in-game events. For
+    these to be accurate, your computer's time zone should be properly
+    set, and its clock should be synchronised with Coordinated
+    Universal Time.  Modern operating systems offer easy means to
+    achieve this; see
+
+    <a target="_blank"
+       href="http://www.ehow.com/how_7550535_sync-clock-server.html">this
+    article</a>
+
+    for a quick rundown.
+   </div>
+
+   <div>
+    <input type="checkbox" id="clock_utc" name="clock_utc"
+           onclick="ps_opts.updateClockSettings();" />
+    <label for="clock_utc">
+     Show the current Coordinated Universal Time
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="clock_ap" name="clock_ap"
+           onclick="ps_opts.updateClockSettings();" />
+    <label for="clock_ap">
+     Show the time remaining to next 24 AP (shields recharge at this time, too)
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="clock_b" name="clock_b"
+           onclick="ps_opts.updateClockSettings();" />
+    <label for="clock_b">
+     Show the time remaining to the next building tick
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="clock_p" name="clock_p"
+           onclick="ps_opts.updateClockSettings();" />
+    <label for="clock_p">
+     Show the time remaining to the next planet tick
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="clock_s" name="clock_s"
+           onclick="ps_opts.updateClockSettings();" />
+    <label for="clock_s">
+     Show the time remaining to the next starbase tick
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="clock_l" name="clock_l"
+           onclick="ps_opts.updateClockSettings();" />
+    <label for="clock_l">
+     Show the time remaining to the next armour repair by your space leech
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="clock_e" name="clock_e"
+           onclick="ps_opts.updateClockSettings();" />
+    <label for="clock_e">
+     Show the time remaining to the next e-matter regeneration
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="clock_n" name="clock_n"
+           onclick="ps_opts.updateClockSettings();" />
+    <label for="clock_n">
+     Show the time remaining to the next roaming NPC movement (not Z series, Lucidi)
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="clock_z" name="clock_z"
+           onclick="ps_opts.updateClockSettings();" />
+    <label for="clock_z">
+     Show the time remaining to the next Z15 Scout, Z16 Fighter, Lucidi movement
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="clock_r" name="clock_r"
+           onclick="ps_opts.updateClockSettings();" />
+    <label for="clock_r">
+     Show the time remaining to the next server reset
+    </label>
+   </div>
+
+  </div>
+
+ </body>
+</html>
