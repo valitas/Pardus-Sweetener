@@ -93,10 +93,17 @@ div.compact div { margin: 0 }
    </div>
 
    <div>
+    <input type="checkbox" id="alarm_mission" name="alarm_mission"
+           onclick="ps_opts.updateAlarmEvents();" />
+    <label for="alarm_mission">Sound the alarm on mission events</label>
+   </div>
+
+   <div>
     <input type="checkbox" id="alarm_trade" name="alarm_trade"
            onclick="ps_opts.updateAlarmEvents();" />
     <label for="alarm_trade">Sound the alarm on payments and trades</label>
    </div>
+
   </div>
 
   <h2>Desktop notifications</h2>
@@ -117,7 +124,7 @@ div.compact div { margin: 0 }
     <input type="checkbox" id="desktop_combat" name="desktop_combat"
            onclick="ps_opts.updateDesktopEvents();" />
     <label for="desktop_combat">
-     Show a desktop notification in case of combat
+     Show a desktop notification on combat
     </label>
    </div>
 
@@ -147,12 +154,21 @@ div.compact div { margin: 0 }
    </div>
 
    <div>
+    <input type="checkbox" id="desktop_mission" name="desktop_mission"
+           onclick="ps_opts.updateDesktopEvents();" />
+    <label for="desktop_mission">
+     Show a desktop notification on mission events
+    </label>
+   </div>
+
+   <div>
     <input type="checkbox" id="desktop_trade" name="desktop_trade"
            onclick="ps_opts.updateDesktopEvents();" />
     <label for="desktop_trade">
      Show a desktop notification on payments and trades
     </label>
    </div>
+
   </div>
 
   <h2>Clock</h2>

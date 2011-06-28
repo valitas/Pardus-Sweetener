@@ -152,28 +152,25 @@ function eventsToHuman(character_name, events) {
     a.length = 0;
   }
 
-  if(character_name)
-    a.push((warn ? warn + ' And your' : 'Your') + ' character ' + character_name);
-  else
-    a.push((warn ? warn + ' And a' : 'A') + ' character of yours');
+  if(events.combat || stuff) {
+    if(character_name)
+      a.push((warn ? warn + ' And your' : 'Your') + ' character ' + character_name);
+    else
+      a.push((warn ? warn + ' And a' : 'A') + ' character of yours');
 
-  if(events.combat) {
-    a.push('has been fighting with someone.');
-    if(stuff) {
-      if(character_name)
-        a.push(character_name + ' also has');
-      else
-        a.push('You also have');
-      a.push(stuff);
-    }
-  }
-  else {
-    if(stuff) {
-      a.push('has');
-      a.push(stuff);
+    if(events.combat) {
+      a.push('has been fighting with someone.');
+      if(stuff) {
+        if(character_name)
+          a.push(character_name + ' also has');
+        else
+          a.push('You also have');
+        a.push(stuff);
+      }
     }
     else {
-      a.push('is feeling abandoned.'); // I mean what else?
+      a.push('has');
+      a.push(stuff);
     }
   }
 

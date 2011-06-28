@@ -8,10 +8,10 @@ function Options(doc) {
   // Fetch all these elements from the options document, so we don't
   // have to look for them each time we need them.
   var a = [ 'alarm_combat', 'alarm_warn', 'alarm_ally',
-            'alarm_pm', 'alarm_trade',
+            'alarm_pm', 'alarm_mission', 'alarm_trade',
             'alarm_sound_select', 'alarm_test',
             'desktop_combat', 'desktop_warn', 'desktop_ally',
-            'desktop_pm', 'desktop_trade', 'desktop_test',
+            'desktop_pm', 'desktop_mission', 'desktop_trade', 'desktop_test',
             'clock_utc', 'clock_ap', 'clock_b', 'clock_p',
             'clock_s', 'clock_l', 'clock_e', 'clock_n',
             'clock_z', 'clock_r' ];
@@ -60,7 +60,7 @@ Options.prototype.testNotification = function() {
 
 
 Options.prototype.loadAlarmEvents = function() {
-  this.loadEvents('alarm', { 'combat': true, 'warn': true });
+  this.loadEvents('alarm', { 'combat': true });
 };
 
 Options.prototype.updateAlarmEvents = function() {
@@ -68,9 +68,9 @@ Options.prototype.updateAlarmEvents = function() {
 };
 
 Options.prototype.loadDesktopEvents = function() {
-  this.loadEvents('desktop', { 'combat': true, 'warn': true,
-                               'ally':   true, 'pm':   true,
-                               'trade':  true                });
+  this.loadEvents('desktop', { 'combat':  true, 'warn':  true,
+                               'ally':    true, 'pm':    true,
+                               'mission': true, 'trade': false });
 };
 
 Options.prototype.updateDesktopEvents = function() {
@@ -122,6 +122,7 @@ Options.prototype.updateClockSettings = function() {
     localStorage.removeItem('clocks');
 };
 
+
 // III. Stuff not really useful outside of this object.
 // Consider the following not part of the public interface.
 
@@ -158,19 +159,21 @@ Options.prototype.loadEvents = function(prefix, dfault) {
     localStorage[lsname] = String(bg.computeEventMask(events));
   };
 
-  this[ prefix + '_combat' ].checked = events.combat;
-  this[ prefix + '_warn'   ].checked = events.warn;
-  this[ prefix + '_ally'   ].checked = events.ally;
-  this[ prefix + '_pm'     ].checked = events.pm;
-  this[ prefix + '_trade'  ].checked = events.trade;
+  this[ prefix + '_combat'  ].checked = events.combat;
+  this[ prefix + '_warn'    ].checked = events.warn;
+  this[ prefix + '_ally'    ].checked = events.ally;
+  this[ prefix + '_pm'      ].checked = events.pm;
+  this[ prefix + '_mission' ].checked = events.mission;
+  this[ prefix + '_trade'   ].checked = events.trade;
 };
 
 Options.prototype.updateEvents = function(prefix) {
-  var events = { 'combat': this[ prefix + '_combat' ].checked,
-                 'warn':   this[ prefix + '_warn'   ].checked,
-                 'ally':   this[ prefix + '_ally'   ].checked,
-                 'pm':     this[ prefix + '_pm'     ].checked,
-                 'trade':  this[ prefix + '_trade'  ].checked };
+  var events = { 'combat':  this[ prefix + '_combat'  ].checked,
+                 'warn':    this[ prefix + '_warn'    ].checked,
+                 'ally':    this[ prefix + '_ally'    ].checked,
+                 'pm':      this[ prefix + '_pm'      ].checked,
+                 'mission': this[ prefix + '_mission' ].checked,
+                 'trade':   this[ prefix + '_trade'   ].checked };
   var mask = chrome.extension.getBackgroundPage().computeEventMask(events);
   localStorage[ prefix + 'Events' ] = String(mask);
 };
