@@ -152,11 +152,14 @@ function eventsToHuman(character_name, events) {
     a.length = 0;
   }
 
+  if(warn)
+    a.push(warn);
+
   if(events.combat || stuff) {
     if(character_name)
-      a.push((warn ? warn + ' And your' : 'Your') + ' character ' + character_name);
+      a.push((warn ? 'And your' : 'Your') + ' character ' + character_name);
     else
-      a.push((warn ? warn + ' And a' : 'A') + ' character of yours');
+      a.push((warn ? 'And a' : 'A') + ' character of yours');
 
     if(events.combat) {
       a.push('has been fighting with someone.');
