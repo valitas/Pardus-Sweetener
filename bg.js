@@ -1,142 +1,246 @@
 // Pardus Sweetener
 // The guts.
 
-function Alarm() {
+// Include Alarm and Notifier before this.
 
-  this.sounds = [
-    { 'id': 'buzz', 'name': 'Buzzer' },
-    { 'id': 'dive', 'name': 'Dive horn' },
-    { 'id': 'missile', 'name': 'Missile alert' },
-    { 'id': 'power', 'name': 'Power plant' },
-    { 'id': 'timex', 'name': 'Timex' }
-  ];
+// The following objects have a simple duty: they convert values
+// stored in localStorage to and from values we can use in the rest of
+// the extension.  The method 'parse' assumes the value supplied comes
+// from localStorage, so null will be assumed to mean the option
+// wasn't saved yet, and the default value will be supplied. The
+// objects don't access localStorage directly, because this
+// translation is also useful for storage events, in which case we get
+// the values through other means.
 
-  this.soundk = new Object();
-  for(var i = 0; i < this.sounds.length; i++) {
-    var s = this.sounds[i];
-    this.soundk[s.id] = s;
-  }
-
-  // Select the current sound. If there's no such thing,
-  // pick the first on our list.
-
-  var id = localStorage.alarmSound;
-  if(!id)
-    id = this.sounds[0].id;
-  this.selectSample(id);
-}
-
-Alarm.prototype.selectSample = function(id, ready_callback) {
-  this.switchOff();
-  this.sound_id = id;
-  this.sound_ready = false;
-  this.sound = new Audio();
-  this.sound.src = 'sounds/' + id + '.ogg';
-  var self = this;
-  this.sound.addEventListener('canplaythrough',
-                              function() {
-                                self.sound_ready = true;
-                                if(ready_callback)
-                                  ready_callback();
-                              });
-  this.sound.load();
+function BooleanOption(defaultValue) { this.defaultValue = defaultValue; }
+BooleanOption.prototype.DICT = { 'true': true, 'false': false };
+BooleanOption.prototype.stringify = function(value) { return value ? 'true' : 'false'; };
+BooleanOption.prototype.parse = function(string_value) {
+  var r = this.DICT[string_value];
+  return r == undefined ? this.defaultValue : r;
 };
 
-Alarm.prototype.switchOff = function() {
-  if(this.sound_timer) {
-    clearTimeout(this.sound_timer);
-    this.sound.pause();
-    delete this.sound_timer;
-  }
+function StringOption(defaultValue) { this.defaultValue = defaultValue; }
+StringOption.prototype.stringify = function(value) { return value; };
+StringOption.prototype.parse = function(string_value) {
+  return (string_value == null) ? this.defaultValue : string_value;
 };
 
-Alarm.prototype.switchOn = function() {
-  if(this.sound_ready) {
-    this.switchOff();
-    this.sound.currentTime = 0;
-    this.sound.loop = true;
-    this.sound.play();
-    // it runs for 50 seconds before turning itself off
-    var self = this;
-    this.sound_timer = setTimeout(function() { self.switchOff(); }, 50000);
-  }
-};
 
-function Notifier() { }
+// The main object
 
-Notifier.prototype.hide = function() {
-  if(this.notification) {
-    this.notification.cancel();
-    delete this.notification;
-  }
-};
+function PardusSweetener() {
+  this.options = {
+    alarmSound:        new StringOption('timex'),
+    alarmCombat:       new BooleanOption(true),
+    alarmAlly:         new BooleanOption(false),
+    alarmWarning:      new BooleanOption(false),
+    alarmPM:           new BooleanOption(false),
+    alarmMission:      new BooleanOption(false),
+    alarmTrade:        new BooleanOption(false),
+    alarmPayment:      new BooleanOption(false),
+    alarmInfo:         new BooleanOption(false),
 
-Notifier.prototype.show = function(title, text) {
-  this.hide();
+    desktopCombat:     new BooleanOption(true),
+    desktopAlly:       new BooleanOption(true),
+    desktopWarning:    new BooleanOption(true),
+    desktopPM:         new BooleanOption(true),
+    desktopMission:    new BooleanOption(true),
+    desktopTrade:      new BooleanOption(false),
+    desktopPayment:    new BooleanOption(false),
+    desktopInfo:       new BooleanOption(false),
 
-  var self = this;
-  var n = webkitNotifications.createNotification('48.png', title, text);
-  n.ondisplay = function() {
-    setTimeout(function() {
-                 if(n == self.notification)
-                   self.hide();
-               }, 15000);
+    clockUTC:          new BooleanOption(false),
+    clockAP:           new BooleanOption(true),
+    clockB:            new BooleanOption(true),
+    clockP:            new BooleanOption(true),
+    clockS:            new BooleanOption(true),
+    clockL:            new BooleanOption(false),
+    clockE:            new BooleanOption(false),
+    clockN:            new BooleanOption(false),
+    clockZ:            new BooleanOption(false),
+    clockR:            new BooleanOption(false),
+
+    pvpMissileAutoAll: new BooleanOption(true),
+    pvmMissileAutoAll: new BooleanOption(false)
   };
+  this.ports = new Array();
+  this.alarm = new Alarm(localStorage['alarmSound']);
+  this.notifier = new Notifier();
 
-  this.notification = n;
-  this.notification.show();
+  var self = this;
+  this.storageEventListener = function(e) { self.handleStorage(e); };
+  this.onConnectEventListener = function(port) { self.handleConnect(port); };
+
+  chrome.extension.onConnect.addListener(this.onConnectEventListener);
+  window.addEventListener('storage', this.storageEventListener, false);
+}
+
+PardusSweetener.prototype.handleConnect = function(port) {
+  var self = this;
+  var pi = { port: port, keys: new Object() };
+
+  pi.messageListener = function(msg) { self.handleMessage(pi, msg); };
+  pi.disconnectListener = function(port) { self.handleDisconnect(pi); };
+
+  this.ports.push(pi);
+  port.onDisconnect.addListener(pi.disconnectListener);
+  port.onMessage.addListener(pi.messageListener);
+
+  console.log('connect - have ' + this.ports.length + ' ports');
 };
 
-function soundAlarm() { alarm.switchOn(); }
-function stopAlarm() { alarm.switchOff(); }
-function selectSound(id, ready_callback) { alarm.selectSample(id, ready_callback); }
-function availableSounds() { return alarm.sounds; }
-function selectedSound() { return alarm.sound_id; }
+PardusSweetener.prototype.handleDisconnect = function(pi) {
+  for(var i = this.ports.length - 1; i >= 0; i--) {
+    if(pi === this.ports[i]) {
+      this.ports.splice(i, 1);
+      break;
+    }
+  }
 
-function showNotification(title, text) { notifier.show(title, text); }
+  // this is likely not needed but hell, lets help the garbage collector
+  pi.port.onDisconnect.removeListener(pi.disconnectListener);
+  pi.port.onMessage.removeListener(pi.messageListener);
+  delete pi.disconnectListener;
+  delete pi.messageListener;
 
-function computeEventMask(e) {
-  return 1
-    | (e.combat  ? 0x02 : 0)
-    | (e.warn    ? 0x04 : 0)
-    | (e.ally    ? 0x08 : 0)
-    | (e.pm      ? 0x10 : 0)
-    | (e.info    ? 0x20 : 0)
-    | (e.trade   ? 0x40 : 0)
-    | (e.mission ? 0x80 : 0);
-}
+  console.log('disconnect - have ' + this.ports.length + ' ports');
+};
 
-function expandEventMask(mask) {
-  return { 'combat':  Boolean(mask & 0x02),
-           'warn':    Boolean(mask & 0x04),
-           'ally':    Boolean(mask & 0x08),
-           'pm':      Boolean(mask & 0x10),
-           'info':    Boolean(mask & 0x20),
-           'trade':   Boolean(mask & 0x40),
-           'mission': Boolean(mask & 0x80) };
-}
+PardusSweetener.prototype.handleMessage = function(pi, msg) {
+  if(msg.op) {
+    var hname = msg.op + "MsgHandler";
+    if(hname in this)
+      this[hname](pi, msg);
+  }
+};
 
-function eventsToHuman(character_name, events) {
+PardusSweetener.prototype.subscribeMsgHandler = function(pi, msg) {
+  var keys = msg.keys;
+  if(keys && keys.length) {
+    pi.keys = new Object();
+    for(var i = keys.length - 1; i >= 0; i--) {
+      var key = keys[i];
+      var option = this.options[key];
+      if(option) {
+        pi.keys[key] = true;
+        var v = option.parse(localStorage[key]);
+        pi.port.postMessage({ op: 'updateValue', key: key, value: v });
+        console.log('subscription added to ' + key);
+      }
+    }
+  }
+};
+
+PardusSweetener.prototype.setValueMsgHandler = function(pi, msg) {
+  var option = this.options[msg.key];
+  if(option) {
+    var v = option.stringify(msg.value);
+    localStorage[msg.key] = v;
+
+    // some specific tweaks we do on special events..
+    if(msg.key == 'alarmSound')
+      this.alarm.selectSample(v,
+                              function() {
+                                pi.port.postMessage({op: 'sampleReady', sample: v});
+                              });
+
+    // apparently we won't a storage event to trigger this, because
+    // that's only for changes from another window (XXX - need more
+    // research into this)
+
+    this.postUpdateValueNotifications(msg.key, msg.value, pi);
+  }
+};
+
+PardusSweetener.prototype.requestListMsgHandler = function(pi, msg) {
+  if(msg.name == 'alarmSound')
+    pi.port.postMessage({ op: 'updateList',
+                          name: 'alarmSound',
+                          list: Alarm.prototype.sounds });
+};
+
+PardusSweetener.prototype.dispatchNotificationsMsgHandler = function(pi, msg) {
+  console.log('dispatch ' + JSON.stringify(msg));
+  if(this.testIndicators('alarm', msg.indicators))
+    this.alarm.switchOn();
+  else
+    this.alarm.switchOff();
+
+  if(this.testIndicators('desktop', msg.indicators))
+    this.notifier.show('Meanwhile, in Pardus...',
+                       this.indicatorsToHuman(msg.character_name, msg.indicators));
+  else
+    this.notifier.hide();
+};
+
+PardusSweetener.prototype.soundAlarmMsgHandler = function(pi, msg) {
+  this.alarm.switchOn();
+};
+
+PardusSweetener.prototype.stopAlarmMsgHandler = function(pi, msg) {
+  this.alarm.switchOff();
+};
+
+// This is supposedly called on storage events. We haven't seen one
+// yet, we need to research more about this...
+
+PardusSweetener.prototype.handleStorage = function(e) {
+  var option = this.options[e.key];
+  if(option)
+    this.postUpdateValueNotifications(e.key, option.parse(e.newValue), null);
+};
+
+PardusSweetener.prototype.postUpdateValueNotifications = function(key, value, exclude_pi) {
+  for(var i = this.ports.length - 1; i >= 0; i--) {
+    var pi = this.ports[i];
+    if(pi === exclude_pi)
+      continue;
+
+    // check if this port requested notification for this key; if so,
+    // notify them
+
+    if(pi.keys[key])
+      pi.port.postMessage({ op: 'updateValue', key: key, value: value });
+  }
+};
+
+PardusSweetener.prototype.testIndicators = function(prefix, indicators) {
+  var r = false;
+  for(var suffix in indicators) {
+    var key = prefix + suffix;
+    var option = this.options[key];
+    if(option) {
+      if(option.parse(localStorage[key])) {
+        r = true;
+        break;
+      }
+    }
+  }
+  return r;
+};
+
+PardusSweetener.prototype.indicatorsToHuman = function(character_name, indicators) {
   var a = new Array();
   var pendings, warn, notifs, stuff;
 
-  if(events.warn)
+  if(indicators['Warning'])
     warn = 'There is a game warning you should see in the message frame.';
-  else if(events.info)
+  else if(indicators['Info'])
     warn = 'There is some information for you in the message frame.';
 
-  if(events.ally)
+  if(indicators['Ally'])
     a.push('alliance');
-  if(events.pm)
+  if(indicators['PM'])
     a.push('private');
   if(a.length > 0) {
     pendings = 'unread ' + a.join(' and ') + ' messages';
     a.length = 0;
   }
 
-  if(events.trade)
-    a.push('trade/payment');
-  if(events.mission)
+  if(indicators['Trade'] || indicators['Payment'])
+    a.push('money');
+  if(indicators['Mission'])
     a.push('mission');
   if(a.length > 0) {
     notifs = a.join(' and ') + ' notifications';
@@ -155,13 +259,13 @@ function eventsToHuman(character_name, events) {
   if(warn)
     a.push(warn);
 
-  if(events.combat || stuff) {
+  if(indicators['Combat'] || stuff) {
     if(character_name)
       a.push((warn ? 'And your' : 'Your') + ' character ' + character_name);
     else
       a.push((warn ? 'And a' : 'A') + ' character of yours');
 
-    if(events.combat) {
+    if(indicators['Combat']) {
       a.push('has been fighting with someone.');
       if(stuff) {
         if(character_name)
@@ -178,49 +282,20 @@ function eventsToHuman(character_name, events) {
   }
 
   return a.join(' ');
-}
+};
 
-function dispatchNotifications(character_name, events) {
-  var r = false;
-  var alrm = parseInt(localStorage.alarmEvents || 0);
-  var desk = parseInt(localStorage.desktopEvents || 0);
-  var ev = computeEventMask(events);
 
-  if((alrm & ev) > 1) {
-    alarm.switchOn();
-    r = true;
-  }
-  else
-    alarm.switchOff();
-
-  if((desk & ev) > 1) {
-    notifier.show('Meanwhile, in Pardus...',
-                  eventsToHuman(character_name, events));
-    r = true;
-  }
-  else
-    notifier.hide();
-
-  return r;
-}
-
-var alarm;
-var notifier;
+var sweetener;
 
 function init() {
-  alarm = new Alarm();
-  notifier = new Notifier();
+  var pattern = /^[^:]+:\/\/([^.]+\.)?pardus\.at\//;
 
-  chrome.extension.onRequest.addListener(
-    function(request, sender, sendResponse) {
-      var r = false;
+  // Enable the page action whenever a pardus page is loaded in a tab
+  chrome.tabs.onUpdated.addListener(
+    function (tab_id, changeInfo, tab) {
+      if(pattern.test(tab.url))
+        chrome.pageAction.show(tab_id);
+    });
 
-      if(request.op == 'dispatchNotifications')
-        r = dispatchNotifications(request.character_name, request.events);
-      else if(request.op == 'getClockSettings')
-        r = localStorage.clocks;
-
-      sendResponse(r);
-    }
-  );
+  sweetener = new PardusSweetener();
 }

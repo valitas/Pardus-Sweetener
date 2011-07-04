@@ -1,0 +1,28 @@
+/* Clone the look and feel of "chrome://" pages. */
+body {
+  background-color: white;
+  color: black;
+  margin: 10px;
+  cursor: default;
+  font-size: 13px;
+  font-family: Arial, sans-serif
+}
+
+h1 { font-size: 156% }
+
+h1 img {
+  margin: 1px 5px 0 1px;
+  vertical-align: middle
+}
+
+h2 {
+  border-top: 1px solid #9cc2ef;
+  background-color: #ebeff9;
+  padding: 3px 5px;
+  font-size: 100%
+}
+
+div.section { margin: 10px 10px 20px 10px }
+div.section div { margin: 10px 0 }
+div.compact { margin: 0 }
+div.compact div { margin: 0 }

@@ -1,17 +1,22 @@
 {
   "name": "Pardus Sweetener",
-  "version": "1.1",
+  "version": "1.2",
   "description": "User interface enhancements for Pardus - alpha release",
   "background_page": "bg.html",
   "options_page": "options.html",
   "content_scripts": [
     { "matches":    [ "*://*.pardus.at/msgframe.php" ],
-      "js":         [ "msgframe.js" ],
+      "js":         [ "clock.js", "msgframe.js" ],
       "all_frames": true }
   ],
+  "page_action": {
+    "default_icon": "19.png",
+    "default_title": "Change Pardus Sweetener settings",
+    "popup": "popup.html"
+  },
   "icons": { "16":  "16.png",
              "48":  "48.png",
              "64":  "64.png",
              "128": "128.png" },
-  "permissions": [ "notifications" ]
+  "permissions": [ "notifications", "tabs" ]
 }

@@ -1,188 +1,121 @@
 // Pardus Sweetener
 // The wiring of the options page.
 
+var port;
+var controls;
+var testAlarmButton;
 
-function Options(doc) {
-  this.doc = doc;
-
-  // Fetch all these elements from the options document, so we don't
-  // have to look for them each time we need them.
-  var a = [ 'alarm_combat', 'alarm_warn', 'alarm_ally',
-            'alarm_pm', 'alarm_mission', 'alarm_trade',
-            'alarm_sound_select', 'alarm_test',
-            'desktop_combat', 'desktop_warn', 'desktop_ally',
-            'desktop_pm', 'desktop_mission', 'desktop_trade', 'desktop_test',
-            'clock_utc', 'clock_ap', 'clock_b', 'clock_p',
-            'clock_s', 'clock_l', 'clock_e', 'clock_n',
-            'clock_z', 'clock_r' ];
-  for(var i = 0; i < a.length; i++) {
-    var s = a[i];
-    this[s] = doc.getElementById(s);
-    if(!this[s])
-      console.log('OOPS: ' + s);
-  }
-
-  this.populateSoundSelect();
-  this.loadAlarmEvents();
-  this.loadDesktopEvents();
-  this.loadClockSettings();
+function disableTestAlarm() {
+  port.postMessage({ op: 'stopAlarm' });
+  testAlarmButton.value = 'Test';
+  testAlarmButton.disabled = true;
 }
 
-
-// I. Methods called from the options page
-
-
-Options.prototype.stopAlarm = function() {
-  chrome.extension.getBackgroundPage().stopAlarm();
-  this.alarm_test.value = 'Test';
-};
-
-Options.prototype.testAlarm = function() {
-  if(this.alarm_test.value == 'Stop') {
-    this.stopAlarm();
+function testAlarm() {
+  if(testAlarmButton.value == 'Stop') {
+    port.postMessage({ op: 'stopAlarm' });
+    testAlarmButton.value = 'Test';
   }
   else {
-    var i = this.alarm_sound_select.selectedIndex;
+    var i = controls.alarmSound.selectedIndex;
     if(i >= 0) {
-      this.alarm_test.value = 'Stop';
-      chrome.extension.getBackgroundPage().soundAlarm();
+      testAlarmButton.value = 'Stop';
+      port.postMessage({ op: 'soundAlarm' });
     }
   }
 };
 
-Options.prototype.testNotification = function() {
-  chrome.extension.getBackgroundPage().showNotification('Notification test',
-                                                        'A sample desktop notification.');
+function setBooleanOption(e) {
+  port.postMessage({ op: 'setValue', key: e.target.id, value: e.target.checked });
+}
+
+function setStringOption(e) {
+  port.postMessage({ op: 'setValue', key: e.target.id, value: e.target.value });
+}
+
+function messageHandler(msg) {
+  var control;
+  switch(msg.op) {
+  case 'updateValue':
+    control = controls[msg.key];
+    if(control)
+      updateControlState(control, msg.value);
+    break;
+  case 'updateList':
+    control = controls[msg.name];
+    if(control)
+      populateSelectControl(control, msg.list);
+    break;
+  case 'sampleReady':
+    if(testAlarmButton)
+      testAlarmButton.disabled = false;
+  }
+}
+
+function updateControlState(control, value) {
+  switch(control.type) {
+  case 'checkbox':
+    control.checked = value;
+    break;
+  case 'select-one':
+    var opt = control.options.namedItem(value);
+    if(opt)
+      opt.selected = true;
+  }
+}
+
+function populateSelectControl(control, list) {
+  while(control.hasChildNodes())
+    control.removeChild(control.firstChild);
+
+  var doc = control.ownerDocument;
+
+  for(var i = 0; i < list.length; i++) {
+    var entry = list[i];
+    var o = doc.createElement('option');
+    o.setAttribute('value', entry.id);
+    o.setAttribute('name', entry.id);
+    o.appendChild(doc.createTextNode(entry.name));
+    control.appendChild(o);
+  }
 };
 
 
-// II. Methods to load/update localStorage
+function initialise() {
+  var keys = [ 'alarmSound',
+               'alarmCombat', 'alarmAlly', 'alarmWarning', 'alarmPM',
+               'alarmMission', 'alarmTrade', 'alarmPayment', 'alarmInfo',
+               'desktopCombat', 'desktopAlly', 'desktopWarning', 'desktopPM',
+               'desktopMission', 'desktopTrade', 'desktopPayment', 'desktopInfo',
+               'clockUTC', 'clockAP', 'clockB', 'clockP', 'clockS',
+               'clockL', 'clockE', 'clockN', 'clockZ', 'clockR',
+               'pvpMissileAutoAll', 'pvmMissileAutoAll' ];
 
+  controls = new Object();
 
-Options.prototype.loadAlarmEvents = function() {
-  this.loadEvents('alarm', { 'combat': true });
-};
-
-Options.prototype.updateAlarmEvents = function() {
-  this.updateEvents('alarm');
-};
-
-Options.prototype.loadDesktopEvents = function() {
-  this.loadEvents('desktop', { 'combat':  true, 'warn':  true,
-                               'ally':    true, 'pm':    true,
-                               'mission': true, 'trade': false });
-};
-
-Options.prototype.updateDesktopEvents = function() {
-  this.updateEvents('desktop');
-};
-
-Options.prototype.updateAlarmSound = function() {
-  this.stopAlarm();
-  this.alarm_sound_select.disable = true;
-  this.alarm_test.disable = true;
-  var id = this.alarm_sound_select.value;
-  localStorage.alarmSound = id;
-  var self = this;
-  chrome.extension.getBackgroundPage().selectSound(id,
-    function() {
-      self.alarm_sound_select.disable = false; // XXX- huh?
-      self.alarm_test.disable = false;
-    });
-};
-
-Options.prototype.loadClockSettings = function() {
-  var s = localStorage.clocks;
-  if(s) {
-    var clocks = JSON.parse(s);
-    for(var i = 0; i < clocks.length; i++) {
-      var c = clocks[i];
-      var e = this[ 'clock_' + c ];
-      if(e)
-        e.checked = true;
+  for(var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    var control = document.getElementById(key);
+    if(control) {
+      controls[key] = control;
+      switch(control.type) {
+      case 'checkbox':
+        control.addEventListener('click', setBooleanOption, false);
+        break;
+      case 'select-one':
+        control.addEventListener('change', setStringOption, false);
+      }
     }
   }
-  // else default is no clocks, so we're done
-};
 
-Options.prototype.updateClockSettings = function() {
-  var clocks_available = [ 'utc', 'ap', 'b', 'p', 's', 'l', 'e', 'n', 'z', 'r' ];
-  var clocks = new Array();
-
-  for(var i = 0; i < clocks_available.length; i++) {
-    var c = clocks_available[i];
-    var e = this[ 'clock_' + c ];
-    if(e && e.checked)
-      clocks.push(c);
+  testAlarmButton = document.getElementById('testAlarm');
+  if(testAlarmButton) {
+    testAlarmButton.addEventListener('click', testAlarm);
+    controls.alarmSound.addEventListener('change', disableTestAlarm);
   }
 
-  if(clocks.length > 0)
-    localStorage.clocks = JSON.stringify(clocks);
-  else
-    localStorage.removeItem('clocks');
-};
-
-
-// III. Stuff not really useful outside of this object.
-// Consider the following not part of the public interface.
-
-
-Options.prototype.populateSoundSelect = function() {
-  while(this.alarm_sound_select.hasChildNodes()) {
-    this.alarm_sound_select.removeChild(this.alarm_sound_select.firstChild);
-  }
-
-  var sounds = chrome.extension.getBackgroundPage().availableSounds();
-  var active = chrome.extension.getBackgroundPage().selectedSound();
-
-  for(var i = 0; i < sounds.length; i++) {
-    var s = sounds[i];
-    var o = this.doc.createElement('option');
-    o.setAttribute('value', s.id);
-    o.appendChild(this.doc.createTextNode(s.name));
-    this.alarm_sound_select.appendChild(o);
-    if(s.id == active)
-      o.selected = true;
-  }
-};
-
-Options.prototype.loadEvents = function(prefix, dfault) {
-  var bg = chrome.extension.getBackgroundPage();
-  var lsname = prefix + 'Events';
-  var s = localStorage[lsname];
-  var events;
-
-  if(s)
-    events = bg.expandEventMask(parseInt(s));
-  else {
-    events = dfault;
-    localStorage[lsname] = String(bg.computeEventMask(events));
-  };
-
-  this[ prefix + '_combat'  ].checked = events.combat;
-  this[ prefix + '_warn'    ].checked = events.warn;
-  this[ prefix + '_ally'    ].checked = events.ally;
-  this[ prefix + '_pm'      ].checked = events.pm;
-  this[ prefix + '_mission' ].checked = events.mission;
-  this[ prefix + '_trade'   ].checked = events.trade;
-};
-
-Options.prototype.updateEvents = function(prefix) {
-  var events = { 'combat':  this[ prefix + '_combat'  ].checked,
-                 'warn':    this[ prefix + '_warn'    ].checked,
-                 'ally':    this[ prefix + '_ally'    ].checked,
-                 'pm':      this[ prefix + '_pm'      ].checked,
-                 'mission': this[ prefix + '_mission' ].checked,
-                 'trade':   this[ prefix + '_trade'   ].checked };
-  var mask = chrome.extension.getBackgroundPage().computeEventMask(events);
-  localStorage[ prefix + 'Events' ] = String(mask);
-};
-
-
-// IV. Start the ball running.
-
-
-var ps_opts;
-function init() {
-  ps_opts = new Options(document);
+  port = chrome.extension.connect();
+  port.onMessage.addListener(messageHandler);
+  port.postMessage({ op: 'requestList', name: 'alarmSound' });
+  port.postMessage({ op: 'subscribe', keys: keys });
 }
