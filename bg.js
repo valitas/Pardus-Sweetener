@@ -126,7 +126,7 @@ PardusSweetener.prototype.subscribeMsgHandler = function(pi, msg) {
         pi.keys[key] = true;
         var v = option.parse(localStorage[key]);
         pi.port.postMessage({ op: 'updateValue', key: key, value: v });
-        console.log('subscription added to ' + key);
+        //console.log('subscription added to ' + key);
       }
     }
   }
@@ -161,7 +161,7 @@ PardusSweetener.prototype.requestListMsgHandler = function(pi, msg) {
 };
 
 PardusSweetener.prototype.dispatchNotificationsMsgHandler = function(pi, msg) {
-  console.log('dispatch ' + JSON.stringify(msg));
+  //console.log('dispatch ' + JSON.stringify(msg));
   if(this.testIndicators('alarm', msg.indicators))
     this.alarm.switchOn();
   else
