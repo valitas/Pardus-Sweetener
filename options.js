@@ -4,6 +4,7 @@
 var port;
 var controls;
 var testAlarmButton;
+var testNotifierButton;
 
 function disableTestAlarm() {
   port.postMessage({ op: 'stopAlarm' });
@@ -24,6 +25,10 @@ function testAlarm() {
     }
   }
 };
+
+function testNotification() {
+  port.postMessage({ op: 'testNotification' });
+}
 
 function setBooleanOption(e) {
   port.postMessage({ op: 'setValue', key: e.target.id, value: e.target.checked });
@@ -179,9 +184,13 @@ function initialise() {
 
   testAlarmButton = document.getElementById('testAlarm');
   if(testAlarmButton) {
-    testAlarmButton.addEventListener('click', testAlarm);
-    controls.alarmSound.addEventListener('change', disableTestAlarm);
+    testAlarmButton.addEventListener('click', testAlarm, false);
+    controls.alarmSound.addEventListener('change', disableTestAlarm, false);
   }
+
+  testNotifierButton = document.getElementById('testNotifier');
+  if(testNotifierButton)
+    testNotifierButton.addEventListener('click', testNotification, false);
 
   wireAutobotControls();
 

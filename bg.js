@@ -210,6 +210,12 @@ PardusSweetener.prototype.enablePageActionMsgHandler = function(pi, msg) {
   chrome.pageAction.show(pi.port.sender.tab.id);
 };
 
+PardusSweetener.prototype.testNotificationMsgHandler = function(pi, msg) {
+  this.notifier.hide();
+  this.notifier.show('Meanwhile, in Pardus...',
+                     'You requested a sample desktop notification.');
+};
+
 // This is supposedly called on storage events. We haven't seen one
 // yet, we need to research more about this...
 
