@@ -16,7 +16,10 @@
       "all_frames": true },
     { "matches":    [ "*://*.pardus.at/main.php*" ],
       "js":         [ "nav.js" ],
-      "all_frames": true }
+      "all_frames": true },
+    { "matches":    [ "*://*.pardus.at/game.php" ],
+      "js":         [ "game.js" ],
+      "all_frames": false }
   ],
   "page_action": {
     "default_icon": "19.png",
@@ -27,5 +30,5 @@
              "48":  "48.png",
              "64":  "64.png",
              "128": "128.png" },
-  "permissions": [ "notifications", "tabs" ]
+  "permissions": [ "notifications" ]
 }

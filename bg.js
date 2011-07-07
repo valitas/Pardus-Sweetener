@@ -206,6 +206,10 @@ PardusSweetener.prototype.stopAlarmMsgHandler = function(pi, msg) {
   this.alarm.switchOff();
 };
 
+PardusSweetener.prototype.enablePageActionMsgHandler = function(pi, msg) {
+  chrome.pageAction.show(pi.port.sender.tab.id);
+};
+
 // This is supposedly called on storage events. We haven't seen one
 // yet, we need to research more about this...
 
@@ -312,14 +316,5 @@ PardusSweetener.prototype.indicatorsToHuman = function(character_name, indicator
 var sweetener;
 
 function init() {
-  var pattern = /^[^:]+:\/\/([^.]+\.)?pardus\.at\//;
-
-  // Enable the page action whenever a pardus page is loaded in a tab
-  chrome.tabs.onUpdated.addListener(
-    function (tab_id, changeInfo, tab) {
-      if(pattern.test(tab.url))
-        chrome.pageAction.show(tab_id);
-    });
-
   sweetener = new PardusSweetener();
 }
