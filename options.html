@@ -245,5 +245,330 @@
 
   </div>
 
+  <h2>Robot autofill</h2>
+  <div class="section">
+
+   <div>
+    <input type="checkbox" id="autobots" name="autobots" />
+    <label for="autobots">
+     In combat screens, fill the "use robots" field with the amount needed to
+     repair your armour as close as possible to the level set below.
+    </label>
+   </div>
+
+   <div>
+    <img src="http://static.pardus.at/various/universes/artemis_16x16.png" alt="Artemis"
+         title="Artemis" class="universe-icon" />
+    <label for="autobotsArtemisPreset">Preset:</label>
+    <select id="autobotsArtemisPreset" name="autobotsArtemisPreset">
+     <option value="0">Custom</option>
+     <optgroup label="Standard Ships">
+      <option value="225">Sabre</option>
+      <option value="135">Rustclaw</option>
+      <option value="285">Interceptor</option>
+      <option value="300">Lanner Mini</option>
+      <option value="210">Harrier</option>
+      <option value="390">Mercury</option>
+      <option value="195">Hercules</option>
+      <option value="390_B">Lanner</option>
+      <option value="480">Hawk</option>
+      <option value="450">Gargantua</option>
+      <option value="405">Behemoth</option>
+      <option value="510">Liberator</option>
+      <option value="330">Leviathan</option>
+     </optgroup>
+     <optgroup label="Federation Ships">
+      <option value="240">Wasp</option>
+      <option value="255">Adder</option>
+      <option value="270">Thunderbird</option>
+      <option value="405_B">Viper DC</option>
+      <option value="210_C">Babel Transporter</option>
+      <option value="375">Piranha</option>
+      <option value="510_B">Nighthawk</option>
+      <option value="540">Nighthawk Deluxe</option>
+      <option value="390_C">Mantis</option>
+      <option value="345">Extender</option>
+      <option value="585">Gauntlet</option>
+      <option value="720">Doomstar</option>
+      <option value="990">War Nova</option>
+     </optgroup>
+     <optgroup label="Empire Ships">
+      <option value="270_B">Ficon</option>
+      <option value="60">Tyrant</option>
+      <option value="225_B">Spectre</option>
+      <option value="405_C">Shadow SC</option>
+      <option value="375_B">Venom</option>
+      <option value="285_B">Constrictor</option>
+      <option value="525">Phantom ASC</option>
+      <option value="495">Dominator</option>
+      <option value="465">Boa UC</option>
+      <option value="540_B">Mooncrusher</option>
+     </optgroup>
+     <optgroup label="Union Ships">
+      <option value="210_B">Rustfire</option>
+      <option value="330_B">Marauder</option>
+      <option value="90">Junker IV</option>
+      <option value="285_C">Slider</option>
+      <option value="195_B">El Padre</option>
+      <option value="420">Chitin</option>
+      <option value="390_D">Horpor</option>
+      <option value="630">Scorpion</option>
+     </optgroup>
+     <optgroup label="TSS Ships">
+      <option value="420_B">Rover</option>
+      <option value="495_B">Reaper</option>
+      <option value="390_E">Blood Lanner</option>
+      <option value="600">Sudden Death</option>
+     </optgroup>
+     <optgroup label="EPS Ships">
+      <option value="330_C">Trident</option>
+      <option value="360">Celeus</option>
+      <option value="480_B">Pantagruel</option>
+      <option value="405_D">Vulcan</option>
+      <option value="500">Nano</option>
+      <option value="540_C">Liberator EPS</option>
+     </optgroup>
+    </select>
+    <label for="autobotsArtemisPoints">Armour points:</label>
+    <input id="autobotsArtemisPoints" name="autobotsArtemisPoints"
+           type="text" size="3" />
+    <label for="autobotsArtemisStrength">Armour strength:</label>
+    <select id="autobotsArtemisStrength" name="autobotsArtemisStrength">
+     <option value="180">I</option>
+     <option value="90">II</option>
+     <option value="60">III</option>
+     <option value="45">IV</option>
+     <option value="36">V</option>
+     <option value="30">VI</option>
+    </select>
+   </div>
+
+   <div>
+    <img src="http://static.pardus.at/various/universes/orion_16x16.png" alt="Orion"
+         title="Orion" class="universe-icon" />
+    <label for="autobotsOrionPreset">Preset:</label>
+    <select id="autobotsOrionPreset" name="autobotsOrionPreset">
+     <option value="0">Custom</option>
+     <optgroup label="Standard Ships">
+      <option value="225">Sabre</option>
+      <option value="135">Rustclaw</option>
+      <option value="285">Interceptor</option>
+      <option value="300">Lanner Mini</option>
+      <option value="210">Harrier</option>
+      <option value="390">Mercury</option>
+      <option value="195">Hercules</option>
+      <option value="390_B">Lanner</option>
+      <option value="480">Hawk</option>
+      <option value="450">Gargantua</option>
+      <option value="405">Behemoth</option>
+      <option value="510">Liberator</option>
+      <option value="330">Leviathan</option>
+     </optgroup>
+     <optgroup label="Federation Ships">
+      <option value="240">Wasp</option>
+      <option value="255">Adder</option>
+      <option value="270">Thunderbird</option>
+      <option value="405_B">Viper DC</option>
+      <option value="210_C">Babel Transporter</option>
+      <option value="375">Piranha</option>
+      <option value="510_B">Nighthawk</option>
+      <option value="540">Nighthawk Deluxe</option>
+      <option value="390_C">Mantis</option>
+      <option value="345">Extender</option>
+      <option value="585">Gauntlet</option>
+      <option value="720">Doomstar</option>
+      <option value="990">War Nova</option>
+     </optgroup>
+     <optgroup label="Empire Ships">
+      <option value="270_B">Ficon</option>
+      <option value="60">Tyrant</option>
+      <option value="225_B">Spectre</option>
+      <option value="405_C">Shadow SC</option>
+      <option value="375_B">Venom</option>
+      <option value="285_B">Constrictor</option>
+      <option value="525">Phantom ASC</option>
+      <option value="495">Dominator</option>
+      <option value="465">Boa UC</option>
+      <option value="540_B">Mooncrusher</option>
+     </optgroup>
+     <optgroup label="Union Ships">
+      <option value="210_B">Rustfire</option>
+      <option value="330_B">Marauder</option>
+      <option value="90">Junker IV</option>
+      <option value="285_C">Slider</option>
+      <option value="195_B">El Padre</option>
+      <option value="420">Chitin</option>
+      <option value="390_D">Horpor</option>
+      <option value="630">Scorpion</option>
+     </optgroup>
+     <optgroup label="TSS Ships">
+      <option value="420_B">Rover</option>
+      <option value="495_B">Reaper</option>
+      <option value="390_E">Blood Lanner</option>
+      <option value="600">Sudden Death</option>
+     </optgroup>
+     <optgroup label="EPS Ships">
+      <option value="330_C">Trident</option>
+      <option value="360">Celeus</option>
+      <option value="480_B">Pantagruel</option>
+      <option value="405_D">Vulcan</option>
+      <option value="500">Nano</option>
+      <option value="540_C">Liberator EPS</option>
+     </optgroup>
+    </select>
+    <label for="autobotsOrionPoints">Armour points:</label>
+    <input id="autobotsOrionPoints" name="autobotsOrionPoints"
+           type="text" size="3" />
+    <label for="autobotsOrionStrength">Armour strength:</label>
+    <select id="autobotsOrionStrength" name="autobotsOrionStrength">
+     <option value="180">I</option>
+     <option value="90">II</option>
+     <option value="60">III</option>
+     <option value="45">IV</option>
+     <option value="36">V</option>
+     <option value="30">VI</option>
+    </select>
+   </div>
+
+   <div>
+    <img src="http://static.pardus.at/various/universes/pegasus_16x16.png" alt="Pegasus"
+         title="Pegasus" class="universe-icon" />
+    <label for="autobotsPegasusPreset">Preset:</label>
+    <select id="autobotsPegasusPreset" name="autobotsPegasusPreset">
+     <option value="0">Custom</option>
+     <optgroup label="Standard Ships">
+      <option value="225">Sabre</option>
+      <option value="135">Rustclaw</option>
+      <option value="285">Interceptor</option>
+      <option value="300">Lanner Mini</option>
+      <option value="210">Harrier</option>
+      <option value="390">Mercury</option>
+      <option value="195">Hercules</option>
+      <option value="390_B">Lanner</option>
+      <option value="480">Hawk</option>
+      <option value="450">Gargantua</option>
+      <option value="405">Behemoth</option>
+      <option value="510">Liberator</option>
+      <option value="330">Leviathan</option>
+     </optgroup>
+     <optgroup label="Federation Ships">
+      <option value="240">Wasp</option>
+      <option value="255">Adder</option>
+      <option value="270">Thunderbird</option>
+      <option value="405_B">Viper DC</option>
+      <option value="210_C">Babel Transporter</option>
+      <option value="375">Piranha</option>
+      <option value="510_B">Nighthawk</option>
+      <option value="540">Nighthawk Deluxe</option>
+      <option value="390_C">Mantis</option>
+      <option value="345">Extender</option>
+      <option value="585">Gauntlet</option>
+      <option value="720">Doomstar</option>
+      <option value="990">War Nova</option>
+     </optgroup>
+     <optgroup label="Empire Ships">
+      <option value="270_B">Ficon</option>
+      <option value="60">Tyrant</option>
+      <option value="225_B">Spectre</option>
+      <option value="405_C">Shadow SC</option>
+      <option value="375_B">Venom</option>
+      <option value="285_B">Constrictor</option>
+      <option value="525">Phantom ASC</option>
+      <option value="495">Dominator</option>
+      <option value="465">Boa UC</option>
+      <option value="540_B">Mooncrusher</option>
+     </optgroup>
+     <optgroup label="Union Ships">
+      <option value="210_B">Rustfire</option>
+      <option value="330_B">Marauder</option>
+      <option value="90">Junker IV</option>
+      <option value="285_C">Slider</option>
+      <option value="195_B">El Padre</option>
+      <option value="420">Chitin</option>
+      <option value="390_D">Horpor</option>
+      <option value="630">Scorpion</option>
+     </optgroup>
+     <optgroup label="TSS Ships">
+      <option value="420_B">Rover</option>
+      <option value="495_B">Reaper</option>
+      <option value="390_E">Blood Lanner</option>
+      <option value="600">Sudden Death</option>
+     </optgroup>
+     <optgroup label="EPS Ships">
+      <option value="330_C">Trident</option>
+      <option value="360">Celeus</option>
+      <option value="480_B">Pantagruel</option>
+      <option value="405_D">Vulcan</option>
+      <option value="500">Nano</option>
+      <option value="540_C">Liberator EPS</option>
+     </optgroup>
+    </select>
+    <label for="autobotsPegasusPoints">Armour points:</label>
+    <input id="autobotsPegasusPoints" name="autobotsPegasusPoints"
+           type="text" size="3" />
+    <label for="autobotsPegasusStrength">Armour strength:</label>
+    <select id="autobotsPegasusStrength" name="autobotsPegasusStrength">
+     <option value="180">I</option>
+     <option value="90">II</option>
+     <option value="60">III</option>
+     <option value="45">IV</option>
+     <option value="36">V</option>
+     <option value="30">VI</option>
+    </select>
+   </div>
+  </div>
+
+  <h2>Quick nav screen links</h2>
+  <div class="section">
+   <div>
+    <input type="checkbox" id="navEquipmentLink" name="navEquipmentLink" />
+    <label for="navEquipmentLink">
+     Show direct link to ship and equipment
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="navPlanetTradeLink" name="navPlanetTradeLink" />
+    <label for="navPlanetTradeLink">
+     Show direct link to trade with planets
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="navSBTradeLink" name="navSBTradeLink" />
+    <label for="navSBTradeLink">
+     Show direct link to trade with starbases
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="navBldgTradeLink" name="navBldgTradeLink" />
+    <label for="navBldgTradeLink">
+     Show direct link to trade with buildings
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="navBMLink" name="navBMLink" />
+    <label for="navBMLink">
+     Show direct link to the black market in planets and starbases
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="navHackLink" name="navHackLink" />
+    <label for="navHackLink">
+     Show direct link to hack information from planets, starbases, and buildings
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="navBBLink" name="navBBLink" />
+    <label for="navBBLink">
+     Show direct link to the bulletin board in planets and starbases
+    </label>
+   </div>
+
+  </div>
  </body>
 </html>

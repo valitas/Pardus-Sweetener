@@ -20,8 +20,11 @@ FEATURES
    * Audible alarm on user-configurable game events
    * Desktop notifications on user-configurable game events
    * Clocks for different "ticks", a la Pardus Clock
-   * A robot autofiller in the combat screen
-   * A missile autoselecter in the combat screen
+   * Robot autofill in combat screens
+   * Missile autoselect in combat screens
+   * Rounds autoselect in combat screens
+   * Links to attack and trade with other ships in the nav screen
+   * Links to bulletin board, black market, etc. in the nav screen
 
 CREDITS AND LEGAL NOTICES
 

@@ -62,7 +62,26 @@ function PardusSweetener() {
     clockR:            new BooleanOption(false),
 
     pvpMissileAutoAll: new BooleanOption(true),
-    pvmMissileAutoAll: new BooleanOption(false)
+    pvmMissileAutoAll: new BooleanOption(false),
+
+    autobots:                new BooleanOption(false),
+    autobotsArtemisPreset:   new StringOption('0'),
+    autobotsArtemisPoints:   new StringOption('0'),
+    autobotsArtemisStrength: new StringOption('36'),
+    autobotsOrionPreset:     new StringOption('0'),
+    autobotsOrionPoints:     new StringOption('0'),
+    autobotsOrionStrength:   new StringOption('36'),
+    autobotsPegasusPreset:   new StringOption('0'),
+    autobotsPegasusPoints:   new StringOption('0'),
+    autobotsPegasusStrength: new StringOption('36'),
+
+    navEquipmentLink:        new BooleanOption(true),
+    navPlanetTradeLink:      new BooleanOption(true),
+    navSBTradeLink:          new BooleanOption(true),
+    navBldgTradeLink:        new BooleanOption(true),
+    navBMLink:               new BooleanOption(true),
+    navHackLink:             new BooleanOption(true),
+    navBBLink:               new BooleanOption(true)
   };
   this.ports = new Array();
   this.alarm = new Alarm(localStorage['alarmSound']);
@@ -87,7 +106,7 @@ PardusSweetener.prototype.handleConnect = function(port) {
   port.onDisconnect.addListener(pi.disconnectListener);
   port.onMessage.addListener(pi.messageListener);
 
-  console.log('connect - have ' + this.ports.length + ' ports');
+  //console.log('connect - have ' + this.ports.length + ' ports');
 };
 
 PardusSweetener.prototype.handleDisconnect = function(pi) {
@@ -104,7 +123,13 @@ PardusSweetener.prototype.handleDisconnect = function(pi) {
   delete pi.disconnectListener;
   delete pi.messageListener;
 
-  console.log('disconnect - have ' + this.ports.length + ' ports');
+  // XXX - need to test this
+  if(this.ports.length < 1) {
+    this.alarm.switchOff();
+    this.notifier.hide();
+  }
+
+  //console.log('disconnect - have ' + this.ports.length + ' ports');
 };
 
 PardusSweetener.prototype.handleMessage = function(pi, msg) {
@@ -145,10 +170,9 @@ PardusSweetener.prototype.setValueMsgHandler = function(pi, msg) {
                                 pi.port.postMessage({op: 'sampleReady', sample: v});
                               });
 
-    // apparently we won't a storage event to trigger this, because
-    // that's only for changes from another window (XXX - need more
-    // research into this)
-
+    // apparently we won't get a storage event to trigger this,
+    // because that's only for changes from another window (XXX - need
+    // more research into this)
     this.postUpdateValueNotifications(msg.key, msg.value, pi);
   }
 };

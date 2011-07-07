@@ -26,3 +26,5 @@ div.section { margin: 10px 10px 20px 10px }
 div.section div { margin: 10px 0 }
 div.compact { margin: 0 }
 div.compact div { margin: 0 }
+
+img.universe-icon { position: relative; top: 2px; }
