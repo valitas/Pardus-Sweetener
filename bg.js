@@ -84,7 +84,7 @@ function PardusSweetener() {
     navBBLink:               new BooleanOption(true)
   };
   this.ports = new Array();
-  this.alarm = new Alarm(localStorage['alarmSound']);
+  this.alarm = new Alarm(this.options.alarmSound.parse(localStorage['alarmSound']));
   this.notifier = new Notifier();
 
   var self = this;
