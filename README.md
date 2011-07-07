@@ -1,5 +1,8 @@
+Pardus Sweetener
+================
+
 About this software
-===================
+-------------------
 
 Pardus Sweetener is a Google Chrome extension that enhances the user
 interface of the online space game Pardus http://www.pardus.at/
@@ -14,7 +17,7 @@ Greasemonkey scripts, which is not optimal for Chrome.  And anyway
 those scripts lack easy configuration from an options screen.
 
 Features
-========
+--------
 
 This is the full list of features planned for the first public
 release:
@@ -29,7 +32,7 @@ release:
  * Links to bulletin board, black market, etc. in the nav screen
 
 Credits and legal notices
-=========================
+-------------------------
 
 The author of this software wishes to remain somewhat anonymous, but
 you can contact her as val@dssrzs.org.
@@ -46,7 +49,7 @@ it, and live a long and happy life.
 DISCLAIMER: This software is without warranty.
 
 About the sound samples
-=======================
+-----------------------
 
 The sound samples included with the software were obtained from
 freesound.org, and are licensed under the Creative Commons Sampling
