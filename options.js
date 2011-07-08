@@ -159,7 +159,8 @@ function initialise() {
                'autobotsPegasusPreset', 'autobotsPegasusPoints', 'autobotsPegasusStrength',
 
                'navEquipmentLink', 'navPlanetTradeLink', 'navSBTradeLink', 'navBldgTradeLink',
-               'navBMLink', 'navHackLink', 'navBBLink' ];
+               'navBMLink', 'navHackLink', 'navBBLink',
+               'navAttackShipLink', 'navTradeShipLink' ];
 
   controls = new Object();
 

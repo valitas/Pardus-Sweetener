@@ -26,22 +26,42 @@ var PSBKEYS = {
                      'navHackLink' ]
 };
 
+var SHLINKS = {
+  navAttackShipLink: { href: 'ship2ship_transfer.php?playerid=', name: 'Attack' },
+  navTradeShipLink:  { href: 'ship2ship_transfer.php?playerid=', name: 'Trade'  }
+};
+var NSHLINKS = Object.keys(SHLINKS).length;
+
 var port;
 var enabledLinks;
 var linksConfigured;
-var scheduledShowLinks;
 var cleanup;
+
+var enabledShipLinks;
+var shipLinksConfigured;
+var shipCleanup;
 
 function messageHandler(msg) {
   if(msg.op == 'updateValue') {
     var info = LINKS[msg.key];
-    if(!info)
-      return;
-    enabledLinks[msg.key] = msg.value;
-    if(Object.keys(enabledLinks).length == NLINKS) {
-      // configuration is complete
-      linksConfigured = true;
-      showLinks();
+    if(info) {
+      enabledLinks[msg.key] = msg.value;
+      if(Object.keys(enabledLinks).length == NLINKS) {
+        // configuration is complete
+        linksConfigured = true;
+        showLinks();
+      }
+    }
+    else {
+      info = SHLINKS[msg.key];
+      if(info) {
+        enabledShipLinks[msg.key] = msg.value;
+        if(Object.keys(enabledShipLinks).length == NSHLINKS) {
+          // configuration is complete
+          shipLinksConfigured = true;
+          showShipLinks();
+        }
+      }
     }
   }
 }
@@ -111,17 +131,83 @@ function showLinks() {
   ctab.parentNode.addEventListener('DOMSubtreeModified', mutationHandler, false);
 }
 
+function stabMutationHandler(e) {
+  if(shipLinksConfigured)
+    showShipLinks();
+}
+
+function showShipLinks() {
+  // find the commands tab
+  var stab = document.getElementById('otherships_content');
+  if(!stab)
+    return;
+
+  // remove the mutation listener, we don't want to hear of our own fiddling
+  stab.parentNode.removeEventListener('DOMSubtreeModified', stabMutationHandler, false);
+
+  // remove any links if any.
+  while(shipCleanup.length > 0) {
+    var e = shipCleanup.pop();
+    e.parentNode.removeChild(e);
+  }
+
+  // find all TABLEs direct childs of stab, and in each one the
+  // second TD, and in those the A element that calls scanId().
+  var ships = new Array();
+  var e;
+  var ns = document.evaluate(
+    "table/tbody/tr/td[position() = 2]/a[starts-with(@href, 'javascript:scanId(')]",
+    stab, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+  while((e = ns.iterateNext())) {
+    var playerId = parseInt(e.href.substr(18));
+    if(playerId) {
+      ships.push({ id: playerId, td: e.parentNode });
+    }
+  }
+
+  // now add the links
+  for(var i = 0; i < ships.length; i++) {
+    var ship = ships[i];
+    e = document.createElement('br');
+    shipCleanup.push(e);
+    ship.td.appendChild(e);
+    var span = document.createElement('span');
+    span.style.fontSize = '10px';
+    e = document.createElement('a');
+    e.href = 'ship2opponent_combat.php?opponentid=' + ship.id;
+    e.style.color = 'red';
+    e.appendChild(document.createTextNode('Attack'));
+    span.appendChild(e);
+    span.appendChild(document.createTextNode(' · '));
+    e = document.createElement('a');
+    e.href = 'ship2ship_transfer.php?playerid=' + ship.id;
+    e.appendChild(document.createTextNode('Trade'));
+    span.appendChild(e);
+    shipCleanup.push(span);
+    ship.td.appendChild(span);
+  }
+
+  // add the mutation listener back
+  stab.parentNode.addEventListener('DOMSubtreeModified', stabMutationHandler, false);
+}
+
 function run() {
   enabledLinks = new Object();
   cleanup = new Array();
+  enabledShipLinks = new Object();
+  shipCleanup = new Array();
 
   port = chrome.extension.connect();
   port.onMessage.addListener(messageHandler);
-  port.postMessage({ op: 'subscribe', keys: Object.keys(LINKS) });
+  var keys = Object.keys(LINKS).concat(Object.keys(SHLINKS));
+  port.postMessage({ op: 'subscribe', keys: keys });
 
   var ctab = document.getElementById('commands_content');
   if(ctab)
     ctab.parentNode.addEventListener('DOMSubtreeModified', mutationHandler, false);
+  var stab = document.getElementById('otherships_content');
+  if(stab)
+    stab.parentNode.addEventListener('DOMSubtreeModified', stabMutationHandler, false);
 }
 
 run();
