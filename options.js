@@ -152,7 +152,7 @@ function initialise() {
                'desktopMission', 'desktopTrade', 'desktopPayment', 'desktopInfo',
                'clockUTC', 'clockAP', 'clockB', 'clockP', 'clockS',
                'clockL', 'clockE', 'clockN', 'clockZ', 'clockR',
-               'pvpMissileAutoAll', 'pvmMissileAutoAll',
+               'pvpMissileAutoAll', 'pvmMissileAutoAll', 'pvbMissileAutoAll',
                'autobots',
                'autobotsArtemisPreset', 'autobotsArtemisPoints', 'autobotsArtemisStrength',
                'autobotsOrionPreset', 'autobotsOrionPoints', 'autobotsOrionStrength',

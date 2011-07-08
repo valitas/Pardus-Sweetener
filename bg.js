@@ -63,6 +63,7 @@ function PardusSweetener() {
 
     pvpMissileAutoAll: new BooleanOption(true),
     pvmMissileAutoAll: new BooleanOption(false),
+    pvbMissileAutoAll: new BooleanOption(true),
 
     autobots:                new BooleanOption(false),
     autobotsArtemisPreset:   new StringOption('0'),
