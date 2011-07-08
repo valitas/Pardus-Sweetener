@@ -160,7 +160,7 @@ function initialise() {
 
                'navEquipmentLink', 'navPlanetTradeLink', 'navSBTradeLink', 'navBldgTradeLink',
                'navBMLink', 'navHackLink', 'navBBLink',
-               'navAttackShipLink', 'navTradeShipLink' ];
+               'navShipLinks' ];
 
   controls = new Object();
 

@@ -83,8 +83,7 @@ function PardusSweetener() {
     navHackLink:             new BooleanOption(true),
     navBBLink:               new BooleanOption(true),
 
-    navAttackShipLink:       new BooleanOption(true),
-    navTradeShipLink:        new BooleanOption(true)
+    navShipLinks:            new BooleanOption(true)
   };
   this.ports = new Array();
   this.alarm = new Alarm(this.options.alarmSound.parse(localStorage['alarmSound']));

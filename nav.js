@@ -26,20 +26,13 @@ var PSBKEYS = {
                      'navHackLink' ]
 };
 
-var SHLINKS = {
-  navAttackShipLink: { href: 'ship2ship_transfer.php?playerid=', name: 'Attack' },
-  navTradeShipLink:  { href: 'ship2ship_transfer.php?playerid=', name: 'Trade'  }
-};
-var NSHLINKS = Object.keys(SHLINKS).length;
-
 var port;
 var enabledLinks;
 var linksConfigured;
-var cleanup;
 
-var enabledShipLinks;
-var shipLinksConfigured;
-var shipCleanup;
+var shipLinksEnabled;
+var highlightedShip;
+var highlightedShipRubbish; // stuff we added on highlight, that we want removed
 
 function messageHandler(msg) {
   if(msg.op == 'updateValue') {
@@ -49,49 +42,27 @@ function messageHandler(msg) {
       if(Object.keys(enabledLinks).length == NLINKS) {
         // configuration is complete
         linksConfigured = true;
-        showLinks();
+        var cbox = document.getElementById('commands_content');
+        if(cbox)
+          setupLinks(cbox);
       }
     }
-    else {
-      info = SHLINKS[msg.key];
-      if(info) {
-        enabledShipLinks[msg.key] = msg.value;
-        if(Object.keys(enabledShipLinks).length == NSHLINKS) {
-          // configuration is complete
-          shipLinksConfigured = true;
-          showShipLinks();
-        }
-      }
+    else if(msg.key == 'navShipLinks' && msg.value) {
+      shipLinksEnabled = true;
+      var sbox = document.getElementById('otherships_content');
+      if(sbox)
+        setupShipLinks(sbox);
     }
   }
 }
 
-function mutationHandler(e) {
-  if(linksConfigured)
-    showLinks();
-}
-
-function showLinks() {
-  // find the commands tab
-  var ctab = document.getElementById('commands_content');
-  if(!ctab)
-    return;
-
-  // remove the mutation listener, we don't want to hear of our own fiddling
-  ctab.parentNode.removeEventListener('DOMSubtreeModified', mutationHandler, false);
-
-  // remove any links if any.
-  while(cleanup.length > 0) {
-    var e = cleanup.pop();
-    e.parentNode.removeChild(e);
-  }
-
+function setupLinks(cbox) {
   // find the "Land on planet", "Land on starbase" or "Enter building"
   // div. We look for the link to planet.php, starbase.php or
   // building.php really; if we find one of those, we use the parent
   // div.
   var planet, keys, i;
-  var as = ctab.getElementsByTagName('a');
+  var as = cbox.getElementsByTagName('a');
   for(i = 0; i < as.length; i++) {
     var a = as[i];
     keys = PSBKEYS[a.pathname];
@@ -104,7 +75,7 @@ function showLinks() {
   if(planet) {
     // rock and roll. add the enabled links then
     var here = planet.nextSibling;
-    var doc = ctab.ownerDocument;
+    var doc = cbox.ownerDocument;
     for(i = 0; i < keys.length; i++) {
       var key = keys[i];
       if(enabledLinks[key]) {
@@ -119,95 +90,123 @@ function showLinks() {
         e.style.top = '6px';
         e.style.left = '6px';
         e.style.fontSize = '10px';
-        // remember this element so we can remove it later
-        cleanup.push(e);
-        ctab.insertBefore(e, here);
+        cbox.insertBefore(e, here);
       }
     }
   }
-  // else no planet
-
-  // add the mutation listener back
-  ctab.parentNode.addEventListener('DOMSubtreeModified', mutationHandler, false);
 }
 
-function stabMutationHandler(e) {
-  if(shipLinksConfigured)
-    showShipLinks();
-}
-
-function showShipLinks() {
-  // find the commands tab
-  var stab = document.getElementById('otherships_content');
-  if(!stab)
-    return;
-
-  // remove the mutation listener, we don't want to hear of our own fiddling
-  stab.parentNode.removeEventListener('DOMSubtreeModified', stabMutationHandler, false);
-
-  // remove any links if any.
-  while(shipCleanup.length > 0) {
-    var e = shipCleanup.pop();
+function unhighlightShip() {
+  while(highlightedShipRubbish.length > 0) {
+    var e = highlightedShipRubbish.pop();
     e.parentNode.removeChild(e);
   }
 
-  // find all TABLEs direct childs of stab, and in each one the
-  // second TD, and in those the A element that calls scanId().
-  var ships = new Array();
-  var e;
-  var ns = document.evaluate(
-    "table/tbody/tr/td[position() = 2]/a[starts-with(@href, 'javascript:scanId(')]",
-    stab, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
-  while((e = ns.iterateNext())) {
-    var playerId = parseInt(e.href.substr(18));
-    if(playerId) {
-      ships.push({ id: playerId, td: e.parentNode });
+  if(highlightedShip) {
+    highlightedShip.style.backgroundColor = 'inherit';
+    highlightedShip = null;
+  }
+}
+
+function highlightShip(event) {
+  if(!shipLinksEnabled)
+    return;
+
+  var element = event.currentTarget;
+  if(element === highlightedShip)
+    return;
+
+  unhighlightShip();
+
+  // find the last TD in this element (which should be a table)
+  var td, id;
+  var es = element.getElementsByTagName('td');
+  if(es.length > 0)
+    td = es[es.length-1];
+  else
+    return;
+
+  // find the A which calls scanId()
+  es = td.getElementsByTagName('a');
+  for(var i = 0; i < es.length; i++) {
+    var a = es[i];
+    if(a.href.substr(0,18) == 'javascript:scanId(') {
+      id = parseInt(a.href.substr(18));
+      break;
     }
   }
+  if(!id)
+    return;
 
-  // now add the links
-  for(var i = 0; i < ships.length; i++) {
-    var ship = ships[i];
-    e = document.createElement('br');
-    shipCleanup.push(e);
-    ship.td.appendChild(e);
-    var span = document.createElement('span');
-    span.style.fontSize = '10px';
-    e = document.createElement('a');
-    e.href = 'ship2opponent_combat.php?opponentid=' + ship.id;
-    e.style.color = 'red';
-    e.appendChild(document.createTextNode('Attack'));
-    span.appendChild(e);
-    span.appendChild(document.createTextNode(' · '));
-    e = document.createElement('a');
-    e.href = 'ship2ship_transfer.php?playerid=' + ship.id;
-    e.appendChild(document.createTextNode('Trade'));
-    span.appendChild(e);
-    shipCleanup.push(span);
-    ship.td.appendChild(span);
+  var doc = td.ownerDocument;
+  var e = doc.createElement('br');
+  highlightedShipRubbish.push(e);
+  td.appendChild(e);
+  var span = doc.createElement('span');
+  span.style.fontSize = '10px';
+  e = doc.createElement('a');
+  e.href = 'ship2ship_combat.php?playerid=' + id;
+  e.style.color = 'red';
+  e.appendChild(doc.createTextNode('Attack'));
+  span.appendChild(e);
+  span.appendChild(doc.createTextNode(' · '));
+  e = doc.createElement('a');
+  e.href = 'ship2ship_transfer.php?playerid=' + id;
+  e.appendChild(doc.createTextNode('Trade'));
+  span.appendChild(e);
+  highlightedShipRubbish.push(span);
+  td.appendChild(span);
+  highlightedShip = element;
+}
+
+function setupShipLinks(sbox) {
+  highlightedShip = null;
+  highlightedShipRubbish.length = 0;
+
+  // find all TABLEs direct childs of stab, and in each one the
+  // second TD, and in those the A element that calls scanId().
+  // XXX - perhaps we should find a way to filter only players, not NPCs?
+  var e, i;
+  var children = sbox.childNodes;
+  for(i = 0; i < children.length; i++) {
+    e = children[i];
+    if(e.tagName.toLowerCase() == 'table') {
+      e.addEventListener('mouseover', highlightShip,   false);
+    }
   }
+}
 
-  // add the mutation listener back
-  stab.parentNode.addEventListener('DOMSubtreeModified', stabMutationHandler, false);
+function cboxMutationHandler(event) {
+  if(linksConfigured && event.target.id == 'commands_content')
+    setupLinks(event.target);
+}
+
+function sboxMutationHandler(event) {
+  if(shipLinksEnabled && event.target.id == 'otherships_content')
+    setupShipLinks(event.target);
 }
 
 function run() {
   enabledLinks = new Object();
-  cleanup = new Array();
-  enabledShipLinks = new Object();
-  shipCleanup = new Array();
+  highlightedShipRubbish = new Array();
 
   port = chrome.extension.connect();
   port.onMessage.addListener(messageHandler);
-  var keys = Object.keys(LINKS).concat(Object.keys(SHLINKS));
+  var keys = Object.keys(LINKS).concat(['navShipLinks']);
   port.postMessage({ op: 'subscribe', keys: keys });
 
-  var ctab = document.getElementById('commands_content');
-  if(ctab)
-    ctab.parentNode.addEventListener('DOMSubtreeModified', mutationHandler, false);
-  var stab = document.getElementById('otherships_content');
-  if(stab)
-    stab.parentNode.addEventListener('DOMSubtreeModified', stabMutationHandler, false);
+  var box = document.getElementById('commands');
+  if(box)
+    // this element gets a new div (id=commands_content) inserted
+    // into it when the game javascript updates the commands box. we
+    // listen to that to update our own stuff.
+    box.addEventListener('DOMNodeInserted', cboxMutationHandler, false);
+  box = document.getElementById('otherships');
+  if(box)
+    // this element gets a new div (id=otherships_content) inserted
+    // into it when the game javascript updates the ships box. we
+    // listen to that to update our own stuff.
+    box.addEventListener('DOMNodeInserted', sboxMutationHandler, false);
 }
 
 run();
