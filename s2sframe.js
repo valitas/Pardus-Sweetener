@@ -23,7 +23,7 @@ function messageHandler(msg) {
 
 function run() {
   var host = document.location.host;
-  var s = host.substr(host.indexOf('.'));
+  var s = host.substr(0, host.indexOf('.'));
   var universe = s.substr(0,1).toUpperCase() + s.substr(1);
 
   config = new Object();
