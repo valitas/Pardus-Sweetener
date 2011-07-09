@@ -1,6 +1,6 @@
 {
   "name": "Pardus Sweetener",
-  "version": "1.6",
+  "version": "1.7",
   "description": "User interface enhancements for Pardus - alpha release",
   "background_page": "bg.html",
   "options_page": "options.html",
@@ -33,5 +33,6 @@
              "48":  "48.png",
              "64":  "64.png",
              "128": "128.png" },
-  "permissions": [ "notifications" ]
+  "permissions": [ "notifications" ],
+  "update_url": "https://github.com/downloads/valitas/Pardus-Sweetener/updates.xml"
 }
