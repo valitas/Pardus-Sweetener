@@ -1,6 +1,6 @@
 {
   "name": "Pardus Sweetener",
-  "version": "1.7",
+  "version": "1.8",
   "description": "User interface enhancements for Pardus - alpha release",
   "background_page": "bg.html",
   "options_page": "options.html",
