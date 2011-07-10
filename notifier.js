@@ -11,7 +11,7 @@ Notifier.prototype.show = function(title, text) {
   this.hide();
 
   var self = this;
-  var n = webkitNotifications.createNotification('48.png', title, text);
+  var n = webkitNotifications.createNotification('icons/48.png', title, text);
   n.ondisplay = function() {
     setTimeout(function() {
                  if(n == self.notification)

@@ -6,7 +6,7 @@
  </head>
  <body onload="initialise();">
   <h1 style="vertical-align: middle">
-   <img src="64.png" alt="" />
+   <img src="icons/64.png" alt="" />
    Pardus Sweetener Options
   </h1>
 
@@ -226,26 +226,42 @@
   </div>
 
 
-  <h2>Missile defaults</h2>
+  <h2>Combat defaults</h2>
   <div class="section">
    <div>
     <input type="checkbox" id="pvpMissileAutoAll" name="pvpMissileAutoAll" />
     <label for="pvpMissileAutoAll">
-     Fire all missiles by default on Player vs Player combat
+     Fire all missiles by default in Player vs Player combat
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="pvpHighestRounds" name="pvpHighestRounds" />
+    <label for="pvpHighestRounds">
+     Preselect the highest number of rounds you can attack for in
+     Player vs Player combat
     </label>
    </div>
 
    <div>
     <input type="checkbox" id="pvmMissileAutoAll" name="pvmMissileAutoAll" />
     <label for="pvmMissileAutoAll">
-     Fire all missiles by default on Player vs NPC combat
+     Fire all missiles by default in Player vs NPC combat
+    </label>
+   </div>
+
+   <div>
+    <input type="checkbox" id="pvmHighestRounds" name="pvmHighestRounds" />
+    <label for="pvmHighestRounds">
+     Preselect the highest number of rounds you can attack for in
+     Player vs NPC combat
     </label>
    </div>
 
    <div>
     <input type="checkbox" id="pvbMissileAutoAll" name="pvbMissileAutoAll" />
     <label for="pvbMissileAutoAll">
-     Fire all missiles by default on Player vs Building combat
+     Fire all missiles by default in Player vs Building combat
     </label>
    </div>
 

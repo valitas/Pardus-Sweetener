@@ -25,7 +25,8 @@ function run() {
   var universe = s.substr(0,1).toUpperCase() + s.substr(1);
 
   config = new Object();
-  configmap = { pvmMissileAutoAll: 'missileAutoAll' };
+  configmap = { pvmMissileAutoAll: 'missileAutoAll',
+                pvmHighestRounds:  'highestRounds'   };
   configmap[ 'autobots' + universe + 'Points' ] = 'autobotsPoints';
   configmap[ 'autobots' + universe + 'Strength' ] = 'autobotsStrength';
 

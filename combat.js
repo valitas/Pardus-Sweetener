@@ -1,6 +1,8 @@
 // Common stuff to do in combat screens.
 
 function sweetenCombatPage(config) {
+  if(config.highestRounds)
+    selectHighestRounds();
   if(config.missileAutoAll)
     checkAllMissiles();
 
@@ -8,6 +10,25 @@ function sweetenCombatPage(config) {
   var str = parseInt(config.autobotsStrength);
   if(pts && str) {
     fillBots(pts, str);
+  }
+}
+
+function selectHighestRounds() {
+  var elts = document.getElementsByName('rounds');
+  for(var i = 0; i < elts.length; i++) {
+    var highest = 0, highestElt = null;
+    var elt = elts[i];
+    var opts = elt.getElementsByTagName('option');
+    for(var j = 0; j < opts.length; j++) {
+      var opt = opts[j];
+      var n = parseInt(opt.value);
+      if(n > highest) {
+        highest = n;
+        highestElt = opt;
+      }
+    }
+    if(highestElt)
+      highestElt.selected = true;
   }
 }
 

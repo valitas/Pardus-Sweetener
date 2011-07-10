@@ -62,7 +62,9 @@ function PardusSweetener() {
     clockR:            new BooleanOption(false),
 
     pvpMissileAutoAll: new BooleanOption(true),
+    pvpHighestRounds:  new BooleanOption(true),
     pvmMissileAutoAll: new BooleanOption(false),
+    pvmHighestRounds:  new BooleanOption(false),
     pvbMissileAutoAll: new BooleanOption(true),
 
     autobots:                new BooleanOption(false),

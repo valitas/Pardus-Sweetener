@@ -1,4 +1,5 @@
 // Additions to the nav page
+// Load shiplinks.js before this.
 
 var LINKS = {
   navEquipmentLink:   { href: 'ship_equipment.php', name: 'Ship equipment'      },
@@ -108,6 +109,19 @@ function unhighlightShip() {
   }
 }
 
+// This matches strings of the form:
+//   javascript:scanId(22324, "player")
+// or
+//   javascript:scanId(25113, "opponent")
+function matchScanId(url) {
+  var r;
+  var m = /^javascript:scanId\((\d+),\s*['"]([^'"]+)['"]\)$/.exec(url);
+  if(m)
+    r = { type: m[2], id: parseInt(m[1]) };
+
+  return r;
+}
+
 function highlightShip(event) {
   if(!shipLinksEnabled)
     return;
@@ -117,45 +131,7 @@ function highlightShip(event) {
     return;
 
   unhighlightShip();
-
-  // find the last TD in this element (which should be a table)
-  var td, id;
-  var es = element.getElementsByTagName('td');
-  if(es.length > 0)
-    td = es[es.length-1];
-  else
-    return;
-
-  // find the A which calls scanId()
-  es = td.getElementsByTagName('a');
-  for(var i = 0; i < es.length; i++) {
-    var a = es[i];
-    if(a.href.substr(0,18) == 'javascript:scanId(') {
-      id = parseInt(a.href.substr(18));
-      break;
-    }
-  }
-  if(!id)
-    return;
-
-  var doc = td.ownerDocument;
-  var e = doc.createElement('br');
-  highlightedShipRubbish.push(e);
-  td.appendChild(e);
-  var span = doc.createElement('span');
-  span.style.fontSize = '11px';
-  e = doc.createElement('a');
-  e.href = 'ship2ship_combat.php?playerid=' + id;
-  e.style.color = 'red';
-  e.appendChild(doc.createTextNode('Attack'));
-  span.appendChild(e);
-  span.appendChild(doc.createTextNode(' · '));
-  e = doc.createElement('a');
-  e.href = 'ship2ship_transfer.php?playerid=' + id;
-  e.appendChild(doc.createTextNode('Trade'));
-  span.appendChild(e);
-  highlightedShipRubbish.push(span);
-  td.appendChild(span);
+  addShipLinks(element, matchScanId, highlightedShipRubbish);
   highlightedShip = element;
 }
 
