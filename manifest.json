@@ -1,6 +1,6 @@
 {
   "name": "Pardus Sweetener",
-  "version": "1.91",
+  "version": "1.92",
   "description": "User interface enhancements for Pardus - beta release",
   "background_page": "bg.html",
   "options_page": "options.html",
@@ -25,14 +25,14 @@
       "all_frames": true }
   ],
   "page_action": {
-    "default_icon": "19.png",
+    "default_icon": "icons/19.png",
     "default_title": "Change Pardus Sweetener settings",
     "popup": "popup.html"
   },
-  "icons": { "16":  "16.png",
-             "48":  "48.png",
-             "64":  "64.png",
-             "128": "128.png" },
+  "icons": { "16":  "icons/16.png",
+             "48":  "icons/48.png",
+             "64":  "icons/64.png",
+             "128": "icons/128.png" },
   "permissions": [ "notifications" ],
   "update_url": "http://dl.dropbox.com/u/28969566/sweetener-update/updates.xml"
 }

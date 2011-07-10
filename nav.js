@@ -89,7 +89,7 @@ function setupLinks(cbox) {
         e.style.position = 'relative';
         e.style.top = '6px';
         e.style.left = '6px';
-        e.style.fontSize = '10px';
+        //e.style.fontSize = '10px';
         cbox.insertBefore(e, here);
       }
     }
@@ -143,7 +143,7 @@ function highlightShip(event) {
   highlightedShipRubbish.push(e);
   td.appendChild(e);
   var span = doc.createElement('span');
-  span.style.fontSize = '10px';
+  //span.style.fontSize = '10px';
   e = doc.createElement('a');
   e.href = 'ship2ship_combat.php?playerid=' + id;
   e.style.color = 'red';
