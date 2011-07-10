@@ -40,7 +40,7 @@ function showShipLinks() {
     e = document.createElement('br');
     ship.td.appendChild(e);
     var span = document.createElement('span');
-    //span.style.fontSize = '10px';
+    span.style.fontSize = '11px';
     e = document.createElement('a');
     e.href = 'ship2ship_combat.php?playerid=' + ship.id;
     e.style.color = 'red';
