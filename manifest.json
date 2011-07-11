@@ -22,6 +22,9 @@
       "all_frames": false },
     { "matches":    [ "*://*.pardus.at/building.php*" ],
       "js":         [ "combat.js", "shiplinks.js", "building.js" ],
+      "all_frames": true },
+    { "matches":    [ "*://*.pardus.at/myalliance.php*" ],
+      "js":         [ "slicer.js", "myalliance.js" ],
       "all_frames": true }
   ],
   "page_action": {
