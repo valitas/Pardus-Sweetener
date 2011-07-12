@@ -1,24 +1,23 @@
-// load slicer.js before this
+// load universe.js and slicer.js before this
 
-var qls = new Array();
-var highlighted_ql = -1;
+var port, qls, qlspans, highlighted_ql;
 
-function highlightQL(id) {
-  if(id == highlighted_ql)
+function highlightQL(name) {
+  if(name == highlighted_ql)
     return;
 
   var spans, i;
 
-  if(highlighted_ql >= 0) {
-    spans = qls[highlighted_ql].spans;
+  if(highlighted_ql) {
+    spans = qlspans[highlighted_ql];
     if(spans)
       for(i = 0; i < spans.length; i++)
         spans[i].style.color = 'inherit';
   }
 
-  highlighted_ql = id;
-  if(id >= 0 && id < qls.length) {
-    spans = qls[id].spans;
+  spans = qlspans[name];
+  if(spans) {
+    highlighted_ql = name;
     for(i = 0; i < spans.length; i++)
       spans[i].style.color = '#3984c6';
   }
@@ -33,7 +32,7 @@ function qlName(name) {
   // "SG" style name
   if((m = /^{(.+)}$/.exec(s)))
     r = m[1].replace(/^\s/, '').replace(/\s$/, '').toUpperCase();
-  else if((m = /^():$/.exec(s)))
+  else if((m = /^(.*):$/.exec(s)))
     r = m[1].replace(/\s$/, '');
   else
     r = s;
@@ -45,34 +44,42 @@ function qlName(name) {
 }
 
 function registerQL(name, ql, spans) {
-  var qlid = qls.length;
-  var listener = function() { highlightQL(qlid); };
-  name = qlName(name);
-  if(!name)
-    name = qlid;
-  var title = 'Quick List: ' + name;
+  ql = ql.replace(/\s+/g, '');
+  if(!ql || ql.length == 0)
+    // need a valid QL
+    return;
 
-  //console.log('match name ' + name + ': [' + ql + ']');
+  name = qlName(name);
+  if(!name || qlspans[name])
+    // need a valid unique name
+    return;
+
+  var listener = function() { highlightQL(name); };
+  var title = 'Quick List: ' + name;
+  var mark = spans[0].firstChild;
   var img = document.createElement('img');
   img.src = chrome.extension.getURL('icons/16.png');
-  img.alt = 'QL';
-  spans[0].insertBefore(img, spans[0].firstChild);
+  img.alt = title;
+  img.title = title;
+  spans[0].insertBefore(img, mark);
+  spans[0].insertBefore(document.createTextNode(' '), mark);
   for(var i = 0; i < spans.length; i++) {
     var span = spans[i];
     span.addEventListener('mouseover', listener, false);
     span.title = title;
   }
 
-  qls.push({ name: name, ql: ql, spans: spans });
+  qls.push({ name: name, ql: ql });
+  qlspans[name] = spans;
 }
 
-function run() {
+function parseQLs() {
   // find the tabstyle table
   var tables = document.getElementsByClassName('tabstyle');
   for(var i = 0; i < tables.length; i++) {
 
     // the infamous QL regexp
-    var rx = /(\S[^\n]*\n)?\s*((?:d|r)\s*;\s*m?\s*;\s*t?\s*;\s*r?\s*;\s*[efn]*\s*;\s*[feun]*\s*;\s*b?\s*;\s*(?:f(?::\d*)?)?\s*;\s*(?:e(?::\d*)?)?\s*;\s*(?:u(?::\d*)?)?\s*;\s*(?:n(?::\d*)?)?\s*;\s*(?:(?:g|l):\d+)?\s*;\s*[0-6]*\s*;\s*(?:\d+(?:\s*,\s*\d+)*)?\s*;\s*(?:\d+(?:\s*,\s*\d+)*)?\s*;\s*[fn]*\s*;\s*[feun]*\s*;\s*(?:(?:g|l):\d+)?\s*;\s*[0-6]*\s*;\s*(?:\d+(?:\s*,\s*\d+)*)?\s*;\s*(?:\d+(?:\s*,\s*\d+)*)?\s*;\s*\d+)/g;
+    var rx = /(\S[^\n]*\n)\s*((?:d|r)\s*;\s*m?\s*;\s*t?\s*;\s*r?\s*;\s*[efn]*\s*;\s*[feun]*\s*;\s*b?\s*;\s*(?:f(?::\d*)?)?\s*;\s*(?:e(?::\d*)?)?\s*;\s*(?:u(?::\d*)?)?\s*;\s*(?:n(?::\d*)?)?\s*;\s*(?:(?:g|l):\d+)?\s*;\s*[0-6]*\s*;\s*(?:\d+(?:\s*,\s*\d+)*)?\s*;\s*(?:\d+(?:\s*,\s*\d+)*)?\s*;\s*[fn]*\s*;\s*[feun]*\s*;\s*(?:(?:g|l):\d+)?\s*;\s*[0-6]*\s*;\s*(?:\d+(?:\s*,\s*\d+)*)?\s*;\s*(?:\d+(?:\s*,\s*\d+)*)?\s*;\s*\d+)/g;
     var element = tables[i];
     var slicer = new TreeSlicer(element);
 
@@ -85,6 +92,31 @@ function run() {
       registerQL(m[1], ql, spans);
     }
   }
+
+  if(qls.length > 0) {
+    var universe = universeName();
+    port.postMessage({ op: 'setValue',
+                       key: 'allianceQLs' + universe,
+                       value: JSON.stringify(qls) });
+
+    var msg;
+    if(qls.length == 1)
+      msg = 'Registered one alliance quick list.';
+    else
+      msg = 'Registered ' + qls.length + ' alliance quick lists.';
+    port.postMessage({ op:       'showNotification',
+                       title:    'Alliance Quick Lists',
+                       message:  msg,
+                       duration: 10000 });
+  }
+}
+
+function run() {
+  port = chrome.extension.connect();
+  qls = new Array();
+  qlspans = new Object();
+
+  parseQLs();
 }
 
 run();

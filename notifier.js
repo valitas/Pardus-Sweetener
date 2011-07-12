@@ -7,16 +7,18 @@ Notifier.prototype.hide = function() {
   }
 };
 
-Notifier.prototype.show = function(title, text) {
+Notifier.prototype.show = function(title, text, timeout) {
   this.hide();
 
   var self = this;
+  if(!timeout)
+    timeout = 15000;
   var n = webkitNotifications.createNotification('icons/48.png', title, text);
   n.ondisplay = function() {
     setTimeout(function() {
                  if(n == self.notification)
                    self.hide();
-               }, 15000);
+               }, timeout);
   };
 
   this.notification = n;

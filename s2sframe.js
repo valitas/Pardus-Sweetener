@@ -1,5 +1,5 @@
 // Ship 2 ship content script. What you get when you're shooting people.
-// Load combat.js before this.
+// Load universe.js and combat.js before this.
 
 // XXX we really can merge more code into combat.js. just holding for now til it's more mature
 
@@ -22,9 +22,7 @@ function messageHandler(msg) {
 }
 
 function run() {
-  var host = document.location.host;
-  var s = host.substr(0, host.indexOf('.'));
-  var universe = s.substr(0,1).toUpperCase() + s.substr(1);
+  var universe = universeName();
 
   config = new Object();
   configmap = { pvpMissileAutoAll: 'missileAutoAll',

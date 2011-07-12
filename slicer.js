@@ -2,19 +2,20 @@
 // hilighter" (http://www.raymondhill.net/blog/?p=272).
 //
 // We need to work on fragments of text in a document.  We want to
-// highlight these, or set event listeners and wotnot.  Problem is,
-// these text fragments may span across elements in the original
-// document, so we won't have a single node to work with.  Instead,
-// each text fragment will be split in a sequence of them, inserted as
-// children of the original nodes that contain pieces of the text.
+// highlight them, or set event listeners and wotnot.  Problem is,
+// these text fragments may span across elements in the document, so
+// we won't have a single node to work with.  Instead, each text
+// fragment will be split in a sequence of nodes, inserted as children
+// of the original nodes that contain pieces of the text.
 //
 // The class below does this processing.  Upon creation, it scans the
-// tree from the designated root and constructs a single string that
-// can be accessed in the member variable 'text'.  This string can be
-// used to obtain ranges (via matching regular expressions or
-// whatever), which can then be passed to the method slice(), which
-// will modify the document, adding span elements as appropriate, and
-// return an array of spans belonging to a range.
+// tree from the designated root downwards and constructs a single
+// string that can be accessed in the member variable 'text'.  This
+// string can be used to obtain ranges (via matching regular
+// expressions or whatever), which can then be passed to the method
+// slice(), which will modify the document, adding span elements as
+// appropriate, and return the array of spans enclosing the parts of
+// the range.
 
 function TreeSlicer(root) {
   this.root = root;
@@ -89,7 +90,7 @@ TreeSlicer.prototype.scanForText = function(node) {
 // (which may, and usually does mean splitting text nodes).
 //
 // IMPORTANT: You may call this method repeatedly, but the ranges in
-// each call should be at increasing offsets and must not overlap
+// each call should be at increasing offsets and must not overlap with
 // ranges used in previous calls.
 //
 // The method returns an array of nodes. Each node is a span element,

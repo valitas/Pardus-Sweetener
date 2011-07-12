@@ -1,5 +1,5 @@
 // Ship 2 opponent content script. What you get when you're shooting NPCs.
-// Load combat.js before this.
+// Load universe.js and combat.js before this.
 
 var port;
 var config;
@@ -20,9 +20,7 @@ function messageHandler(msg) {
 }
 
 function run() {
-  var host = document.location.host;
-  var s = host.substr(0, host.indexOf('.'));
-  var universe = s.substr(0,1).toUpperCase() + s.substr(1);
+  var universe = universeName();
 
   config = new Object();
   configmap = { pvmMissileAutoAll: 'missileAutoAll',

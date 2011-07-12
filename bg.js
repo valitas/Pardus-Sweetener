@@ -86,7 +86,11 @@ function PardusSweetener() {
     navHackLink:             new BooleanOption(true),
     navBBLink:               new BooleanOption(true),
 
-    navShipLinks:            new BooleanOption(true)
+    navShipLinks:            new BooleanOption(true),
+
+    allianceQLsArtemis:      new StringOption('[]'),
+    allianceQLsOrion:        new StringOption('[]'),
+    allianceQLsPegasus:      new StringOption('[]')
   };
   this.ports = new Array();
   this.alarm = new Alarm(this.options.alarmSound.parse(localStorage['alarmSound']));
@@ -219,6 +223,11 @@ PardusSweetener.prototype.testNotificationMsgHandler = function(pi, msg) {
   this.notifier.hide();
   this.notifier.show('Meanwhile, in Pardus...',
                      'You requested a sample desktop notification.');
+};
+
+PardusSweetener.prototype.showNotificationMsgHandler = function(pi, msg) {
+  this.notifier.hide();
+  this.notifier.show(msg.title, msg.message, msg.duration);
 };
 
 // This is supposedly called on storage events. We haven't seen one
