@@ -14,7 +14,6 @@ APTimer.prototype.createNode = function(doc, label, title) {
   this.element.appendChild(doc.createTextNode(' '));
   this.element.style.margin = '0 0 0 7px';
   this.element.style.cursor = 'default';
-  this.element.style.zIndex = '-1';
   this.element.title = title;
 };
 
@@ -323,4 +322,8 @@ VClock.prototype.update = function() {
     if(t.enabled)
       t.instance.update(now);
   }
+};
+
+VClock.prototype.sink = function(sunk) {
+  this.div.style.zIndex = sunk ? '-1' : 'inherit';
 };
