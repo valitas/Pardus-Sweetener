@@ -98,6 +98,9 @@ function parseQLs() {
     port.postMessage({ op: 'setValue',
                        key: 'allianceQLs' + universe,
                        value: JSON.stringify(qls) });
+    port.postMessage({ op: 'setValue',
+                       key: 'allianceQLs' + universe + 'MTime',
+                       value: Math.floor(Date.now() / 1000) });
 
     var msg;
     if(qls.length == 1)

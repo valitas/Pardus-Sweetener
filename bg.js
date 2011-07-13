@@ -89,8 +89,11 @@ function PardusSweetener() {
     navShipLinks:            new BooleanOption(true),
 
     allianceQLsArtemis:      new StringOption('[]'),
+    allianceQLsArtemisMTime: new StringOption('0'),
     allianceQLsOrion:        new StringOption('[]'),
-    allianceQLsPegasus:      new StringOption('[]')
+    allianceQLsOrionMTime:   new StringOption('0'),
+    allianceQLsPegasus:      new StringOption('[]'),
+    allianceQLsPegasusMTime: new StringOption('0')
   };
   this.ports = new Array();
   this.alarm = new Alarm(this.options.alarmSound.parse(localStorage['alarmSound']));
