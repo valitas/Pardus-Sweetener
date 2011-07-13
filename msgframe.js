@@ -15,6 +15,7 @@ var indicators = {
 
 function scanForNotifications() {
   var r = new Object();
+  var any = false;
   var imgs = document.getElementsByTagName('img');
   for(var i = 0; i < imgs.length; i++) {
     var src = imgs[i].src;
@@ -22,8 +23,10 @@ function scanForNotifications() {
     if(offset >= 0) {
       src = src.substr(offset+1);
       var ind = indicators[src];
-      if(ind)
+      if(ind) {
         r[ind] = true;
+        any = true;
+      }
     }
   }
 
@@ -41,6 +44,8 @@ function scanForNotifications() {
   port.postMessage({ 'op': 'dispatchNotifications',
                      'character_name': name,
                      'indicators': r });
+
+  clock.sink(any);
 }
 
 function messageHandler(msg) {
