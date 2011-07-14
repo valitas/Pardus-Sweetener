@@ -1,8 +1,160 @@
-var port;
-var configmap;
-var config;
+function PSWAmbushScreenDriver(doc) {
+  this.doc = doc;
 
-function timeAgo(seconds) {
+  var universe = universeName();
+  this.configmap = new Object();
+  this.configmap[ 'allianceQLs' + universe + 'Enabled' ] = 'allianceQLsEnabled';
+  this.configmap[ 'allianceQLs' + universe             ] = 'allianceQLs';
+  this.configmap[ 'allianceQLs' + universe + 'MTime'   ] = 'allianceQLsMTime';
+  this.configmap[ 'personalQL' + universe + 'Enabled'  ] = 'personalQLEnabled';
+  this.configmap[ 'personalQL' + universe              ] = 'personalQL';
+
+  var keys = Object.keys(this.configmap);
+
+  this.parameter_count = keys.length;
+  this.config = new Object();
+  this.addedElements = new Array();
+
+  this.port = chrome.extension.connect();
+
+  var self = this;
+
+  this.port.onMessage.addListener(function(msg) { self[ msg.op + 'MessageHandler' ](msg); });
+  this.port.postMessage({ op: 'subscribe', keys: keys });
+}
+
+PSWAmbushScreenDriver.prototype.updateValueMessageHandler = function(msg) {
+  var key = this.configmap[msg.key];
+  if(key)
+    this.config[key] = msg.value;
+  if(Object.keys(this.config).length >= this.parameter_count)
+    this.configure();
+};
+
+// called when configuration is complete
+PSWAmbushScreenDriver.prototype.configure = function() {
+  this.removeUI();
+  if(this.config.allianceQLsEnabled) {
+    this.scanPage();
+    if(this.ready) {
+      this.setupAQLsUI(JSON.parse(this.config.allianceQLs),
+                       parseInt(this.config.allianceQLsMTime));
+    }
+  }
+};
+
+PSWAmbushScreenDriver.prototype.removeUI = function() {
+  while(this.addedElements.length > 0) {
+    var elt = this.addedElements.pop();
+    elt.parentNode.removeChild(elt);
+  }
+};
+
+// Finds elements we're interested in this page:
+// * the form named 'modes', which we submit when we have to
+// * the tbody of the table containing the legend ('Ambush mode'),
+//   which is where we append our stuff
+// * the 'readlist' text area, which is where we paste QLs
+PSWAmbushScreenDriver.prototype.scanPage = function(msg) {
+  if(!this.scanned) {
+    this.scanned = true;
+    var form = this.doc.forms.modes;
+    if(form) {
+      var xpr = this.doc.evaluate("table/tbody[tr/th = 'Ambush mode']",
+                                  form, null, XPathResult.ANY_UNORDERED_NODE_TYPE, null);
+      this.target_tbody = xpr.singleNodeValue;
+      if(this.target_tbody) {
+        this.ta = form.elements['readlist'];
+        if(this.ta) {
+          this.submit = form.elements['apply_ql'];
+          if(this.submit)
+            this.ready = true;
+        }
+      }
+    }
+  }
+};
+
+// returns two TRs - the header, and the content one with buttons and stuff
+PSWAmbushScreenDriver.prototype.setupAQLsUI = function(qls, mtime) {
+  var tr = this.doc.createElement('tr');
+  var th = this.doc.createElement('th');
+  th.appendChild(this.doc.createTextNode('Alliance quick lists'));
+  tr.appendChild(th);
+  this.target_tbody.appendChild(tr);
+  this.addedElements.push(tr);
+
+  tr = this.doc.createElement('tr');
+  var td = this.doc.createElement('td');
+  var div = this.doc.createElement('div');
+  var b = this.doc.createElement('b');
+  div.appendChild(b);
+  td.appendChild(div);
+  td.align = 'center';
+  tr.appendChild(td);
+  this.target_tbody.appendChild(tr);
+  this.addedElements.push(tr);
+
+  var age = Math.floor(Date.now() / 1000) - mtime;
+  if(age < 0)
+    age = 0;
+  if(qls && qls.length > 0 && mtime > 0) {
+    var table = this.doc.createElement('table');
+    var tbody = this.doc.createElement('tbody');
+    b.appendChild(this.doc.createTextNode('Quick lists last updated: ' + this.timeAgo(age)));
+    table.appendChild(tbody);
+    td.appendChild(table);
+
+    for(var i = 0; i < qls.length; i++) {
+      var ql = qls[i];
+      tr = this.makeAQLInnerTR(ql.name, ql.ql);
+      tbody.appendChild(tr);
+    }
+  }
+  else {
+    var a = this.doc.createElement('a');
+    a.href = 'myalliance.php';
+    a.appendChild(this.doc.createTextNode('My Alliance'));
+    b.appendChild(
+      this.doc.createTextNode('No alliance QLs on record. You may want to fetch some from your '));
+    b.appendChild(a);
+    b.appendChild(this.doc.createTextNode(' page.'));
+    b.style.color = 'red';
+  }
+};
+
+PSWAmbushScreenDriver.prototype.makeAQLInnerTR = function(qlname, ql) {
+  var tr = this.doc.createElement('tr');
+  var td = this.doc.createElement('td');
+  var img = this.doc.createElement('img');
+  img.src = chrome.extension.getURL('icons/viewup.png'); // XXX not very self-contained, this
+  img.alt = 'view';
+  img.title = 'Copy ' + qlname + ' to quicklist field';
+  var ta = this.ta;
+  var rows = 2 + Math.floor(ql.length / 80);
+  img.addEventListener('click', function() {
+                         ta.value = ql;
+                         // XXX - maybe we should make this enlargement configurable
+                         ta.cols = 80;
+                         ta.rows = rows;
+                       }, false);
+  td.appendChild(img);
+  tr.appendChild(td);
+
+  td = this.doc.createElement('td');
+  var input = this.doc.createElement('input');
+  input.type = 'button';
+  input.name = 'apply' + qlname.replace(/\s/g, '-');
+  input.value = 'Apply ' + qlname;
+  var submit = this.submit;
+  input.addEventListener('click', function() { ta.value = ql; submit.click(); }, false);
+  td.appendChild(input);
+  tr.appendChild(td);
+
+  return tr;
+};
+
+PSWAmbushScreenDriver.prototype.timeAgo = function(seconds) {
   if(seconds < 60)
     return 'just now';
 
@@ -19,114 +171,6 @@ function timeAgo(seconds) {
 
   n = Math.round(seconds/86400);
   return (n == 1 ? 'yesterday' : String(n) + ' days ago');
-}
+};
 
-function makeAQLInnerTR(doc, ql) {
-  var tr = doc.createElement('tr');
-  var td = doc.createElement('td');
-  var input = doc.createElement('input');
-
-  input.type = 'submit';
-  input.name = 'apply' + ql.name.replace(/\s/g, '-');
-  input.value = 'Apply ' + ql.name;
-  td.appendChild(input);
-  tr.appendChild(td);
-
-  td = doc.createElement('td');
-  var img = doc.createElement('img');
-  img.src = chrome.extension.getURL('icons/viewup.png');
-  img.alt = 'view';
-  img.title = 'Copy ' + ql.name + ' to quicklist field';
-  td.appendChild(img);
-  tr.appendChild(td);
-
-  return tr;
-}
-
-// returns two TRs - the header, and the content one with buttons and stuff
-function makeAQLTRs(doc, qls, mtime) {
-  var r = new Array(2);
-  var tr = doc.createElement('tr');
-  var th = doc.createElement('th');
-  th.appendChild(doc.createTextNode('Alliance quick lists'));
-  tr.appendChild(th);
-  r[0] = tr;
-
-  tr = doc.createElement('tr');
-  var td = doc.createElement('td');
-  var div = doc.createElement('div');
-  var b = doc.createElement('b');
-  div.appendChild(b);
-  td.appendChild(div);
-  td.align = 'center';
-  tr.appendChild(td);
-  r[1] = tr;
-
-  var age = Math.floor(Date.now() / 1000) - mtime;
-  if(age < 0)
-    age = 0;
-  if(qls && qls.length > 0 && mtime > 0) {
-    var table = doc.createElement('table');
-    var tbody = doc.createElement('tbody');
-    b.appendChild(doc.createTextNode('Quick lists last updated: ' + timeAgo(age)));
-    table.appendChild(tbody);
-    td.appendChild(table);
-
-    for(var i = 0; i < qls.length; i++) {
-      tr = makeAQLInnerTR(doc, qls[i]);
-      tbody.appendChild(tr);
-    }
-  }
-  else {
-    var a = doc.createElement('a');
-    a.href = 'myalliance.php';
-    a.appendChild(doc.createTextNode('My Alliance'));
-    b.appendChild(
-      doc.createTextNode('No alliance QLs on record. You may want to fetch some from your '));
-    b.appendChild(a);
-    b.appendChild(doc.createTextNode(' page.'));
-    b.style.color = 'red';
-  }
-
-  return r;
-}
-
-function setupAQLsUI(qls, mtime) {
-  // find the table (or the tbody, rather) which contains the the
-  // legend "Ambush mode". We'll add our stuff at the end of it.
-  // XXX - changed to View ambush settings to work while on ambush..
-
-  var xpr = document.evaluate("//tbody[tr/th = 'View ambush settings']",
-                              document, null, XPathResult.ANY_UNORDERED_NODE_TYPE, null);
-  var container = xpr.singleNodeValue;
-  if(container) {
-    var aqls = makeAQLTRs(document, qls, mtime);
-    container.appendChild(aqls[0]);
-    container.appendChild(aqls[1]);
-  }
-}
-
-function messageHandler(msg) {
-  if(msg.op == 'updateValue') {
-    var key = configmap[msg.key];
-    if(key)
-      config[key] = msg.value;
-
-    if(Object.keys(config).length >= 2) // XXX
-      setupAQLsUI(JSON.parse(config.allianceQLs), parseInt(config.allianceQLsMTime));
-  }
-}
-
-function run() {
-  var universe = universeName();
-  configmap = new Object();
-  configmap[ 'allianceQLs' + universe ] = 'allianceQLs';
-  configmap[ 'allianceQLs' + universe + 'MTime' ] = 'allianceQLsMTime';
-  config = new Object();
-
-  port = chrome.extension.connect();
-  port.onMessage.addListener(messageHandler);
-  port.postMessage({ op: 'subscribe', keys: Object.keys(configmap) });
-}
-
-run();
+var pswAmbushScreenDriver = new PSWAmbushScreenDriver(document);

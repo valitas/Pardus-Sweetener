@@ -88,12 +88,21 @@ function PardusSweetener() {
 
     navShipLinks:            new BooleanOption(true),
 
+    allianceQLsArtemisEnabled: new BooleanOption(false),
     allianceQLsArtemis:      new StringOption('[]'),
     allianceQLsArtemisMTime: new StringOption('0'),
+    personalQLArtemisEnabled:  new BooleanOption(false),
+    personalQLArtemis:       new StringOption(''),
+    allianceQLsOrionEnabled: new BooleanOption(false),
     allianceQLsOrion:        new StringOption('[]'),
     allianceQLsOrionMTime:   new StringOption('0'),
+    personalQLOrionEnabled:  new BooleanOption(false),
+    personalQLOrion:         new StringOption(''),
+    allianceQLsPegasusEnabled: new BooleanOption(false),
     allianceQLsPegasus:      new StringOption('[]'),
-    allianceQLsPegasusMTime: new StringOption('0')
+    allianceQLsPegasusMTime: new StringOption('0'),
+    personalQLPegasusEnabled:  new BooleanOption(false),
+    personalQLPegasus:       new StringOption('')
   };
   this.ports = new Array();
   this.alarm = new Alarm(this.options.alarmSound.parse(localStorage['alarmSound']));

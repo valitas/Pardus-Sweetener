@@ -63,11 +63,16 @@ function updateControlState(control, value) {
     control.checked = value;
     if(control.id == 'autobots')
       updateAutobotControlsDisable();
+    if(control.id == 'personalQLArtemisEnabled' ||
+       control.id == 'personalQLOrionEnabled' ||
+       control.id == 'personalQLPegasusEnabled')
+      updateQLControlsDisable();
     break;
   case 'select-one':
     updateSelectState(control, value);
     break;
   case 'text':
+  case 'textarea':
     control.value = value;
   }
 }
@@ -143,6 +148,29 @@ function wireAutobotControls() {
   }
 }
 
+function wireQLControls() {
+  controls.personalQLArtemisEnabled.addEventListener(
+    'click',
+    function () {
+      controls.personalQLArtemis.disabled = !controls.personalQLArtemisEnabled.checked;
+    }, false);
+  controls.personalQLOrionEnabled.addEventListener(
+    'click',
+    function () {
+      controls.personalQLOrion.disabled = !controls.personalQLOrionEnabled.checked;
+    }, false);
+  controls.personalQLPegasusEnabled.addEventListener(
+    'click',
+    function () {
+      controls.personalQLPegasus.disabled = !controls.personalQLPegasusEnabled.checked;
+    }, false);
+}
+
+function updateQLControlsDisable() {
+  controls.personalQLArtemis.disabled = !controls.personalQLArtemisEnabled.checked;
+  controls.personalQLOrion.disabled = !controls.personalQLOrionEnabled.checked;
+  controls.personalQLPegasus.disabled = !controls.personalQLPegasusEnabled.checked;
+}
 
 function initialise() {
   var keys = [ 'alarmSound',
@@ -162,7 +190,11 @@ function initialise() {
 
                'navEquipmentLink', 'navPlanetTradeLink', 'navSBTradeLink', 'navBldgTradeLink',
                'navBMLink', 'navHackLink', 'navBBLink',
-               'navShipLinks' ];
+               'navShipLinks',
+               'allianceQLsArtemisEnabled', 'personalQLArtemisEnabled',
+               'personalQLArtemis', 'allianceQLsOrionEnabled', 'personalQLOrionEnabled',
+               'personalQLOrion', 'allianceQLsPegasusEnabled', 'personalQLPegasusEnabled',
+               'personalQLPegasus' ];
 
   controls = new Object();
 
@@ -179,6 +211,7 @@ function initialise() {
         control.addEventListener('change', setStringOption, false);
         break;
       case 'text':
+      case 'textarea':
         // keyup may be a bit much...
         control.addEventListener('keyup', setStringOption, false);
       }
@@ -196,6 +229,7 @@ function initialise() {
     testNotifierButton.addEventListener('click', testNotification, false);
 
   wireAutobotControls();
+  wireQLControls();
 
   port = chrome.extension.connect();
   port.onMessage.addListener(messageHandler);

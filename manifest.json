@@ -26,7 +26,7 @@
     { "matches":    [ "*://*.pardus.at/myalliance.php*" ],
       "js":         [ "universe.js", "slicer.js", "myalliance.js" ],
       "all_frames": true },
-    { "matches":    [ "*://*.pardus.at/ambush_view.php*" ],
+    { "matches":    [ "*://*.pardus.at/ambush.php*" ],
       "js":         [ "universe.js", "ambush.js" ],
       "all_frames": true }
   ],

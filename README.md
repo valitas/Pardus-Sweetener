@@ -24,10 +24,10 @@ release:
 
  * Audible alarm on user-configurable game events
  * Desktop notifications on user-configurable game events
+ * Robot autofill in NPC combat screen
+ * Missile and rounds autoselect in combat screens
+ * Stored personal and alliance quicklists
  * Clocks for different "ticks", a la Pardus Clock
- * Robot autofill in combat screens
- * Missile autoselect in combat screens
- * Rounds autoselect in combat screens
  * Links to attack and trade with other ships in the nav screen
  * Links to bulletin board, black market, etc. in the nav screen
 
