@@ -34,12 +34,18 @@ PSWAmbushScreenDriver.prototype.updateValueMessageHandler = function(msg) {
 // called when configuration is complete
 PSWAmbushScreenDriver.prototype.configure = function() {
   this.removeUI();
+
   if(this.config.allianceQLsEnabled) {
     this.scanPage();
-    if(this.ready) {
+    if(this.ready)
       this.setupAQLsUI(JSON.parse(this.config.allianceQLs),
                        parseInt(this.config.allianceQLsMTime));
-    }
+  }
+
+  if(this.config.personalQLEnabled) {
+    this.scanPage();
+    if(this.ready)
+      this.setupPQLUI(this.config.personalQL);
   }
 };
 
@@ -75,7 +81,6 @@ PSWAmbushScreenDriver.prototype.scanPage = function(msg) {
   }
 };
 
-// returns two TRs - the header, and the content one with buttons and stuff
 PSWAmbushScreenDriver.prototype.setupAQLsUI = function(qls, mtime) {
   var tr = this.doc.createElement('tr');
   var th = this.doc.createElement('th');
@@ -91,6 +96,7 @@ PSWAmbushScreenDriver.prototype.setupAQLsUI = function(qls, mtime) {
   div.appendChild(b);
   td.appendChild(div);
   td.align = 'center';
+  td.style.padding = '17px';
   tr.appendChild(td);
   this.target_tbody.appendChild(tr);
   this.addedElements.push(tr);
@@ -107,7 +113,7 @@ PSWAmbushScreenDriver.prototype.setupAQLsUI = function(qls, mtime) {
 
     for(var i = 0; i < qls.length; i++) {
       var ql = qls[i];
-      tr = this.makeAQLInnerTR(ql.name, ql.ql);
+      tr = this.makeQLInnerTR(ql.name, ql.ql);
       tbody.appendChild(tr);
     }
   }
@@ -123,7 +129,42 @@ PSWAmbushScreenDriver.prototype.setupAQLsUI = function(qls, mtime) {
   }
 };
 
-PSWAmbushScreenDriver.prototype.makeAQLInnerTR = function(qlname, ql) {
+// we really should be able to reuse some of the code above...
+PSWAmbushScreenDriver.prototype.setupPQLUI = function(ql) {
+  var tr = this.doc.createElement('tr');
+  var th = this.doc.createElement('th');
+  th.appendChild(this.doc.createTextNode('Personal quick list'));
+  tr.appendChild(th);
+  this.target_tbody.appendChild(tr);
+  this.addedElements.push(tr);
+
+  tr = this.doc.createElement('tr');
+  var td = this.doc.createElement('td');
+  td.align = 'center';
+  td.style.padding = '17px';
+  tr.appendChild(td);
+  this.target_tbody.appendChild(tr);
+  this.addedElements.push(tr);
+
+  if(ql.length > 0) {
+    var table = this.doc.createElement('table');
+    var tbody = this.doc.createElement('tbody');
+    tr = this.makeQLInnerTR("Personal QL", ql);
+    tbody.appendChild(tr);
+    table.appendChild(tbody);
+    td.appendChild(table);
+  }
+  else {
+    var div = this.doc.createElement('div');
+    var b = this.doc.createElement('b');
+    b.appendChild(
+      this.doc.createTextNode('No personal QL configured. You may want to set one in the options screen.'));
+    div.appendChild(b);
+    td.appendChild(div);
+  }
+};
+
+PSWAmbushScreenDriver.prototype.makeQLInnerTR = function(qlname, ql) {
   var tr = this.doc.createElement('tr');
   var td = this.doc.createElement('td');
   var img = this.doc.createElement('img');
