@@ -230,10 +230,6 @@ PardusSweetener.prototype.stopAlarmMsgHandler = function(pi, msg) {
   this.alarm.switchOff();
 };
 
-PardusSweetener.prototype.enablePageActionMsgHandler = function(pi, msg) {
-  chrome.pageAction.show(pi.port.sender.tab.id);
-};
-
 PardusSweetener.prototype.testNotificationMsgHandler = function(pi, msg) {
   this.notifier.hide();
   this.notifier.show('Meanwhile, in Pardus...',
