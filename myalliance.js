@@ -1,6 +1,6 @@
 // load universe.js and slicer.js before this
 
-var port, qls, qlspans, highlighted_ql;
+var port, enabledKey, qls, qlspans, highlighted_ql;
 
 function highlightQL(name) {
   if(name == highlighted_ql)
@@ -104,9 +104,9 @@ function parseQLs() {
 
     var msg;
     if(qls.length == 1)
-      msg = 'Registered one alliance quick list.';
+      msg = 'Updated one alliance quick list.';
     else
-      msg = 'Registered ' + qls.length + ' alliance quick lists.';
+      msg = 'Updated ' + qls.length + ' alliance quick lists.';
     port.postMessage({ op:       'showNotification',
                        title:    'Alliance Quick Lists',
                        message:  msg,
@@ -114,12 +114,20 @@ function parseQLs() {
   }
 }
 
-function run() {
-  port = chrome.extension.connect();
-  qls = new Array();
-  qlspans = new Object();
+function messageHandler(msg) {
+  if(msg.key == enabledKey && msg.value) {
+    qls = new Array();
+    qlspans = new Object();
+    parseQLs();
+  }
+}
 
-  parseQLs();
+function run() {
+  var universe = universeName();
+  enabledKey = 'allianceQLs' + universe + 'Enabled';
+  port = chrome.extension.connect();
+  port.onMessage.addListener(messageHandler);
+  port.postMessage({ op: 'subscribe', keys: [ enabledKey ] });
 }
 
 run();

@@ -2,7 +2,7 @@ function PSWAmbushScreenDriver(doc) {
   this.doc = doc;
 
   var universe = universeName();
-  this.configmap = new Object();
+  this.configmap = { overrideAmbushRounds:  'overrideAmbushRounds'   };
   this.configmap[ 'allianceQLs' + universe + 'Enabled' ] = 'allianceQLsEnabled';
   this.configmap[ 'allianceQLs' + universe             ] = 'allianceQLs';
   this.configmap[ 'allianceQLs' + universe + 'MTime'   ] = 'allianceQLsMTime';
@@ -35,17 +35,20 @@ PSWAmbushScreenDriver.prototype.updateValueMessageHandler = function(msg) {
 PSWAmbushScreenDriver.prototype.configure = function() {
   this.removeUI();
 
-  if(this.config.allianceQLsEnabled) {
+  if(this.config.allianceQLsEnabled || this.config.personalQLEnabled) {
     this.scanPage();
     if(this.ready)
-      this.setupAQLsUI(JSON.parse(this.config.allianceQLs),
-                       parseInt(this.config.allianceQLsMTime));
+      this.setupQLsUI(this.config.allianceQLsEnabled,
+                      JSON.parse(this.config.allianceQLs),
+                      parseInt(this.config.allianceQLsMTime),
+                      this.config.personalQLEnabled,
+                      this.config.personalQL);
   }
 
-  if(this.config.personalQLEnabled) {
+  if(this.config.overrideAmbushRounds) {
     this.scanPage();
     if(this.ready)
-      this.setupPQLUI(this.config.personalQL);
+      this.selectHighestRounds();
   }
 };
 
@@ -57,142 +60,177 @@ PSWAmbushScreenDriver.prototype.removeUI = function() {
 };
 
 // Finds elements we're interested in this page:
-// * the form named 'modes', which we submit when we have to
-// * the tbody of the table containing the legend ('Ambush mode'),
-//   which is where we append our stuff
-// * the 'readlist' text area, which is where we paste QLs
+// * the TBODY of the TABLE containing the legend ('Ambush mode'),
+//   which is where we do all our stuff (we call this 'container')
+// * the 'readlist' textarea
+// * the 'apply_ql' input
+// * the 'rounds' input
 PSWAmbushScreenDriver.prototype.scanPage = function(msg) {
-  if(!this.scanned) {
-    this.scanned = true;
-    var form = this.doc.forms.modes;
-    if(form) {
-      var xpr = this.doc.evaluate("table/tbody[tr/th = 'Ambush mode']",
-                                  form, null, XPathResult.ANY_UNORDERED_NODE_TYPE, null);
-      this.target_tbody = xpr.singleNodeValue;
-      if(this.target_tbody) {
-        this.ta = form.elements['readlist'];
-        if(this.ta) {
-          this.submit = form.elements['apply_ql'];
-          if(this.submit)
-            this.ready = true;
-        }
-      }
-    }
-  }
+  var elts = this.elements;
+  if(elts)
+    // only run once
+    return;
+  else
+    elts = this.elements = new Object();
+
+  var form = this.doc.forms.modes;
+  // sanity check
+  if(!form || form.children.length < 1 || form.children[0].children.length < 1)
+    return;
+
+  elts.container = form.children[0].children[0];
+  // sanity check
+  if(elts.container.tagName.toLowerCase() != 'tbody')
+    return;
+
+  elts.ta = form.elements['readlist'];
+  elts.rounds = form.elements['rounds'];
+  elts.apply = form.elements['apply_ql'];
+  elts.confirm = form.elements['confirm'];
+  // sanity check
+  if(!elts.ta || !elts.rounds || !elts.apply || !elts.confirm)
+    return;
+
+  // all is good
+  this.ready = true;
 };
 
-PSWAmbushScreenDriver.prototype.setupAQLsUI = function(qls, mtime) {
+PSWAmbushScreenDriver.prototype.setupQLsUI = function(aqls_enabled, aqls, mtime,
+                                                      pql_enabled, pql) {
+  var container = this.elements.container;
+  var first = this.elements.container.firstChild;
+
   var tr = this.doc.createElement('tr');
   var th = this.doc.createElement('th');
-  th.appendChild(this.doc.createTextNode('Alliance quick lists'));
+  var img = this.doc.createElement('img');
+  img.src = chrome.extension.getURL('icons/16.png'); // XXX not very self-contained, this
+  img.style.verticalAlign = 'middle';
+  img.style.position = 'relative';
+  img.style.top = '-2px';
+  var font = this.doc.createElement('font');
+  font.size = 3;
+  font.appendChild(img);
+  font.appendChild(this.doc.createTextNode(' Fast ambush options'));
+  th.appendChild(font);
   tr.appendChild(th);
-  this.target_tbody.appendChild(tr);
+  container.insertBefore(tr, first);
   this.addedElements.push(tr);
 
   tr = this.doc.createElement('tr');
   var td = this.doc.createElement('td');
-  var div = this.doc.createElement('div');
-  var b = this.doc.createElement('b');
-  div.appendChild(b);
-  td.appendChild(div);
   td.align = 'center';
-  td.style.padding = '17px';
-  tr.appendChild(td);
-  this.target_tbody.appendChild(tr);
-  this.addedElements.push(tr);
+  //td.style.padding = '17px';
 
   var age = Math.floor(Date.now() / 1000) - mtime;
   if(age < 0)
     age = 0;
-  if(qls && qls.length > 0 && mtime > 0) {
-    var table = this.doc.createElement('table');
-    var tbody = this.doc.createElement('tbody');
-    b.appendChild(this.doc.createTextNode('Quick lists last updated: ' + this.timeAgo(age)));
-    table.appendChild(tbody);
-    td.appendChild(table);
 
-    for(var i = 0; i < qls.length; i++) {
-      var ql = qls[i];
-      tr = this.makeQLInnerTR(ql.name, ql.ql);
-      tbody.appendChild(tr);
+  if(aqls_enabled) {
+    var div = this.doc.createElement('div');
+    div.style.margin = '17px';
+
+    if(aqls && aqls.length > 0 && mtime > 0) {
+      var b = this.doc.createElement('b');
+      var span = this.doc.createElement('span');
+      span.appendChild(this.doc.createTextNode('last updated ' + this.timeAgo(age)));
+      if(age > 84600)
+        span.style.color = 'red';
+      b.appendChild(this.doc.createTextNode('Alliance quick lists '));
+      b.appendChild(span);
+      b.appendChild(this.doc.createTextNode(':'));
+      div.appendChild(b);
+      div.appendChild(this.doc.createElement('br'));
+
+      for(var i = 0; i < aqls.length; i++) {
+        var ql = aqls[i];
+        this.addQL(div, ql.name, ql.ql);
+      }
     }
-  }
-  else {
-    var a = this.doc.createElement('a');
-    a.href = 'myalliance.php';
-    a.appendChild(this.doc.createTextNode('My Alliance'));
-    b.appendChild(
-      this.doc.createTextNode('No alliance QLs on record. You may want to fetch some from your '));
-    b.appendChild(a);
-    b.appendChild(this.doc.createTextNode(' page.'));
-    b.style.color = 'red';
-  }
-};
+    else {
+      var a = this.doc.createElement('a');
+      a.href = '/myalliance.php';
+      var b = this.doc.createElement('b');
+      a.appendChild(this.doc.createTextNode('My Alliance'));
+      b.appendChild(this.doc.createTextNode('No alliance quick lists on record. '
+                                            + 'You may try and load some from '));
+      b.appendChild(a);
+      b.appendChild(this.doc.createTextNode('.'));
+      div.appendChild(b);
+    }
 
-// we really should be able to reuse some of the code above...
-PSWAmbushScreenDriver.prototype.setupPQLUI = function(ql) {
-  var tr = this.doc.createElement('tr');
-  var th = this.doc.createElement('th');
-  th.appendChild(this.doc.createTextNode('Personal quick list'));
-  tr.appendChild(th);
-  this.target_tbody.appendChild(tr);
+    td.appendChild(div);
+  }
+
+  if(pql_enabled) {
+    var div = this.doc.createElement('div');
+    div.style.margin = '17px';
+
+    if(pql && pql.length > 0) {
+      var b = this.doc.createElement('b');
+      b.appendChild(this.doc.createTextNode('Personal quick list:'));
+      div.appendChild(b);
+      div.appendChild(this.doc.createElement('br'));
+      this.addQL(div, 'Personal QL', pql);
+    }
+    else {
+      var b = this.doc.createElement('b');
+      b.appendChild(this.doc.createTextNode('No personal quick list defined. '
+                                            + 'Please set one in the Pardus Sweetener options.'));
+      div.appendChild(b);
+    }
+
+    td.appendChild(div);
+  }
+
+  tr.appendChild(td);
+  container.insertBefore(tr, first);
   this.addedElements.push(tr);
 
   tr = this.doc.createElement('tr');
-  var td = this.doc.createElement('td');
+  td = this.doc.createElement('td');
   td.align = 'center';
-  td.style.padding = '17px';
+  td.style.paddingBottom = '17px';
+  var input = this.doc.createElement('input');
+  input.type = 'submit';
+  input.name = 'confirm';
+  input.value = 'Lay Ambush';
+  input.style.backgroundColor = '#600';
+  td.appendChild(input);
   tr.appendChild(td);
-  this.target_tbody.appendChild(tr);
+  container.insertBefore(tr, first);
   this.addedElements.push(tr);
 
-  if(ql.length > 0) {
-    var table = this.doc.createElement('table');
-    var tbody = this.doc.createElement('tbody');
-    tr = this.makeQLInnerTR("Personal QL", ql);
-    tbody.appendChild(tr);
-    table.appendChild(tbody);
-    td.appendChild(table);
-  }
-  else {
-    var div = this.doc.createElement('div');
-    var b = this.doc.createElement('b');
-    b.appendChild(
-      this.doc.createTextNode('No personal QL configured. You may want to set one in the options screen.'));
-    div.appendChild(b);
-    td.appendChild(div);
-  }
+  // and while we're at this, lets make the other lay ambush button red too
+  this.elements.confirm.style.backgroundColor = '#600';
 };
 
-PSWAmbushScreenDriver.prototype.makeQLInnerTR = function(qlname, ql) {
-  var tr = this.doc.createElement('tr');
-  var td = this.doc.createElement('td');
+PSWAmbushScreenDriver.prototype.addQL = function(container, qlname, ql) {
+  var input = this.doc.createElement('input');
+  input.type = 'button';
+  input.name = 'apply' + qlname.replace(/\s/g, '-');
+  input.value = 'Apply ' + qlname;
+  var ta = this.elements.ta;
+  var submit = this.elements.apply;
+  input.addEventListener('click', function() { ta.value = ql; submit.click(); }, false);
+  container.appendChild(input);
+
   var img = this.doc.createElement('img');
-  img.src = chrome.extension.getURL('icons/viewup.png'); // XXX not very self-contained, this
+  img.src = chrome.extension.getURL('icons/down.png'); // XXX not very self-contained, this
   img.alt = 'view';
-  img.title = 'Copy ' + qlname + ' to quicklist field';
-  var ta = this.ta;
+  img.title = 'Copy ' + qlname + ' to quicklist field below';
+  img.style.verticalAlign = 'middle';
   var rows = 2 + Math.floor(ql.length / 80);
+  var scrollTo = this.scrollTo;
   img.addEventListener('click', function() {
                          ta.value = ql;
                          // XXX - maybe we should make this enlargement configurable
                          ta.cols = 80;
                          ta.rows = rows;
+                         scrollTo(ta);
                        }, false);
-  td.appendChild(img);
-  tr.appendChild(td);
+  container.appendChild(img);
 
-  td = this.doc.createElement('td');
-  var input = this.doc.createElement('input');
-  input.type = 'button';
-  input.name = 'apply' + qlname.replace(/\s/g, '-');
-  input.value = 'Apply ' + qlname;
-  var submit = this.submit;
-  input.addEventListener('click', function() { ta.value = ql; submit.click(); }, false);
-  td.appendChild(input);
-  tr.appendChild(td);
-
-  return tr;
+  container.appendChild(this.doc.createTextNode("\n"));
 };
 
 PSWAmbushScreenDriver.prototype.timeAgo = function(seconds) {
@@ -212,6 +250,36 @@ PSWAmbushScreenDriver.prototype.timeAgo = function(seconds) {
 
   n = Math.round(seconds/86400);
   return (n == 1 ? 'yesterday' : String(n) + ' days ago');
+};
+
+// utility method, may move elsewhere
+PSWAmbushScreenDriver.prototype.scrollTo = function (element) {
+  var x = 0, y = 0;
+
+  while(element) {
+    x += element.offsetLeft;
+    y += element.offsetTop;
+    element = element.offsetParent;
+  }
+
+  window.scrollTo(x,y);
+};
+
+// this could be merged with the rounds function in combat.js
+PSWAmbushScreenDriver.prototype.selectHighestRounds = function () {
+  var elt = this.elements.rounds;
+  var highest = 0, highestElt = null;
+  var opts = elt.getElementsByTagName('option');
+  for(var j = 0; j < opts.length; j++) {
+    var opt = opts[j];
+    var n = parseInt(opt.value);
+    if(n > highest) {
+      highest = n;
+      highestElt = opt;
+    }
+  }
+  if(highestElt)
+    highestElt.selected = true;
 };
 
 var pswAmbushScreenDriver = new PSWAmbushScreenDriver(document);

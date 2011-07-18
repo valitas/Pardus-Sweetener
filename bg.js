@@ -88,17 +88,18 @@ function PardusSweetener() {
 
     navShipLinks:            new BooleanOption(true),
 
-    allianceQLsArtemisEnabled: new BooleanOption(false),
+    overrideAmbushRounds:    new BooleanOption(true),
+    allianceQLsArtemisEnabled: new BooleanOption(true),
     allianceQLsArtemis:      new StringOption('[]'),
     allianceQLsArtemisMTime: new StringOption('0'),
     personalQLArtemisEnabled:  new BooleanOption(false),
     personalQLArtemis:       new StringOption(''),
-    allianceQLsOrionEnabled: new BooleanOption(false),
+    allianceQLsOrionEnabled: new BooleanOption(true),
     allianceQLsOrion:        new StringOption('[]'),
     allianceQLsOrionMTime:   new StringOption('0'),
     personalQLOrionEnabled:  new BooleanOption(false),
     personalQLOrion:         new StringOption(''),
-    allianceQLsPegasusEnabled: new BooleanOption(false),
+    allianceQLsPegasusEnabled: new BooleanOption(true),
     allianceQLsPegasus:      new StringOption('[]'),
     allianceQLsPegasusMTime: new StringOption('0'),
     personalQLPegasusEnabled:  new BooleanOption(false),
@@ -126,6 +127,8 @@ PardusSweetener.prototype.handleConnect = function(port) {
   this.ports.push(pi);
   port.onDisconnect.addListener(pi.disconnectListener);
   port.onMessage.addListener(pi.messageListener);
+
+  chrome.pageAction.show(pi.port.sender.tab.id);
 
   //console.log('connect - have ' + this.ports.length + ' ports');
 };

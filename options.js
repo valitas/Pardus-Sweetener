@@ -173,28 +173,26 @@ function updateQLControlsDisable() {
 }
 
 function initialise() {
-  var keys = [ 'alarmSound',
-               'alarmCombat', 'alarmAlly', 'alarmWarning', 'alarmPM',
-               'alarmMission', 'alarmTrade', 'alarmPayment', 'alarmInfo',
-               'desktopCombat', 'desktopAlly', 'desktopWarning', 'desktopPM',
-               'desktopMission', 'desktopTrade', 'desktopPayment', 'desktopInfo',
-               'clockUTC', 'clockAP', 'clockB', 'clockP', 'clockS',
-               'clockL', 'clockE', 'clockN', 'clockZ', 'clockR',
-               'pvpMissileAutoAll', 'pvpHighestRounds',
-               'pvmMissileAutoAll', 'pvmHighestRounds',
-               'pvbMissileAutoAll',
-               'autobots',
-               'autobotsArtemisPreset', 'autobotsArtemisPoints', 'autobotsArtemisStrength',
-               'autobotsOrionPreset', 'autobotsOrionPoints', 'autobotsOrionStrength',
-               'autobotsPegasusPreset', 'autobotsPegasusPoints', 'autobotsPegasusStrength',
-
-               'navEquipmentLink', 'navPlanetTradeLink', 'navSBTradeLink', 'navBldgTradeLink',
-               'navBMLink', 'navHackLink', 'navBBLink',
-               'navShipLinks',
-               'allianceQLsArtemisEnabled', 'personalQLArtemisEnabled',
-               'personalQLArtemis', 'allianceQLsOrionEnabled', 'personalQLOrionEnabled',
-               'personalQLOrion', 'allianceQLsPegasusEnabled', 'personalQLPegasusEnabled',
-               'personalQLPegasus' ];
+  var keys = [ 'alarmSound', 'alarmCombat', 'alarmAlly', 'alarmWarning',
+               'alarmPM', 'alarmMission', 'alarmTrade', 'alarmPayment',
+               'alarmInfo', 'desktopCombat', 'desktopAlly', 'desktopWarning',
+               'desktopPM', 'desktopMission', 'desktopTrade', 'desktopPayment',
+               'desktopInfo', 'clockUTC', 'clockAP', 'clockB', 'clockP',
+               'clockS', 'clockL', 'clockE', 'clockN', 'clockZ', 'clockR',
+               'pvpMissileAutoAll', 'pvpHighestRounds', 'pvmMissileAutoAll',
+               'pvmHighestRounds', 'pvbMissileAutoAll', 'autobots',
+               'autobotsArtemisPreset', 'autobotsArtemisPoints',
+               'autobotsArtemisStrength', 'autobotsOrionPreset',
+               'autobotsOrionPoints', 'autobotsOrionStrength',
+               'autobotsPegasusPreset', 'autobotsPegasusPoints',
+               'autobotsPegasusStrength', 'navEquipmentLink',
+               'navPlanetTradeLink', 'navSBTradeLink', 'navBldgTradeLink',
+               'navBMLink', 'navHackLink', 'navBBLink', 'navShipLinks',
+               'overrideAmbushRounds', 'allianceQLsArtemisEnabled',
+               'personalQLArtemisEnabled', 'personalQLArtemis',
+               'allianceQLsOrionEnabled', 'personalQLOrionEnabled',
+               'personalQLOrion', 'allianceQLsPegasusEnabled',
+               'personalQLPegasusEnabled', 'personalQLPegasus' ];
 
   controls = new Object();
 
