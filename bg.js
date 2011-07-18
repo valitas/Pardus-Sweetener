@@ -31,6 +31,7 @@ StringOption.prototype.parse = function(string_value) {
 
 function PardusSweetener() {
   this.options = {
+    muteAlarm:         new BooleanOption(false),
     alarmSound:        new StringOption('timex'),
     alarmCombat:       new BooleanOption(true),
     alarmAlly:         new BooleanOption(false),
@@ -107,6 +108,7 @@ function PardusSweetener() {
   };
   this.ports = new Array();
   this.alarm = new Alarm(this.options.alarmSound.parse(localStorage['alarmSound']));
+  this.mute = this.options.muteAlarm.parse(localStorage['muteAlarm']);
   this.notifier = new Notifier();
 
   var self = this;
@@ -128,7 +130,13 @@ PardusSweetener.prototype.handleConnect = function(port) {
   port.onDisconnect.addListener(pi.disconnectListener);
   port.onMessage.addListener(pi.messageListener);
 
-  chrome.pageAction.show(pi.port.sender.tab.id);
+  if(pi.port.sender && pi.port.sender.tab) {
+    var tab = pi.port.sender.tab.id;
+    var path = this.mute ? 'icons/19mute.png' : 'icons/19.png';
+    chrome.pageAction.setIcon({ path: path, tabId: tab });
+    chrome.pageAction.show(tab);
+    console.log('icon ' + path + ' on tab ' + tab);
+  }
 
   //console.log('connect - have ' + this.ports.length + ' ports');
 };
@@ -147,7 +155,6 @@ PardusSweetener.prototype.handleDisconnect = function(pi) {
   delete pi.disconnectListener;
   delete pi.messageListener;
 
-  // XXX - need to test this
   if(this.ports.length < 1) {
     this.alarm.switchOff();
     this.notifier.hide();
@@ -188,11 +195,22 @@ PardusSweetener.prototype.setValueMsgHandler = function(pi, msg) {
     localStorage[msg.key] = v;
 
     // some specific tweaks we do on special events..
-    if(msg.key == 'alarmSound')
+    switch(msg.key) {
+    case 'alarmSound':
       this.alarm.selectSample(v,
                               function() {
                                 pi.port.postMessage({op: 'sampleReady', sample: v});
                               });
+      break;
+    case 'muteAlarm':
+      this.mute = msg.value;
+      for(var i = this.ports.length - 1; i >= 0; i--) {
+        var port = this.ports[i].port;
+        if(port.sender && port.sender.tab)
+          chrome.pageAction.setIcon({ path: this.mute ? 'icons/19mute.png' : 'icons/19.png',
+                                      tabId: port.sender.tab.id });
+      }
+    }
 
     // apparently we won't get a storage event to trigger this,
     // because that's only for changes from another window (XXX - need
@@ -210,7 +228,8 @@ PardusSweetener.prototype.requestListMsgHandler = function(pi, msg) {
 
 PardusSweetener.prototype.dispatchNotificationsMsgHandler = function(pi, msg) {
   //console.log('dispatch ' + JSON.stringify(msg));
-  if(this.testIndicators('alarm', msg.indicators))
+  if(!this.options.muteAlarm.parse(localStorage['muteAlarm']) &&
+     this.testIndicators('alarm', msg.indicators))
     this.alarm.switchOn();
   else
     this.alarm.switchOff();
@@ -223,7 +242,8 @@ PardusSweetener.prototype.dispatchNotificationsMsgHandler = function(pi, msg) {
 };
 
 PardusSweetener.prototype.soundAlarmMsgHandler = function(pi, msg) {
-  this.alarm.switchOn();
+  if(!this.options.muteAlarm.parse(localStorage['muteAlarm']))
+    this.alarm.switchOn();
 };
 
 PardusSweetener.prototype.stopAlarmMsgHandler = function(pi, msg) {

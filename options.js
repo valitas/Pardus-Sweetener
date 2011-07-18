@@ -61,12 +61,19 @@ function updateControlState(control, value) {
   switch(control.type) {
   case 'checkbox':
     control.checked = value;
-    if(control.id == 'autobots')
+    switch(control.id) {
+    case 'autobots':
       updateAutobotControlsDisable();
-    if(control.id == 'personalQLArtemisEnabled' ||
-       control.id == 'personalQLOrionEnabled' ||
-       control.id == 'personalQLPegasusEnabled')
+      break;
+    case 'muteAlarm':
+      updateAlarmControlsDisable();
+      break;
+    case 'personalQLArtemisEnabled':
+    case 'personalQLOrionEnabled':
+    case 'personalQLPegasusEnabled':
       updateQLControlsDisable();
+      break;
+    }
     break;
   case 'select-one':
     updateSelectState(control, value);
@@ -104,6 +111,20 @@ function populateSelectControl(control, list) {
   }
 };
 
+function updateAlarmControlsDisable() {
+  var disabled = controls.muteAlarm.checked;
+  var keys = [ 'alarmSound', 'alarmCombat', 'alarmAlly',
+               'alarmWarning', 'alarmPM', 'alarmMission',
+               'alarmTrade', 'alarmPayment' ];
+
+  for(var i = 0; i < keys.length; i++)
+    controls[keys[i]].disabled = disabled;
+  if(disabled)
+    disableTestAlarm();
+  else
+    testAlarmButton.disabled = false;
+}
+
 function updateAutobotControlsDisable() {
   var disabled = !controls.autobots.checked;
   var keys = [ 'autobotsArtemisPreset', 'autobotsArtemisPoints', 'autobotsArtemisStrength',
@@ -129,6 +150,11 @@ function wireAutobotPreset(preset, points) {
         port.postMessage({ op: 'setValue', key: preset.id, value: 0 });
       }
     }, false);
+}
+
+function wireAlarmControls() {
+  if(controls.muteAlarm)
+    controls.muteAlarm.addEventListener('click', updateAlarmControlsDisable, false);
 }
 
 function wireAutobotControls() {
@@ -173,22 +199,26 @@ function updateQLControlsDisable() {
 }
 
 function initialise() {
-  var keys = [ 'alarmSound', 'alarmCombat', 'alarmAlly', 'alarmWarning',
-               'alarmPM', 'alarmMission', 'alarmTrade', 'alarmPayment',
-               'alarmInfo', 'desktopCombat', 'desktopAlly', 'desktopWarning',
-               'desktopPM', 'desktopMission', 'desktopTrade', 'desktopPayment',
-               'desktopInfo', 'clockUTC', 'clockAP', 'clockB', 'clockP',
-               'clockS', 'clockL', 'clockE', 'clockN', 'clockZ', 'clockR',
-               'pvpMissileAutoAll', 'pvpHighestRounds', 'pvmMissileAutoAll',
-               'pvmHighestRounds', 'pvbMissileAutoAll', 'autobots',
+
+  var keys = [ 'muteAlarm', 'alarmSound', 'alarmCombat', 'alarmAlly',
+               'alarmWarning', 'alarmPM', 'alarmMission',
+               'alarmTrade', 'alarmPayment', 'desktopCombat',
+               'desktopAlly', 'desktopWarning', 'desktopPM',
+               'desktopMission', 'desktopTrade', 'desktopPayment',
+               'clockUTC', 'clockAP', 'clockB', 'clockP', 'clockS',
+               'clockL', 'clockE', 'clockN', 'clockZ', 'clockR',
+               'pvpMissileAutoAll', 'pvpHighestRounds',
+               'pvmMissileAutoAll', 'pvmHighestRounds',
+               'pvbMissileAutoAll', 'autobots',
                'autobotsArtemisPreset', 'autobotsArtemisPoints',
                'autobotsArtemisStrength', 'autobotsOrionPreset',
                'autobotsOrionPoints', 'autobotsOrionStrength',
                'autobotsPegasusPreset', 'autobotsPegasusPoints',
                'autobotsPegasusStrength', 'navEquipmentLink',
-               'navPlanetTradeLink', 'navSBTradeLink', 'navBldgTradeLink',
-               'navBMLink', 'navHackLink', 'navBBLink', 'navShipLinks',
-               'overrideAmbushRounds', 'allianceQLsArtemisEnabled',
+               'navPlanetTradeLink', 'navSBTradeLink',
+               'navBldgTradeLink', 'navBMLink', 'navHackLink',
+               'navBBLink', 'navShipLinks', 'overrideAmbushRounds',
+               'allianceQLsArtemisEnabled',
                'personalQLArtemisEnabled', 'personalQLArtemis',
                'allianceQLsOrionEnabled', 'personalQLOrionEnabled',
                'personalQLOrion', 'allianceQLsPegasusEnabled',
@@ -226,6 +256,7 @@ function initialise() {
   if(testNotifierButton)
     testNotifierButton.addEventListener('click', testNotification, false);
 
+  wireAlarmControls();
   wireAutobotControls();
   wireQLControls();
 

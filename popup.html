@@ -5,24 +5,38 @@
   <script type="text/javascript" src="popup.js"></script>
  </head>
  <body onload="initialise();">
-   <div style="width: 200px">
-    <img style="position: absolute; top: 8px; left: 8px" src="icons/bell.png" alt="" /> 
+   <div style="width: 180px">
+    <img style="position: absolute; top: 10px; left: 8px" src="icons/bell.png" alt="" /> 
     <div style="margin-left: 20px">
      <div>Quick alarm settings:</div>
+
+     <div style="margin-top: 10px">
+      <input type="checkbox" id="muteAlarm" name="muteAlarm" />
+      <label for="muteAlarm"><strong>Mute</strong></label>
+     </div>
+
      <div>
       <input type="checkbox" id="alarmCombat" name="alarmCombat" />
       <label for="alarmCombat">Combat</label>
      </div>
+
      <div>
       <input type="checkbox" id="alarmAlly" name="alarmAlly" />
       <label for="alarmAlly">Alliance message</label>
      </div>
+
      <div>
       <input type="checkbox" id="alarmPM" name="alarmPM" />
       <label for="alarmPM">Private message</label>
      </div>
 
-     <div>Right click on the icon and select <em>Options</em> for more.</div>
+     <div style="margin-top: 10px">
+      <input id="testAlarm" name="testAlarm" type="button" value="Test Alarm" />
+     </div>
+
+     <div style="margin-top: 10px">
+      Right click on the icon and select <em>Options</em> for more.
+     </div>
 
     </div>
    </div>
