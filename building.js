@@ -30,13 +30,10 @@ function matchShipLink(url) {
 }
 
 function showShipLinks() {
-  // find the table which contains the "Other Ships" legend, add the
-  // links to it
-  var xpr = document.evaluate(
-    "//table[@class = 'messagestyle' and tbody/tr/th = 'Other Ships']",
-    document, null, XPathResult.ANY_UNORDERED_NODE_TYPE, null);
-  if(xpr && xpr.singleNodeValue)
-    addShipLinks(xpr.singleNodeValue, matchShipLink, null);
+  var ships = getShips(document,
+                       "//table/tbody[tr/th = 'Other Ships']/tr/td/a",
+                       matchShipLink);
+  addShipLinks(ships);
 }
 
 function run() {

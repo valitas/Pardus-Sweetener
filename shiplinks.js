@@ -1,67 +1,75 @@
 // Routines for adding the attack and trade icons to ships in the otherships box
 
-// 'element' below should be a table.  Pardus shows other ships in
-// tables with one row and two columns; one column shows the ship
-// graphic, the other the pilot's name and alliance and stuff. We add
-// our stuff in this last cell.
-//
-// 'match' is a function that examines the href of the link in the
-// pilot's name.  It should return an object with properties 'type'
-// ('player' or 'opponent') and 'id' (the id of the player or NPC).
-//
-// 'remember' can be null, or an array. if an array, the elements
-// inserted will be pushed there too, so they can be removed if the
-// highlight needs be undone.
+// This one extracts a list of ships/opponents from a container
+// element. xpath is evaluated from container, and is expected to find
+// the links that matchId will match.
 
-function addShipLinks(element, match, remember) {
-  // find the TD which contains the link to the pilot
-  var info;
-  var tds = element.getElementsByTagName('td');
-  for(var i = 0; i < tds.length; i++) {
-    var td = tds[i];
-    var as = td.getElementsByTagName('a');
-    for(var j = 0; j < as.length; j++) {
-      var a = as[j];
-      info = match(a.href);
-      if(info) {
-        info.td = td;
-        break;
-      }
+function getShips(container, xpath, matchId) {
+  var doc = container.ownerDocument;
+  if(!doc)
+    doc = container;
+  var ships = [];
+  var xpr = doc.evaluate(xpath, container, null,
+                         XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+  var a, entry;
+  while((a = xpr.iterateNext())) {
+    var href = a.href;
+    var m = matchId(href);
+    if(m) {
+      entry = m;
+      entry.name = a.textContent;
+      entry.td = a.parentNode;
+      ships.push(entry);
+
+      /* one day we'll have use for this; it works
+      if(entry.type == 'player') {
+        // see if we find an alliance link
+        var xpr2 = doc.evaluate("font/b/a",
+                                entry.td, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE,
+                                null);
+        var aa;
+        while((aa = xpr2.iterateNext())) {
+          if(aa.pathname == '/alliance.php' && (m = /^\?id=(\d+)$/.exec(aa.search))) {
+            entry.ally_id = parseInt(m[1]);
+            entry.ally_name = aa.textContent;
+            break;
+          }
+        }
+      } */
     }
   }
 
-  if(!info)
-    // couldn't find the pilot/npc info, soz
-    return;
+  return ships;
+}
 
-  // add the links
+function addShipLinks(ships) {
+  for(var i = 0; i < ships.length; i++) {
+    var entry = ships[i];
+    var player = entry.type == 'player';
+    var doc = entry.td.ownerDocument;
+    var div = doc.createElement('div');
+    div.style.fontSize = '10px';
+    div.style.fontWeight = 'bold';
+    var a = doc.createElement('a');
+    if(player)
+      a.href = 'ship2ship_combat.php?playerid=' + entry.id;
+    else
+      a.href = 'ship2opponent_combat.php?opponentid=' + entry.id;
+    a.style.color = '#cc0000';
+    a.title = 'Attack ' + entry.name;
+    a.appendChild(doc.createTextNode('Attack'));
+    div.appendChild(a);
 
-  var doc = info.td.ownerDocument;
-  var br = doc.createElement('br');
-  info.td.appendChild(br);
-  var span = doc.createElement('span');
-  span.style.fontSize = '11px';
-  var a = doc.createElement('a');
-  a.style.color = 'red';
-  a.appendChild(doc.createTextNode('Attack'));
-  if(info.type == 'player') {
-    a.href = 'ship2ship_combat.php?playerid=' + info.id;
-    span.appendChild(a);
-    span.appendChild(doc.createTextNode(' · '));
-    a = doc.createElement('a');
-    a.href = 'ship2ship_transfer.php?playerid=' + info.id;
-    a.appendChild(doc.createTextNode('Trade'));
-    span.appendChild(a);
-  }
-  else {
-    a.href = 'ship2opponent_combat.php?opponentid=' + info.id;
-    span.appendChild(a);
-  }
+    if(player) {
+      div.appendChild(doc.createTextNode(' '));
+      a = doc.createElement('a');
+      a.href = 'ship2ship_transfer.php?playerid=' + entry.id;
+      a.style.color = '#a1a1af';
+      a.title = 'Trade with ' + entry.name;
+      a.appendChild(doc.createTextNode('Trade'));
+      div.appendChild(a);
+    }
 
-  info.td.appendChild(span);
-
-  if(remember) {
-    remember.push(br);
-    remember.push(span);
+    entry.td.appendChild(div);
   }
 }

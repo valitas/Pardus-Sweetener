@@ -32,8 +32,19 @@ var enabledLinks;
 var linksConfigured;
 
 var shipLinksEnabled;
-var highlightedShip;
-var highlightedShipRubbish; // stuff we added on highlight, that we want removed
+
+// This matches strings of the form:
+//   javascript:scanId(22324, "player")
+// or
+//   javascript:scanId(25113, "opponent")
+function matchScanId(url) {
+  var r;
+  var m = /^javascript:scanId\((\d+),\s*['"]([^'"]+)['"]\)$/.exec(url);
+  if(m)
+    r = { type: m[2], id: parseInt(m[1]) };
+
+  return r;
+}
 
 function messageHandler(msg) {
   if(msg.op == 'updateValue') {
@@ -51,8 +62,10 @@ function messageHandler(msg) {
     else if(msg.key == 'navShipLinks' && msg.value) {
       shipLinksEnabled = true;
       var sbox = document.getElementById('otherships_content');
-      if(sbox)
-        setupShipLinks(sbox);
+      if(sbox) {
+        var ships = getShips(sbox, "table/tbody/tr/td[position() = 2]/a", matchScanId);
+        addShipLinks(ships);
+      }
     }
   }
 }
@@ -97,74 +110,20 @@ function setupLinks(cbox) {
   }
 }
 
-function unhighlightShip() {
-  while(highlightedShipRubbish.length > 0) {
-    var e = highlightedShipRubbish.pop();
-    e.parentNode.removeChild(e);
-  }
-
-  if(highlightedShip) {
-    highlightedShip.style.backgroundColor = 'inherit';
-    highlightedShip = null;
-  }
-}
-
-// This matches strings of the form:
-//   javascript:scanId(22324, "player")
-// or
-//   javascript:scanId(25113, "opponent")
-function matchScanId(url) {
-  var r;
-  var m = /^javascript:scanId\((\d+),\s*['"]([^'"]+)['"]\)$/.exec(url);
-  if(m)
-    r = { type: m[2], id: parseInt(m[1]) };
-
-  return r;
-}
-
-function highlightShip(event) {
-  if(!shipLinksEnabled)
-    return;
-
-  var element = event.currentTarget;
-  if(element === highlightedShip)
-    return;
-
-  unhighlightShip();
-  addShipLinks(element, matchScanId, highlightedShipRubbish);
-  highlightedShip = element;
-}
-
-function setupShipLinks(sbox) {
-  highlightedShip = null;
-  highlightedShipRubbish.length = 0;
-
-  // find all TABLEs direct childs of stab, and in each one the
-  // second TD, and in those the A element that calls scanId().
-  // XXX - perhaps we should find a way to filter only players, not NPCs?
-  var e, i;
-  var children = sbox.childNodes;
-  for(i = 0; i < children.length; i++) {
-    e = children[i];
-    if(e.tagName.toLowerCase() == 'table') {
-      e.addEventListener('mouseover', highlightShip,   false);
-    }
-  }
-}
-
 function cboxMutationHandler(event) {
   if(linksConfigured && event.target.id == 'commands_content')
     setupLinks(event.target);
 }
 
 function sboxMutationHandler(event) {
-  if(shipLinksEnabled && event.target.id == 'otherships_content')
-    setupShipLinks(event.target);
+  if(shipLinksEnabled && event.target.id == 'otherships_content') {
+    var ships = getShips(event.target, "table/tbody/tr/td[position() = 2]/a", matchScanId);
+    addShipLinks(ships);
+  }
 }
 
 function run() {
   enabledLinks = new Object();
-  highlightedShipRubbish = new Array();
 
   port = chrome.extension.connect();
   port.onMessage.addListener(messageHandler);

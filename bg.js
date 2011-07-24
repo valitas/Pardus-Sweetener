@@ -44,9 +44,9 @@ function PardusSweetener() {
 
     desktopCombat:     new BooleanOption(true),
     desktopAlly:       new BooleanOption(true),
-    desktopWarning:    new BooleanOption(true),
+    desktopWarning:    new BooleanOption(false),
     desktopPM:         new BooleanOption(true),
-    desktopMission:    new BooleanOption(true),
+    desktopMission:    new BooleanOption(false),
     desktopTrade:      new BooleanOption(false),
     desktopPayment:    new BooleanOption(false),
     desktopInfo:       new BooleanOption(false),

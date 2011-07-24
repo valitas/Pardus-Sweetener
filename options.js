@@ -209,7 +209,7 @@ function initialise() {
                'clockL', 'clockE', 'clockN', 'clockZ', 'clockR',
                'pvpMissileAutoAll', 'pvpHighestRounds',
                'pvmMissileAutoAll', 'pvmHighestRounds',
-               'pvbMissileAutoAll', 'autobots',
+               'pvbMissileAutoAll', 'displayDamage', 'autobots',
                'autobotsArtemisPreset', 'autobotsArtemisPoints',
                'autobotsArtemisStrength', 'autobotsOrionPreset',
                'autobotsOrionPoints', 'autobotsOrionStrength',
