@@ -2,35 +2,22 @@
 // Load universe.js and combat.js before this.
 
 var port;
-var config;
-var configured;
-var configmap;
-
-function messageHandler(msg) {
-  if(msg.op == 'updateValue') {
-    var key = configmap[msg.key];
-    if(key) {
-      config[key] = msg.value;
-      if(!configured && (Object.keys(config).length == Object.keys(configmap).length))
-        configured = true;
-      if(configured)
-        sweetenCombatPage(config);
-    }
-  }
-}
+var pswCombatScreenDriver;
 
 function run() {
+  var configmap = { pvmMissileAutoAll:  'missileAutoAll',
+                    pvmHighestRounds:   'highestRounds',
+                    autobots:           'autobots',
+                    displayDamage:      'displayDamage',
+                    previousShipStatus: 'previousShipStatus' };
   var universe = universeName();
-
-  config = new Object();
-  configmap = { pvmMissileAutoAll: 'missileAutoAll',
-                pvmHighestRounds:  'highestRounds'   };
   configmap[ 'autobots' + universe + 'Points' ] = 'autobotsPoints';
   configmap[ 'autobots' + universe + 'Strength' ] = 'autobotsStrength';
 
   port = chrome.extension.connect();
-  port.onMessage.addListener(messageHandler);
-  port.postMessage({ op: 'subscribe', keys: Object.keys(configmap) });
+  pswCombatScreenDriver = new PSWCombatScreenDriver(document, port, configmap);
+
+  port.postMessage({ op: 'subscribe', keys: pswCombatScreenDriver.configkeys });
 }
 
 run();

@@ -12,7 +12,7 @@
       "js":         [ "universe.js", "combat.js", "s2oframe.js" ],
       "all_frames": true },
     { "matches":    [ "*://*.pardus.at/ship2ship_combat.php*" ],
-      "js":         [ "universe.js", "combat.js", "s2sframe.js" ],
+      "js":         [ "combat.js", "s2sframe.js" ],
       "all_frames": true },
     { "matches":    [ "*://*.pardus.at/main.php*" ],
       "js":         [ "shiplinks.js", "nav.js" ],

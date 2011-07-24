@@ -79,6 +79,9 @@ function PardusSweetener() {
     autobotsPegasusPoints:   new StringOption('0'),
     autobotsPegasusStrength: new StringOption('36'),
 
+    displayDamage:           new BooleanOption(true),
+    previousShipStatus:      new StringOption(''),
+
     navEquipmentLink:        new BooleanOption(true),
     navPlanetTradeLink:      new BooleanOption(true),
     navSBTradeLink:          new BooleanOption(true),
@@ -135,7 +138,6 @@ PardusSweetener.prototype.handleConnect = function(port) {
     var path = this.mute ? 'icons/19mute.png' : 'icons/19.png';
     chrome.pageAction.setIcon({ path: path, tabId: tab });
     chrome.pageAction.show(tab);
-    console.log('icon ' + path + ' on tab ' + tab);
   }
 
   //console.log('connect - have ' + this.ports.length + ' ports');
