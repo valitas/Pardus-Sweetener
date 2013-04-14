@@ -16,6 +16,25 @@ includes functionality already available through other means, but as
 Greasemonkey scripts, which is not optimal for Chrome.  And anyway
 those scripts lack easy configuration from an options screen.
 
+Download and Install
+--------------------
+
+For the time being, download a packaged version from the developer's
+Dropbox. Follow these steps:
+
+1. Download this file and save it to your computer:
+   [Pardus-Sweetener-2.0.crx](https://dl.dropboxusercontent.com/u/28969566/sweetener-update/Pardus-Sweetener-2.0.crx)
+2. Click the "hotdogs" icon on the browser toolbar (on the right side;
+   the one that used to be the wrench).
+3. Select **Tools > Extensions**.
+4. Locate the extension file on your computer and drag the file onto
+   the Extensions page.
+5. Review the list of permissions in the dialog that appears. If you
+   would like to proceed, click **Install**.
+
+Yup, I'll be moving this extension to the Chrome Store as time
+permits, so we get shot of this nonsense.
+
 Features
 --------
 
