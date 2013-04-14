@@ -1,8 +1,13 @@
 {
   "name": "Pardus Sweetener",
-  "version": "1.99",
+  "version": "2.0",
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self'; object-src 'self'",
   "description": "User interface enhancements for Pardus - beta release",
-  "background_page": "bg.html",
+  "background": {
+    "scripts": [ "alarm.js", "notifier.js", "bg.js" ],
+    "persistent": false
+  },
   "options_page": "options.html",
   "content_scripts": [
     { "matches":    [ "*://*.pardus.at/msgframe.php*" ],
@@ -33,12 +38,17 @@
   "page_action": {
     "default_icon": "icons/19.png",
     "default_title": "Change Pardus Sweetener settings",
-    "popup": "popup.html"
+    "default_popup": "popup.html"
   },
   "icons": { "16":  "icons/16.png",
              "48":  "icons/48.png",
              "64":  "icons/64.png",
              "128": "icons/128.png" },
   "permissions": [ "notifications" ],
+  "web_accessible_resources": [
+    "icons/16.png",
+    "icons/48.png",
+    "icons/down.png"
+  ],
   "update_url": "http://dl.dropbox.com/u/28969566/sweetener-update/updates.xml"
 }

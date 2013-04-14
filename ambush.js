@@ -195,6 +195,9 @@ PSWAmbushScreenDriver.prototype.setupQLsUI = function(aqls_enabled, aqls, mtime,
   input.name = 'confirm';
   input.value = 'Lay Ambush';
   input.style.backgroundColor = '#600';
+  input.style.color = '#fff';
+  input.style.fontWeight = 'bold';
+  input.style.padding = '3px';
   td.appendChild(input);
   tr.appendChild(td);
   container.insertBefore(tr, first);
@@ -202,6 +205,7 @@ PSWAmbushScreenDriver.prototype.setupQLsUI = function(aqls_enabled, aqls, mtime,
 
   // and while we're at this, lets make the other lay ambush button red too
   this.elements.confirm.style.backgroundColor = '#600';
+  this.elements.confirm.style.color = '#fff';
 };
 
 PSWAmbushScreenDriver.prototype.addQL = function(container, qlname, ql) {

@@ -265,3 +265,5 @@ function initialise() {
   port.postMessage({ op: 'requestList', name: 'alarmSound' });
   port.postMessage({ op: 'subscribe', keys: keys });
 }
+
+window.onload = initialise;

@@ -67,3 +67,5 @@ function initialise() {
   port.onMessage.addListener(messageHandler);
   port.postMessage({ op: 'subscribe', keys: keys });
 }
+
+window.onload = initialise;

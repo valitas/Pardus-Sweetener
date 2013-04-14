@@ -366,8 +366,4 @@ PardusSweetener.prototype.indicatorsToHuman = function(character_name, indicator
 };
 
 
-var sweetener;
-
-function init() {
-  sweetener = new PardusSweetener();
-}
+var sweetener = new PardusSweetener();
