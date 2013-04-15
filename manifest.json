@@ -1,6 +1,6 @@
 {
   "name": "Pardus Sweetener",
-  "version": "2.1",
+  "version": "2.2",
   "manifest_version": 2,
   "content_security_policy": "script-src 'self'; object-src 'self'",
   "description": "User interface enhancements for the online game Pardus",
@@ -49,6 +49,5 @@
     "icons/16.png",
     "icons/48.png",
     "icons/down.png"
-  ],
-  "update_url": "http://clients2.google.com/service/update2/crx"
+  ]
 }

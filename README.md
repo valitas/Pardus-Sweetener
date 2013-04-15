@@ -5,48 +5,22 @@ About this software
 -------------------
 
 Pardus Sweetener is a Google Chrome extension that enhances the user
-interface of the online space game Pardus http://www.pardus.at/
-
-THIS SOFTWARE IS UNDER DEVELOPMENT AND NOT READY FOR PRODUCTION USE.
-Install at your own risk.
-
-The main feature is an audible combat notifier, which Firefox users
-have had for long, but was unavailable for Chrome.  Besides that, it
-includes functionality already available through other means, but as
-Greasemonkey scripts, which is not optimal for Chrome.  And anyway
-those scripts lack easy configuration from an options screen.
+interface of the online space game Pardus (www.pardus.at).
 
 Download and Install
 --------------------
 
-For the time being, download a packaged version from the developer's
-Dropbox. Follow these steps:
-
-1. Download this file and save it to your computer:
-   [Pardus-Sweetener-2.1.crx](https://dl.dropboxusercontent.com/u/28969566/sweetener-update/Pardus-Sweetener-2.1.crx)
-2. Click the "hotdogs" icon on the browser toolbar (on the right side;
-   the one that used to be the wrench).
-3. Select **Tools > Extensions**.
-4. Locate the extension file on your computer and drag the file onto
-   the Extensions page.
-5. Review the list of permissions in the dialog that appears. If you
-   would like to proceed, click **Install**.
-
-Yup, I'll be moving this extension to the Chrome Store as time
-permits, so we get shot of this nonsense.
+Install it from the Chrome Web Store: [Pardus Sweetener](https://chrome.google.com/webstore/detail/pardus-sweetener/ejnppkfdhdnchkcdblfddedelmbpoklo)
 
 Features
 --------
 
-This is the full list of features planned for the first public
-release:
-
- * Audible alarm on user-configurable game events
- * Desktop notifications on user-configurable game events
+ * Audible alarm on combat and user-configurable game events
+ * Desktop notifications on combat and user-configurable game events
  * Robot autofill in NPC combat screen
  * Missile and rounds autoselect in combat screens
  * Stored personal and alliance quicklists
- * Clocks for different "ticks", a la Pardus Clock
+ * Clocks for different game "ticks", a la Pardus Clock
  * Links to attack and trade with other ships in the nav screen
  * Links to bulletin board, black market, etc. in the nav screen
 
