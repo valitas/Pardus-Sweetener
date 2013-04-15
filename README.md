@@ -23,7 +23,7 @@ For the time being, download a packaged version from the developer's
 Dropbox. Follow these steps:
 
 1. Download this file and save it to your computer:
-   [Pardus-Sweetener-2.0.crx](https://dl.dropboxusercontent.com/u/28969566/sweetener-update/Pardus-Sweetener-2.0.crx)
+   [Pardus-Sweetener-2.1.crx](https://dl.dropboxusercontent.com/u/28969566/sweetener-update/Pardus-Sweetener-2.1.crx)
 2. Click the "hotdogs" icon on the browser toolbar (on the right side;
    the one that used to be the wrench).
 3. Select **Tools > Extensions**.
