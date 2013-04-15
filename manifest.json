@@ -1,9 +1,9 @@
 {
   "name": "Pardus Sweetener",
-  "version": "2.0",
+  "version": "2.1",
   "manifest_version": 2,
   "content_security_policy": "script-src 'self'; object-src 'self'",
-  "description": "User interface enhancements for Pardus - beta release",
+  "description": "User interface enhancements for the online game Pardus",
   "background": {
     "scripts": [ "alarm.js", "notifier.js", "bg.js" ],
     "persistent": false
@@ -50,5 +50,5 @@
     "icons/48.png",
     "icons/down.png"
   ],
-  "update_url": "http://dl.dropbox.com/u/28969566/sweetener-update/updates.xml"
+  "update_url": "http://clients2.google.com/service/update2/crx"
 }
