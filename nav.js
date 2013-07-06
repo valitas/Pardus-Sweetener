@@ -30,18 +30,23 @@ var PSBKEYS = {
 var port;
 var enabledLinks;
 var linksConfigured;
-
 var shipLinksEnabled;
 
 // This matches strings of the form:
 //   javascript:scanId(22324, "player")
 // or
 //   javascript:scanId(25113, "opponent")
-function matchScanId(url) {
+var midrx = /^javascript:scanId\((\d+),\s*['"]([^'"]+)['"]\)|main\.php\?scan_details=(\d+)&scan_type=([A-Za-z]+).*$/;
+function matchId(url) {
   var r;
-  var m = /^javascript:scanId\((\d+),\s*['"]([^'"]+)['"]\)$/.exec(url);
-  if(m)
-    r = { type: m[2], id: parseInt(m[1]) };
+  var m = midrx.exec(url);
+  if(m) {
+      var id = m[1];
+      if(id)
+          r = { type: m[2], id: parseInt(id) };
+      else
+          r = { type: m[4], id: parseInt(m[3]) };
+  }
 
   return r;
 }
@@ -63,7 +68,7 @@ function messageHandler(msg) {
       shipLinksEnabled = true;
       var sbox = document.getElementById('otherships_content');
       if(sbox) {
-        var ships = getShips(sbox, "table/tbody/tr/td[position() = 2]/a", matchScanId);
+        var ships = getShips(sbox, "table/tbody/tr/td[position() = 2]/a", matchId);
         addShipLinks(ships);
       }
     }
@@ -117,7 +122,7 @@ function cboxMutationHandler(event) {
 
 function sboxMutationHandler(event) {
   if(shipLinksEnabled && event.target.id == 'otherships_content') {
-    var ships = getShips(event.target, "table/tbody/tr/td[position() = 2]/a", matchScanId);
+    var ships = getShips(event.target, "table/tbody/tr/td[position() = 2]/a", matchId);
     addShipLinks(ships);
   }
 }

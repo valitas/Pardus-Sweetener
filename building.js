@@ -17,12 +17,13 @@ function messageHandler(msg) {
   }
 }
 
+var mslrx = /building\.php\?detail_type=([A-Za-z]+)&detail_id=(\d+)$/;
 function matchShipLink(url) {
   // this could be smarter, doing proper URL-decode of the
   // building.php query string... but it isn't likely that'll be
   // needed, and it would slow things down..
   var r;
-  var m = /building\.php\?detail_type=([A-Za-z]+)&detail_id=(\d+)$/.exec(url);
+  var m = mslrx.exec(url);
   if(m)
     r = { type: m[1], id: parseInt(m[2]) };
 
