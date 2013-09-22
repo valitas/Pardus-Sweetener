@@ -102,6 +102,7 @@ function setupLinks(cbox) {
         var e = doc.createElement('div');
         var a = doc.createElement('a');
         a.href = info.href;
+        a.id = 'psw-plink-' + key;
         a.appendChild(doc.createTextNode(info.name));
         e.appendChild(a);
         // don't ask me, this weird positioning is how pardus does it...

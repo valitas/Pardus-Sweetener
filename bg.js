@@ -13,17 +13,21 @@
 // the values through other means.
 
 function BooleanOption(defaultValue) { this.defaultValue = defaultValue; }
-BooleanOption.prototype.DICT = { 'true': true, 'false': false };
-BooleanOption.prototype.stringify = function(value) { return value ? 'true' : 'false'; };
-BooleanOption.prototype.parse = function(string_value) {
-  var r = this.DICT[string_value];
-  return r == undefined ? this.defaultValue : r;
-};
+BooleanOption.prototype = {
+  DICT: { 'true': true, 'false': false },
+  stringify: function(value) { return value ? 'true' : 'false'; },
+  parse: function(string_value) {
+    var r = this.DICT[string_value];
+    return r == undefined ? this.defaultValue : r;
+  }
+}
 
 function StringOption(defaultValue) { this.defaultValue = defaultValue; }
-StringOption.prototype.stringify = function(value) { return value; };
-StringOption.prototype.parse = function(string_value) {
-  return (string_value == null) ? this.defaultValue : string_value;
+StringOption.prototype = {
+  stringify: function(value) { return value; },
+  parse: function(string_value) {
+    return (string_value == null) ? this.defaultValue : string_value;
+  }
 };
 
 
@@ -122,248 +126,249 @@ function PardusSweetener() {
   window.addEventListener('storage', this.storageEventListener, false);
 }
 
-PardusSweetener.prototype.handleConnect = function(port) {
-  var self = this;
-  var pi = { port: port, keys: new Object() };
+PardusSweetener.prototype = {
+  handleConnect: function(port) {
+    var self = this;
+    var pi = { port: port, keys: new Object() };
 
-  pi.messageListener = function(msg) { self.handleMessage(pi, msg); };
-  pi.disconnectListener = function(port) { self.handleDisconnect(pi); };
+    pi.messageListener = function(msg) { self.handleMessage(pi, msg); };
+    pi.disconnectListener = function(port) { self.handleDisconnect(pi); };
 
-  this.ports.push(pi);
-  port.onDisconnect.addListener(pi.disconnectListener);
-  port.onMessage.addListener(pi.messageListener);
+    this.ports.push(pi);
+    port.onDisconnect.addListener(pi.disconnectListener);
+    port.onMessage.addListener(pi.messageListener);
 
-  if(pi.port.sender && pi.port.sender.tab) {
-    var tab = pi.port.sender.tab.id;
-    var path = this.mute ? 'icons/19mute.png' : 'icons/19.png';
-    chrome.pageAction.setIcon({ path: path, tabId: tab });
-    chrome.pageAction.show(tab);
-  }
-
-  //console.log('connect - have ' + this.ports.length + ' ports');
-};
-
-PardusSweetener.prototype.handleDisconnect = function(pi) {
-  for(var i = this.ports.length - 1; i >= 0; i--) {
-    if(pi === this.ports[i]) {
-      this.ports.splice(i, 1);
-      break;
-    }
-  }
-
-  // this is likely not needed but hell, lets help the garbage collector
-  pi.port.onDisconnect.removeListener(pi.disconnectListener);
-  pi.port.onMessage.removeListener(pi.messageListener);
-  delete pi.disconnectListener;
-  delete pi.messageListener;
-
-  if(this.ports.length < 1) {
-    this.alarm.switchOff();
-    this.notifier.hide();
-  }
-
-  //console.log('disconnect - have ' + this.ports.length + ' ports');
-};
-
-PardusSweetener.prototype.handleMessage = function(pi, msg) {
-  if(msg.op) {
-    var hname = msg.op + "MsgHandler";
-    if(hname in this)
-      this[hname](pi, msg);
-  }
-};
-
-PardusSweetener.prototype.subscribeMsgHandler = function(pi, msg) {
-  var keys = msg.keys;
-  if(keys && keys.length) {
-    pi.keys = new Object();
-    for(var i = keys.length - 1; i >= 0; i--) {
-      var key = keys[i];
-      var option = this.options[key];
-      if(option) {
-        pi.keys[key] = true;
-        var v = option.parse(localStorage[key]);
-        pi.port.postMessage({ op: 'updateValue', key: key, value: v });
-        //console.log('subscription added to ' + key);
-      }
-    }
-  }
-};
-
-PardusSweetener.prototype.setValueMsgHandler = function(pi, msg) {
-  var option = this.options[msg.key];
-  if(option) {
-    var v = option.stringify(msg.value);
-    localStorage[msg.key] = v;
-
-    // some specific tweaks we do on special events..
-    switch(msg.key) {
-    case 'alarmSound':
-      this.alarm.selectSample(v,
-                              function() {
-                                pi.port.postMessage({op: 'sampleReady', sample: v});
-                              });
-      break;
-    case 'muteAlarm':
-      this.mute = msg.value;
-      for(var i = this.ports.length - 1; i >= 0; i--) {
-        var port = this.ports[i].port;
-        if(port.sender && port.sender.tab)
-          chrome.pageAction.setIcon({ path: this.mute ? 'icons/19mute.png' : 'icons/19.png',
-                                      tabId: port.sender.tab.id });
-      }
+    if(pi.port.sender && pi.port.sender.tab) {
+      var tab = pi.port.sender.tab.id;
+      var path = this.mute ? 'icons/19mute.png' : 'icons/19.png';
+      chrome.pageAction.setIcon({ path: path, tabId: tab });
+      chrome.pageAction.show(tab);
     }
 
-    // apparently we won't get a storage event to trigger this,
-    // because that's only for changes from another window (XXX - need
-    // more research into this)
-    this.postUpdateValueNotifications(msg.key, msg.value, pi);
-  }
-};
+    //console.log('connect - have ' + this.ports.length + ' ports');
+  },
 
-PardusSweetener.prototype.requestListMsgHandler = function(pi, msg) {
-  if(msg.name == 'alarmSound')
-    pi.port.postMessage({ op: 'updateList',
-                          name: 'alarmSound',
-                          list: Alarm.prototype.sounds });
-};
-
-PardusSweetener.prototype.dispatchNotificationsMsgHandler = function(pi, msg) {
-  //console.log('dispatch ' + JSON.stringify(msg));
-  if(!this.options.muteAlarm.parse(localStorage['muteAlarm']) &&
-     this.testIndicators('alarm', msg.indicators))
-    this.alarm.switchOn();
-  else
-    this.alarm.switchOff();
-
-  if(this.testIndicators('desktop', msg.indicators))
-    this.notifier.show('Meanwhile, in Pardus...',
-                       this.indicatorsToHuman(msg.character_name, msg.indicators));
-  else
-    this.notifier.hide();
-};
-
-PardusSweetener.prototype.soundAlarmMsgHandler = function(pi, msg) {
-  if(!this.options.muteAlarm.parse(localStorage['muteAlarm']))
-    this.alarm.switchOn();
-};
-
-PardusSweetener.prototype.stopAlarmMsgHandler = function(pi, msg) {
-  this.alarm.switchOff();
-};
-
-PardusSweetener.prototype.testNotificationMsgHandler = function(pi, msg) {
-  this.notifier.hide();
-  this.notifier.show('Meanwhile, in Pardus...',
-                     'You requested a sample desktop notification.');
-};
-
-PardusSweetener.prototype.showNotificationMsgHandler = function(pi, msg) {
-  this.notifier.hide();
-  this.notifier.show(msg.title, msg.message, msg.duration);
-};
-
-// This is supposedly called on storage events. We haven't seen one
-// yet, we need to research more about this...
-
-PardusSweetener.prototype.handleStorage = function(e) {
-  var option = this.options[e.key];
-  if(option)
-    this.postUpdateValueNotifications(e.key, option.parse(e.newValue), null);
-};
-
-PardusSweetener.prototype.postUpdateValueNotifications = function(key, value, exclude_pi) {
-  for(var i = this.ports.length - 1; i >= 0; i--) {
-    var pi = this.ports[i];
-    if(pi === exclude_pi)
-      continue;
-
-    // check if this port requested notification for this key; if so,
-    // notify them
-
-    if(pi.keys[key])
-      pi.port.postMessage({ op: 'updateValue', key: key, value: value });
-  }
-};
-
-PardusSweetener.prototype.testIndicators = function(prefix, indicators) {
-  var r = false;
-  for(var suffix in indicators) {
-    var key = prefix + suffix;
-    var option = this.options[key];
-    if(option) {
-      if(option.parse(localStorage[key])) {
-        r = true;
+  handleDisconnect: function(pi) {
+    for(var i = this.ports.length - 1; i >= 0; i--) {
+      if(pi === this.ports[i]) {
+        this.ports.splice(i, 1);
         break;
       }
     }
-  }
-  return r;
-};
 
-PardusSweetener.prototype.indicatorsToHuman = function(character_name, indicators) {
-  var a = new Array();
-  var pendings, warn, notifs, stuff;
+    // this is likely not needed but hell, lets help the garbage collector
+    pi.port.onDisconnect.removeListener(pi.disconnectListener);
+    pi.port.onMessage.removeListener(pi.messageListener);
+    delete pi.disconnectListener;
+    delete pi.messageListener;
 
-  if(indicators['Warning'])
-    warn = 'There is a game warning you should see in the message frame.';
-  else if(indicators['Info'])
+    if(this.ports.length < 1) {
+      this.alarm.switchOff();
+      this.notifier.hide();
+    }
+
+    //console.log('disconnect - have ' + this.ports.length + ' ports');
+  },
+
+  handleMessage: function(pi, msg) {
+    if(msg.op) {
+      var hname = msg.op + "MsgHandler";
+      if(hname in this)
+        this[hname](pi, msg);
+    }
+  },
+
+  subscribeMsgHandler: function(pi, msg) {
+    var keys = msg.keys;
+    if(keys && keys.length) {
+      pi.keys = new Object();
+      for(var i = keys.length - 1; i >= 0; i--) {
+        var key = keys[i];
+        var option = this.options[key];
+        if(option) {
+          pi.keys[key] = true;
+          var v = option.parse(localStorage[key]);
+          pi.port.postMessage({ op: 'updateValue', key: key, value: v });
+          //console.log('subscription added to ' + key);
+        }
+      }
+    }
+  },
+
+  setValueMsgHandler: function(pi, msg) {
+    var option = this.options[msg.key];
+    if(option) {
+      var v = option.stringify(msg.value);
+      localStorage[msg.key] = v;
+
+      // some specific tweaks we do on special events..
+      switch(msg.key) {
+      case 'alarmSound':
+        this.alarm.selectSample(v,
+                                function() {
+                                  pi.port.postMessage({op: 'sampleReady', sample: v});
+                                });
+        break;
+      case 'muteAlarm':
+        this.mute = msg.value;
+        for(var i = this.ports.length - 1; i >= 0; i--) {
+          var port = this.ports[i].port;
+          if(port.sender && port.sender.tab)
+            chrome.pageAction.setIcon({ path: this.mute ? 'icons/19mute.png' : 'icons/19.png',
+                                        tabId: port.sender.tab.id });
+        }
+      }
+
+      // apparently we won't get a storage event to trigger this,
+      // because that's only for changes from another window (XXX - need
+      // more research into this)
+      this.postUpdateValueNotifications(msg.key, msg.value, pi);
+    }
+  },
+
+  requestListMsgHandler: function(pi, msg) {
+    if(msg.name == 'alarmSound')
+      pi.port.postMessage({ op: 'updateList',
+                            name: 'alarmSound',
+                            list: Alarm.prototype.sounds });
+  },
+
+  dispatchNotificationsMsgHandler: function(pi, msg) {
+    //console.log('dispatch ' + JSON.stringify(msg));
+    if(!this.options.muteAlarm.parse(localStorage['muteAlarm']) &&
+       this.testIndicators('alarm', msg.indicators))
+      this.alarm.switchOn();
+    else
+      this.alarm.switchOff();
+
+    if(this.testIndicators('desktop', msg.indicators))
+      this.notifier.show('Meanwhile, in Pardus...',
+                         this.indicatorsToHuman(msg.character_name, msg.indicators));
+    else
+      this.notifier.hide();
+  },
+
+  soundAlarmMsgHandler: function(pi, msg) {
+    if(!this.options.muteAlarm.parse(localStorage['muteAlarm']))
+      this.alarm.switchOn();
+  },
+
+  stopAlarmMsgHandler: function(pi, msg) {
+    this.alarm.switchOff();
+  },
+
+  testNotificationMsgHandler: function(pi, msg) {
+    this.notifier.hide();
+    this.notifier.show('Meanwhile, in Pardus...',
+                       'You requested a sample desktop notification.');
+  },
+
+  showNotificationMsgHandler: function(pi, msg) {
+    this.notifier.hide();
+    this.notifier.show(msg.title, msg.message, msg.duration);
+  },
+
+  // This is supposedly called on storage events. We haven't seen one
+  // yet, we need to research more about this...
+
+  handleStorage: function(e) {
+    var option = this.options[e.key];
+    if(option)
+      this.postUpdateValueNotifications(e.key, option.parse(e.newValue), null);
+  },
+
+  postUpdateValueNotifications: function(key, value, exclude_pi) {
+    for(var i = this.ports.length - 1; i >= 0; i--) {
+      var pi = this.ports[i];
+      if(pi === exclude_pi)
+        continue;
+
+      // check if this port requested notification for this key; if so,
+      // notify them
+
+      if(pi.keys[key])
+        pi.port.postMessage({ op: 'updateValue', key: key, value: value });
+    }
+  },
+
+  testIndicators: function(prefix, indicators) {
+    var r = false;
+    for(var suffix in indicators) {
+      var key = prefix + suffix;
+      var option = this.options[key];
+      if(option) {
+        if(option.parse(localStorage[key])) {
+          r = true;
+          break;
+        }
+      }
+    }
+    return r;
+  },
+
+  indicatorsToHuman: function(character_name, indicators) {
+    var a = new Array();
+    var pendings, warn, notifs, stuff;
+
+    if(indicators['Warning'])
+      warn = 'There is a game warning you should see in the message frame.';
+    else if(indicators['Info'])
     warn = 'There is some information for you in the message frame.';
 
-  if(indicators['Ally'])
-    a.push('alliance');
-  if(indicators['PM'])
-    a.push('private');
-  if(a.length > 0) {
-    pendings = 'unread ' + a.join(' and ') + ' messages';
-    a.length = 0;
-  }
+    if(indicators['Ally'])
+      a.push('alliance');
+    if(indicators['PM'])
+      a.push('private');
+    if(a.length > 0) {
+      pendings = 'unread ' + a.join(' and ') + ' messages';
+      a.length = 0;
+    }
 
-  if(indicators['Trade'] || indicators['Payment'])
-    a.push('money');
-  if(indicators['Mission'])
-    a.push('mission');
-  if(a.length > 0) {
-    notifs = a.join(' and ') + ' notifications';
-    a.length = 0;
-  }
+    if(indicators['Trade'] || indicators['Payment'])
+      a.push('money');
+    if(indicators['Mission'])
+      a.push('mission');
+    if(a.length > 0) {
+      notifs = a.join(' and ') + ' notifications';
+      a.length = 0;
+    }
 
-  if(pendings)
-    a.push(pendings);
-  if(notifs)
-    a.push(notifs);
-  if(a.length > 0) {
-    stuff = a.join(', and ') + '.';
-    a.length = 0;
-  }
+    if(pendings)
+      a.push(pendings);
+    if(notifs)
+      a.push(notifs);
+    if(a.length > 0) {
+      stuff = a.join(', and ') + '.';
+      a.length = 0;
+    }
 
-  if(warn)
-    a.push(warn);
+    if(warn)
+      a.push(warn);
 
-  if(indicators['Combat'] || stuff) {
-    if(character_name)
-      a.push((warn ? 'And your' : 'Your') + ' character ' + character_name);
-    else
-      a.push((warn ? 'And a' : 'A') + ' character of yours');
+    if(indicators['Combat'] || stuff) {
+      if(character_name)
+        a.push((warn ? 'And your' : 'Your') + ' character ' + character_name);
+      else
+        a.push((warn ? 'And a' : 'A') + ' character of yours');
 
-    if(indicators['Combat']) {
-      a.push('has been fighting with someone.');
-      if(stuff) {
-        if(character_name)
-          a.push(character_name + ' also has');
-        else
-          a.push('You also have');
+      if(indicators['Combat']) {
+        a.push('has been fighting with someone.');
+        if(stuff) {
+          if(character_name)
+            a.push(character_name + ' also has');
+          else
+            a.push('You also have');
+          a.push(stuff);
+        }
+      }
+      else {
+        a.push('has');
         a.push(stuff);
       }
     }
-    else {
-      a.push('has');
-      a.push(stuff);
-    }
+
+    return a.join(' ');
   }
-
-  return a.join(' ');
 };
-
 
 var sweetener = new PardusSweetener();

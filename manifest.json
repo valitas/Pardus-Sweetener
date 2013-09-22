@@ -1,6 +1,6 @@
 {
   "name": "Pardus Sweetener",
-  "version": "2.2",
+  "version": "2.3",
   "manifest_version": 2,
   "content_security_policy": "script-src 'self'; object-src 'self'",
   "description": "User interface enhancements for the online game Pardus",
