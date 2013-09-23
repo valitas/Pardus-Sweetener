@@ -11,8 +11,21 @@ PSOptionsPageDriver.prototype = {
 
   onDOMContentLoaded: function() {
     this.controls = new Object();
+    var doc = this.doc, controls = this.controls, keys, i, end;
 
-    var doc = this.doc, controls = this.controls,
+    // Find all these elements in the document, save references to
+    // them in own object properties.
+    keys = [ 'showAlarmGroup', 'showCombatGroup', 'showGeneralGroup',
+             'showHelpGroup',
+             'alarmGroup', 'combatGroup', 'generalGroup', 'helpGroup',
+             'testAlarm', 'testNotification', 'version' ];
+    for(i = 0, end = keys.length; i < end; i++) {
+      var key = keys[i];
+      this[key] = doc.getElementById(key);
+    }
+
+    // Find all these elements in the document, save references to
+    // them in this.controls, and install event listeners.
     keys = [ 'muteAlarm', 'alarmSound', 'alarmCombat', 'alarmAlly',
              'alarmWarning', 'alarmPM', 'alarmMission',
              'alarmTrade', 'alarmPayment', 'desktopCombat',
@@ -36,8 +49,7 @@ PSOptionsPageDriver.prototype = {
              'allianceQLsOrionEnabled', 'personalQLOrionEnabled',
              'personalQLOrion', 'allianceQLsPegasusEnabled',
              'personalQLPegasusEnabled', 'personalQLPegasus' ];
-
-    for(var i = 0, end = keys.length; i < end; i++) {
+    for(i = 0, end = keys.length; i < end; i++) {
       var key = keys[i];
       var control = doc.getElementById(key);
       if(control) {
@@ -56,28 +68,29 @@ PSOptionsPageDriver.prototype = {
       }
     }
 
-    this.testAlarmButton = doc.getElementById('testAlarm');
-    this.testAlarmButton.addEventListener('click',
-                                          this.onTestAlarmClick.bind(this));
-    controls.alarmSound.addEventListener('change',
-                                         this.disableTestAlarm.bind(this));
+    this.version.textContent = chrome.runtime.getManifest().version;
 
-    this.testNotifierButton = doc.getElementById('testNotifier');
-    this.testNotifierButton.addEventListener('click',
-                                       this.onTestNotificationClick.bind(this));
-
-    controls.muteAlarm.addEventListener('click',
-                                    this.updateAlarmControlsDisable.bind(this));
-
-    controls.autobots.addEventListener('click',
-                                  this.updateAutobotControlsDisable.bind(this));
+    // Install additional listeners
+    this.wireGroupSwitch(this.showAlarmGroup, this.alarmGroup);
+    this.wireGroupSwitch(this.showCombatGroup, this.combatGroup);
+    this.wireGroupSwitch(this.showGeneralGroup, this.generalGroup);
+    this.wireGroupSwitch(this.showHelpGroup, this.helpGroup);
+    this.testAlarm.
+      addEventListener('click', this.onTestAlarmClick.bind(this));
+    controls.alarmSound.
+      addEventListener('change', this.disableTestAlarm.bind(this));
+    this.testNotification.
+      addEventListener('click', this.onTestNotificationClick.bind(this));
+    controls.muteAlarm.
+      addEventListener('click', this.updateAlarmControlsDisable.bind(this));
+    controls.autobots.
+      addEventListener('click', this.updateAutobotControlsDisable.bind(this));
     this.wireAutobotsPreset(controls.autobotsArtemisPreset,
                             controls.autobotsArtemisPoints);
     this.wireAutobotsPreset(controls.autobotsOrionPreset,
                             controls.autobotsOrionPoints);
     this.wireAutobotsPreset(controls.autobotsPegasusPreset,
                             controls.autobotsPegasusPoints);
-
     this.wireQLControls(controls.personalQLArtemisEnabled,
                         controls.personalQLArtemis);
     this.wireQLControls(controls.personalQLOrionEnabled,
@@ -85,13 +98,20 @@ PSOptionsPageDriver.prototype = {
     this.wireQLControls(controls.personalQLPegasusEnabled,
                         controls.personalQLPegasus);
 
+    // Connect to background page.
     this.port = chrome.extension.connect();
     this.port.onMessage.addListener(this.messageHandler.bind(this));
     this.port.postMessage({ op: 'requestList', name: 'alarmSound' });
+    // Note keys is still set to the last list of keys we used above
     this.port.postMessage({ op: 'subscribe', keys: keys });
   },
 
-  // Just a shorthand, to simplify setup above
+  // A shorthand, to simplify setup above
+  wireGroupSwitch: function(button, group) {
+    button.addEventListener('click',
+                            this.onShowGroupClick.bind(this, button, group));
+  },
+  // Another shorthand
   wireAutobotsPreset: function(preset, points) {
     preset.addEventListener('change',
                             this.onAutobotsPresetChange.bind(this,
@@ -100,27 +120,41 @@ PSOptionsPageDriver.prototype = {
                             this.onAutobotsPointsInput.bind(this,
                                                             preset, points));
   },
-  // Another shorthand
+  // And another shorthand
   wireQLControls: function(enabled, ql) {
     enabled.addEventListener('change',
                              this.onQLEnabledClick.bind(this, enabled, ql));
   },
 
+  onShowGroupClick: function(groupButton, group) {
+    var i, end, keys;
+    keys = ['showAlarmGroup', 'showCombatGroup', 'showGeneralGroup',
+            'showHelpGroup'];
+    for(i = 0, end = keys.length; i < end; i++)
+      this[keys[i]].parentNode.classList.remove('selected');
+    keys = ['alarmGroup', 'combatGroup', 'generalGroup', 'helpGroup'];
+    for(i = 0, end = keys.length; i < end; i++)
+      this[keys[i]].classList.remove('selected');
+    groupButton.parentNode.classList.add('selected');
+    group.classList.add('selected');
+    group.scrollIntoView(true);
+  },
+
   disableTestAlarm: function() {
     this.port.postMessage({ op: 'stopAlarm' });
-    this.testAlarmButton.value = 'Test';
-    this.testAlarmButton.disabled = true;
+    this.testAlarm.value = 'Test';
+    this.testAlarm.disabled = true;
   },
 
   onTestAlarmClick: function() {
-    if(this.testAlarmButton.value == 'Stop') {
+    if(this.testAlarm.value == 'Stop') {
       this.port.postMessage({ op: 'stopAlarm' });
-      this.testAlarmButton.value = 'Test';
+      this.testAlarm.value = 'Test';
     }
     else {
       var i = this.controls.alarmSound.selectedIndex;
       if(i >= 0) {
-        this.testAlarmButton.value = 'Stop';
+        this.testAlarm.value = 'Stop';
         this.port.postMessage({ op: 'soundAlarm' });
       }
     }
@@ -154,8 +188,8 @@ PSOptionsPageDriver.prototype = {
         this.populateSelectControl(control, msg.list);
       break;
     case 'sampleReady':
-      if(this.testAlarmButton)
-        this.testAlarmButton.disabled = false;
+      if(this.testAlarm)
+        this.testAlarm.disabled = false;
     }
   },
 
@@ -224,7 +258,7 @@ PSOptionsPageDriver.prototype = {
     if(disabled)
       this.disableTestAlarm();
     else
-      this.testAlarmButton.disabled = false;
+      this.testAlarm.disabled = false;
   },
 
   updateAutobotControlsDisable: function() {
