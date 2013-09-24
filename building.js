@@ -1,20 +1,12 @@
 // Building content script. What you get when you click on "Enter building".
-// Load combat.js and shiplinks.js before this.
+// Load universe.js, combat.js and shiplinks.js before this.
 
 var port;
+var pswCombatScreenDriver;
 
 function messageHandler(msg) {
-  if(msg.op == 'updateValue') {
-    switch(msg.key) {
-    case 'pvbMissileAutoAll':
-      if(msg.value)
-        checkAllMissiles();
-      break;
-    case 'navShipLinks':
-      if(msg.value)
-        showShipLinks();
-    }
-  }
+  if(msg.op == 'updateValue' && msg.key == 'navShipLinks' && msg.value)
+    showShipLinks();
 }
 
 var mslrx = /building\.php\?detail_type=([A-Za-z]+)&detail_id=(\d+)$/;
@@ -38,9 +30,20 @@ function showShipLinks() {
 }
 
 function run() {
+  var configmap = { pvbMissileAutoAll:  'missileAutoAll',
+                    autobots:           'autobots',
+                    displayDamage:      'displayDamage',
+                    previousShipStatus: 'previousShipStatus' };
+  var universe = universeName();
+  configmap[ 'autobots' + universe + 'Points' ] = 'autobotsPoints';
+  configmap[ 'autobots' + universe + 'Strength' ] = 'autobotsStrength';
+
   port = chrome.extension.connect();
+  pswCombatScreenDriver = new PSWCombatScreenDriver(document, port, configmap);
+
   port.onMessage.addListener(messageHandler);
-  port.postMessage({ op: 'subscribe', keys: [ 'pvbMissileAutoAll', 'navShipLinks'] });
+  var keys = pswCombatScreenDriver.configkeys.concat(['navShipLinks']);
+  port.postMessage({ op: 'subscribe', keys: keys });
 }
 
 run();

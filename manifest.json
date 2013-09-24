@@ -26,7 +26,7 @@
       "js":         [ "game.js" ],
       "all_frames": false },
     { "matches":    [ "*://*.pardus.at/building.php*" ],
-      "js":         [ "combat.js", "shiplinks.js", "building.js" ],
+      "js":         [ "universe.js", "combat.js", "shiplinks.js", "building.js" ],
       "all_frames": true },
     { "matches":    [ "*://*.pardus.at/myalliance.php*" ],
       "js":         [ "universe.js", "slicer.js", "myalliance.js" ],
