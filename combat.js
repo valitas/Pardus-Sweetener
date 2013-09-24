@@ -50,22 +50,30 @@ PSWCombatScreenDriver.prototype = {
   },
 
   selectHighestRounds: function() {
-    var elts = this.doc.getElementsByName('rounds');
-    for(var i = 0; i < elts.length; i++) {
-      var highest = 0, highestElt = null;
-      var elt = elts[i];
-      var opts = elt.getElementsByTagName('option');
-      for(var j = 0; j < opts.length; j++) {
-        var opt = opts[j];
-        var n = parseInt(opt.value);
-        if(n > highest) {
-          highest = n;
-          highestElt = opt;
-        }
-      }
-      if(highestElt)
-        highestElt.selected = true;
+    var doc = this.doc, sel,
+    xpr = doc.evaluate('//select[@name = "rounds"]', doc, null,
+                       XPathResult.UNORDERED_NODE_ITERATOR_TYPE, null);
+    while((sel = xpr.iterateNext())) {
+      if(sel.style.display == 'none' &&
+         sel.nextElementSibling.tagName == 'SELECT')
+        // for some reason, Pardus now hides the rounds select,
+        // and instead adds a second, visible select element, with
+        // a gibberish name.
+        sel = sel.nextElementSibling;
+
+      this.selectMaxValue(sel);
     }
+  },
+
+  selectMaxValue: function(select) {
+    var opts = select.options, max = -1, maxindex = -1;
+    for(var i = 0, end = opts.length; i < end; i++) {
+        var n = parseInt(opts[i].value);
+        if(n > max)
+            maxindex = i;
+    }
+    if(maxindex >= 0)
+      select.selectedIndex = maxindex;
   },
 
   checkAllMissiles: function() {
