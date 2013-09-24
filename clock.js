@@ -1,4 +1,4 @@
-// server reset is at 5.30 GMT/UTC every day
+// server reset is at 5.30 UTC every day
 
 function APTimer(doc) {
   this.createNode(doc, 'AP', 'Time to next 24 AP and next shield recharge');
@@ -240,7 +240,8 @@ ResetTimer.prototype = {
 
 // This is not a timer per se, it just displays current UTC
 function UTCTimer(doc) {
-  this.createNode(doc, 'UTC', 'Coordinated Universal Time');
+  // ... and we call it "GMT" because people get confused otherwise
+  this.createNode(doc, 'GMT', 'Greenwich Mean Time');
 }
 
 UTCTimer.prototype = {
@@ -249,8 +250,29 @@ UTCTimer.prototype = {
     this.textNode.data = this.formatTime(t);
   },
 
-  createNode: APTimer.prototype.createNode,
-  formatTime: APTimer.prototype.formatTime
+  formatTime: function(seconds) {
+    var hours = Math.floor(seconds / 3600);
+    seconds -= hours*3600;
+    var minutes = Math.floor(seconds / 60);
+    seconds -= minutes*60;
+
+    var s = '';
+    if(hours < 10)
+      s += '0';
+    s += hours;
+    s += ':';
+    if(minutes < 10)
+      s += '0';
+    s += minutes;
+    s += ':';
+    if(seconds < 10)
+      s += '0';
+    s += seconds;
+
+    return s;
+  },
+
+  createNode: APTimer.prototype.createNode
 };
 
 
