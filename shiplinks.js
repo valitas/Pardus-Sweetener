@@ -42,12 +42,27 @@ function getShips(container, xpath, matchId) {
   return ships;
 }
 
+// Very generic, could move somewhere else
+function removeElementsByClassName(base, className) {
+  var elts = base.getElementsByClassName(className), a = [], i, end;
+  // Add to a proper array first, cause if we modify the document
+  // while traversing the HTMLCollection, funky things would happen.
+  for(i = 0, end = elts.length; i < end; i++)
+    a.push(elts[i]);
+  // Now remove them.
+  for(i = 0, end = a.length; i < end; i++) {
+    var elt = a[i];
+    elt.parentNode.removeChild(elt);
+  }
+}
+
 function addShipLinks(ships) {
-  for(var i = 0; i < ships.length; i++) {
+  for(var i = 0, end = ships.length; i < end; i++) {
     var entry = ships[i];
     var player = entry.type == 'player';
     var doc = entry.td.ownerDocument;
     var div = doc.createElement('div');
+    div.className = 'psw-slink';
     div.style.fontSize = '10px';
     div.style.fontWeight = 'bold';
     var a = doc.createElement('a');

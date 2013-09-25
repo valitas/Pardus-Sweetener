@@ -111,18 +111,32 @@ PSNavPageDriver.prototype = {
           this.setupLinks(cbox);
       }
     }
-    else if(msg.key == 'navShipLinks' && msg.value) {
-      this.shipLinksEnabled = true;
+    else if(msg.key == 'navShipLinks') {
+      // First of all, remove all links we may have added before. This
+      // function will be called if the configuration changes. The
+      // utility function removeElementsByClassName is currently in
+      // shiplinks.js, we may move it somewhere else later.
       var sbox = doc.getElementById('otherships_content');
       if(sbox) {
-        var ships =
-          getShips(sbox, "table/tbody/tr/td[position() = 2]/a", this.matchId);
-        addShipLinks(ships);
+        removeElementsByClassName(sbox, 'psw-slink');
+        this.shipLinksEnabled = msg.value;
+        // Now, if enabled, add them again.
+        if(this.shipLinksEnabled) {
+          var ships =
+            getShips(sbox, "table/tbody/tr/td[position() = 2]/a", this.matchId);
+          addShipLinks(ships);
+        }
       }
     }
   },
 
   setupLinks: function(cbox) {
+    // First of all, remove all links we may have added before. This
+    // function will be called if the configuration changes. The
+    // utility function removeElementsByClassName is currently in
+    // shiplinks.js, we may move it somewhere else later.
+    removeElementsByClassName(cbox, 'psw-plink');
+
     // find the "Land on planet", "Land on starbase" or "Enter
     // building" div. We look for the link to planet.php, starbase.php
     // or building.php really; if we find one of those, we use the
@@ -139,11 +153,8 @@ PSNavPageDriver.prototype = {
     }
 
     if(planet) {
-      // rock and roll.
-
-      // add the enabled links then
-      var here = planet.nextSibling;
-      var doc = cbox.ownerDocument;
+      // rock and roll. add the enabled links then
+      var doc = this.doc, here = planet.nextSibling;
       for(i = 0, end = keys.length; i < end; i++) {
         var key = keys[i];
         if(this.enabledLinks[key]) {
