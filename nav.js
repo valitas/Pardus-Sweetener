@@ -5,41 +5,6 @@ function PSNavPageDriver(doc) { this.initialise(doc); }
 
 PSNavPageDriver.prototype = {
 
-  // Ordinarily, we'd wait for DOMContentLoaded before doing all the
-  // initialisation below. However, this being a content script, we
-  // rely on Chrome to call us at the proper time, and assume doc is
-  // ready by now.
-
-  initialise: function(doc) {
-    this.doc = doc;
-    this.enabledLinks = new Object();
-
-    this.port = chrome.extension.connect();
-    this.port.onMessage.addListener(this.onMessage.bind(this));
-
-    var keys = Object.keys(this.LINKS);
-
-    // Remember how many link options we'll request. We use this
-    // later to notice when we have them all.
-    this.linkOptionCount = keys.length;
-
-    keys.push('navShipLinks');
-    this.port.postMessage({ op: 'subscribe', keys: keys });
-
-    var box = doc.getElementById('commands');
-    if(box)
-      // this element gets a new div (id=commands_content) inserted
-      // into it when the game javascript updates the commands box. we
-      // listen to that to update our own stuff.
-      box.addEventListener('DOMNodeInserted', this.onCBoxMutation.bind(this));
-    box = doc.getElementById('otherships');
-    if(box)
-      // this element gets a new div (id=otherships_content) inserted
-      // into it when the game javascript updates the ships box. we
-      // listen to that to update our own stuff.
-      box.addEventListener('DOMNodeInserted', this.onSBoxMutation.bind(this));
-  },
-
   LINKS: {
     navEquipmentLink:   { href: 'ship_equipment.php',
                           name: 'Ship equipment'      },
@@ -72,10 +37,58 @@ PSNavPageDriver.prototype = {
                        'navHackLink' ]
   },
 
-  //var port;
-  //var enabledLinks;
-  //var linksConfigured;
-  //var shipLinksEnabled;
+  // Ordinarily, we'd wait for DOMContentLoaded before doing all the
+  // initialisation below. However, this being a content script, we
+  // rely on Chrome to call us at the proper time, and assume doc is
+  // ready by now.
+
+  initialise: function(doc) {
+    this.doc = doc;
+    this.enabledLinks = new Object();
+
+    this.port = chrome.extension.connect();
+    this.port.onMessage.addListener(this.onPortMessage.bind(this));
+
+    var keys = Object.keys(this.LINKS);
+
+    // Remember how many link options we'll request. We use this
+    // later to notice when we have them all.
+    this.linkOptionCount = keys.length;
+
+    keys.push('navShipLinks');
+    this.port.postMessage({ op: 'subscribe', keys: keys });
+
+    // Insert a bit of script to execute in the page's context and
+    // send us what we need. And add a listener to receive the call.
+    var window = doc.defaultView;
+    window.addEventListener('message', this.onMessage.bind(this), false);
+    var script = doc.createElement('script');
+    script.type = 'text/javascript';
+    script.textContent = "(function() {var fn=function(){window.postMessage({pardus_sweetener:1,loc:typeof(userloc)=='undefined'?null:userloc,ajax:typeof(ajax)=='undefined'?null:ajax},window.location.origin);};if(typeof(addUserFunction)=='function')addUserFunction(fn);fn();})();";
+    doc.body.appendChild(script);
+  },
+
+  // This is a handler for DOM messages coming from the game page.
+  // Arrival of a message means the page contents were updated. The
+  // message contains the value of the userloc variable, too.
+  onMessage: function(event) {
+    var data = event.data;
+    if(!data || data.pardus_sweetener != 1)
+        return;
+    this.userloc = parseInt(data.loc);
+    this.ajax = data.ajax;
+
+    var doc = this.doc, box = doc.getElementById('commands_content');
+    if(box && this.linksConfigured)
+      this.setupLinks(box);
+
+    box = doc.getElementById('otherships_content');
+    if(box && this.shipLinksEnabled) {
+      var ships =
+        getShips(box, "table/tbody/tr/td[position() = 2]/a", this.matchId);
+      addShipLinks(ships);
+    }
+  },
 
   matchId: function(url) {
     var r;
@@ -96,7 +109,7 @@ PSNavPageDriver.prototype = {
     return r;
   },
 
-  onMessage: function(msg) {
+  onPortMessage: function(msg) {
     if(msg.op != 'updateValue')
       return;
 
@@ -173,21 +186,6 @@ PSNavPageDriver.prototype = {
           cbox.insertBefore(e, here);
         }
       }
-    }
-  },
-
-  onCBoxMutation: function(event) {
-    var cbox = event.target;
-    if(this.linksConfigured && cbox.id == 'commands_content')
-      this.setupLinks(cbox);
-  },
-
-  onSBoxMutation: function(event) {
-    var sbox = event.target;
-    if(this.shipLinksEnabled && sbox.id == 'otherships_content') {
-      var ships =
-        getShips(sbox, "table/tbody/tr/td[position() = 2]/a", matchId);
-      addShipLinks(ships);
     }
   }
 };
