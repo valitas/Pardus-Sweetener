@@ -27,7 +27,7 @@
     <p>
      The audible alarm can draw your attention back to your computer
      when certain events occur.  It can also compel people in the
-     vicinity to appease your computer with a BFH, if you leave it
+     vicinity to appease your computer with a hammer, if you leave it
      logged into Pardus while you are not around to snooze it.
     </p>
 
@@ -92,7 +92,7 @@
 
     <p>
      Desktop notifications are subtler than the alarm, and convenient
-     when you are at your computer but doing something else.
+     when you are at your computer but not watching the Pardus tab.
     </p>
 
     <div class="setting">
@@ -254,62 +254,13 @@
    </section>
 
    <section>
-    <h3>Combat defaults</h3>
-
-    <div class="setting">
-     <input type="checkbox" id="pvpMissileAutoAll" />
-     <label for="pvpMissileAutoAll">
-      Fire all missiles by default in Player vs Player combat
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="pvpHighestRounds" />
-     <label for="pvpHighestRounds">
-      Preselect the highest number of rounds you can attack for in
-      Player vs Player combat
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="pvmMissileAutoAll" />
-     <label for="pvmMissileAutoAll">
-      Fire all missiles by default in Player vs NPC combat
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="pvmHighestRounds" />
-     <label for="pvmHighestRounds">
-      Preselect the highest number of rounds you can attack for in
-      Player vs NPC combat
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="pvbMissileAutoAll" />
-     <label for="pvbMissileAutoAll">
-      Fire all missiles by default in Player vs Building combat
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="displayDamage" />
-     <label for="displayDamage">
-      Display damage taken after combat
-     </label>
-    </div>
-   </section>
-
-   <section>
     <h3>Robot autofill</h3>
 
     <div class="setting">
      <input type="checkbox" id="autobots" />
      <label for="autobots">
-      In the Ship vs NPC combat screen, fill the "use robots" field
-      with the amount needed to repair your armour as close as
-      possible to the condition set below
+      Fill the "use robots" field with the amount needed to repair
+      your armour as close as possible to the condition set below:
      </label>
     </div>
 
@@ -375,6 +326,7 @@
        <option value="495_B">Reaper</option>
        <option value="390_E">Blood Lanner</option>
        <option value="600">Sudden Death</option>
+       <option value="705">Harvester</option>
       </optgroup>
       <optgroup label="EPS Ships">
        <option value="330_C">Trident</option>
@@ -460,6 +412,7 @@
        <option value="495_B">Reaper</option>
        <option value="390_E">Blood Lanner</option>
        <option value="600">Sudden Death</option>
+       <option value="705">Harvester</option>
       </optgroup>
       <optgroup label="EPS Ships">
        <option value="330_C">Trident</option>
@@ -545,6 +498,7 @@
        <option value="495_B">Reaper</option>
        <option value="390_E">Blood Lanner</option>
        <option value="600">Sudden Death</option>
+       <option value="705">Harvester</option>
       </optgroup>
       <optgroup label="EPS Ships">
        <option value="330_C">Trident</option>
@@ -568,6 +522,54 @@
      </select>
     </div>
    </section>
+
+   <section>
+    <h3>Combat defaults</h3>
+
+    <div class="setting">
+     <input type="checkbox" id="pvpMissileAutoAll" />
+     <label for="pvpMissileAutoAll">
+      Fire all missiles by default in Player vs Player combat
+     </label>
+    </div>
+
+    <div class="setting">
+     <input type="checkbox" id="pvpHighestRounds" />
+     <label for="pvpHighestRounds">
+      Preselect the highest number of rounds you can attack for in
+      Player vs Player combat
+     </label>
+    </div>
+
+    <div class="setting">
+     <input type="checkbox" id="pvmMissileAutoAll" />
+     <label for="pvmMissileAutoAll">
+      Fire all missiles by default in Player vs NPC combat
+     </label>
+    </div>
+
+    <div class="setting">
+     <input type="checkbox" id="pvmHighestRounds" />
+     <label for="pvmHighestRounds">
+      Preselect the highest number of rounds you can attack for in
+      Player vs NPC combat
+     </label>
+    </div>
+
+    <div class="setting">
+     <input type="checkbox" id="pvbMissileAutoAll" />
+     <label for="pvbMissileAutoAll">
+      Fire all missiles by default in Player vs Building combat
+     </label>
+    </div>
+
+    <div class="setting">
+     <input type="checkbox" id="displayDamage" />
+     <label for="displayDamage">
+      Display damage taken after combat
+     </label>
+    </div>
+   </section>
   </div>
 
   <div id="generalGroup" class="groupContainer">
@@ -580,9 +582,9 @@
 
     <p>
      Display countdowns to recurring in-game events. For these to be
-     accurate, your computer's time zone should be properly set, and
-     its clock should be synchronised with Coordinated Universal Time.
-     Modern operating systems offer easy means to achieve this; see
+     accurate, your computer's time zone and clock should be properly
+     set.  Modern operating systems can keep your clock on the correct
+     time automatically; see
 
      <a target="_blank"
         href="http://www.ehow.com/how_7550535_sync-clock-server.html">this
@@ -722,8 +724,7 @@
     <div class="setting">
      <input type="checkbox" id="navShipLinks" />
      <label for="navShipLinks">
-      Show links to attack ships and trade with ships in nav and
-      building screens
+      Add links to attack and trade with other ships on your tile
      </label>
     </div>
    </section>
@@ -757,7 +758,7 @@
 
      Please report bugs and request enhancements in the
      <a href="http://forum.pardus.at/index.php?showtopic=62190"
-        target="_blank">Pardus Forum</a>, or the
+        target="_blank">Pardus Forum</a> or the
      <a href="https://github.com/valitas/Pardus-Sweetener"
         target="_blank">GitHub repository</a>.</p>
 
