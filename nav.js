@@ -84,6 +84,7 @@ PSNavPageDriver.prototype = {
 
     box = doc.getElementById('otherships_content');
     if(box && this.shipLinksEnabled) {
+      removeElementsByClassName(box, 'psw-slink');
       var ships =
         getShips(box, "table/tbody/tr/td[position() = 2]/a", this.matchId);
       addShipLinks(ships);
