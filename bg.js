@@ -111,7 +111,9 @@ function PardusSweetener() {
     allianceQLsPegasus:      new StringOption('[]'),
     allianceQLsPegasusMTime: new StringOption('0'),
     personalQLPegasusEnabled:  new BooleanOption(false),
-    personalQLPegasus:       new StringOption('')
+    personalQLPegasus:       new StringOption(''),
+
+    sendmsgShowAlliance:     new BooleanOption(true)
   };
   this.ports = new Array();
   this.alarm = new Alarm(this.options.alarmSound.parse(localStorage['alarmSound']));

@@ -33,7 +33,10 @@
       "all_frames": true },
     { "matches":    [ "*://*.pardus.at/ambush.php*" ],
       "js":         [ "universe.js", "ambush.js" ],
-      "all_frames": true }
+      "all_frames": true },
+    { "matches":    [ "*://*.pardus.at/sendmsg.php*" ],
+      "js":         [ "sendmsg.js" ],
+      "all_frames": false }
   ],
   "page_action": {
     "default_icon": "icons/19.png",
