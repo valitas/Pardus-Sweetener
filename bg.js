@@ -270,10 +270,41 @@ PardusSweetener.prototype = {
     this.notifier.show(msg.title, msg.message, msg.duration);
   },
 
-  // This is supposedly called on storage events. We haven't seen one
-  // yet, we need to research more about this...
+  requestMapMsgHandler: function(pi, msg) {
+    var sectorName = msg.sector;
+    var rq = new XMLHttpRequest(),
+        url = chrome.runtime.getURL('map/' +
+                                    sectorName.replace(' ', '_') + '.json');
+    rq.onreadystatechange = this.onMapRSC.bind(this, sector, pi);
+    rq.open('get', url);
+    rq.send();
+  },
 
+  onMapRSC: function(sector_name, pi, event) {
+    var rq = event.target;
+    if(rq.readyState != 4)
+      return;
+    if(rq.status == 200) {
+      var sector = JSON.parse(rq.responseText);
+      this.postUpdateMap(pi, sector);
+    }
+    else
+      this.postUpdateMap(pi, null);
+  },
+
+  postUpdateMap: function(pi, sector) {
+    var msg = { op: 'updateMap' };
+    if(sector)
+      msg.sector = sector;
+    else
+      msg.error = true;
+    pi.port.postMessage(msg);
+  },
+
+  // This is supposedly called on storage events. We haven't seen one
+  // yet, we need to research more about this... XXX
   handleStorage: function(e) {
+    console.log("XXX handleStorage", e);
     var option = this.options[e.key];
     if(option)
       this.postUpdateValueNotifications(e.key, option.parse(e.newValue), null);
