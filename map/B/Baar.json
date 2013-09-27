@@ -1,0 +1,11 @@
+{
+  "cluster": "Lane",
+  "sector": "Baar",
+  "width": 16,
+  "height": 12,
+  "tiles": "bbeeebbbbbbbbbbbbeefeebbbbbbbbbbeefffebbbbbbbbbbefffoeebbbbbbbbbefffffebbbbbbbbbefffffebbbeeebbbefgggfebeeefeeeeefgggfeeefeeeefeeegggeebefebbeeebefffebbefeebbeebeefeebbeefebbbbbbeeebbbbeeebbbb",
+  "beacons": {
+    "Aandti": { "type": "wh", "x": 15, "y": 8 },
+    "UZ 8-466": { "type": "wh", "x": 10, "y": 11 }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "IP 3-251",
+  "width": 16,
+  "height": 9,
+  "tiles": "bbbbbbeeebbbbbbbbbbbbbeeebbbbbbbbeebbbbebbbbbbbbeeeebbbebeeebbbbeooebbeeeefebbbbeofeeeeffffeeebbefoffeeeeeeeeeeeeeeeeebbbbbbeeeeeebeebbbbbbbbbee",
+  "beacons": {
+    "Pass EMP-02": { "type": "wh", "x": 7, "y": 0 },
+    "Olbea": { "type": "wh", "x": 15, "y": 7 },
+    "Iceo": { "type": "wh", "x": 0, "y": 8 }
+  }
+}

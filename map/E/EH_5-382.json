@@ -1,0 +1,14 @@
+{
+  "cluster": "East Pardus Rim",
+  "sector": "EH 5-382",
+  "width": 14,
+  "height": 15,
+  "tiles": "bbbbbeeebbbbbbbbbbbeeebbbbbbbbbbbbebbbbbbbbeeeeeeeeebbbbeefffffffeeeebefffeeeeefffeeefffebbbeffffeefffeeeeefeeeeeeffeeeeefebeebeefebbbefebbbbbeeeebeefebbbbbbeeeeefeebbbbbbbeebefebbbbbeeeeeeeeebbbbbeeeeeeeebbbbb",
+  "beacons": {
+    "Pass UNI-02": { "type": "wh", "x": 6, "y": 1 },
+    "Kitalpha": { "type": "wh", "x": 0, "y": 6 },
+    "Diphda": { "type": "wh", "x": 12, "y": 7 },
+    "Alfirk (West)": { "type": "wh", "x": 2, "y": 13 },
+    "Alfirk (East)": { "type": "wh", "x": 8, "y": 13 }
+  }
+}

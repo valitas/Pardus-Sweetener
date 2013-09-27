@@ -1,0 +1,11 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "Pass EMP-04",
+  "width": 25,
+  "height": 25,
+  "tiles": "bbbbbbbeebbbbbbbbbbbbbbbbbeebbbeeebeebbeebeeeebbbbbeeeeeefeeeeeeeeeeffeeebbeeebbbeeebeefeefffffffebbeeebbbbebbbeeeeffeeeffebbbebbbbeeebbbeeeeeebeefeebbebbbeefeebbbeebbbbbeffeebebbbeeeeeebbbbbbbbbefffebebbbbeeefebbbbbbbbbeffeebebbbbeeeeeebbeeeebbeeeebeeeebbbbbeeeeeeffeebeeeebeefeebbbbbeeeeeeefebeefebbeffeeebbbbbeebbefebbefeebeeeefeebbbbbbbeeeebbeffebbeeeffebbbeeeeeeebbbeffebbeefffeeeeeffffebbeeefeebbbeefffffffffffebeefffebbbbbefffffffeeefeeeffffebbbbeefffffffebeeffffffeebbbbefffeeeffeebeffeeffebbbbbeeffebeeffebeefeeeeebbbbbbeeeebbeeeebbeefeebbbbbbbbbbbbbbbbebbbbeeebbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbbbbbeeebbbbbbbbbbb",
+  "beacons": {
+    "AN 2-956": { "type": "wh", "x": 7, "y": 2 },
+    "Daurlia": { "type": "wh", "x": 12, "y": 24 }
+  }
+}

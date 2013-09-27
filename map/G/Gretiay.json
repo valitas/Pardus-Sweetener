@@ -1,0 +1,14 @@
+{
+  "cluster": "Union Rashkir Core",
+  "sector": "Gretiay",
+  "width": 20,
+  "height": 20,
+  "tiles": "bbbbbbbbbeeebeeebbbbbbbbbbbbbeeeeefeeebbbbbbbbbbbbeefffffeebbbbbbbbbbbbeefeeefeebbbbbbbbbbbbeeebeffebbbbbbbeebbbbbbbefeebbbbbbeeeeebbbeeeeebeebbbeefffeebeeffebbeeeeeefffffeeefeeeebeebbbefgggfffffeefeebbbbbefgggggfffffffebbbbbefggggggffffffebbbbbeeggggggfffoffebbbbbbeggggggffffeeebbbbbeeggggggfeeeebbbbbbbeegggggfeebbbbbbbbbbbegggggfebbbbbbbbbbbbeggggfeebbbbbbbbbbbbeeffeeebbbbbbbbbbbbbbeeeebbbbbbbbb",
+  "beacons": {
+    "Ioliaa": { "type": "wh", "x": 10, "y": 1 },
+    "Pass UNI-01": { "type": "wh", "x": 0, "y": 8 },
+    "Sophilia": { "type": "wh", "x": 19, "y": 10 },
+    "Liaququ": { "type": "wh", "x": 10, "y": 19 },
+    "Gretiay Station": { "x": 12, "y": 8 }
+  }
+}

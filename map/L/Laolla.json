@@ -1,0 +1,13 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "Laolla",
+  "width": 12,
+  "height": 17,
+  "tiles": "bbbbbbbbbeebbbbbbbbbbeeebbbbbbbbeefebbbbbbbbeffebbbbbbbeefeebbbbeeeeffebeeeeeffffeebeffffffffebbeeeoeeeefeebbbefebbeeeeebbefeebbbefebeeooebbbefebefooebbbeeeeeoffebbeeebeoofeebbeeeeefofebbbbeeeeeeeebbbbbee",
+  "beacons": {
+    "Canexin": { "type": "wh", "x": 10, "y": 0 },
+    "Usube": { "type": "wh", "x": 0, "y": 7 },
+    "Tiacken": { "type": "wh", "x": 11, "y": 16 },
+    "Bio Armor Station Laolla": { "x": 3, "y": 13 }
+  }
+}

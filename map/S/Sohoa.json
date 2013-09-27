@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Sohoa",
+  "width": 14,
+  "height": 16,
+  "tiles": "bbbbbeeeebbbbbbbbeeeffeeebbbbbbeegggggeebbbbbbeggggggeebbbbeegggggggebbeeefgggggggeebeefffffggggfebbefffffggggeebeeffggggggeebbeeffggggggebbbbeefgggggeebbbbbeffggggebbbbbeefeeeeeebbbeeefeebbeebbbbeeeeebbbbbbbbbbbeebbbbbbbbbb",
+  "beacons": {
+    "GV 4-652": { "type": "wh", "x": 1, "y": 5 },
+    "Betelgeuse (East)": { "type": "wh", "x": 1, "y": 14 },
+    "Sohoa": { "x": 7, "y": 6 }
+  }
+}

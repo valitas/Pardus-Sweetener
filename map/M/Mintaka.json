@@ -1,0 +1,13 @@
+{
+  "cluster": "Pardus Federation Contingent",
+  "sector": "Mintaka",
+  "width": 40,
+  "height": 25,
+  "tiles": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbeebbbbbbbeffeebbbbbbbbbbbbbbbbbbbbbbbbbeeeebbbbbeefffebbbbbbbbbbbbbbbbbbbbbbbeeeffeebbbeeffffebbbbbeeeeebbbbbbbbbeeeeefffffeeeeeffffeebbbbeefffeeeeebeebeeffffgggffeeeefffffebbbbeeffffffffeeeeeefffggggggfebbegggffebeeeeffggeeeefffeefffgggggggggeeeegggffebeeffffggebbefeeeefgggggggggggffffgggfeebbeefffffeeeefeeffggggggggggggfffffffeebbbbeeeffffffffeeffggggggggggggffooffeebbbbbbbeeffeeeffeeefggggggggggffffooffebbbbbbbbbefeebeefebeffffggggfffffffffeeebbbbbbbbbeeebbbeeeeeffffffffeeeeffffeebbbbbbbbbbbbbbbbbbefffgggoofooebbeeeeeebbbbbbbbbbbbbbbbbbeefffgggffoooebbbbbbebbbeeeebbbbbbbbeebeeffffgggffofoebbeeebebeeeggeebbbbbbeeeeefffffgggfofooeeeefeeeeeffggeebbbbbbefffffffffgggffffoooffffffffffffebbbbbbbeefffffffeeeffffoffffffffffffeeeeebbbbbbbefffffffebeeffffffffffffffffebefebbbbbbbeffffffeebbeeeeeeffeeeeffffeebeeebbbbbbbeeefffeebbbbbbbbeeeebbeeeeeebbbbbbbbbbbbbbeeeeebbbbbbbbbbbbbbbbbeebbbbbbb",
+  "beacons": {
+    "Dubhe": { "type": "wh", "x": 38, "y": 1 },
+    "Meram": { "type": "wh", "x": 1, "y": 9 },
+    "Aya": { "type": "wh", "x": 37, "y": 21 },
+    "Mintaka": { "x": 11, "y": 21 }
+  }
+}

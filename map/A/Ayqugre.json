@@ -1,0 +1,14 @@
+{
+  "cluster": "Federation South Human",
+  "sector": "Ayqugre",
+  "width": 16,
+  "height": 14,
+  "tiles": "bbeebbbbbeeebbbbbeeeebbeeefeebbbbefeebeeffffebbbbeeebeefffffeebbbbeeeefffffffeebbbeffffffffgggebbeefggggggggggeeeeffgggggggggggeeeeegggggggggggebbbefggggggggggeeebefggggggggggeeeeefffffggggeeeeeffffeeeeefeebbbeeeeeebbbeeebbb",
+  "beacons": {
+    "Ureneth": { "type": "wh", "x": 10, "y": 0 },
+    "Qumiin": { "type": "wh", "x": 2, "y": 1 },
+    "Xewao": { "type": "wh", "x": 1, "y": 10 },
+    "RA 3-124": { "type": "wh", "x": 9, "y": 12 },
+    "Ayqugre": { "x": 9, "y": 4 }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "cluster": "Union Keldon Core",
+  "sector": "Nekkar",
+  "width": 14,
+  "height": 24,
+  "tiles": "bbbbbbbbbbeebbbbbbbbbbbeeeebbbbbbbbbbeffeebbbbbbbeeefffebbbbbbeeffffeebbbbbeefffeeebbbbbbefffeebbbbbbbbeeeeebbbbbbbbbbbebbbbbbbbbbbbbebbbbbbbbbbbbbebbbbbbbeeebbbebbbbbbbefebeeeeebbbbbefeeefffeebbbbeeebefmmfebbbbbebbeemmeebbbbbebbbeeeebbbbbeeebbbbbbbbbbbeeebbbbbbbbbbbbebbbbbbbbbbbbbeeebbbbbbbbbeeeeebbbbbbbbbeffeebbbbbbbbbeeeebbbbbbbbbb",
+  "beacons": {
+    "UG 5-093": { "type": "wh", "x": 12, "y": 1 },
+    "BE 3-702": { "type": "wh", "x": 0, "y": 21 }
+  }
+}

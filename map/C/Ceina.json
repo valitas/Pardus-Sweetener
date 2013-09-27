@@ -1,0 +1,13 @@
+{
+  "cluster": "Split",
+  "sector": "Ceina",
+  "width": 16,
+  "height": 15,
+  "tiles": "bbbeeeebbbeebbbbbbbeeeebbbeeeeebbbbbbeeebbeffoebbbbbeefebeefooeebbbeeffeeeffffeebeeeffeebeefeeebeeffffebbbeeebbbefffffeeebbebbbbeeffffffeeeeebbbbeffffffeeeeeebbbeeffffeebbefeebbbeeeeeebbbeffeebbeebbebbbbeeefebbbbbeeebbbbbeeebbbbbeeebbbbbbbb",
+  "beacons": {
+    "Edqueth": { "type": "wh", "x": 1, "y": 5 },
+    "Pass EMP-10": { "type": "wh", "x": 6, "y": 13 },
+    "Sowace": { "type": "wh", "x": 15, "y": 13 },
+    "Ceina": { "x": 4, "y": 8 }
+  }
+}

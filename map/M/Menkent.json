@@ -1,0 +1,12 @@
+{
+  "cluster": "Union Rashkir Core",
+  "sector": "Menkent",
+  "width": 20,
+  "height": 17,
+  "tiles": "bbbbbbbbeeebbbeeebbbbbbbbbeeefeebeefeeebbbbbbeeffffeeeffffeebbbbeeffffffffgggfeebbbbeefffffggggggeebbbbbbefffffggggggebbbbbbbefffffggggggebbbbbbeeffffffggggeebbbbbbefffffgggeeeebbbbbbbeffffggggebbbbbbbbbeeffffggggeeebbbbbbbeffeeeggggggeeebbbeeeffebefggggggfebbeeffffeeefggggggfebbeeeefeeeeeeggggeeebbbbbeeebeebeefeeebbbbbbbbbbbbbbbeeebbbbbb",
+  "beacons": {
+    "Zaurak": { "type": "wh", "x": 19, "y": 2 },
+    "Ackwada": { "type": "wh", "x": 0, "y": 13 },
+    "Menkent": { "x": 8, "y": 5 }
+  }
+}

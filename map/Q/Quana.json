@@ -1,0 +1,14 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Quana",
+  "width": 16,
+  "height": 26,
+  "tiles": "bbbbeeebbbbbbbbbbbbbefeeebbbbbbbbbbbeeeeeebbbbbbbbbeeefefeebbbbbbbeefefefeebbbbbbbeffeeefebbbbbbbeeffgggfeebbbbbbefgggggggeebeebeefgggggggfebeebeeeeggggggfeeeebbbbegggggffoofebeebegggggfooooeeeeeeggggfooooofeeebeggggfffooffebbbegggffffffffebeeeffffeeeefeeeeeffffffebbeeebbefffffffebbbbbbbefffffffeeebbbbbeeffffffffeebbbbbeeefeeeeffeebbbbbbefebbefffeebbbbbefebbeeeefeeebbbeeebbbbbeeeeebbbbeeebbbbbbbeebbbbeeebbbbbbbbb",
+  "beacons": {
+    "Iceo": { "type": "wh", "x": 14, "y": 7 },
+    "Pass EMP-07": { "type": "wh", "x": 0, "y": 12 },
+    "Tiexen": { "type": "wh", "x": 15, "y": 23 },
+    "Phicanho": { "type": "wh", "x": 5, "y": 25 },
+    "Quana Station": { "x": 8, "y": 16 }
+  }
+}

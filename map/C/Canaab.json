@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Canaab",
+  "width": 18,
+  "height": 13,
+  "tiles": "bbbbeebbbbbbeebbbbbbeeeeeebbbeeebbbbbeefoooeebbefeebbbbeffffooeeeeffeeebeefeeeefffffggggeeefeebbeeffffggggfeeeebbbbeefffffggeeeebbbbbbefffffffebbbbbbbbeefffffffebbbbbbbbefffffffeebbbbbbbeeeeeffffebbbbbbeeefebeeefeebbbbbbeeeeebbbeeebbb",
+  "beacons": {
+    "An Dzeve": { "type": "wh", "x": 12, "y": 0 },
+    "Lamice": { "type": "wh", "x": 0, "y": 7 },
+    "Grecein": { "type": "wh", "x": 4, "y": 12 },
+    "Canaab": { "x": 13, "y": 8 }
+  }
+}

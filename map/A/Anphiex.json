@@ -1,0 +1,14 @@
+{
+  "cluster": "Lane",
+  "sector": "Anphiex",
+  "width": 18,
+  "height": 30,
+  "tiles": "bbbbbbbbeebbbbbbbbbeeeebbeeebbbbbbbbbeffeebefeebbbbbbbbefffebeffebbbbbbbbeeffebefeebbbbbbbbbeefebefebbbeeebbbbbeeeeeeebbbeeebbbbbbeffeebbbbbebbbbbbeeeeebbbbbbebbbbbbefebbbbbeeeeebbbbbeeebbbbeefffebbbbbeebbbbeefeefeebbbbeeebbbeffeeeeeebbeefeebeeffffeeeebeefffeeeeeeeffeebeefggggggebbeeeebbeffggggggeebbbbbbbeffgggggggebbbbbbbeffgggggggebbbbbbbeeeefgggggeebbbbbbeebefgggggfebbbbbbbbeeffggggfeebbbbbbbefffffffffebeebbbbeeffffffffeeeebbbbbeffffffffebeebbbbbeeeffffffebbbbbbbbbbefffffeebbbbbbbbbbeffeeeebbbbbbbbbbeefeebbbbbbbbbbbbbeeeebbbbbbbbbb",
+  "beacons": {
+    "Waolex": { "type": "wh", "x": 8, "y": 1 },
+    "Becanol": { "type": "wh", "x": 0, "y": 19 },
+    "Pass UNI-01": { "type": "wh", "x": 14, "y": 23 },
+    "Lasolia": { "type": "wh", "x": 7, "y": 29 },
+    "Anphiex": { "x": 8, "y": 23 }
+  }
+}

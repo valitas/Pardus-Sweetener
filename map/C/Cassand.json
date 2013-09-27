@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "Cassand",
+  "width": 13,
+  "height": 19,
+  "tiles": "bbbbbbeebbbbbbbbbeeeebbbbbbbbeeffeeebbbbbeegggffeebbbbegggggffeebbeeggggggffebeegggggggffeeefgggggggfffeeeggggggfeeeebeggggfffebeebegggffffebbbbeeffffffeeebbbeeffgggfeebbbbeffgggfebbbbbeefffeeebbbbbbeeeeebbbbbbbbeebeebbbbbbbeeebbbbbbbbbbeeebbbbbbb",
+  "beacons": {
+    "Regulus": { "type": "wh", "x": 6, "y": 0 },
+    "Aeg": { "type": "wh", "x": 12, "y": 9 },
+    "Besoex": { "type": "wh", "x": 4, "y": 17 },
+    "Cassand": { "x": 7, "y": 10 }
+  }
+}

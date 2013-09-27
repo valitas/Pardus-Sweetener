@@ -1,0 +1,14 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "Fomalhaut",
+  "width": 20,
+  "height": 20,
+  "tiles": "bbeebbbbbbbbbbbbbbbbbeeeebbeebbbbbbbbbbbbefoeeeeeeeebbbbeebbbeoooffffffeebbeeeebbeeooffffgggeebeffebbbeffffffgggfeeeffeebbeeeffffgggffffffeebbbbeffffgggeeefffebbbeeefffffeeebeeffeeeeefggggfeebbbbeeffeeeefggggeebbbbbbeffebbeeggggebbbbbbbeffebbbeeggfeebbbbbbeffebbbbefgggeebbbbbeffebbbeefgggfebbbbeefeebbbeffgggeebbbbeffebbbbeeffeeebbbbbeefeebbbbeeeebbbbbbbbefeebbbbbbeeebbbbbbbeeebbbbbbbeeebbbbbbbbeeb",
+  "beacons": {
+    "Tianbe": { "type": "wh", "x": 17, "y": 2 },
+    "Ackandso (West)": { "type": "wh", "x": 7, "y": 19 },
+    "Ackandso (East)": { "type": "wh", "x": 17, "y": 19 },
+    "Fomalhaut": { "x": 7, "y": 6 },
+    "Bio Weapon Station Fomalhaut": { "x": 5, "y": 13 }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "cluster": "Pardus Federation Contingent",
+  "sector": "Dubhe",
+  "width": 20,
+  "height": 25,
+  "tiles": "beeeebbbbbbbbbbbbbbbeemmeebeebbbbbbbbbbbeemmfeeeeeebbbbbbbbbbeeffffeeeebbbbeeeebbbeefffeeebbeebeeeeebbbefffffeeeeeeeeefebbbeeeefffffggeefffebbbbbbefeeefggffffeebbbbeeefebeffffffeebbbbbefffebefffeeeebbbbbbeeffeeeffeebbbbbbbbbbeeeeeeefebbbbbbbbbbbbbebbbefeebeeebbbbbeeeeeebeffeeefeebeeeeffffeeefffffffebeffggggeebeeeeeeeeeeeffggggebbbebbbbebbeeefggggebeeeebbeeebbbefggggeeeffeebeeebbbefggggebeeffeeeebbeeefggggebbeeeebeeebeffffeeeeebbebbbefebeeffeebeeeeeeeeeeeebbeeeebbbeeeefeeeeebbbbbbbbbbbbbeeebeebbb",
+  "beacons": {
+    "Enif": { "type": "wh", "x": 18, "y": 4 },
+    "Mintaka": { "type": "wh", "x": 1, "y": 22 }
+  }
+}

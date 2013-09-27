@@ -1,0 +1,12 @@
+{
+  "cluster": "Lane",
+  "sector": "BL 6-511",
+  "width": 24,
+  "height": 31,
+  "tiles": "bbbeebbbbbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbbbbefebbbbbbbbbbeeebbbbbbbbefeeeeeeeeeeeefebbbbbbbbefebbbbbbbbbbefebbbbbbbeeeebbbeeebbbeeeebbbbbbbeeebbbbefeebbeeebbbbbbbbeebbbbeeffeebeebbbbbbbbbeeeebbeffffeeeeebbbbbbbbeffeeeefgggffffeebbbbbbeefggggfggggfgggfeebbbbbeffgggggggggfgggeeebbbbbeefgggggggggfgggebbbbbbbbefgggggggggfgggeebbbbbbbeegggggggggfggggeebbbbbbbeggggggggggggggeebbbbbbbeeegggggffgggggebbbbbbbbbbeffffffggggggebbbbbbbbbeeffffgggggggeebbbbbbbbbeefffggggggeeebbbbbbbbbbbeffgggggggebbbbbbbbbbbbbeffgggggggeeebbbbbbbbbbbeffggggggggfeebbbeebbbbbefffgggggggffebbeeebbbbeeffffgggggggfeeeefeebbbefffffgggggggeeeefffebbeeffffffggggggebbeefeebbeffffffffgggggebbbeeebbbefffeeeefeeeeeebbbbeebbbeefeebbeeebbeebbbbbbbbbbbeeebbbbbbbbbbbbbbbbbb",
+  "beacons": {
+    "Nex 0001 (West)": { "type": "wh", "x": 3, "y": 1 },
+    "Nex 0001 (East)": { "type": "wh", "x": 16, "y": 2 },
+    "Becanol": { "type": "wh", "x": 9, "y": 28 }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "cluster": "Gap",
+  "sector": "Oucanfa",
+  "width": 15,
+  "height": 15,
+  "tiles": "bbbbbbeeeebbbbbbbbbbeeffebbbbbbbbbbeeffeebbbbbbbbbbefffeebbbeeebbbeefffebbbefeebbbeeffeebbeefeeebbeeffeebbeeffeebeefeeebbbeeffeeefeebbbbbbeeffffeebeebeebbeeffeebeeebeeebbeeeebeefeeefeebbeebeeeeeeeeeeeeeeeeeebeebbeeeeeebeebbee",
+  "beacons": {
+    "Fadaphi": { "type": "wh", "x": 6, "y": 0 },
+    "Xeho": { "type": "wh", "x": 0, "y": 4 }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "cluster": "South Pardus Rim",
+  "sector": "Lahola",
+  "width": 25,
+  "height": 21,
+  "tiles": "beebeeebbbbbeeebbbbbbbeeeeeeeefeeebbbeeebbbbbbbefeeeeeeefeebbbbebbbbbbbbeeebbbbbeeebbbeeeeebbbbbbbebbbbbbeebbbeefffeebbbbbbebbbbbbeeebeefeeffebbbbbbebbbbeeefeeeffeeffeeeeebbebbeeeffffffffeeefffffeebebeeffffffffeeebeeefgggeeeeeefffffffeebbbbbefgggeeeebefffffffebbbbbbefgggebbbbeefffffoeeeeeeeefgggeebbbbeefffffoooooooofffffeebbbbefffooeeeeeeeeofffffeebbeeffffoebbbbbbefffffffebeefffffeebbbbbbeefffffeebeffggfeebbbbbbbbeeeeeeebeeffggeebbbbbbbbbbbbeebbbefffeeebbbbbbbbbbbbbbbbbbeffeebbbbbbbbbbbbbbbbbbbbeeeebbbbbbbbbbbbbbbbbbbbb",
+  "beacons": {
+    "Nunki": { "type": "wh", "x": 13, "y": 1 },
+    "Facece": { "type": "wh", "x": 0, "y": 9 },
+    "GM 4-572": { "type": "wh", "x": 24, "y": 13 },
+    "Ophiuchi": { "type": "wh", "x": 0, "y": 20 },
+    "Lahola I": { "x": 6, "y": 9 },
+    "Lahola II": { "x": 19, "y": 14 }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "HO 2-296",
+  "width": 15,
+  "height": 11,
+  "tiles": "bbbbeebbbbbeeeebbeeeeebbbeeffebeefffeebeeffeeeefffffeeefffebeffgggfffffffebeefggggggggffeebefggggggggfffebeefffgggggffeebbeeeeffffffeebbbbbbeeeffeeebbbbbbbbbeeeebbbb",
+  "beacons": {
+    "Iozeio": { "type": "wh", "x": 13, "y": 1 },
+    "Olphize": { "type": "wh", "x": 8, "y": 10 },
+    "Cybernetic Station HO 2-296": { "x": 5, "y": 1 }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "Pass UNI-09",
+  "width": 20,
+  "height": 15,
+  "tiles": "bbeeeeebbbbeeeebbbbbbeefffebbbeeffeeeebbeeffffeebeeffffffeebeffeeefeeeffeeeeffeeeggebeeffffeebbefffeeggebbeeeeeebbeeeeeeeefeebbbbeebbeeeebebbeffeebbbbbbbeeebbebbeeffebbbbbeeeebbeeebbeefebeebbeooeebefebbbefeeeeeeeoooebeeeeebefeeeebbefofebbbbeeeefebeebbeefeebbbbeebeeeebbbbbeeebbbbbbbbbeeebbbbbbbbbbbbb",
+  "beacons": {
+    "Dadaex": { "type": "wh", "x": 18, "y": 9 },
+    "Algol": { "type": "wh", "x": 0, "y": 12 }
+  }
+}

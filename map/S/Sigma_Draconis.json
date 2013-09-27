@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Sigma Draconis",
+  "width": 25,
+  "height": 20,
+  "tiles": "bbbbbbbbbbbbbbbbbbeebbbbbbbbbbbbbbbbbbbbeeeeeeebbbeebbbbbbbbbbbeeeffoooeebbeeeebeebbbbeeefffooofeebbeefeeeeebbbeffffffeeeebbbbeeffffeebeegggfoeebbbbbbbbeeffffebefgggggebbbbbbbbbbeffffeeefgggggeebeeeeebbbefffffeeefggggfeeeffeebbeefffffebefgggfffffeeebbeeffffffebefffggffeeebbbbeggggfffeeeffgggeeebbbbbeeggggffffffffgggebbbbbbbefggggfffffeeefffebbbbbbbeeegggfffffebeeffebbbbbbbbbefffggffeebeeffeebbbbbbbbefffggfeebbeffeeebbbbbbbbeeefffeebbbeffebbbbbbbbbbbbeeeeebbbbefeebbbbbbbbbbbbbbbbbbbbbeeebbbbbbbbb",
+  "beacons": {
+    "PO 4-991": { "type": "wh", "x": 0, "y": 2 },
+    "Miayack": { "type": "wh", "x": 24, "y": 7 },
+    "VH 3-344": { "type": "wh", "x": 14, "y": 19 },
+    "Sigma Draconis Base": { "x": 8, "y": 11 }
+  }
+}

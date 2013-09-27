@@ -1,0 +1,12 @@
+{
+  "cluster": "Union Keldon Core",
+  "sector": "Achird",
+  "width": 22,
+  "height": 22,
+  "tiles": "bbbbbbbbbbbbeeebbbbbbbbbbeeebbbbbbefeeebbbbbbeeefeebbbbeefffebbbbbbeggggebbbeefeefebbbbbeeggggebbbeffeefeeebeeefggggeebbeeefffffeeeeeeggggfebeeeefffffebeebeggggfeeeffffffffebbbbeefffffffffffffffeebbbbbeffoofffffffooffebbbbbefoooffffffoooofebbbbbeffoffffffffoooeebbbbbeeffffffoofffooebbbbbbbefffffooffofofebbbbbbbefffoooofeeefeebbbbbbbeffffooofebeeebbbbbbbbeeffffoffeebbbbbbbbbbbbefffffofeebbbbbbbbbbbbeeeeeoooebbbbbbbbbbbbbbeebefofeebbbbbbbbbbbbbeebeeffeebbbbbebbbbbbbbbbbeeeebbbbbbbb",
+  "beacons": {
+    "UG 5-093": { "type": "wh", "x": 13, "y": 0 },
+    "Phaet": { "type": "wh", "x": 6, "y": 19 },
+    "Achird Station": { "x": 9, "y": 7 }
+  }
+}

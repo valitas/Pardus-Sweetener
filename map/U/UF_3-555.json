@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation South Human",
+  "sector": "UF 3-555",
+  "width": 14,
+  "height": 14,
+  "tiles": "bbbbeeeeebbbbbbbbbefffeeebbbbbbeefffffeebbbbbeeeeeeffeebeeeeebebeffeebeeeeebebeeeebbeeeebbebbeeeeebeebbbebeefeeebeebbeeeeffeeebeeeeefeeefffebefffffebeffeebefffffeeefeebbeeffeeeeeeebbbbeeeebbeebbbb",
+  "beacons": {
+    "Wamien": { "type": "wh", "x": 4, "y": 0 },
+    "Leesti": { "type": "wh", "x": 2, "y": 10 },
+    "Qumiin": { "type": "wh", "x": 13, "y": 10 }
+  }
+}

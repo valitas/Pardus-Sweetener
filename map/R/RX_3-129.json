@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "RX 3-129",
+  "width": 13,
+  "height": 12,
+  "tiles": "bbbbbbbbbbeebeeebbbbbbeeebeeeebbbbbefeebefeeeeeeefeeeefgggggggfebeffgggggggfeeeefgggggggfeebeffeeeeeffebbeffebebeffebeeffeeeeefeebeeeefffffeebbeebeeeeeeebbb",
+  "beacons": {
+    "Tiurio": { "type": "wh", "x": 11, "y": 0 },
+    "Anayed": { "type": "wh", "x": 1, "y": 1 },
+    "Edvea": { "type": "wh", "x": 0, "y": 11 }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "cluster": "Union Rashkir Core",
+  "sector": "Aveed",
+  "width": 17,
+  "height": 15,
+  "tiles": "beebbbbbbbbeebbbbeeeeebbeeeeeeeebbefffeeeegggggeebbeeeeefffgggggebbbbeebeeefgggggebeebbbbbbeegggggeeeebbbbbbbegggffebeebbbbbbbefffffebbbbbbbbbeefffffeebbbbbbbeefffffffebbbbbbbeffffffffebbbbbeeeffffffffeebbbeefffeeeefffeebbbeffeeebbeeeeebbbbeeeebbbbbbeebbb",
+  "beacons": {
+    "Dainfa": { "type": "wh", "x": 1, "y": 2 },
+    "Exiool": { "type": "wh", "x": 15, "y": 5 },
+    "Ioliaa": { "type": "wh", "x": 3, "y": 14 },
+    "Aveed": { "x": 10, "y": 9 }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "cluster": "Split",
+  "sector": "Daaze",
+  "width": 17,
+  "height": 15,
+  "tiles": "bbeeeebbbbbbbbbbbbbeffebeeeeeebbbbbeeffeeeffffeebbbbeffeebefgggfebbbbeeeebbefggggeeebbbeebbeegggggggeebbbbbeefggggggggeeebeeeffggggggggeeeeeffffeeegggggeeebefffeebegggggebbbefffebeegggggebbbeefeebeffffffebbbbeeebeefffffeebbbbbbbeeffffffebbbbbbbbeeeeeeeeeb",
+  "beacons": {
+    "Stein": { "type": "wh", "x": 13, "y": 2 },
+    "Pass FED-12": { "type": "wh", "x": 1, "y": 8 },
+    "Daaze": { "x": 12, "y": 12 }
+  }
+}

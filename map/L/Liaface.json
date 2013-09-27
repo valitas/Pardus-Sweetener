@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation South Human",
+  "sector": "Liaface",
+  "width": 20,
+  "height": 20,
+  "tiles": "bbbbbbbbbeebbbbbbbbbbbbbbbbbeeeebbbbbbbbbbbbbbbeeffeeebbbbbbbbeeeeeefffffeeebbbbbeefggggggfffffeebbbbefgggggggfggggfeebbbeggggggggfggggffebbeegggggggffggggffeebeggggggffffffeeeffeeegggggfffffffebefffeegggggfffffffebeeffeeggggggfffffeebbeffeeggggggfffffebbeeofeeefggggffffeebeeoffebefoofffffeebbefoffebeooooffeeebbeeoffeebefoffffebbbbefofoebbeeeeeefeeeeeefffeebbbeebbeeebbbbeeffebbbbbbbbbbbbbbbbeeeebb",
+  "beacons": {
+    "Enioar": { "type": "wh", "x": 10, "y": 0 },
+    "Inioen (West)": { "type": "wh", "x": 2, "y": 18 },
+    "Inioen (East)": { "type": "wh", "x": 16, "y": 19 },
+    "Liaface": { "x": 8, "y": 9 }
+  }
+}

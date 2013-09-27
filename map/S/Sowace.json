@@ -1,0 +1,12 @@
+{
+  "cluster": "Split",
+  "sector": "Sowace",
+  "width": 19,
+  "height": 21,
+  "tiles": "bbbbbeeeebbbbbbbbbbbbbeeeofeebbbbbbbbbbeeefooffebbbeebbbbbeffffoffeebeeeebbbbeffffffffeeeffeebbeeffffffeeebeeggeebefgggfffebbbbeggfebeegggfeeeeebeefffeebegggfeeeeebeeffffeeeeeeeeeebbbbefffeeeeebeebbbbbeeeffeebbebbbbbbbbbefeeeebbbebbbbbbeeeefebeeebeeeebeeeeffffeeefeeeffeeeeeeefeeeffffeeeffffeeeefebeeefeebeeeeeffffeebbbeeebbbeebeeeeeebbbbbbbbbbbbbbbbebbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbeeebbbbbbbbb",
+  "beacons": {
+    "Oauress": { "type": "wh", "x": 17, "y": 5 },
+    "Ceina": { "type": "wh", "x": 4, "y": 16 },
+    "Pass EMP-11": { "type": "wh", "x": 8, "y": 19 }
+  }
+}

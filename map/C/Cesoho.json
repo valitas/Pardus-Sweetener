@@ -1,0 +1,10 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "Cesoho",
+  "width": 12,
+  "height": 7,
+  "tiles": "eeeeeeeeebbbeefffeeeebbbbeefffffeeebbbefffeeefebbbeeeeebeeebbbbeebbbbeeebbbbbbbbbeee",
+  "beacons": {
+    "Ook": { "type": "wh", "x": 1, "y": 0 }
+  }
+}

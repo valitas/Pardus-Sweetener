@@ -1,0 +1,11 @@
+{
+  "cluster": "Union Keldon Core",
+  "sector": "WW 2-934",
+  "width": 16,
+  "height": 11,
+  "tiles": "bbbbbbbbbeebbbbbbbbeebbbeeeeebbbbbbeebbeefffeeebeeeeeeeeffffffeeeeeeeffffffffeeeeebbeffffooooebbeebbefffoooooeebeeeeefffooofofebeefffffffeeefeebbeeeeeefeebeeebbbbbbbbeeebbbbbbb",
+  "beacons": {
+    "Olaeth": { "type": "wh", "x": 12, "y": 1 },
+    "Homam": { "type": "wh", "x": 4, "y": 9 }
+  }
+}

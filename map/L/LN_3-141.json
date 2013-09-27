@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "LN 3-141",
+  "width": 6,
+  "height": 6,
+  "tiles": "bbbeeebbbeeebbbbebbeeeeeeeeeeeeeebee",
+  "beacons": {
+    "Pass EMP-06": { "type": "wh", "x": 3, "y": 0 },
+    "Urlafa": { "type": "wh", "x": 0, "y": 5 },
+    "WG 3-288": { "type": "wh", "x": 5, "y": 5 }
+  }
+}

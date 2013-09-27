@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "BL3961",
+  "width": 20,
+  "height": 10,
+  "tiles": "beebbbbbbbbbbbbbbbbbeeeebbbbbbbbbbbbbbbbeffeeeebbbbbbbbbbbbbefffffeeeeeeeebbbbbbeeffeeeffffffeeeeeebbeefebefffffffffffeebbefeeefffeeeeeeeffeeeefffeeeeebbbbbeeeeeeeeeeebbbbbbbbbbbbbeebbbbbbbbbbbbbbbbbb",
+  "beacons": {
+    "Beta Proxima": { "type": "wh", "x": 1, "y": 0 },
+    "Tau Ceti": { "type": "wh", "x": 18, "y": 6 },
+    "Siberion": { "type": "wh", "x": 0, "y": 9 }
+  }
+}

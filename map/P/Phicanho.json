@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Phicanho",
+  "width": 13,
+  "height": 25,
+  "tiles": "bbbbbbeebbbbbbbbbbbeebbbbbbbbbeeeebbbbbbbeeeffeeeebbbeeggggfffeebbeggggggfffebeeggggggfffeeefggggggggggeeefgggggggggebeeeegggggggebbbbefffggggebbbbeeffggggebbbbbeffgggfebbbbeeffffffebbbeeffffffeebbeefffffffbbbbeeffffffebbbeeefffffeebbbefffffeeebbbeeffeeeebbbbbeeeeebbbbbbbbeebeebbbbbbbbbbbeeeeeeeebbbbeeffffffeebbbeeeeeeeeeeb",
+  "beacons": {
+    "Quana": { "type": "wh", "x": 6, "y": 0 },
+    "Inliaa": { "type": "wh", "x": 10, "y": 23 },
+    "Phicanho": { "x": 7, "y": 15 }
+  }
+}

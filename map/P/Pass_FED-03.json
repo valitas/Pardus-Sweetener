@@ -1,0 +1,11 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "Pass FED-03",
+  "width": 17,
+  "height": 15,
+  "tiles": "bbbbbbbbbbeebbbbbbbbbbbbbeeeeeeebbbbbeebeeeffoofeebbeeeeeeffffffofebbefffffeeeeeeffebeeeeeeeebeebeeeeeeeebeebbbbbbeeeeebeebeebbbbbeeeeebbeeeeeebbbbeeffeebeefffeeebbbeeeeebbeefeefeebbbbeebbbbeeeeffeebbbbbbbbbbeeeeeeebbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbeeebbbbb",
+  "beacons": {
+    "Alioth": { "type": "wh", "x": 15, "y": 10 },
+    "PJ3373": { "type": "wh", "x": 10, "y": 14 }
+  }
+}

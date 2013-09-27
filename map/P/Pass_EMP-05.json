@@ -1,0 +1,11 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "Pass EMP-05",
+  "width": 13,
+  "height": 20,
+  "tiles": "bbbbbeeebbbbbbbbbbeeebbbbbbbbbbbebbbbbbbbbbbeeeebbbbbbbbbeeeebbbbbbbbbeeeeeebbbbbbbeeeffeebbbbbbbbeeefeebbeeeebbbefeebbeeeeeeeeeebbbeeeffeefebbbeeeeeeeefebbeefebbeeeeebbeefeebbbeebbbbeffeeebbbbbbbeefffeebbbbbbbeeeeeebbbbbbbbbbbebbbbbbbbbbbeeebbbbbbbbbbeeebbbbb",
+  "beacons": {
+    "Waarze": { "type": "wh", "x": 6, "y": 1 },
+    "PI 4-669": { "type": "wh", "x": 6, "y": 19 }
+  }
+}

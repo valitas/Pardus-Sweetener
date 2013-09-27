@@ -1,0 +1,13 @@
+{
+  "cluster": "Split",
+  "sector": "Beurso",
+  "width": 19,
+  "height": 25,
+  "tiles": "bbbeeeeebbbbeeebbbbbbbefffeebbeefeebbbbbbeffffeeeefeeebbbbbeeffffffeeeebbbbbbbeeffffffeeebbbbbbbbbeeeefffffebbbbbbeebeeeefffffeebbbbbeeeeeeeffffffeebbbbeebefeefffffooebbbbbbbefeefffooofebeeebbbeeffffffooeebeeebbbbeeeffffoeebbbeebbbbbbeefgggebbbbeebbeeebbefgggeebbeeeeeefeeeefggggeebeeeeffffeeefgggggebbebeefffebeefggggeeeeebeeeeebbefggggfffeebbbbbbbeefggggfeeebbbbbbbeefffffeeebbbeeebbbeeeeeeeebbbbbefeeebbbeebbebbbbbbeffoeeeeeebeeebbbbbeefffffffebeeebbbbbbeeeeeeeeebbbbbbbbb",
+  "beacons": {
+    "FR 3-328": { "type": "wh", "x": 14, "y": 1 },
+    "Pass FED-11": { "type": "wh", "x": 1, "y": 7 },
+    "Stein": { "type": "wh", "x": 17, "y": 10 },
+    "Beurso": { "x": 8, "y": 4 }
+  }
+}

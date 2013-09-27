@@ -1,0 +1,11 @@
+{
+  "cluster": "Lane",
+  "sector": "Faarfa",
+  "width": 14,
+  "height": 12,
+  "tiles": "bbbbbbbbeeebbbbbbbbbeeefeebbbbbbbeeffffeebbbbbbeffffffebbbbbbeffgggfebbbbbeeffgggfeebbbbefffgggffebbbeefffffffeeeeeeffeefffeebefffffeefeeebbeeeffeeeeebbbbbbeeeebbbbbbbb",
+  "beacons": {
+    "Lasolia": { "type": "wh", "x": 9, "y": 0 },
+    "Edenve": { "type": "wh", "x": 1, "y": 9 }
+  }
+}

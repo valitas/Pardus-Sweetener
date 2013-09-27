@@ -1,0 +1,12 @@
+{
+  "cluster": "Split",
+  "sector": "Quexho",
+  "width": 17,
+  "height": 14,
+  "tiles": "bbbbbbbeebbbeeebbbbbbbbeeeebbeeebbbbbbeeeffeebbebbbeeebeffmmfeeeeebbbebbeeemmeefffebbbebbeeeffeefffebbeeeeefeeeeffffeebeefeefebbeeffggeebefeeeebbbeefggfeeefffebbbbbefggfeeefffebeeebefggeebeffeebefeeefffebbeeeebbefebeeffeebbeebbbeeebbeeeee",
+  "beacons": {
+    "Tivea": { "type": "wh", "x": 2, "y": 12 },
+    "Canolin": { "type": "wh", "x": 16, "y": 12 },
+    "Veedfa": { "type": "wh", "x": 8, "y": 13 }
+  }
+}

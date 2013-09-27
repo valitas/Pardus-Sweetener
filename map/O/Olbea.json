@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Olbea",
+  "width": 21,
+  "height": 22,
+  "tiles": "bbbbbbbbbbbeeeebbbbbbbbbeebbbeeeefoeeebbbbbbbeeebbefffooofebbbbbbbeeeeeefgggoffeebbbbbbbbeffffggggggfebbbbbeeeefffggggggggeebbbeefffffgggggggggfeebbefffffggggggggggffebeefffffggggggggggffebeffgggfggggggggggggeeefggggfggggggggggggfeefggggffffffffgggggeeefgggffffffffffgggfebefffffeeeffffffffffebeefffeeeeffffffeeeeebbeffeebefffffffebeebbbeffebbefffffffeebbbbbeefebeeffffffffebbbbbbefebeeffffffffeeebbbbeeebeefffffeeeeeeeebbeebbbeeefeeebbbeeeebbeebbbbeeeebbbbbbbee",
+  "beacons": {
+    "IP 3-251": { "type": "wh", "x": 3, "y": 1 },
+    "RV 2-578": { "type": "wh", "x": 20, "y": 20 },
+    "Adaa": { "type": "wh", "x": 2, "y": 21 },
+    "Olbea": { "x": 11, "y": 16 }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "cluster": "North Pardus Rim",
+  "sector": "Phiagre",
+  "width": 21,
+  "height": 13,
+  "tiles": "bbbbbbbeeeeeebbeebbbbbbbbbeeeffffeeeeeeebbbbbbeeffffffffffffebbbbbbefffffffffffffeebbbbbeffffffffffeeefeeeebeefgggfffffeebeeeeeeeeffgggfffffebbbbbbeebeffgggfeeefeebbbbbbbbefofffeebeefeeebbbbbbeoooffebbbeeffebbbbbbeeffeeebbbbeeeebeebbbbeeeebbbbbbbbeeeeebbbbbbbbbbbbbbbbeebee",
+  "beacons": {
+    "Miphimi": { "type": "wh", "x": 19, "y": 4 },
+    "Pass FED-04": { "type": "wh", "x": 0, "y": 6 },
+    "Olcanze": { "type": "wh", "x": 19, "y": 11 },
+    "Phiagre": { "x": 10, "y": 3 }
+  }
+}

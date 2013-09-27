@@ -1,0 +1,11 @@
+{
+  "cluster": "Pardus Empire Contingent",
+  "sector": "Menkar",
+  "width": 27,
+  "height": 34,
+  "tiles": "bbbbbbbbbbbbbbeeebbbbbbbbbbbbeeebbbbbbbbeefeebbbbeeebbbeefeeebeeebeemmfeebbeefeebeeffofebefeeefmmffebbefffebeffffeebeeebeefeeeeeeefffeeefofeebbbbbbbeeebeebbeffffeeeofebbbbbeebeebbeebbeeefeebeffeebbbeeeeeebbeeebbbeeebbeffeebbbbefffeebefebbbbebbeeffebbbbbeeeeeeeefeebbbebbefffeebbeebeebeeffffebbeeebeefffebbeeeeebbeffeeebeefeebeeffebeefffeeeeeeebbeeffoebbeefeeeffffffffebbbbeffofebbbeeeeeffggggffeebbeefoooebbbbbbbefggggggffeebeffoofebbbbbbeefgggggggffeeefoofeebbbbeeeffggggggggfffffffeebbbeeeffffggggggggfgggggfebbbeefffffffgggggggggggggfeebeefffeeefffffgggfggggggffeeefffeebeefeeeffffgggggffffeeeffebbbeeebefeeefggggffeeebeefeebbeebbeeebefgggfeeebbbbeffeeeeeeeeebbefgggfebbbbeeeeeffeeeeeeebeefffffebbbbeffeeffebeebeeeefffffeebbbbeeeffeeeeeeeefeeefffeebbbbbbbeefeeeeefeeeebeeefebbbbbbbbbeeeeebeeeeebbbbeeebbbbbbbbbbbbbbbbeffeebbbbebbbbbbbbbbbbbbbbeemmfebbbeeebbbbbbbbbbbbbbbeemmeebbbefebbbbbbbbbbbbbbbbeeeebbbbeeebbbbbb",
+  "beacons": {
+    "Rigel": { "type": "wh", "x": 26, "y": 22 },
+    "Procyon": { "type": "wh", "x": 1, "y": 25 }
+  }
+}

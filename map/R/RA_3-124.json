@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation South Human",
+  "sector": "RA 3-124",
+  "width": 12,
+  "height": 12,
+  "tiles": "bbbbbbeeeebbbbeeebeefeebbbeeeebeffeebbbeeeeefffeeeebefffffeeefeeefeeffeeeeefffeeffeebbeffffffeebbeeeeeeeeebbbeeebbebbbbbbbbbbeeebbbbbbbbbeeebbbb",
+  "beacons": {
+    "Ayqugre": { "type": "wh", "x": 6, "y": 0 },
+    "Aedce": { "type": "wh", "x": 0, "y": 5 },
+    "Pass FED-11": { "type": "wh", "x": 6, "y": 11 }
+  }
+}

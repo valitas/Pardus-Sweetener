@@ -1,0 +1,12 @@
+{
+  "cluster": "North Pardus Rim",
+  "sector": "Remo",
+  "width": 28,
+  "height": 26,
+  "tiles": "bbbbeeebbbbeeebbbbbbeeebbbbbbbbeefeeebbefeebbbbeefeeeebbbbeeffffeeeeffebeeeefffffeebbeefffffeeeeffeeefffffffffeebeffeeeeeeeeffebeffffeeeeffebefeebbebbbeffeeeffffebbeffeeefebbbebbbeefeeeeeffebeeffeeefebbbebbbbefeebbeefebeeffebefeebeeeebbeefebbbeeebbeffebeffebefeebbbeeebbbbeeebeffebeffebeeebbbeeebbbbeeeebeffebeffebbbbbbbeeebbbbefebbefeebeefeebbbeebbbbbeebefebeefebbbeffeeeeeeebbeeeebeeebeffeebbeffebbbefeeeefeebbeebeeffebeeffeeeeefffffeebbbbbbbeffebefffeeeeffeeefebbbbeebbeffebefeeebbeffebeeebbbbeeebeffebefebbbeeffebbeebbbeefebefeebefebbbeffeebbbbbeeeffeeefebeefebbbeefebbeeeeeffeeebefeeeffebbbbeeebeefffffeebbbeffeeffeebbbeebbeffffffebbeeeffeeeffebbbeeeeefeeeefeeeefffeebeeeebbbeffffeebbeeefffffeebbbbbbbbbeeeeeebbbbbeeeeeeebb",
+  "beacons": {
+    "Ross": { "type": "wh", "x": 13, "y": 1 },
+    "Sargas": { "type": "wh", "x": 10, "y": 24 },
+    "EM Weapon Station Remo": { "x": 21, "y": 18 }
+  }
+}

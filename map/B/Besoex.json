@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "Besoex",
+  "width": 13,
+  "height": 16,
+  "tiles": "bbbbbbbbeeeeebbbbbbeeeffeebbbbbeeoffeebbbbbbeoffeebbbbbbbeoofebbbbbbbeefffebbbbbbeeffffeeebeeeefffffffebeeeefffffffeeeebefffeeeeeebbbeeeeebeebbbbbeebbbbeeebbbbbbbbbbeeebbbbbbbbbbbeebbbbbbbbeeeeeebbbbbbbeeeeee",
+  "beacons": {
+    "Cassand": { "type": "wh", "x": 11, "y": 0 },
+    "Pollux": { "type": "wh", "x": 0, "y": 8 },
+    "Wolf": { "type": "wh", "x": 7, "y": 15 },
+    "Besoex": { "x": 7, "y": 7 }
+  }
+}

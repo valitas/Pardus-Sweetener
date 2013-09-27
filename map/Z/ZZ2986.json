@@ -1,0 +1,11 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "ZZ2986",
+  "width": 15,
+  "height": 5,
+  "tiles": "eeeebbeeeeeebbbeeeeebeffooeeebbbefeeeooofofeebeeeeeefofeeeeebeeebbeeeeebbbb",
+  "beacons": {
+    "Hoanda": { "type": "wh", "x": 0, "y": 0 },
+    "Beta Proxima": { "type": "wh", "x": 1, "y": 4 }
+  }
+}

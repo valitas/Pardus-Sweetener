@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "PJ3373",
+  "width": 10,
+  "height": 6,
+  "tiles": "bbbbbbeeebbbbbbbeeebbeeebbbebbeefeeeeeeeefeeeeeeeeeeebbbbbbb",
+  "beacons": {
+    "Pass FED-03": { "type": "wh", "x": 7, "y": 0 },
+    "Quurze": { "type": "wh", "x": 9, "y": 4 },
+    "Epsilon Eridani": { "type": "wh", "x": 0, "y": 5 }
+  }
+}

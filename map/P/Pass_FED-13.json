@@ -1,0 +1,11 @@
+{
+  "cluster": "Gap",
+  "sector": "Pass FED-13",
+  "width": 16,
+  "height": 21,
+  "tiles": "bbbbbbbeeebbbbbbbbbbbbbeeebbbbbbbbbbbbbbebbbeeebbbbbeeeeeeeeefebbbbeegggfeeeeeebbeeefgggeeeebeebbeeeeffeebbbeeeebeebefeebbeeefeebeebeeebeeeffeebeeeeeebeefeeeebbeeffeebefeebbbbbbeffebeeeebbbbbbbeeeeeefebeeeebbbbbeeeeeeeeffeebbbbbeebeeeffffebbbbbbbeeeeffffeebbbbbbeeeeffffeebbbbbbbbbeeeeeebbbbbbbbbbbebbbbbbbbbbbbbbeeebbbbbbbbbbbbbeeebbbb",
+  "beacons": {
+    "JO 4-132": { "type": "wh", "x": 8, "y": 0 },
+    "GV 4-652": { "type": "wh", "x": 10, "y": 20 }
+  }
+}

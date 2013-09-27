@@ -1,0 +1,12 @@
+{
+  "cluster": "South Pardus Rim",
+  "sector": "Cabard",
+  "width": 9,
+  "height": 22,
+  "tiles": "eeebbbbbbefebeebbbeeeeeeebbbeffooeebbefooofeebeefffffebbeeeeffebbbbbefeebbbbbefebbbbbeefeebbbbeffeebbbbeffebbbbeeffebbbeefggeebeeffggfebefffffeeeefffffebeffffffebeefffggeebefffggeebeeeffeebbbbeeeebb",
+  "beacons": {
+    "ZP 2-989": { "type": "wh", "x": 1, "y": 1 },
+    "Paan": { "type": "wh", "x": 8, "y": 10 },
+    "Cabard": { "x": 4, "y": 16 }
+  }
+}

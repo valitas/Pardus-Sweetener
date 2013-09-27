@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Bedaho",
+  "width": 20,
+  "height": 18,
+  "tiles": "bbbbbbbeebbbbbbbbbbbbbbbbbeeeeeebbbbbbbbbbbbbeeffffeebbbbbbbbbbbbeeeefffebbbbbbbbbbbbbebeeeeeeebbbbbbbbbbbebbbbeefeebbbbbbbbbbebbbbbeefebbbbbbbbbbebbbbbbeeeebbbbbbbeeeebbbbbbefebeebbbbeffeebbbbeefeeeebbbeefffeeeeeeffebeebbeemmfeebbbbeffebbbbbefmmeebbbbbeffeebbbeefeeebbbbeeeffeebbbeffebbbbeeefffeebbbeefeebbbeeffeeeebbbbefeebbbbefeeebbbbbbbeeebbbbbeeebbbbbbbbb",
+  "beacons": {
+    "Capella": { "type": "wh", "x": 11, "y": 2 },
+    "Phekda": { "type": "wh", "x": 19, "y": 9 },
+    "Zeaex": { "type": "wh", "x": 1, "y": 16 },
+    "Micanex": { "type": "wh", "x": 9, "y": 16 }
+  }
+}

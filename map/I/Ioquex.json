@@ -1,0 +1,13 @@
+{
+  "cluster": "Lane",
+  "sector": "Ioquex",
+  "width": 16,
+  "height": 15,
+  "tiles": "bbbbbbbbbbbbbeebbbbbbbeebbbeeeebbbbbbeeebbbeeeeebbeeeefeebbeeeeebeefffffeebefeebeefffffffeeeeebbeffffffgggffebbbeeffffgggggfebeebeeggggggggfeeeebbeggggggggeebeebbeggggggggebbbbbbeegggggggebbbbbbbeeeggggeebbbbbbbbbeeeeeebbbbbbbbbbbbbeebbbbbb",
+  "beacons": {
+    "Polaris": { "type": "wh", "x": 7, "y": 1 },
+    "Solaqu": { "type": "wh", "x": 0, "y": 6 },
+    "Pass UNI-07": { "type": "wh", "x": 14, "y": 8 },
+    "Ioquex": { "x": 5, "y": 6 }
+  }
+}

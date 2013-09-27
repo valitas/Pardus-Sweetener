@@ -1,0 +1,11 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "JS 2-090",
+  "width": 13,
+  "height": 10,
+  "tiles": "eeebbbbbeebbbeeeebeebeeebbbeeeeeeeefeebbbefeeeffffebbeefebeefffeebeffebbefffeebeefeeeefffebbbeeeffeeeeebbbbbeeeebbeeebbbbbbbbbbeee",
+  "beacons": {
+    "Alioth": { "type": "wh", "x": 0, "y": 0 },
+    "Waayan": { "type": "wh", "x": 12, "y": 5 }
+  }
+}

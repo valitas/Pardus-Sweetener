@@ -1,0 +1,12 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "Dadaex",
+  "width": 18,
+  "height": 21,
+  "tiles": "bbbbbbbbbbbbeeeebbbbbbbbeeeeeeeffeebbbbbeeeffffffggfeebbbeeggggggggggffebbbegggggggggggfeebbbegggeeeeeeefeebbbbeggeebeebbefebbeebeggeeeeebbefebbeeeeffffffeeeefeebeebeggeeeeffffffeebbbeggebbeeeeefffebbbeggebbbeebefffebbeeggeebbbbeefffebbeggggeeeeeegggfeeeegggggggggggggeeeeeegggggggggggfebbebeeeeeeefggggfebbebbbbbbbeefffffebeeeeeebbbbeeeefeebeffffebbbbbbbeeebbeeeeeebbbbbbbbbbbb",
+  "beacons": {
+    "Arexack": { "type": "wh", "x": 6, "y": 2 },
+    "Pass UNI-09": { "type": "wh", "x": 0, "y": 8 },
+    "Pass UNI-06": { "type": "wh", "x": 9, "y": 17 }
+  }
+}

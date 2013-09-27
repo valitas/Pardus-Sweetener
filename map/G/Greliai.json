@@ -1,0 +1,14 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "Greliai",
+  "width": 16,
+  "height": 20,
+  "tiles": "bbbbbbbbbbbbbeebbeeebeebbeebeeeebeeeeeebeeebefeebbeeefeeefeeefebbbbbefggggeeeeebbbbeefggggebeebbbbbeffggggeeeeebbeeeggggggffffebeeffggggggffffebeefffggffffffeebbeeffffffffeeebbbbeeeffffffebbbbbbbbeeeffffeebbbbbbbbbeeffffebbbbbbbbbbeffffeeebbbbbbbeeeeeeeeebbbbbbeefeeebbeeebbbbbefeeeebeefebbbbbefebbbbeeeebbbbbeeebbbbeebb",
+  "beacons": {
+    "Pass EMP-08": { "type": "wh", "x": 14, "y": 1 },
+    "Pass EMP-11": { "type": "wh", "x": 2, "y": 2 },
+    "Tiurio (West)": { "type": "wh", "x": 6, "y": 18 },
+    "Tiurio (East)": { "type": "wh", "x": 13, "y": 18 },
+    "Greliai": { "x": 8, "y": 10 }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "cluster": "Union Keldon Core",
+  "sector": "BE 3-702",
+  "width": 20,
+  "height": 20,
+  "tiles": "bbbbbbbbbbbbbbbeebbbbbbbbbbbbbbbbbeeeebbbbbbbbbeeeeebbeffebbbbbeeeeegggeeeeffebbbbeeggggggggfgggeebbbeegggggggggfgggebbbbeegggggggggfgggebbbbbeggggggggfggggeebbeeefgggggggfgggggeeeeeeefggggggfggggggfebbbefggggggfggggggfebbbeffgggggfggggggeebbbeefgggggfggggggebbbbbefffgggfggggggebbbbeegggggfggggggeebbbbeegggggfgggggeebbbbbbegggggfgggeeebbbbbbbeeeefffffeebbbbbbbbbbbbeeeffeebbbbbbbbbbbbbbbeeeebbbbbbb",
+  "beacons": {
+    "Nekkar": { "type": "wh", "x": 16, "y": 1 },
+    "Pass UNI-05": { "type": "wh", "x": 1, "y": 9 },
+    "Cebalrai": { "type": "wh", "x": 10, "y": 19 }
+  }
+}

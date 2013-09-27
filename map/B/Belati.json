@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "Belati",
+  "width": 25,
+  "height": 16,
+  "tiles": "bbbbbbbbeebbbbbbbbbbbbbbbbbeeebeeeebbbbbeebbbbbbbbbeefeeeffeeeeeeeebbbbbbbbbefeefffeeeeeeeeebbbbbbbbbefeefffebbbbbbebbbbbbbbbeefffeefeeebbbbebeebbbbbbeeeeeeefffeeebbebeeeeebbbbebbeeffffffeebebefofeebbeeebbeeffffffeeeeeffofeeeefebbbeeeffgggggffooooofeeeebbbbbeffgggggfffoooffebbbbbbbeeffgggggffoffofeebbbbbbeefffgggggfffffffebbbbbbbeefffgggggfffffffeebbbbbbbeefffffffeeeeeeeeebbbbbbbbeeeeeeeeebbbbeebb",
+  "beacons": {
+    "Edvea": { "type": "wh", "x": 2, "y": 2 },
+    "ZS 3-798 (North)": { "type": "wh", "x": 16, "y": 2 },
+    "ZS 3-798 (South)": { "type": "wh", "x": 24, "y": 14 },
+    "Belati": { "x": 8, "y": 10 }
+  }
+}

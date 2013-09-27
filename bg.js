@@ -113,6 +113,7 @@ function PardusSweetener() {
     personalQLPegasusEnabled:  new BooleanOption(false),
     personalQLPegasus:       new StringOption(''),
 
+    miniMap:                 new BooleanOption(true),
     sendmsgShowAlliance:     new BooleanOption(true)
   };
   this.ports = new Array();
@@ -273,14 +274,14 @@ PardusSweetener.prototype = {
   requestMapMsgHandler: function(pi, msg) {
     var sectorName = msg.sector;
     var rq = new XMLHttpRequest(),
-        url = chrome.runtime.getURL('map/' +
+        url = chrome.runtime.getURL('map/' + sectorName[0] + '/' +
                                     sectorName.replace(' ', '_') + '.json');
-    rq.onreadystatechange = this.onMapRSC.bind(this, sector, pi);
+    rq.onreadystatechange = this.onMapRSC.bind(this, pi);
     rq.open('get', url);
     rq.send();
   },
 
-  onMapRSC: function(sector_name, pi, event) {
+  onMapRSC: function(pi, event) {
     var rq = event.target;
     if(rq.readyState != 4)
       return;

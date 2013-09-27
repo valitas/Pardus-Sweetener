@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "Pass EMP-11",
+  "width": 15,
+  "height": 22,
+  "tiles": "bbbbbeeebbbbbbbbbbbbeeebbbbbbbbbbbbbebbbbbbbbbbeeeeeeeebbbbbbeeffffffeeebbbbeeeeeeeeefebbbbeebbbebbeeebbbbeeebbebbbebbbbbeeebbebbeeebeebbebbbebbefeeeebbebbeeebeeebeebbebbeeebbbbbeebeeebbeebeeebeeeefebbeeeefeeeeeeeebbeebeeebeebeebbeeebbebbbbbeeeeefebbebbbbbeebbeeebbebbbbbeeebeeeeeeebbbbeeebefffffeebbbbeeeefeeefeebbbbeeeeeebeeebbb",
+  "beacons": {
+    "Sowace": { "type": "wh", "x": 6, "y": 0 },
+    "Pass EMP-10": { "type": "wh", "x": 2, "y": 20 },
+    "Greliai": { "type": "wh", "x": 12, "y": 20 }
+  }
+}

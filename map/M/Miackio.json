@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "Miackio",
+  "width": 25,
+  "height": 16,
+  "tiles": "eeebbbbbbbbbbbbbbbbbbbeebeeeeeeeeeeeeeeeeeeeeeeeebbeeeeeeeeeeeeeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbefeefeeeeeeeeebeeeeebbbbeefeefffffffffeeeffeebbeeeffeeeffffffffffffeebbbeffffebeffffffffggfeebbbeeffffebefffgggggggeebbeeeffffeebeffggggggggebbeeffffffebbeefggggggggebeefffffffebbbefggggggggeeefffffffeebbbeefggggggffffffffffeebbbbbeefffffffffeeefeeeebbbbbbbeeeeeeeeeeebeeebbbbbbbbbbbbbbbbbeeeebbbbbbbbbb",
+  "beacons": {
+    "Oldain": { "type": "wh", "x": 2, "y": 2 },
+    "Edvea": { "type": "wh", "x": 21, "y": 2 },
+    "Miackio I": { "x": 7, "y": 6 },
+    "Miackio II": { "x": 19, "y": 10 }
+  }
+}

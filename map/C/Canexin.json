@@ -1,0 +1,13 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "Canexin",
+  "width": 25,
+  "height": 25,
+  "tiles": "bbbbbbbbbbeebbbbbbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbbbbbefebbbbbbbbbbbbbbbbbbbbbbefeebbbeebbbbbbbbbbbbbbbbeffeeeeeebbbbbbbbbbbbbbbeefggggggeebbbbbbbbeeeeeeeffggggggfeebbbbeeeefffffffgggmmggffebbbeeeeeeeeefffgggmmgggfeeeeeeebbbbbeeefggggggggffffffebbbbbbbbeefggggggffffffeebbbbbbbbbeeffggggffeeeeebbbbbbbbbbbeffggggfeebbbbbbbbbbbbbbbeffggggfebbbbbbbbbbbbbbbbeefgggfeebbbbbbbbbbbbbbbbbeffffeebbbbbbbbbbbbbbbbbbeefffebbbbbbbbbbbbbbbbbbbbeffeebbbbbbbbbbbbbbbbbbbbeffebbbbbbbbbbbbbbbbbbbbbefeebbbbbbbbbbbbbbbbbbbbbefebbbbbbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbbbbbbeebbbbbbbbbbb",
+  "beacons": {
+    "Olphize": { "type": "wh", "x": 11, "y": 0 },
+    "Zirr": { "type": "wh", "x": 0, "y": 9 },
+    "Retho": { "type": "wh", "x": 23, "y": 9 },
+    "Laolla": { "type": "wh", "x": 13, "y": 24 }
+  }
+}

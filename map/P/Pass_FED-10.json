@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation South Human",
+  "sector": "Pass FED-10",
+  "width": 19,
+  "height": 20,
+  "tiles": "bbbbeeeeeeeeeebbbbbbbbeeffeeefffeebbbbbbbeefeebeeefeebbbbbbbbeeebbbbeeebbbbbeeebbeeebbbbebbbbbbefebbeeebbeeeeeebeeeeeebbebbeeffeeeeeebeeebbebbeeffeeebeeeeebbbebbbeeeffebbbefebbeeeebbbeefeebbefeeeeffeeebbeeeeebeeeeeeffffebbeeefebbeebbeeggfebbeeeeeebbbbbbeggfeebbeeefebbbbbeefeeeeebeeffebbbbeefeebeeeebeffebbbbeeeebeeefeeefeebbbbbebbbeeefffeeebbbbbeeebbbbeeeeebbbbbbbeeebbbbbeebbbbb",
+  "beacons": {
+    "Pass FED-09": { "type": "wh", "x": 9, "y": 0 },
+    "Wamien": { "type": "wh", "x": 1, "y": 5 },
+    "Lave": { "type": "wh", "x": 18, "y": 6 },
+    "Ureneth": { "type": "wh", "x": 5, "y": 19 }
+  }
+}

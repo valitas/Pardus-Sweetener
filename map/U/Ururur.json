@@ -1,0 +1,14 @@
+{
+  "cluster": "North Pardus Rim",
+  "sector": "Ururur",
+  "width": 20,
+  "height": 17,
+  "tiles": "bbbbbbbbeeebeeeebbbbbbbbbbeeefeeeffeeebbbbbbeeeffffffffffeebbbbeeffffoofffffffebbbbeeffoooffffffffeebbbbefoofffffffffffebbbeefffffffffffffeebeeefffffffffffffeebbefffooffffffffffebbeeffoffffffffffeeebbeffooffeeeffffeebbbbeeffoffebeeeefebbbbbbefffffebeebeeebbbbbbefeeeeebbbbbbbbbbbbbefebbbbbbbbbbbbbbbbbeeeebbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbb",
+  "beacons": {
+    "BQ 3-927": { "type": "wh", "x": 19, "y": 5 },
+    "Betiess": { "type": "wh", "x": 10, "y": 12 },
+    "Enaness": { "type": "wh", "x": 13, "y": 12 },
+    "Daaya": { "type": "wh", "x": 6, "y": 13 },
+    "Ururur": { "x": 11, "y": 7 }
+  }
+}

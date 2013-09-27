@@ -1,0 +1,13 @@
+{
+  "cluster": "North Pardus Rim",
+  "sector": "BQ 3-927",
+  "width": 15,
+  "height": 15,
+  "tiles": "bbbbbbeebbbbbbbbbbbbbeeebbbbbbbbbbbbefeeeebbbbbbeeeefgggeeeebeeegggfgggggeebegggggggggggebeeggggggfggggeeefggggggfggggeeeefffffffgggfebbeggggggffgggeebegggggggggggeebegggggggggggebbeegggggggggeebbbeeeffeeeeeebbbbbbeeeebbeebbb",
+  "beacons": {
+    "Canopus": { "type": "wh", "x": 7, "y": 1 },
+    "Ururur": { "type": "wh", "x": 0, "y": 7 },
+    "Ross": { "type": "wh", "x": 14, "y": 7 },
+    "Missile Hub": { "x": 3, "y": 13 }
+  }
+}

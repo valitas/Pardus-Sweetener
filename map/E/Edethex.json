@@ -1,0 +1,12 @@
+{
+  "cluster": "Union Rashkir Core",
+  "sector": "Edethex",
+  "width": 25,
+  "height": 25,
+  "tiles": "bbbbbbbeeeebeebbbbbeebbbbbbeeeeeeffeeeeebeeeeeebbbbeeffffeeeffffeeeffofeebbeefoeeeebeeefffeefffffeebefffebbbbbbeeeeeefoffffebefooeeebbbbbbbeeeeeeeffebeefoffeeebbbbbbeebbbeffeebeefeeeffebbbbbbbbbbefffebbeeebeeeeeeebbbbbbbeffeebbbeebbbeeffebbbbbbeeffebbbbeebbbbeffeebbbbeeggfebbbeeeebbbeeffeebbbeeggfebbeeffebbbbefffebbbbeffeebbefffeebbbeeeeebbbeeffebbeeffggebbbbbeebbbbeffeebbeeffggebbbbbbbbbbeeffebbbbeefggebbbbbbbbbbeeffebbbbbefggeeebbbbbbbbbeffeeeebbefggffeebbbbeeeeefffffebeeffffffebeeeeffffffffeeeefffffffeeefeeeeeefffeebeeffffffffffeebbbbeeeeebbbbeffffffffeebbbbbbbeebbbbbeeffffeeeebbbbbbbbbbbbbbbbeeeeeebbbbbbbbbbbbbbbb",
+  "beacons": {
+    "Exiool": { "type": "wh", "x": 15, "y": 2 },
+    "Beta Hydri": { "type": "wh", "x": 23, "y": 19 },
+    "Edethex": { "x": 5, "y": 20 }
+  }
+}

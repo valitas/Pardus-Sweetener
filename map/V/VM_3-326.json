@@ -1,0 +1,11 @@
+{
+  "cluster": "Federation South Human",
+  "sector": "VM 3-326",
+  "width": 25,
+  "height": 10,
+  "tiles": "bbbbbbbbbbbbbbbbbbbbbbeebbbbbeeeeeeebbbbeebbeeeeebbbbeegggggeebbeeebeeeeeeebbbefgggggfebeefeeeeebeeeeebefgggggfeeeffebeebbbeeeeeefgggggffeeefebeebeeeeeebefgggggffebefeeeeeeeeebbbeffffffffebeeebeefeebbbbeeeeeefffeebbeebbeeebbbbbeeebbeeeeebbbbbbbbbbbbb",
+  "beacons": {
+    "Inioen": { "type": "wh", "x": 11, "y": 2 },
+    "Wamien": { "type": "wh", "x": 11, "y": 9 }
+  }
+}

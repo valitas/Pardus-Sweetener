@@ -1,0 +1,12 @@
+{
+  "cluster": "South Pardus Rim",
+  "sector": "Waarze",
+  "width": 20,
+  "height": 14,
+  "tiles": "bbbeebbbbbbbbbbbbbbbbbeeeebbbbbbbbbbbbbbbeeffeebbbbbbbbbbbbbeegggfebbbbbbbbbbbbbefggggeebeeeebbeeebbeegggggeeeffebeefeebbegggggfffffebefffeebegggggfffffeeeffffebegggggfffffffffffeebeeggggfffffffffffebbbeggggfeeeffffffeebbbeffffeebeeefffeebbbbeefeeebbbbeeeeebbbbbbeeebbbbbbbbbbbbbb",
+  "beacons": {
+    "Veareth": { "type": "wh", "x": 12, "y": 4 },
+    "Pass EMP-05": { "type": "wh", "x": 10, "y": 11 },
+    "Waarze": { "x": 9, "y": 7 }
+  }
+}

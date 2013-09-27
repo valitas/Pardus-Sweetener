@@ -1,0 +1,12 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "Famida",
+  "width": 25,
+  "height": 19,
+  "tiles": "bbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbbbbbefeeebbbbbbbbbbbbbbbbbbbeefffebbbbbbbbbbbbbbbbbbeeffffeeebbbbbbbbbeeebbebefgggfffeebbbbbeeeefeeeefffgggggffeebbbeefffffofffggggggggffeebbeffffffofggggggggggfffebeeffffffoogggggggggfeeeebeeffgggooogggggggggfebeebbeffgggfofgggggggggfeeeebbeeegggfofggggggfffffffebbbbeefffffggggfffffeeeeebbbbbefffoffffggfffeebbebbbbeeeffffffffggffeebeeeebbeefeeeeeeeeeeefeebeeffeebeeeebbeebbbbbeeebbeeffeebbeebbbbbbbbbbbbbbbbefeebbbbbbbbbbbbbbbbbbbbbeeebb",
+  "beacons": {
+    "GT 3-328": { "type": "wh", "x": 1, "y": 9 },
+    "Let": { "type": "wh", "x": 23, "y": 17 },
+    "Famida": { "x": 18, "y": 10 }
+  }
+}

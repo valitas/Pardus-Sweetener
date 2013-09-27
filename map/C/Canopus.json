@@ -1,0 +1,12 @@
+{
+  "cluster": "North Pardus Rim",
+  "sector": "Canopus",
+  "width": 12,
+  "height": 22,
+  "tiles": "bbbbbeeebbbbbbbbbeeebbbbbbeebbebbbbbbeeeeeeeebbbbeeffffeebbbbbefeeeebbbbeeefebbbbbbbefffeeeeeebbeefffffofeebbeeeeeffofeebbbbbefffofebbeeeefooffebbeffffffoeebeeffffeeeebbefffffebbbbbefffffeeeebbeeffffgggeebbeefffgggfebbbefffgggeebbbeefffeeebbbbbeffeebbbbbbbeeeebbbb",
+  "beacons": {
+    "Pass FED-05": { "type": "wh", "x": 6, "y": 0 },
+    "BQ 3-927": { "type": "wh", "x": 6, "y": 21 },
+    "Canopus": { "x": 4, "y": 14 }
+  }
+}

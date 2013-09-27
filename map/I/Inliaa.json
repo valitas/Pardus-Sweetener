@@ -1,0 +1,11 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Inliaa",
+  "width": 12,
+  "height": 10,
+  "tiles": "eeeebbbbbbbbeeeeeeeebbbbbbeffffeeebbbbeeffeeeebbbbbeefeeeeebbbbbefeeefeebbbbeeeffffebbbbbbeefffebbbbbbbeeeeebbbbbbbbbbee",
+  "beacons": {
+    "Phicanho": { "type": "wh", "x": 0, "y": 0 },
+    "Kenlada": { "type": "wh", "x": 11, "y": 9 }
+  }
+}

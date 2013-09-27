@@ -1,0 +1,14 @@
+{
+  "cluster": "Split",
+  "sector": "Andsoled",
+  "width": 18,
+  "height": 25,
+  "tiles": "beeeebbbbeeeebbbbbbeeeebbbeeffeebbbbbbbebbbbeffffeebbbbbeeeebbeefffeebbbbeeffeebbefffeebbbbeggggeeeeffggeebbeeggggggggfggggeebeeggggggggfgggggebeeggggggggfgggggeeeggggggggfggggggeeeggggggggfgggggeebegggggggfggggggebbegggggfffggggggeeeeggggeeefggggffffeeefffebefffeeeeeeebeffebbeeeeebeebbbbefeebbbebbbbbbbbbbeeebbbeeeeebbbbbbbbbbbbeefeeeeebbbbbbbbbeeffeeffeebbbbbbeeeffffffeeebbbbbbefffeeeffebbbbbbbbeeffebefeebbbbbbbbbeeeebeeebbbbbbbbbbbeebbbbbbbbbbb",
+  "beacons": {
+    "Tivea (North)": { "type": "wh", "x": 17, "y": 13 },
+    "Liaackti": { "type": "wh", "x": 1, "y": 17 },
+    "Tivea (South)": { "type": "wh", "x": 14, "y": 20 },
+    "Enwaand": { "type": "wh", "x": 3, "y": 22 },
+    "Andsoled": { "x": 11, "y": 2 }
+  }
+}

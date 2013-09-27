@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Exinfa",
+  "width": 10,
+  "height": 20,
+  "tiles": "bbbeeebbbbbbeefeebbbbeegggebbbbeggggeeeebeggggfeeeeegggfeebbefffffebbbeeeeffebbbbbbeffebbbbbeeffeebbeeeffffeebefffffffebeeffffffeebefffffffebefffffffebeffffffeebeefffffebbbeeefffebbbbbeeeeebbbbbbbeebb",
+  "beacons": {
+    "Lamice": { "type": "wh", "x": 9, "y": 3 },
+    "Miayack": { "type": "wh", "x": 0, "y": 6 },
+    "Exinfa": { "x": 5, "y": 14 }
+  }
+}

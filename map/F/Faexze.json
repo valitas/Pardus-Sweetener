@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "Faexze",
+  "width": 23,
+  "height": 16,
+  "tiles": "bbbbbbeeeebbbbbbbbbbeeebbbbbeeffeeeebbbbbbbeeebbbbbeffffffeeeeebbbbeebbbbeefffgggffffeebbeeebbbbeffffgggfffffeeeefebbbbeefffgggffffffffffebbbbbeeeffffggggffffffebbbbbbbefffgggggfffffeebbbbbeeeffggggggeeeffebbbbbbeffffggggfeebefeebeebbbeffffggggeebbeeebbeeeeeefeeeefffebbeeebbbeebbbeeebbeefeebbefeebbbbbbbbbbbbbeeebbbeefeeebbbbbbbbbbbbbbbbbbeeeeebbbbbbbbbbbbbbbbbbeebee",
+  "beacons": {
+    "Epsilon Eridani": { "type": "wh", "x": 21, "y": 0 },
+    "Pass FED-09": { "type": "wh", "x": 0, "y": 11 },
+    "Alpha Centauri": { "type": "wh", "x": 21, "y": 14 },
+    "Faexze Station": { "x": 8, "y": 7 }
+  }
+}

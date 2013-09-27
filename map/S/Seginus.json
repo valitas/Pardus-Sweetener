@@ -1,0 +1,13 @@
+{
+  "cluster": "East Pardus Rim",
+  "sector": "Seginus",
+  "width": 17,
+  "height": 18,
+  "tiles": "eeebbbbbbeeebbbbbefeebbbbbefebbbbbeefeebeeeefebbbbbbeefeeeffffeebbbbbbeeffgggggfebbbbbbbeffggggggeebbbbbbeffggggggfeebbbbbeeffggggggfebbbbbbeeefgggggfeebbbbbbbefgggggffebbbbbbbefggggfffebbbbbbeeffffffffeebbbbeefffffffffeebbbbefffffffffeebbbbbeffffffeeeebbbbbbeefffeeebbbbbbbbbbefffebbbbbbbbbbbbeeeeebbbbbbb",
+  "beacons": {
+    "Adara": { "type": "wh", "x": 10, "y": 0 },
+    "Phao": { "type": "wh", "x": 1, "y": 1 },
+    "Nusakan": { "type": "wh", "x": 9, "y": 17 },
+    "Seginus": { "x": 8, "y": 12 }
+  }
+}

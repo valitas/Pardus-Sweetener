@@ -1,0 +1,13 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "Nex Kataam",
+  "width": 25,
+  "height": 25,
+  "tiles": "bbbbbbbbbbbbbbeeeeebbbbbbbbeeeeebbbbbeeefffeebbbbbbeefffeebbbeefeeeefebbbbbeeeeeeeebbbefeebbefeebbbbefeeebebbeeefebbeeffebbbbeefeebebeegggeeeefffebbbbbeeebbebefgggfffffffeeebbbbbbbbebefgggeeeefgggfebbbbbbbeeeefgggebbefgggfebbbbbbbefffeeeeeebefgggfeebbbbbeefeeebbefeeeeeeeffeebbbbeffebbbeefffeebbeefeebbbbeffeebeefffeebbbbefebbbbbefffeeeffffebbbbbefebbbbeefffeeefffeebbbbeeeebbeeeeeefebeefeebbbeeefebbbeeeebeeebbefebbeeefffebbbbeebbbbbeeefebeefffffeebbeeeebbbeefffeeefffffffeeeeffeebeeffffffeeeefffffeeefffeeefffffffebbeefffeebeeffffffffffffeebbeefeebbbeffggffffeeeffeebbefebbbbeeeggfffeebeeffeeeeeebbbbbbeeeeeeebbbeeeeeeeebbb",
+  "beacons": {
+    "Retho": { "type": "wh", "x": 16, "y": 0 },
+    "Tiacken": { "type": "wh", "x": 1, "y": 20 },
+    "13": { "type": "xh", "x": 13, "y": 0 },
+    "Kataam": { "x": 11, "y": 19 }
+  }
+}

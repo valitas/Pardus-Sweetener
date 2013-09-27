@@ -1,0 +1,11 @@
+{
+  "cluster": "Union Keldon Core",
+  "sector": "Izar",
+  "width": 16,
+  "height": 18,
+  "tiles": "bbbbbbbeebbbbbbbbbbbbbeeeeebbbbbbbbbeeegggeebbbbbbeeegggggfebbbbbbeggggggggeebbbbeeggggggggfebbbbegggggggggfebeeeegggggggggfeeeeefgggggggggfebeeefgggffgggffebbbeeffffffffffebbbeeffffffffeeebbbbeeffffffeebbbbbbbeffffffebbbbbbbbeefffffebbbbbbbbbeeeeeeebbbbbbbbbbbbeebbbbbbbbbbbbbbeebbbbbbbb",
+  "beacons": {
+    "Wezen": { "type": "wh", "x": 6, "y": 17 },
+    "Izar": { "x": 6, "y": 11 }
+  }
+}

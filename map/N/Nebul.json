@@ -1,0 +1,11 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Nebul",
+  "width": 12,
+  "height": 26,
+  "tiles": "bbbeeeebbbbbbbeeffeebbbbbeefgggeeebbeegggggggeebefggggggggebefggggggggebeeggggggggebbegggggggeebbeggggffeebbbegggfeeebbbeeffeeebbbbbeeffebbbbbbbbeefeeeebbbbbbeeeffeebbbbbbbefffeeeebbbeeffffffebbeeffffeeeebbefffeeebbbeeefffebbbbbefeeeeeeeebbeeebbegggeeebbbbeeggggfebbbbefggggfebbbbefggggeebbbbeegggeebbbbbbeeeeebb",
+  "beacons": {
+    "Famiay": { "type": "wh", "x": 11, "y": 15 },
+    "Capella": { "type": "wh", "x": 1, "y": 19 }
+  }
+}

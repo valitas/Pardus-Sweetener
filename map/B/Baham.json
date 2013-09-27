@@ -1,0 +1,12 @@
+{
+  "cluster": "Pardus Empire Contingent",
+  "sector": "Baham",
+  "width": 29,
+  "height": 36,
+  "tiles": "bbbbbbbbeeebbbbbbbbbbbbbbbbbbbbbbbbeeefeebbbbeeebbbbbbbbbbbbbbeeefffeebbbeefeebbbbbbbbbbbbeeffffeebbbeefofebbbbbbbbbbbeeeeeffebbbbeeooeebbbbbbbbbbeefebeefebbbbbeffebbbbbbbbbbbeffebbefeebbbeefeebbbbbbbbbbbeffeeeeffeebbeefebbbbbbbbbbbeefffffffffeebbeeebbbbbeeebbbefffffffffffeebeebbbbbeefeebbeffffffffgggfeeeeebeeeefffeebefffffffgggggffffeeefffffffeeeeffffffggggggfffgggfffoffffebeffffffggggggggggggffooofffebbefffffggggggggggggfoooffffebbeeeeffggggggggggggfooffffeebbbbbeeefgggggggggggffoooffebbbbbbbbeefggggggggfffofffeeebbbbbbbbbeffgggggggfffffeeebbbbbeebbbbefffgggggffffffebbbbbbbeeebbbeefffgggffffffeebbbbbbeefeeebbefffgggffffeeebbbbbbbeffffeeeeffffgggffeebbbbbbbbbefffeebbeffffgggffebbbbbbbbbbeeeeebbeeffgggggffeebbbbbbbbbbbbbbbbefggggggggffeeeebbbbbbbbbbbbbefggggggggggfffeebbbbbbbbbbbeefgggggggggggfffeeebbbbbbbbbeffgggggggggggffffeebbbbbbbbeeeeeggggggggggffffebbbbbbbbbefebeeffgggfffffeefebbbbbbbbbeeeebeeeeffffeeeeefeebbbbbbbbbeeeeeebeeefeebeefffeebbbbbbbbbeeeeebbbeeebbbeefffebbbbbbbbbbbeebbbbbbbbbbbeffeebbbbbbbbbbbbbbbbbbbbbbbbeeeebb",
+  "beacons": {
+    "Nhandu": { "type": "wh", "x": 10, "y": 1 },
+    "Rigel": { "type": "wh", "x": 23, "y": 35 },
+    "Baham": { "x": 4, "y": 10 }
+  }
+}

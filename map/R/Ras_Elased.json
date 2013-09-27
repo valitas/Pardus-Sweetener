@@ -1,0 +1,13 @@
+{
+  "cluster": "Pardus Federation Contingent",
+  "sector": "Ras Elased",
+  "width": 41,
+  "height": 38,
+  "tiles": "bbbbeebbbbbbbbbbbbbbbeeeebbbbbbbbbbbeeebbbbbeeebbbbbbbbbbbbbeeeffeeeebbbbbbbeefeebbbeefeebbbbbbbbbbbbefffffggeebbbbbeefffeebeeffeebbbbbbbbbbbbefffffggfeebbbeefgggfebeffeebbbbbbbbbbbbbeeeeeffffeebbbeffgggfeeeffebbbbbbeeeeebbbeebbeeeeeebbbeeffgggeeeeffeebbbbeeoffeeeeeeebbbbeebbbeefffggeebbefffeebeeeffoofoffffebbbbbbbbbegggfggebbbeefffebefffffoofffffeebbbbbbbbegggfggebbbbeeefeeeffffoooooffffebbbbbbbbegggfggeebbbbbeeeeefffffooffffffeebbbbbeeegggfggfeebbbbbbbbefffoofffeeefffeeeebeeffgggffffeebbbbbbbbeefffoeeeebefgggffeeefffffffffeebbbbbbbbbbeffffebbbeefgggfffffffffffeeeebbbbbbbbbbbeffffebeeeffgggfffffeeeeeeebbbbbbbbbbbbbeeffffeeefffffffffeeeeeebeebbbbbbbbbbbeeeefffgggfffffffffffebeffeebbbbbbbbbbeeeeffffffgggggggfffffffeeefffebbbbbbbbbeeeeeeeffffgggggggffffffffeeeeeebbbbbbbbbefebbbeefffgggggggffffffffebbeebeeebbbbbbefeeebbeeefggggggfffffffffeeeeeeefeebbbbbefffeebbbeeggggggffffffffffffffffffebbbbbeffffebbbbeegggffffffffffffffffffffeeebbeeffofebbbbbeefffffffffffffffeeeffffffeebeffoofeebbbbbefffffffeeefeeeeebeeeeeeefeeeffofffebbbbeeffffffeebeebbbbbbbebebbeffeefffffeebbbbeffeeefeebbbbbbbbbbeeeeeeefeeeefeeeebbbbbefeebeeebbbbbbeeeeeefffffffebbeeebbbbbbbeefebbbbbbbeeeeefffffffofffeebbbbbbbbbbbeeffeeeeebeeeggggfffffooooofebbbbbbbbbbbeefffffffeeeffggggffffffooofeebbbbbbeeebeeffffffffffffffffffeeeffofofebbbbbbeefeeeffgggeeeffffeeeeeeeebefffffoeebbbbeefffffffgggebeeefeebbbbbebbeeeeffffebbbbeffffffffgggebbbeeebbbbeeeebbbbeefffebbbbeeeeefffffffebbbbbbbbbbeffebbbbbeffeebbbbbeebeeefeeeeebbbbbbbbbbbbbbbbbbbeefebbbbbbbbbbbeeebeebbbbbbbbbbbbbbbbbbbbbeeebbb",
+  "beacons": {
+    "Fornacis (West)": { "type": "wh", "x": 5, "y": 0 },
+    "Fornacis (East)": { "type": "wh", "x": 38, "y": 1 },
+    "Enif": { "type": "wh", "x": 12, "y": 37 },
+    "Elased": { "x": 21, "y": 20 }
+  }
+}

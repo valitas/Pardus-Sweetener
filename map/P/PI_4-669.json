@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "PI 4-669",
+  "width": 9,
+  "height": 10,
+  "tiles": "bbbeeebbbbbbefebbbbbbeeebbbbbbbebbeebbeeeeeeebeeffffeeeeffeeeebeefeebeeebeeebbeeebbeebbbee",
+  "beacons": {
+    "Pass EMP-05": { "type": "wh", "x": 4, "y": 1 },
+    "Daurlia": { "type": "wh", "x": 0, "y": 6 },
+    "Delta Pavonis": { "type": "wh", "x": 2, "y": 9 },
+    "Eta Cassiopeia": { "type": "wh", "x": 8, "y": 9 }
+  }
+}

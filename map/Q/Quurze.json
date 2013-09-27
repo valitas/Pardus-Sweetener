@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "Quurze",
+  "width": 16,
+  "height": 20,
+  "tiles": "bbbeebbbbbbbbbbbbbbeeebbbbbbbbbbbbeefeebbbbbbbbbbbeeffeeeebbbbbbbbbefffffeeeebbbbbbeefffffffeeebbbbbeeefffffffeebbbbbbeefffffffebbbbbbbeffffffeebbbbbbeeffffffebbbbbbeeggffffeebbbbbeefggfeeeebbbbbeefggfeebbbbbbbbeffggfebbbbbbbbeefffffeeeebbbeeefffffffffebbbeeefffffffeeebbbbbeeffffffebbbbbbbbeeefeeeebbbbbbbbbbeeebbbbbbbb",
+  "beacons": {
+    "PJ3373": { "type": "wh", "x": 3, "y": 0 },
+    "Hoanda": { "type": "wh", "x": 12, "y": 15 },
+    "Epsilon Eridani": { "type": "wh", "x": 0, "y": 16 },
+    "Quurze": { "x": 11, "y": 8 }
+  }
+}

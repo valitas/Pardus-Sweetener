@@ -1,0 +1,12 @@
+{
+  "cluster": "Split",
+  "sector": "Enwaand",
+  "width": 20,
+  "height": 22,
+  "tiles": "eeeeebbbeeebbbeeeeeeegggebbeefeebeeggggeegggeeeegggebegggggeegggeeefgggeeegggggeeeeeebeegggeeeggggeebbebbbbeefeebeeeeeebbeeebeebefebbbeebbbbbefebeeeefeebbeeeebbeefeeeffgggebeeefeebeffebeffgggeeeggffeeeffebeefggggggggggfeeffebbeffgggggggggfeeofeebeeegggggggggeeeefeebbbeggggggggfebbeeebbeeefggggggfeebbbbbbbeeffgggggfeebbbbbbbbbefffgggfeebbbbeeeeebeffffffeebbbbeefffeeefffeeeebbbbbeeeeeebeeeeebebbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbeeebbbbb",
+  "beacons": {
+    "Liaackti": { "type": "wh", "x": 9, "y": 0 },
+    "Andsoled": { "type": "wh", "x": 19, "y": 10 },
+    "Stein": { "type": "wh", "x": 8, "y": 13 }
+  }
+}

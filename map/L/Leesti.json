@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation South Human",
+  "sector": "Leesti",
+  "width": 15,
+  "height": 16,
+  "tiles": "bbbbbbbbeeebeeebbbbbbeeefeeeeebbbbbeegggggfebbbbbeegggggggeebbbeefgggggggfeeebeffgggggffeeeeeeffffffffeebeebeffffffffebbbbbeffffffffebbbbbeffffffffeebbbeegggfeeeefeebbefgggeebbeffebeefgggebbeeffebeeffffeebeefeebbeeeeeeebbeeebbbbbbbbeebbbbbb",
+  "beacons": {
+    "UF 3-555": { "type": "wh", "x": 14, "y": 0 },
+    "Faedho": { "type": "wh", "x": 8, "y": 15 },
+    "Leesti": { "x": 8, "y": 7 }
+  }
+}

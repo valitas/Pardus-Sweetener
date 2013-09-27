@@ -1,0 +1,10 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "Edbeeth",
+  "width": 18,
+  "height": 15,
+  "tiles": "bbbeeebeebbeebbbbbbbeefeeeeeeeeeebbbbeefeebeffffffeebbbefeebbeeffffffebbbefebbbbeffffffebbeefebbbeefffffeebbeffeeeeefgggfeebbbeeeebbbegggggebbbbbbbbbbeegggggebbbbbbbbeeeggggggeeeebbbeeefgggggggfooeebeeffgggggggfoooeebeeffggggggeeeofebbbeeeggggeeebeeeebbbbbeeeeeebbbbbbbb",
+  "beacons": {
+    "Olphize": { "type": "wh", "x": 0, "y": 6 }
+  }
+}

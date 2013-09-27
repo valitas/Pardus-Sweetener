@@ -1,0 +1,13 @@
+{
+  "cluster": "Union Rashkir Core",
+  "sector": "Quexce",
+  "width": 19,
+  "height": 24,
+  "tiles": "bbbbbbbbeeeebbbbbbbbbbbbbbeeofeebbbbbbbbbbbbeeffooebbbbbbbbbbbbefoofeebbbbbbbbbbbbeffoeebbbbbbbbbbbbbefffebbbbbbbbbbbbeeefffeebbbbbbbbbbbefffffeebbbbbbbbbbbeefgggebbbbbbbbbbbbbefgggebbbbbbbbbbbbeefgggeeebbbbbbbbbeeffgggggeeeebbbbbeefffggggggggeeebbeefffffgggggggggeebeffffffffgggggggfebeffffffffgggggggeeeeffffffffgggggffebeefffffffffeeeefeebbeeeefffeeeebbeeebbbbbbeefeebbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbebbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbeeebbbbbbbbbbb",
+  "beacons": {
+    "YV 3-386": { "type": "wh", "x": 11, "y": 6 },
+    "Urfaa": { "type": "wh", "x": 4, "y": 7 },
+    "Pass UNI-03": { "type": "wh", "x": 6, "y": 23 },
+    "Quexce": { "x": 5, "y": 14 }
+  }
+}

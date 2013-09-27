@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation South Human",
+  "sector": "Ceanze",
+  "width": 15,
+  "height": 17,
+  "tiles": "eeebeeeeebbbbbbeeebeeeeeebeebbbeeeeebefeeeeebbeeeeebeeeeeeebbbbebbbbeebeebbbbbebbbbeeeeeebbbeeebeeeeeefeebbefeeeffebeffebbeeebeefeeeffebbbebbbeeffffeebbbebeebeffffebbeeeeeeeeffffebeefeefffffffeebeeeeefeeeeeeebbbbeefeebbebbbbbbbbeeebbeeebbbbbbbbbbbbeeebbbb",
+  "beacons": {
+    "Soolti (North)": { "type": "wh", "x": 0, "y": 0 },
+    "Soolti (South)": { "type": "wh", "x": 1, "y": 13 },
+    "Ceanze Station": { "x": 8, "y": 10 }
+  }
+}

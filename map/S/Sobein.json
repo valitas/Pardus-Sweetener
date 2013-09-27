@@ -1,0 +1,12 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "Sobein",
+  "width": 15,
+  "height": 12,
+  "tiles": "bbbeeeeeeebbbbbbbeefffffeeebbbbeeffffffffeeebeeeeefffeeefeebefebeeeeebefebbeeeebebbbeefeeebefeeebbbefeeeeeeffeeebeefebeeeeffffeeeffeebbbeeffeebeeefebbbbeeeebbbbeeebbbbbeebbbbbbeebb",
+  "beacons": {
+    "BU 5-773 (West)": { "type": "wh", "x": 3, "y": 10 },
+    "BU 5-773 (East)": { "type": "wh", "x": 12, "y": 11 },
+    "Sobein": { "x": 6, "y": 2 }
+  }
+}

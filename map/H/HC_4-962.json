@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "HC 4-962",
+  "width": 12,
+  "height": 13,
+  "tiles": "bbbbbbeebbbbbbbeeeeebbbbbbeefffebbbbbbeffffeebbbbbefffffebbbbeefgggfebeebeffgggfeeeeeefggggfebeeeeeggggfebbbbbeeggffebbbeebefffeebbbeeeefeeebbbbeebeeebbbbbb",
+  "beacons": {
+    "Micanex": { "type": "wh", "x": 6, "y": 0 },
+    "Pass FED-04": { "type": "wh", "x": 11, "y": 6 },
+    "Waayan": { "type": "wh", "x": 0, "y": 7 },
+    "Waayan (South)": { "type": "wh", "x": 0, "y": 11 }
+  }
+}

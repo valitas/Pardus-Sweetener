@@ -1,0 +1,13 @@
+{
+  "cluster": "Pardus Federation Contingent",
+  "sector": "Enif",
+  "width": 35,
+  "height": 25,
+  "tiles": "bbbbbbbbeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbeeefeebbbbbbbbbbbbbbbbbbbbbbbbbbbeeeffffebeebbbbbbbbbbbbbbbbbbbbbbbbeefffffeeeebbbbbbbbbbbeeeeebbbbbbbbbeefffffffebbbbbbbbbbeefffeeebbbbbeebeefffffeebbbeebbbbbeffffffebbbbbeeebefffffebeebeeebbbeeeeefffeebbbeefeeefffffeeeeeefeebbefebeffeeeeeeeffffffggggffffffffebeefeeeeeeeeeeeffffggggggggggfffffeeefffffeeeeebbeeeffggggggggggfffffeeefffooffebbbbbbeefggggggggggfffffebeffoofffeebbbbbbeffgggggggggfffffeeeeeeeffffebbbbbbeefggggggggffeeeffffebbeefffebbbbbbbefggggggggffebeffffebbbeefeebbbbbbbefggggggggffebefoofebbbbefebbbbbbbeefffggggggffeeeffooeebbbefeebbbbbeefffffffgggfffeeeooofeebeeeeeebbbbefffffffffffffeebeeofffebefeeeebbbbeefffeeeffffffebbbefoffeeeffeebbbbbbeeeeebeffeeefeebbeefffeeeeeebbbbbbbbbebbbeefebefeebbbeeeeebbbbbbbbbbeeeeeeebbefeeeeebbbbbbbbbbbbbbbbbbbeeefffebbeeefeebbbbbbbbbbbbbbbbbbbbbbeeeeebbbbeeebbbbbbbbbbbbbbbbbbb",
+  "beacons": {
+    "Ras Elased": { "type": "wh", "x": 9, "y": 0 },
+    "Dubhe": { "type": "wh", "x": 1, "y": 9 },
+    "Pardus (West)": { "type": "wh", "x": 32, "y": 9 },
+    "Nari": { "type": "wh", "x": 13, "y": 23 }
+  }
+}

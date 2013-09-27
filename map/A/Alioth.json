@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Alioth",
+  "width": 16,
+  "height": 15,
+  "tiles": "bbbbbeebbbbbbbbbbbbbbeebbbbbbbbbbbbbbeebbbbbbbbbbbbbbeeebbbbbbbbbbbbeefebbbeeebbbbbbeffebeeefeebbbbbefoeeeffffeebbbeeooebefffffeeebeoofeeeggfffeeeeefofebeggffeeeebeeffeeeggfeebbbbbeffebeggfebbbbbbeefeeefffeeebbbbbeeebeefffeebbbbbbbbbbeeeeeb",
+  "beacons": {
+    "Inena": { "type": "wh", "x": 5, "y": 0 },
+    "Pass FED-03": { "type": "wh", "x": 0, "y": 9 },
+    "JS 2-090": { "type": "wh", "x": 15, "y": 13 },
+    "Alioth Station": { "x": 11, "y": 5 }
+  }
+}

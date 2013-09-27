@@ -1,0 +1,11 @@
+{
+  "cluster": "East Pardus Rim",
+  "sector": "Alfirk",
+  "width": 20,
+  "height": 15,
+  "tiles": "bbeebbbbbbeeebbbbbbbbeeeeeebbbefebbbbbbbbeffeeebbbeeebbbbbbbbefeebbbbbbebbbbbbbbeefebbbbbeeeebbeeebbeffeebbbeeffeeeeoeebeeeeebbbefffffffooebeebeebbbeeffffooofeeeebeeebbbeeffffgggeeeebeeebbbbeefffgggebeebbeebbbbbeeeeeeeebeeebeebbbbbbeebbebbbeeeeeeebeebbbbbeeebbbeeeeeeeeeeeeeeefeebbbeebeeeeebbbbbeeeeb",
+  "beacons": {
+    "EH 5-382 (East)": { "type": "wh", "x": 11, "y": 0 },
+    "EH 5-382 (West)": { "type": "wh", "x": 5, "y": 1 }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "cluster": "North Pardus Rim",
+  "sector": "WO 3-290",
+  "width": 17,
+  "height": 11,
+  "tiles": "bbbbbbbbbeebbbbbbbbbbbbbeeeeeeeebbbbbbbeeeffffffeebbbbbeeeefffffffeebbeeefeefffffffeeeeefffffeefoofeebefffffffeeooooebbeefeeefffffoofeebbeeebeeeffffffeebbbbbbbbeefeeeeebbbbbbbbbbeeebbbbbb",
+  "beacons": {
+    "Miphimi": { "type": "wh", "x": 0, "y": 5 },
+    "Daaya": { "type": "wh", "x": 15, "y": 8 },
+    "Hocancan": { "type": "wh", "x": 9, "y": 10 }
+  }
+}

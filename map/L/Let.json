@@ -1,0 +1,14 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "Let",
+  "width": 22,
+  "height": 34,
+  "tiles": "bbbbbbbbbbbbbbbbeeeebbbbbbbbbbbbbbeeeeeffeebbbbbbbeeeeeeeeeeeeffebbbbbeeefgggffebeeefeebbbbeefeegggfeebeeeeebbbbbeffeegggfebbbbeebbbbbbeeeefgggfeebeeeeebbbbbbbbefgggffeeefffeebbbbbbeefgggfffffffofebbbeeeeffffffffofoofoebbbefffffffffffffooooeebeefffffffffffoooofoeebeffgggffffffffooofeebbefggggffffffffoffeebbbefggggfffgggfffeeebbbbefgggggffgggfeeebbbbbbefggggggfgggfebbbbbbbeeggggggggffeeebbbbbbbefggggggggfeebbbbbbbbbeeggggggggfebbbbbbbbbbbeefggggggfebbbbbbbbbbbbeeggggggfebeebbbbbbbbbbefggggffeeeeebbbbbbbbbeeffffffebefeeebbbbbbbbeffffffeeefffeebbbbeeeeffffffebeeffeebbbbefffffffffebbeeeebbbbbeeeeffffeeebbbbebbbbbbbbbeefofeebbbbbebbbbbbbbbbeffoeeeeebbebbbbbbbeebeffoofffeeeeeeebbbeeeeefoooofffffffoeeebeeeeeeeefeeeefeeeffeebbeebeebeeebbeeebeeeeb",
+  "beacons": {
+    "Uv Seti": { "type": "wh", "x": 19, "y": 1 },
+    "Famida": { "type": "wh", "x": 5, "y": 3 },
+    "Zeaay": { "type": "wh", "x": 16, "y": 25 },
+    "Tigrecan": { "type": "wh", "x": 2, "y": 32 },
+    "Let": { "x": 9, "y": 11 }
+  }
+}

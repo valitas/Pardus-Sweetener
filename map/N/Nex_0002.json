@@ -1,0 +1,12 @@
+{
+  "cluster": "North Pardus Rim",
+  "sector": "Nex 0002",
+  "width": 20,
+  "height": 25,
+  "tiles": "bbbbbbbbeeebbbbbbbbbbbbbbbbeefeebbeeeebbbbbbbbeefffeeeeffeebbeeebbeeffeebbefffeebefeebbeeeebbeeffeeebeffeeeeeeeeeefggebbbeefffeeeeebbefggeebbbefeeebbeebbeefffebbbeeebbbeeeebbefffeebbbebbeeeffeeeeffooeeeeeebefffffffffoooeeeffebeefffeeeeffofebeffebbeffeebbefffeeeeffeebeffebbeefffebegggfeeeffeebeefffebegggfffffffebbeeffeeegggfeeefeeebbbeffeeegggeebefebbbbeeffebeffeebbeeeebeeefffebeefebbbbeeebeeeeefebbefeebbbbebbeebbefebbeefeebbeeeeeebeefebbbeefeebeffffeeefeebbbbeefeeeeeeeeeeeebbbbbbeeebeebbeebeebbb",
+  "beacons": {
+    "Daaya": { "type": "wh", "x": 10, "y": 23 },
+    "9": { "type": "xh", "x": 2, "y": 0 },
+    "Nex 0002 Station": { "x": 7, "y": 11 }
+  }
+}

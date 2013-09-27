@@ -1,0 +1,14 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Betelgeuse",
+  "width": 32,
+  "height": 22,
+  "tiles": "bbbbbbbbbeeeebbbbbbbbbbbbbbbeeeebbbbbbeeeeffebbbbbbbbbeeeeeeeffebbbbeeefffffeebbbbbbbeefffffffeebbbbeffffooffebbbbbbeeffffeeeeebbbbeefffoooofebbbbbbefffeeebbbbbbeeegggfffofeebbbbbbefffebbbbbbbeeffgggffffeebbbbbbbeeffeeebbbbbefffgggffeeebbbbbbbbbefoffebbbbbeeffffffeebbbbbbbbbbeeooofeebbbbbeegggfeebbbbbbbbbbbeffooffeebbbbbegggfebbbbbbbbbbbeefffffffebeebbegggfebbbbbbbbbbeefeeeeeefeeeeeeegggfeebbbbbbbeeeffebbeeeeebeeeegggfffeeeebbbeefeeeeeeeeeebbbbbeggggfffffeeebeefebeffffeeeebbbbeggggfffffffebbeeeeeeeeeffeebbbbeegggfffffffeebbeefeebbeeeebbbbbbegggeeefffffebbbeeebbbbeebbbbbbbeeffebeeeeffebbbbbbbbbbbbbbbbbbbbeeeebeebeefebbbbbbbbbbbbbbbbbbbbbeebbbbbbeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbeeeebbbbbbbbbbbbbbb",
+  "beacons": {
+    "GV 4-652": { "type": "wh", "x": 11, "y": 0 },
+    "Rashkan": { "type": "wh", "x": 15, "y": 21 },
+    "Betelgeuse Station": { "x": 7, "y": 17 },
+    "Sohoa": { "type": "wh", "x": 30, "y": 1 },
+    "Tiacan": { "type": "wh", "x": 31, "y": 11 }
+  }
+}

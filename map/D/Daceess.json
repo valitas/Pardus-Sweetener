@@ -1,0 +1,11 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "Daceess",
+  "width": 15,
+  "height": 8,
+  "tiles": "bbbbbbbeeeeeeeebbbbeeeeffffeeebbeeeffffeeeebbbeeeefeeeebbbbbeefeeeebbbbbbbbeffeeebbbbbbbbbeeeebbbbbbbbbbbeebbbbbbbbbbbbb",
+  "beacons": {
+    "Siberion": { "type": "wh", "x": 14, "y": 1 },
+    "Andexa": { "type": "wh", "x": 0, "y": 7 }
+  }
+}

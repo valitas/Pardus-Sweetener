@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Capella",
+  "width": 20,
+  "height": 17,
+  "tiles": "bbbbbbeebbbbbbbbbbbbbbbbbeeeebbbbbbbbbbbbbbbbeffebbbbbbbbeeebbbbbeffeebbbbeeeeeebbbbeegggeeeeeefeeeebbbbeggggffffffeebbbbbbbeggggffffffebbbbbbbbeggggfffffeebbbbbbbeefgggfffffebbbbbbeeefffffffffeebbbbbbeffffffffffeebbbbbbeeffooeeeefeebbbbbbbeeffooebbeeebbbbbbbbbeffoeebbbbbbbbbbbbbbeeefebbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbeebbbbbbbbbbbbbb",
+  "beacons": {
+    "Nebul": { "type": "wh", "x": 17, "y": 3 },
+    "Bedaho": { "type": "wh", "x": 0, "y": 11 },
+    "Capella": { "x": 11, "y": 7 }
+  }
+}

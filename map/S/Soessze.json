@@ -1,0 +1,10 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "Soessze",
+  "width": 20,
+  "height": 20,
+  "tiles": "bbbbbbbeeeeeebbbbbbbbbbeeeeefgggeeeebbbbbbeeffffgggggffebbbbbeefoofgggggggfeebbbbeeffffggggggggfeeebbbeeeefgggggggggfeebbbbbbeegggggggggfebbbbbbbbefgggggggggeebeeeeeeefffgggggggfebefeeeffffffgggggggeeeeebeeeffggggggggggebbbbbbeefggggggggggebbbbbbbefggggggggggebbbbbbbeffggggggggeebbbbbbbefffffgggggebbbbbbbeeffffffgggfebbbbbbbeefffffffffeebbbbbbbbeeffffffffebbbbbbbbbbeeffffeeeebbbbbbbbbbbeeeeeebbbbb",
+  "beacons": {
+    "Tiacken": { "type": "wh", "x": 0, "y": 9 }
+  }
+}

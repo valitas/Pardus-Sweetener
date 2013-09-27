@@ -1,0 +1,12 @@
+{
+  "cluster": "Union Keldon Core",
+  "sector": "Matar",
+  "width": 16,
+  "height": 16,
+  "tiles": "bbbbbbeeebbbbbbbbbbbbeefeebbbbbbbbbbeefffeebbbbbbbbbefffffebbbbbbbbeeffffeebbeebbbbefffffebbeeeebbbefffffeebeffebbbefffffeeeeffeeebefffffebefffeeeeefffffeeeffeeeebeeffffffffeebbbbeeffffgggfebbbbbbeefffgggfebbbbbbbeeefgggeebbbbbbbbbeeffffebbbbbbbbbbeeeeeebb",
+  "beacons": {
+    "UG 5-093": { "type": "wh", "x": 14, "y": 5 },
+    "Homam": { "type": "wh", "x": 1, "y": 9 },
+    "Matar": { "x": 6, "y": 5 }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "Datiack",
+  "width": 19,
+  "height": 15,
+  "tiles": "bbbbbbbbbbeeebbbbbbbbbbbbbeebefebbbbbbbbeeeeeeeeeeebbbbbbbeeffffffffebbeeebbbefffffffffeeeefeebbefffffffgggggggfebbefffffffggggggggebbeeffffffggggggggebbbeefffffffggggggeebbbeeeeeeefffggggfebbbbbbeebefeeegggfebbbbbbbbbeeebeeffeebbbbbbbbbbebbbeeeebbbbbbbbbbeeebbbbbbbbbbbbbbbbeeebbbbbbb",
+  "beacons": {
+    "Faphida": { "type": "wh", "x": 11, "y": 0 },
+    "Pass EMP-02": { "type": "wh", "x": 10, "y": 14 },
+    "Datiack": { "x": 5, "y": 5 }
+  }
+}

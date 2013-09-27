@@ -1,0 +1,12 @@
+{
+  "cluster": "Union Rashkir Core",
+  "sector": "Sophilia",
+  "width": 24,
+  "height": 17,
+  "tiles": "bbbbbbbbbbbbeeeeebbbbbbbbbbbbbbbbbeeefffeeeebbbbbbbbbbbbeeeffffffffeeeebbbbbbbeeefffffffffffooebbbbbbeefffffffffffooooeebbbbbefffffffffffffooofebbbeeefgggfeeeeffffofeeebeeeffggggfebbeeefffoebbbeeffggggfeebbbbeeeffeeebbeggggggeebbbbbbbeeeeeebeegggggeebbbbbbbbbbeebbbegggggeebbbbbbbbbbbbbbbeegggeeebbbbbbbbbbbbbbbbefgggebbbbbbbbbbbbbbbbbbefffeebbbbbbbbbbbbbbbbbbefeeebbbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbbbb",
+  "beacons": {
+    "Gretiay": { "type": "wh", "x": 1, "y": 8 },
+    "DI 9-486": { "type": "wh", "x": 22, "y": 8 },
+    "Sophilia": { "x": 13, "y": 3 }
+  }
+}

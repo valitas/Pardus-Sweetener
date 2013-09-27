@@ -1,0 +1,10 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Edeneth",
+  "width": 12,
+  "height": 7,
+  "tiles": "bbeeeebbbbbbbeeffeeeebbbeeffeeeeebbbeeffebeebbbbbeeeebeeebeebbeebbeeeeeebbbbbbbeebee",
+  "beacons": {
+    "VH 3-344": { "type": "wh", "x": 0, "y": 3 }
+  }
+}

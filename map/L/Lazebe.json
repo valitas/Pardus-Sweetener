@@ -1,0 +1,14 @@
+{
+  "cluster": "Union Keldon Core",
+  "sector": "Lazebe",
+  "width": 28,
+  "height": 19,
+  "tiles": "bbbbbbbeebbbbbeeeeeebbbbbbbbbbbbeeeeeebbbeeffffeeebbeeebbbeeeffffebbeeeeeefffeebefeebeeffffffebbefebbeffffebeffebefffffffeeeefeebeffffeeeffebefffffffeeeeeeeeefffffffffeeefffffffebbbbeeffffffggggfeeffffffffeebbbbeffffffggggeeeeffffffffebbbbeffffffgggfebbeefffffffeebbbeeffffffggeebbbeeeffffffeebbbeeeeeeeffebbbbbbeeeeffofeebbbebeebeffeeebbbbbbbeeefooeeeeeebbeeffffebbbbbbbbbeffoofeefeeeeffffeebbbbbbbbbefoooooffeeeeffffebbbbbeeebeeofooooffeeeeeeffebbbbeefeeeofffoofffeeeeeefeebbbbeefebeeofffffeeebbeeeeeebbbbbeeebbeeeeeeeebbbbbbbbbbb",
+  "beacons": {
+    "Nashira": { "type": "wh", "x": 26, "y": 2 },
+    "Bellatrix": { "type": "wh", "x": 27, "y": 13 },
+    "Olaeth": { "type": "wh", "x": 18, "y": 17 },
+    "Lazebe I": { "x": 5, "y": 6 },
+    "Lazebe II": { "x": 19, "y": 6 }
+  }
+}

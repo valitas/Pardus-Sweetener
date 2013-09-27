@@ -1,0 +1,12 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "Pass UNI-08",
+  "width": 20,
+  "height": 31,
+  "tiles": "bbeeebbbbeeebbbbbbbbbeefeeebeefebbbbbeebeeeeeeeeefeebbbeeeebefebbeefffebbbeeffebeeeebbeeffeebeeffeebbefeebbeggfeeeffoebbbeefebbeggffffoofeebbeeeebbeeeeeffeeeeebeefebbbbeebeeeebbeebeefeebbeeebbeebbbbbbbeefebbeeeebbbbbbbbbbbefebbbeeeebeeeeeebbbefebbbbeeeeefeefeebbeeebbbbbeeeeeeeeeebeeebbbbbbbbbbbbbeeeeefeebbbbeebbeebbeeeeeffeebbbeeeeeeebbeebefffebbeeffeeeeeeeebeeffebbeffeebeeeeeebbeeeebbeefebbbbeeeebbbbeeebbeeeeeebbbbbbbbbeeeebbeefoeeebbbeeebbeeeebbeefooeebbefebbbeeebbbefofeebbefeebbeebeeeefofebbbeffebeeeeeeffffeebbbeffeeefeeeeffeeebbbbeffebeeebbeeeebbbbbbeeeebbbbbbbebbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbeeebbbbbbb",
+  "beacons": {
+    "Miola": { "type": "wh", "x": 10, "y": 1 },
+    "WI 4-329": { "type": "wh", "x": 17, "y": 2 },
+    "Naos": { "type": "wh", "x": 11, "y": 30 }
+  }
+}

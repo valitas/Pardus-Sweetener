@@ -1,0 +1,14 @@
+{
+  "cluster": "Gap",
+  "sector": "Cegreeth",
+  "width": 18,
+  "height": 22,
+  "tiles": "bbbbbbbbbeeeeeebbbbbbbbeeeeeffffeeeebbbbeeggggeeeefffebbbbefggggebbeffeebbeeefggffeeeefeebbeefffffeeefffeebbbefffeeeebeeeeebbbeefffebeebbbbbbbbbeefffeebbbbbbbbbbbbeeffeebbeeeebbbbbbbeeeebbbeffebeebbbbbeebbbeeffebeeeeeebeebbeefooeeeffeeeeeebbefffoebefeeeebeeebeeeefebeeebbbbeeebbbbeeebbbbbbbbbeeebbbbbbbbbbbbbbbefeeeeeebbbbbbbbbbeefffffeeeeebbbbbbbeeefffffffeebbbbbbbbeeeefffeeebbbbbbbbeebeeeeebbb",
+  "beacons": {
+    "Fadaphi": { "type": "wh", "x": 4, "y": 2 },
+    "AB 5-848 (North)": { "type": "wh", "x": 17, "y": 2 },
+    "AB 5-848 (South)": { "type": "wh", "x": 16, "y": 20 },
+    "Edmial": { "type": "wh", "x": 7, "y": 21 },
+    "AB 5-848": { "type": "wh", "x": 17, "y": 11 }
+  }
+}

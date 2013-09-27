@@ -1,0 +1,10 @@
+{
+  "cluster": "North Pardus Rim",
+  "sector": "Betiess",
+  "width": 13,
+  "height": 16,
+  "tiles": "bbbbbeeebbbbbbbbbbeeebbbbbbbbbbbebbbbbbbbbbbeeebbbbbbbbbbeeebbbbbbbbbbeebbbbbbbbbbeeeebeebbbbeeeffeeeeebeeefffffgggebefffffffgggebeeffffffgggeebeffffffgggfebeffffofgggeebeeffoooffeebbbeeefoffeebbbbbbeeeeeebbb",
+  "beacons": {
+    "Ururur": { "type": "wh", "x": 6, "y": 1 }
+  }
+}

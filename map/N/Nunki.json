@@ -1,0 +1,11 @@
+{
+  "cluster": "South Pardus Rim",
+  "sector": "Nunki",
+  "width": 19,
+  "height": 27,
+  "tiles": "bbbbbbbbbbbeeebbbbbbbbeeebbbbeefeeebbbbbeefeeebbeffffeebbbeeffffeebefffffeebbeffffffeeeffffggebbeffeeeeeeeffffggebbeffebeeeeeeffeeeeeeefeebeeeebeffeeeeeeffebbbeebbeeeeefebeefebbbbbbbbeebefebbeeeeebbbbbbbbbefebbbeefeeeebbbbbbefebbbbeffggeebbbbbefeebbbeffggeebbbbeeffebbeefffeebbbbbeeeeebeeeeeeebbbbbbeebeeeeeebeebbbbbbbeebeeeeebbeebbeeebbeebeebeebbeebeefeebeeeeebeeeeeeeefffeeeffeeeeffffeeffeeefffeebeefeeeeefeebeeefebbbeeebeeffebbbbefebbbbbbbbeffeebeeeeebbbbbbbeefffeeefeebbbbbbbbeefffffeeebbbbbbbbbbeeeeeeebbbbbb",
+  "beacons": {
+    "Heze (South)": { "type": "wh", "x": 11, "y": 1 },
+    "Lahola": { "type": "wh", "x": 8, "y": 26 }
+  }
+}

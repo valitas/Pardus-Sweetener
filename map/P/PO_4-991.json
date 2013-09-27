@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "PO 4-991",
+  "width": 20,
+  "height": 14,
+  "tiles": "bbbbbbbbbbbbbbbbbeeebbbbbbeeebbbbbbeeefebbeebeefeeebbbeeffeebbeeeeffffeeeeefeeebbbeeeffffffoffffebbbbbbbeefofoooffffeebbbbbbbeffooooofffeebbbbbeeefffofofffeebbbbeeeffeeefffoffebbbbeefeeeebeefffffeebbbeeeebbbbbeeffeeeeebbeebbbbbbbbeeeebefeebbbbbbbbbbbbbbbbeffeebbbbbbbbbbbbbbbeeeee",
+  "beacons": {
+    "Urandack": { "type": "wh", "x": 18, "y": 1 },
+    "Ska": { "type": "wh", "x": 2, "y": 2 },
+    "Kenlada": { "type": "wh", "x": 1, "y": 10 },
+    "Sigma Draconis": { "type": "wh", "x": 18, "y": 13 }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "cluster": "Union Rashkir Core",
+  "sector": "Urfaa",
+  "width": 23,
+  "height": 20,
+  "tiles": "bbbbbbbbbbeeeebbbbbbbbbbbbbbbbbbeeffeeeeebbbbbbbbbbbbbeeeeeefffeebbbbbbbbbbbbefebbeffffeeebbbbbbbbbbefeeeeffffffebbbbbbbbbbeefffeeeeeffebbbbbbbbbbbefffebbbeefebbeebbbbbbbeeeeebbbbefeeeeeeebbeeeeebeebbbbeefeeeffeeeefffeeeeebbbbeeebeefeefffeeeeefeebbbbbbbbeeeeeeeebeeeffeebbbbbbbbeeeebeebeeefffeeeeebbbbbbbbbbbbbbeeefffffeebbbbbbbbbbbbbbbeeeefeeebbbbbbbbbbbbbbbbbbefeeeebbbbbbbbbbbeeeeeeefffeebbbbbbbbbbeeeeeffffeeebbbbbbbbbbbeeebeffeeebbbbbbbbbbbbbbeebeeeebbbbb",
+  "beacons": {
+    "Quexce": { "type": "wh", "x": 22, "y": 7 },
+    "Pass UNI-02": { "type": "wh", "x": 12, "y": 19 }
+  }
+}

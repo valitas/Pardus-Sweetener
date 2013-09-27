@@ -1,0 +1,11 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "QW 2-014",
+  "width": 15,
+  "height": 9,
+  "tiles": "bbeeebbbbbeebbbbbeeebbbbeeeeebbbbebbeeeefofeebeeeeeefooooofebeeeeeeffooooeebbbeebeeeffffebbbeeebbbeeeeeebeeefebbbbbbeebbeeeeebbbbbbbbbb",
+  "beacons": {
+    "Retho": { "type": "wh", "x": 4, "y": 0 },
+    "Zamith": { "type": "wh", "x": 0, "y": 8 }
+  }
+}

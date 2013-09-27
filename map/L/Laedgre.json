@@ -1,0 +1,13 @@
+{
+  "cluster": "North Pardus Rim",
+  "sector": "Laedgre",
+  "width": 19,
+  "height": 20,
+  "tiles": "bbbbeeeebbbbbbbbbbbbbbeeffeeebbbbbbbbbbbeefffffeebbbbbbbbbbefofffffebeebbbbbbeefofffffeeeebbeebbeooffoffffffeebeeebeooofeeeeffffeeefeeeooffebbefffffffeeeffoffeebefffffffebeefffffebefffffffebbefffffeeefffffeeebbefffffffffgggfebbbbefffffgggfgggeebbbbeefffggggfgggebbbbbbefffggggfgggebbbbbbeeffggggfgggeebbbbbbeeffffffgggeebbbbbbbeeeeeffffeebbbbbbbbbeebefffeebbbbbbbbbbbbbeeeeebbbbbb",
+  "beacons": {
+    "Hocancan": { "type": "wh", "x": 6, "y": 0 },
+    "Daaya": { "type": "wh", "x": 13, "y": 3 },
+    "Electra": { "type": "wh", "x": 10, "y": 19 },
+    "Laedgre": { "x": 4, "y": 11 }
+  }
+}

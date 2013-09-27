@@ -1,0 +1,12 @@
+{
+  "cluster": "Split",
+  "sector": "Liaackti",
+  "width": 20,
+  "height": 23,
+  "tiles": "bbbeeeeeebbbbeeeeebbbbeeffofeebbeefffeebbeeffffoeebbefffffeebeeffffeebbeefffggeebbeeeeeebbeeffffggebbbbeebbbbbeeeeeeeeebbbeeeeeeebbbeebbeebbbbeeeeffeeebeebbbbbbbbbbbeeeffeeeeeebbbbbbbbbbbefffofffeeeebbeeebeeeffoofffoofebeefeeefofoooofeeeeeeeffebeefofofofebbeeeeffebbeffffoffeeebeeeffebeefeeefffffeebbeeeebeeeebeeeeeefeebbbeebeebbbbeebbefeebbbbbbbbbeeeeeebeeebbbbbbbbbbeeeefebbbbbbbbbbbbbbbebeeebbbbbbbbbbbeebbeeeebbbbbbbbbbbbeeeeeeeebbbbbbbbbbbbeebbebeeeebbbbb",
+  "beacons": {
+    "FR 3-328": { "type": "wh", "x": 5, "y": 16 },
+    "Andsoled": { "type": "wh", "x": 18, "y": 16 },
+    "Enwaand": { "type": "wh", "x": 5, "y": 22 }
+  }
+}

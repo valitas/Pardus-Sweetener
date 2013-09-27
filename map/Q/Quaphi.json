@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "Quaphi",
+  "width": 17,
+  "height": 14,
+  "tiles": "bbbbbbbbbbeeeebbbbeeebbbbbeeffeebbbeeebbbbbeefffeebbbebbbbbbbeffggebbbebbbbbbbeffggeebeeebbbbbeefffffeeefeeebbbefffffeeeffffeebeefffffebefffffeeeffffffeeefofofffffffffffeeoooeeeeeeefffffeeefeebbebbeefffeebeeebbeeebbeefeebbbbbbbeeebbbeeebb",
+  "beacons": {
+    "Iowagre": { "type": "wh", "x": 14, "y": 1 },
+    "ZS 3-798": { "type": "wh", "x": 0, "y": 6 },
+    "Quaphi": { "x": 13, "y": 9 }
+  }
+}

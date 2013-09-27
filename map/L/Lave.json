@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "Lave",
+  "width": 23,
+  "height": 16,
+  "tiles": "bbbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbeeebbbeebbbbbbbbbbeeeeeefeebbebbbbbbbbbeeefffffffeeeeebbbbbbbeefffffffffffffeeeebbbeeffggggfffffffffeeeeeeefffgggggffffffffeeebbbefffgggggggfffffeebbbbbeeefgggggggffeeeebbbbbbbbeffggggggffebbbbbbbbbbbefffgggffffeeebbbbbbbbbefffeeeffffffebbbbbbbbbeefeebeffffffebbbbbbbbbbeeebbeeffffeebbbbbbbbbbbeeebbeeeeeebbbbbbbbbbbbeeebbbbbbbbbbb",
+  "beacons": {
+    "XH3819": { "type": "wh", "x": 19, "y": 0 },
+    "Pass FED-10": { "type": "wh", "x": 0, "y": 6 },
+    "Miarin": { "type": "wh", "x": 10, "y": 15 },
+    "Lave Station": { "x": 18, "y": 8 }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Tiexen",
+  "width": 19,
+  "height": 20,
+  "tiles": "bbbbbbbbbbeeebbbbbbbbbbbbbeeeefeeebbbbbbbbbeeeffffffeebbbeebbeefffgggfffeebbeeeeefffggggggffebbeeffffffgggggggfeebbeefffffggggggggfebbbegggffggggggggfeebbegggggfgggggggffebeeggggggggggggfffeeeffggggggfggggffeeefffggggggfgggfffebeffffffgggfgggffeebeffffoffffffffffebbeffoooooffffffffebbeeffooofffffffffeebbefffoffffffeeeeeeebeeffffffeeeebbbeeebbeeefffeebbbbbbbeebbbbeeeeebbbbbbbbbb",
+  "beacons": {
+    "Quana": { "type": "wh", "x": 0, "y": 3 },
+    "Ska": { "type": "wh", "x": 18, "y": 17 },
+    "Tiexen Station": { "x": 11, "y": 9 }
+  }
+}

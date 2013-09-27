@@ -1,0 +1,14 @@
+{
+  "cluster": "Split",
+  "sector": "PP 5-713",
+  "width": 15,
+  "height": 13,
+  "tiles": "beeebbbbbbbbbbbbefeeebbbeeeebbbeeeeeebeefeebbeeebeeebeffebbbefebeeebeffebeeefebeeebeefeeeeefeeeeebbefebeeeefeeebbeefebbbbeeebbbbeffeeebbbbbbbeeefffeebbbbbbeeffggeebbbbbbbeeffggebbbbbbbbbeeeeeebbb",
+  "beacons": {
+    "Ladaen (East)": { "type": "wh", "x": 12, "y": 1 },
+    "Pass EMP-07": { "type": "wh", "x": 13, "y": 5 },
+    "Oauress": { "type": "wh", "x": 6, "y": 11 },
+    "Ladaen (West)": { "type": "wh", "x": 2, "y": 0 },
+    "Edqueth": { "type": "wh", "x": 0, "y": 7 }
+  }
+}

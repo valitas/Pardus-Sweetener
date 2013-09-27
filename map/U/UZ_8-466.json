@@ -1,0 +1,13 @@
+{
+  "cluster": "Lane",
+  "sector": "UZ 8-466",
+  "width": 20,
+  "height": 13,
+  "tiles": "bbbbbbbbeeebbbeeebbbbbbbbbbeefebbeefeeebbbbbeeeefeebbeeeffebeebeeffffebbbbbeffeeeeeeoofffeebbeeefffeeebeffofffebbeffffeebbbeffffffeeeeffeeebbbbeeeeeefffffffebbbbbbbbbbbefffffffebbbbbbbbbbbeeffffffebbbbbbbbbbbbeffffffeebbbbbbbbbbbeeffeeeeebbbbbbbbbbbbeeeebbbbbb",
+  "beacons": {
+    "Pass FED-07": { "type": "wh", "x": 1, "y": 4 },
+    "Baar": { "type": "wh", "x": 13, "y": 4 },
+    "Waolex": { "type": "wh", "x": 19, "y": 4 },
+    "Gilo": { "type": "wh", "x": 10, "y": 11 }
+  }
+}

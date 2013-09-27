@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Waayan",
+  "width": 25,
+  "height": 16,
+  "tiles": "bbbbbbbeeeebbeeeeebbbbbbbbbbbbeeeffebeegggeeebbbbbbbbbeeffffeeegggggfeebbbbbbbbeffffffgggggggffeeebbbbbbeffffffgggggggffffeebbbbeeffffffggggffffofffebbbbefffffffffffeeeoooffebeeeefffffffffeeebeeooffeeeeeffffffffeeebbbbeooeeeebbeeeeffffeebbbbbbefeebeebbbbbeefeeebbbbbbbeeebbbbbbbbbbeeebbbeeebbbbbbbbbbbbbbbbbbbbbeefeeeeeebbbbbbbbbbbbbbbbefeefeeeebeeeebbbbbbbbbbbeeeeeebeeeeffebbbbbbbbbbbbeeeebbeeeeeee",
+  "beacons": {
+    "JS 2-090": { "type": "wh", "x": 0, "y": 7 },
+    "HC 4-962 (North)": { "type": "wh", "x": 24, "y": 9 },
+    "Waayan": { "x": 7, "y": 5 },
+    "HC 4-962 (South)": { "type": "wh", "x": 24, "y": 14 }
+  }
+}

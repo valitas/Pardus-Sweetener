@@ -1,0 +1,13 @@
+{
+  "cluster": "Gap",
+  "sector": "Greenso",
+  "width": 20,
+  "height": 16,
+  "tiles": "eeeeeebbbbbeebbbbbbbeoffeebbbeeeeeeebbbbeffeebbbeefffffeebbbeeeebbbbefffffeeebbbbbebbbbeefffffebbbbbbbebbbeeffffffeeeebbbbebeeeffffffffffeeebeeeefgggfffffffffeebegggggggeeeeeeefeebeegggggggebeebbeeebbefggggggfeebbbbbbbbbefggggggffeeeeeeeebbeeggggffeeeffeeeeeeebeffffeeebeffebbeffebeeefeebbbeeeeeeefeebbbeeebbbbbbeeeeeeeb",
+  "beacons": {
+    "Nex 0006 (North)": { "type": "wh", "x": 15, "y": 2 },
+    "Fadaphi": { "type": "wh", "x": 1, "y": 14 },
+    "Nex 0006 (South)": { "type": "wh", "x": 19, "y": 14 },
+    "Greenso": { "x": 12, "y": 5 }
+  }
+}

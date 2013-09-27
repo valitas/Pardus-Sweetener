@@ -1,0 +1,13 @@
+{
+  "cluster": "Lane",
+  "sector": "Becanol",
+  "width": 20,
+  "height": 25,
+  "tiles": "bbbbbbbeeeeebbbbbbbbbbbbbbbefffebbbbbbbbbbbbbbbeefeebbbbbbbbbbbbbbbbefebbbbbbbbbbbbbbbbbefebbbbbbbbbbbbbbbbbefebbbbbbbbbbbbbbbbbefebbbbbbbbbbbbbbbbeefeebbbbbbbbbbbbbeeefffeeebbbbbbbbeebefffffffeeebbbbbeeeeefffffffffeebbbeeffffffffffffffeebbeeffffoffffffffffeebbeeeoooofeeeeeefffebbbbeefffoebeebefffebbbbbefoooebbbbeeffeebbbbeofffeebbbbeeefebeeeeooofeebbbbbbeeeeefffffffebbbbbbbbbbeffffffggeebeebbbbbbeffffffggfeeeebbbbbbeeffffffffffeebbbbbbbeefffffffffebbbbbbbbbeeeeeffffeebbbbbbbbbbbbbeeeeeebbbbbbbb",
+  "beacons": {
+    "BL 6-511": { "type": "wh", "x": 9, "y": 1 },
+    "Anphiex": { "type": "wh", "x": 18, "y": 16 },
+    "Zelada": { "type": "wh", "x": 10, "y": 24 },
+    "Becanol": { "x": 3, "y": 20 }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "CC 3-771",
+  "width": 20,
+  "height": 10,
+  "tiles": "bbbbbeeeebbbbbbbbbbbbbeeeeffeebbeeebeeebeeeffffffeebefeeefeeeeggfeeeffeeefffffeebeggfebeefebefffeeebbeeefeebeeeeeeeeebbbbbbeeeebbefffebebbbbbbbbbebbbeeffeeeebbbbbbbeeebbbeeeeeeeeeebbbbeeebbbbeebbeeeee",
+  "beacons": {
+    "Watibe": { "type": "wh", "x": 18, "y": 2 },
+    "Oldain": { "type": "wh", "x": 19, "y": 9 }
+  }
+}

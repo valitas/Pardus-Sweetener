@@ -1,0 +1,15 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "Sol",
+  "width": 24,
+  "height": 29,
+  "tiles": "bbbeeeeeeebbbbeeeeeeeeeebeeefffffeeeeeefffoofffeeeffffffffffffffoooooffeeffffffffffffffoooooofeeeefffffffffffffoooffeeebbefffffffffffffffffeebbbbeeffffffffffffoeefebbbbbbefffffffffffffeefeeeeebbeffffffffffffffeeeeefebeefffffffffffoofebbbeeebefffggggggfffoooebbbbbbeefffgggggggfffofeeeebbbeefffgggggggggffffffeeebbefffgggggggggffffffffeebefgggfgggggggfffffffffebefggggggggggggfffffffeebefgggggfggggggggffffeebbeggggggfggggggggffffebbeeggggggggggggggfffffebbefgggggfgggggggfggggfeebefgggggfgggggggggggggfebeeggggfggggggggggggggfeebeffoffggggggggggggggffebeeooffggggggggggggggffebbeffffggggggggggggggffebeefffffggggggggggggffeeeefffeeefgggggfggggfeeebefffeebeeffeeeffffeeebbbeeeeebbbeeeebeeeeeebbbbb",
+  "beacons": {
+    "Epsilon Eridani": { "type": "wh", "x": 1, "y": 1 },
+    "SA2779": { "type": "wh", "x": 22, "y": 8 },
+    "Alpha Centauri": { "type": "wh", "x": 1, "y": 27 },
+    "Olexti": { "type": "wh", "x": 14, "y": 28 },
+    "Earth": { "x": 7, "y": 4 },
+    "Sol Base": { "x": 17, "y": 19 }
+  }
+}

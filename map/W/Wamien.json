@@ -1,0 +1,14 @@
+{
+  "cluster": "Federation South Human",
+  "sector": "Wamien",
+  "width": 25,
+  "height": 15,
+  "tiles": "bbbbbeebbbbbbbbbbbbbbbbbbbbeeeeeebbbbbbbeeeeebbbbbbeefeeeeeeeebeeefffeebbbbeefeebefgggeeeffffffeebbbeefebeefggggfffffffffebeebeeeeeffgggggggffffffeeeebbeeffffgggggggffffffebeebbbeeefffgggggggfffffebbbbbbbbeeeefggggggfffffeebbbeeeeeebeffffgggffffofeebeeffffeeeffffffffffooofebefffffffeeefeeefeeeooooebeefffffeebeeebefebefofeebbeefffeebbbeebeeebeefoebbbbeeeeebbbbbbbbeebbeeeebb",
+  "beacons": {
+    "VM 3-326": { "type": "wh", "x": 2, "y": 1 },
+    "Pass FED-10": { "type": "wh", "x": 24, "y": 5 },
+    "UF 3-555": { "type": "wh", "x": 15, "y": 13 },
+    "Wamien I": { "x": 17, "y": 4 },
+    "Wamien II": { "x": 4, "y": 12 }
+  }
+}

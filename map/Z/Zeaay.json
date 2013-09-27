@@ -1,0 +1,14 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "Zeaay",
+  "width": 27,
+  "height": 14,
+  "tiles": "beebbbbbbbbbbbbbbbbbbbbbeebbeeeeebeeeebbbbbbbbbbbbeeebbefffeeeffeebbbbeeeebbbeeebbeegggfffffebeeefofeebbeebbbbegggfffffeeefofoofebbeebbbbegggfffffeeeffooofeeeeeebbeegggfffggffffooofeeeeeeebeefffffffggeeeffoofebeebebbeeffffffeeeeeefffofeebbbebbbeeeefffebeebeffofffeeeeeebbbbbefffeeeeeefffffffeeefeebeeeeffffeeebeefffffeebeeeebeefeeeeeebbbbeefeeeebbbbeebbeeebbbbbbbbbbeeebbbbbbbbb",
+  "beacons": {
+    "Let": { "type": "wh", "x": 1, "y": 1 },
+    "Uv Seti": { "type": "wh", "x": 24, "y": 1 },
+    "BU 5-773": { "type": "wh", "x": 3, "y": 12 },
+    "Iohofa": { "type": "wh", "x": 20, "y": 12 },
+    "Zeaay": { "x": 7, "y": 5 }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "Uv Seti",
+  "width": 22,
+  "height": 15,
+  "tiles": "bbbbbbbbbbbbbbeeebbbbbbbbbbbbbbeeeeeefeebbbbbbbbbbbeeefffggggeebbbbbbbbbeefffffggggfeebbbbbbbeeffggggggggffebbbbbeeefggggggfgggffeebeeeefggggggggfffeeefeeeeeffggggggggfffebeeeeeeeefgggggggffffebbbbbbbbefggggggffeeeebbbbbbeeefgggggffeebeeeeebbeeffffffffffebeefffebbeeffeeeefffeebeeeeeeebbeeeebbeeeeebbbeebeeebbbbbbbbbbbbbbbbbbbbeeb",
+  "beacons": {
+    "Gresoin": { "type": "wh", "x": 20, "y": 6 },
+    "Let": { "type": "wh", "x": 2, "y": 13 },
+    "Zeaay": { "type": "wh", "x": 20, "y": 14 },
+    "Uv Seti": { "x": 12, "y": 7 }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "cluster": "Union Keldon Core",
+  "sector": "Furud",
+  "width": 15,
+  "height": 20,
+  "tiles": "bbbbbbeeeeeebbbbbbeeeeffffeeebbbeeofoffffffebbeeooooofffffeebefoooffffffffebefoooofffffffeeeffofffffffffeeefffffeeeffffebeefffeebefffeebbeeeeebeefeeebbbbbbebbeefebbbbbbbeeebbefeebbbbbbeeebbeeeeebbbbbbbbbeeeefebbbbbbbbeeeeeeebbbbbbbbeeebeebbbbbbbbbeebeeeebbbbbbbbbbbeffeebbbbbbbbbbeeffebbbbbbbbbbbeeee",
+  "beacons": {
+    "Subra": { "type": "wh", "x": 1, "y": 7 },
+    "Furud": { "x": 11, "y": 5 }
+  }
+}

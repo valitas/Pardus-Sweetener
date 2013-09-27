@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation South Human",
+  "sector": "Hobeex",
+  "width": 19,
+  "height": 14,
+  "tiles": "bbbbbbbbbeebbbeeebbbbeeebbbeeeebeefeebbeefeeebeffeeefffebeeoofoeeefeebeeffeeefooofofofebbbeggfeeooofoeeefeebeeggfeefofooebeffeeefggfeeeeeeoebefffffffffebbbbefeeefffffffffebbbeefffffffffffffebbbefffffeeeffffffebbbeeffffebefffffeebbbbeeefeebeefffeebbbbbbbeeebbbeeeeebb",
+  "beacons": {
+    "JG 2-013": { "type": "wh", "x": 10, "y": 0 },
+    "Tiafa": { "type": "wh", "x": 16, "y": 0 },
+    "SF 5-674": { "type": "wh", "x": 7, "y": 13 },
+    "Hobeex": { "x": 14, "y": 10 }
+  }
+}

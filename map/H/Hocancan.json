@@ -1,0 +1,12 @@
+{
+  "cluster": "North Pardus Rim",
+  "sector": "Hocancan",
+  "width": 17,
+  "height": 19,
+  "tiles": "beeebbbbbbbbbbbbbeefeebbbbbbbeeeebegggeebeeebeeffebeggggebeeebeoooeeeggggeeeebbefoffeeggggfffeeeegggfeeggggffffggggggfeeefffffffggggggeebefffffffggggggebeefffffffggggggebefffggggfggggfeebeegggggggfffeeebbbegggggggffeebbbbbegggggggeeebbbbbbeeggggffebbbbbbbbbeeffeeeebbbbbbbbbbeeeebeebbbbbbbbbbbbbbbeebbbbbbbbbbbbbbbeebbbbbbb",
+  "beacons": {
+    "WO 3-290": { "type": "wh", "x": 8, "y": 2 },
+    "Laedgre": { "type": "wh", "x": 9, "y": 18 },
+    "Hocancan": { "x": 4, "y": 8 }
+  }
+}

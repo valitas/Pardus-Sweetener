@@ -1,0 +1,12 @@
+{
+  "cluster": "South Pardus Rim",
+  "sector": "Cemiess",
+  "width": 18,
+  "height": 15,
+  "tiles": "bbbbbbbbeebbbbbbbbbbbbbbbbeeeebbbbbbbbbbbbbbeffeeeebbbbbbbbbbbefffffeeebbbbbbbbeefffffffeebbeeebeeffffffffeebeefeeeffffffffeebeeffffgggffffffebbeefgggggggggggfebbbefgggggggggggfebbbeegggggggggggfebbbbeefgggggggggeebbbbbeeegggggggeebbbbbbbbeeeffeeeebbbbbbbbbbbeeeebbbbbbb",
+  "beacons": {
+    "Encea": { "type": "wh", "x": 9, "y": 0 },
+    "Paan": { "type": "wh", "x": 0, "y": 7 },
+    "Cemiess": { "x": 12, "y": 5 }
+  }
+}

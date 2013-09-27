@@ -1,0 +1,13 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "Edmize",
+  "width": 16,
+  "height": 16,
+  "tiles": "eeeeeebbbbbeeebbeffffeebbbeeeebbefooofeebeeeebbbeeffoffeeefebbeebeeffoffeeeeeeeebbeeffffebeffeeebbbeefffebeeeebbbbbbeffeebbbbbbbbbbbeffebbbbbbbbbbbbeffeebbeeebbbbbeefffeeeefeebbbeefffffffgggebbeeffffffffgggebbeeffeeeeeeeefebbbeeeebbeebbeebbbbbbbbbbeebbbbbb",
+  "beacons": {
+    "Usube": { "type": "wh", "x": 0, "y": 0 },
+    "Tiacken": { "type": "wh", "x": 12, "y": 0 },
+    "Faphida": { "type": "wh", "x": 15, "y": 4 },
+    "TG 2-143": { "type": "wh", "x": 9, "y": 15 }
+  }
+}

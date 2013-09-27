@@ -1,0 +1,12 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "Veliace",
+  "width": 25,
+  "height": 16,
+  "tiles": "bbbbbbbbbbbbbbbbbbeeebeeebbbbeeeebbeebbbbbbeeeeeeebbbeeffeeeeeeeebeebeeeeebbbbeffffffffffeeeeeeebbbbbbbeeeeffeeeefggggggeebeebbbbebeffebbefggggggfeeeebbbeeeefeebeefggggffeebeebbeeoffeebeeffgggfeeebbbbbbefofeebeefffgggfebbbbbbbeeoffebeefggffffeebbbbbbeeffeeebeeeggffffebbbbbbbeefoebbbbbeggffffeebbeeeebeffeeeeeeefffffffebbeffebeeeebbbbbeeeeefffeeeeffebbbeebbbbbbbbbeefeebbeffebbbbbbbbbbbbbbbeeebbbeeee",
+  "beacons": {
+    "Olaso": { "type": "wh", "x": 4, "y": 2 },
+    "WI 4-329": { "type": "wh", "x": 1, "y": 11 },
+    "Veliace": { "x": 15, "y": 11 }
+  }
+}

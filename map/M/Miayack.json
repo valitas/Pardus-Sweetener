@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Miayack",
+  "width": 24,
+  "height": 14,
+  "tiles": "bbbbbbbbbbeeeeebbbbbbbbbbbbbbbbbeeefffeeeebbbbbbbbbbbbbeeggggggggeeebbbbbbbbbbbefgggggggggfebbbbbbbbbeeefgggggggggeebbbbbbbbeefffffffgggggebbbbbeeeeeffffeeeffgggeebbbbbeefffffffebeefgggebbbbbbbeeefffffebbeffffeebbeeebbbeeffffebbeeffffeeeeeebbbbeeefeebbbefffffffeebbbbbbbeeebbbeefofffeeebbbbbbbbbbbbbbeeooeeeebbbbbbbbbbbbbbbbbeeeebbbbbbb",
+  "beacons": {
+    "Sigma Draconis": { "type": "wh", "x": 0, "y": 6 },
+    "Exinfa": { "type": "wh", "x": 23, "y": 8 },
+    "Miayack Station": { "x": 11, "y": 6 }
+  }
+}

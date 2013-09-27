@@ -1,0 +1,11 @@
+{
+  "cluster": "South Pardus Rim",
+  "sector": "ZP 2-989",
+  "width": 13,
+  "height": 14,
+  "tiles": "bbbbbeeebbbbbbbbbbefeeebbbbbbbbeeffeebbbbbbbbefffebbbbbbbbefffeebbbbbbbeffffebbbbbbbeffffebbbbbbeeffffeebbeeeeffffffebeeffoffofffeeefoooooffffeeffooooeeeffeeeeeeefebeefebeebbeeebbeee",
+  "beacons": {
+    "Sodaack": { "type": "wh", "x": 6, "y": 0 },
+    "Cabard": { "type": "wh", "x": 12, "y": 13 }
+  }
+}

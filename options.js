@@ -49,7 +49,7 @@ PSOptionsPageDriver.prototype = {
              'allianceQLsOrionEnabled', 'personalQLOrionEnabled',
              'personalQLOrion', 'allianceQLsPegasusEnabled',
              'personalQLPegasusEnabled', 'personalQLPegasus',
-             'sendmsgShowAlliance' ];
+             'miniMap', 'sendmsgShowAlliance' ];
     for(i = 0, end = keys.length; i < end; i++) {
       var key = keys[i];
       var control = doc.getElementById(key);

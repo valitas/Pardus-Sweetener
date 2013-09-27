@@ -1,0 +1,14 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "Epsilon Eridani",
+  "width": 18,
+  "height": 32,
+  "tiles": "bbbbbbbbeebbbbbbbbbbbbbbbeeeeebbbeeebbbbbbeefffeeeeefebbbbbbefgggfffffeebbbbbeefggggfffeebbbbbeefgggggffeebbbbbbefggggggffebbbbbbeeggggggfffeebbbbbegggggggffffebbbbeeggggggfffeeebbbeefgggggfeeeebbbbbeefgggggfebbbbbbbbbeeeggggfebbbbbbbbbbbeeefffeebeebbbbbbbbbeffffeeeeebbbbbbbeeffffffffeebbbbeeeffffffffffebbbbeeefeeeffffffebbbbbbeeebefffffeebbbbbbbbbbefffeeebbbbbbbbbbbefffebbbbbbbbbbbbeefffeebbbbbbbbbeeefffffeeeebbeeeeeffffffeeeeebeeffooffffffebbbbeeffoooffffofebbbbeefffoffffoooeeebbbeeeffffffooeeeebbbbbeffffffoeebeeebbeeeffffffeebbeeeeeeeeeffeeeebbbbeeeeeebeeeebbbbbbbbee",
+  "beacons": {
+    "PJ3373": { "type": "wh", "x": 16, "y": 2 },
+    "Quurze": { "type": "wh", "x": 17, "y": 23 },
+    "Faexze": { "type": "wh", "x": 0, "y": 30 },
+    "Sol": { "type": "wh", "x": 17, "y": 30 },
+    "Eridani": { "x": 13, "y": 16 }
+  }
+}

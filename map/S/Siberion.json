@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "Siberion",
+  "width": 25,
+  "height": 15,
+  "tiles": "eeeebbbbbbbbeeeeeeeebbbbbeffebbbeeeeeeffggggeeeebbeefeebeefffffffgggggffeeebeefebeffffggffgggggggfeebbefeeeffffggffgggggggfebbbeffffffffffffgggggggfebeeefffffffffffggggggggeebefffffffffffffgggggggfebbeeffffffffffooggggggffebbbefffffffffooogggggfffeebbeeffffggfffoffgggfffffeebbeefffggfffeeefffffeeefebbbeeffffffeebeeeeeeebeeebbbbeeefffeebbbeebeebbbeebbbbbbeeeeebbbbeebbbbbbee",
+  "beacons": {
+    "BL3961": { "type": "wh", "x": 1, "y": 1 },
+    "Daceess": { "type": "wh", "x": 15, "y": 14 },
+    "WP3155": { "type": "wh", "x": 24, "y": 14 },
+    "Siberion Station": { "x": 5, "y": 4 }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "Pass EMP-08",
+  "width": 25,
+  "height": 21,
+  "tiles": "bbbbbbeebbeebbbbbbbbbbbbbbbbbeeeeeeeeebbbeeebbbbbbbbbeeeeeeeffeebeefeebbbbbeeeefeeebeeefebeeeeeebbbbeeefeeeebbbeeebeebeeeebbbeeeeebbbbbbbeeeeebbefebbbbbbbbbbbbbbbeeeeebbefebbbbbbbbbbbbbbbbbbbbbeefebeebbbbeeeebbbeeebbbbeffeeeebbeeeffeeeeefebbbbeffebeebeefffffeeefeebbbeeffebbbbeffeeeeebeeebbbbefeeebbbbeffebbeebbeebbbbefeeeebbeefeebbeebeeebbbbeffffeebeffebbeeeeeeebbbbeefffeebefeebbeeeeeebbbbbbeeeeebbeeebbbeebeebeeeeebbeeeebbbebbbbeeeeeeeeeeeeeeeeebbeeebbbeffeeefeeeffffebbbbeeeeeeefeebeeeeeeeffeebbbbeebbbeeebbeebbbbeeeeebbb",
+  "beacons": {
+    "Greliai": { "type": "wh", "x": 0, "y": 4 },
+    "Lianla": { "type": "wh", "x": 24, "y": 8 },
+    "DP 2-354": { "type": "wh", "x": 1, "y": 15 }
+  }
+}

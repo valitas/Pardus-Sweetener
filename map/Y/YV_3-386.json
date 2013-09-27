@@ -1,0 +1,12 @@
+{
+  "cluster": "Union Rashkir Core",
+  "sector": "YV 3-386",
+  "width": 12,
+  "height": 18,
+  "tiles": "bbbbeeebbbbbbbbbefeebbbbbbbbeffebbbbbbbbeffebbbbbbbeefeebbbbbeeeffebbbbbeeffffeeebbbeeeeffffebbbbbbeffffebbbeeeeffffebeeeefffoffeeeebefoooooebeebeooooffebbbbefoofffebbbbeeofoofeebbbbeoffffeebbbbeefeeeebbbbbbeeebbbbbb",
+  "beacons": {
+    "Wainze": { "type": "wh", "x": 6, "y": 0 },
+    "Quexce": { "type": "wh", "x": 0, "y": 6 },
+    "Pass UNI-04": { "type": "wh", "x": 11, "y": 10 }
+  }
+}

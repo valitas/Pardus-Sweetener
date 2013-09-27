@@ -1,0 +1,12 @@
+{
+  "cluster": "East Pardus Rim",
+  "sector": "Rotanev",
+  "width": 16,
+  "height": 19,
+  "tiles": "bbbbbbbeebbbbbbbbbbbeeeeebbbbbbbbbbeefffebbbbbbbbbeefffeebbbbbbbbbeffffebbeeebbbbbeffffeebefeeeebbefffffeeeffffebeefffffeeeffffebefffffeebeffooeeefffffebbeeoeeeeffffofebbbeeebbeefooooeebbbbbbbbeeefoffebbbbbbbbbbeefofeebbbbbbbeebefoooebbbbbbeeeeeffoeebbbbbbefebeffeebbbbbbbeeebeeeebbbbbbbbbeebbbbbbbbbbbbb",
+  "beacons": {
+    "HW 3-863": { "type": "wh", "x": 7, "y": 1 },
+    "DH 3-625": { "type": "wh", "x": 1, "y": 15 },
+    "Rotanev": { "x": 5, "y": 6 }
+  }
+}

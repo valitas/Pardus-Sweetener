@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "Zearla",
+  "width": 17,
+  "height": 16,
+  "tiles": "bbbbbbbbeeebbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbebbbbbbbbbbeeebeeeeeeebbbbbeefeeefffffeeebbeefffffffffgggebbeffffffeeefgggeeeefffffeebefggggeeffffffebeefggggeeefffffebeffggggebefofffebeefggggebeeooffebbefggggebbeeoofebbefgggeebbbefofeeeefgggebbbbeeeeebbeeefeebbbbbbeebbbbbeeebb",
+  "beacons": {
+    "YS 3-386": { "type": "wh", "x": 14, "y": 14 },
+    "Ackarack": { "type": "wh", "x": 5, "y": 15 },
+    "Zearla": { "x": 5, "y": 6 }
+  }
+}

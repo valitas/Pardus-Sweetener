@@ -1,0 +1,13 @@
+{
+  "cluster": "Union Rashkir Core",
+  "sector": "DI 9-486",
+  "width": 25,
+  "height": 16,
+  "tiles": "bbbbeeebbbbbbbbbbbbbbbbbbbbeeefeebbeebbbbbbbbbbbbbbeeffffeeeeeebbbbbbbbbbbbbefgggffffffeeebbbbbbbbbbeefgggggfoffffeebbbbbbbbbeffgggggffffeeeeeeebbbbbbeeffeeefffffebeeffeeebeeebeeeebeeeeeeeebefoooeeefebbbbbbbbeebeeeeeffofffffebbbbbbbbbbbbeeffffffeeeeebbbbbbbbbbbbbefoffffebeebbbbbbbbbbbbbbeffooffeebbbbbbbbbbbbbeeeeffffeeeeeeebbbbbbbbbbeefffeeeebeffeebbbbbbbbbbbeefeebbbbeeeebbbbbbbbbbbbbeeebbbbbbeebb",
+  "beacons": {
+    "Sophilia": { "type": "wh", "x": 0, "y": 5 },
+    "Vega": { "type": "wh", "x": 23, "y": 7 },
+    "Daured": { "type": "wh", "x": 23, "y": 14 },
+    "Spica": { "type": "wh", "x": 14, "y": 15 }
+  }
+}

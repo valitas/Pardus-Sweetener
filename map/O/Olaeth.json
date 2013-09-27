@@ -1,0 +1,11 @@
+{
+  "cluster": "Union Keldon Core",
+  "sector": "Olaeth",
+  "width": 18,
+  "height": 14,
+  "tiles": "bbbbbbbeebeeeebbbbbbeeebeeeeeffeeebbbbefeeeffffffffeebbbeeebeefffeeeffebbbbebbbeeeeebeffeebbbebbbbebbbeeffeebeeeebbeeebbefffebbeeeebeefeeeefffeebeeeeeeffebbeffffebbeeeeeeeeeeefffeebebeebeeeebbeeefebbbeeeeeffeeeeeeeebbeeeeefeeebbeeeebbbbeebeeebbbbbbbbbb",
+  "beacons": {
+    "Lazebe": { "type": "wh", "x": 8, "y": 1 },
+    "WW 2-934": { "type": "wh", "x": 15, "y": 11 }
+  }
+}

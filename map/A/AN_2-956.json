@@ -1,0 +1,11 @@
+{
+  "cluster": "South Pardus Rim",
+  "sector": "AN 2-956",
+  "width": 19,
+  "height": 20,
+  "tiles": "bbbbbbbbbbbbbbeebbbbbbbbbbbbbbbbeeeebbbbbbbeebbbbbeeffeebbbbeeeeeebbeeffofeebeeeffffebeeffoffeeeeffooffeeeffffffebefffooofeeeeefffeebeefffoffebbbeeffebbbeefffeeeebbbeeeebbbbeeffeefeebbbeebbbbbbeeeffffeebbbbbbbbbbbbefeeffeebbbbbbbbbbbeeeefeeeeebbbbbbbbbbefffeeffeebbbbbbbbbeefffffeeebbbbbbbbbbeeeeeeeeebbbbbbbbbbbbeebeeeebbbbbbbbbbbbbbbbebbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbeeebbbb",
+  "beacons": {
+    "Tiliala": { "type": "wh", "x": 0, "y": 6 },
+    "Pass EMP-04": { "type": "wh", "x": 13, "y": 19 }
+  }
+}

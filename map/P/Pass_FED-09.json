@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation South Human",
+  "sector": "Pass FED-09",
+  "width": 23,
+  "height": 17,
+  "tiles": "bbbbeebbbbbbbbbbbbeebbbbbbeeeeeeeeeebbbbeeeebbbbeeeeeeeeefebbbeeffeebbbeeebbeebeeeebbeeffeebbbbeebbbbbbefebbbeefebbbbbeebbbbbbeeebbbbeeebbeebeebeeebbbeebbbeeebbbeeeeeeefeebbeebbbeeebbbeebeebeefebbeeeebbeebeebbbbbbbeeebbeefeeeeeeeebbbbbbbeeebbbeeeeeeebeebbbbbbeeeebbbbbbbbeebbbbbbbbeefebbbbbbeebeeebbbbbbbefeebeeeeeeeeefeebbbbbbefebeeeefeeefeeeebbbbbbeeeeefeeeebeeebbbbbbbbbbeeeeeeeebbbeebbbb",
+  "beacons": {
+    "Enioar": { "type": "wh", "x": 0, "y": 7 },
+    "Faexze": { "type": "wh", "x": 22, "y": 9 },
+    "Pass FED-10": { "type": "wh", "x": 18, "y": 16 }
+  }
+}

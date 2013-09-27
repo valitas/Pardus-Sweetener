@@ -1,0 +1,13 @@
+{
+  "cluster": "Gap",
+  "sector": "Nex 0006",
+  "width": 25,
+  "height": 25,
+  "tiles": "bbbbeeeeebeeeeebbbbbbbbbbeeeeefffeeefffeeeeebbbbbbeeffffeeefffffffffeeebbbbbeffeeebeffeeeeeffffebbbbbeeeebbeefeebbbeeeffeebbbbbeebbeefeebbbbbbeeefeebbbbbbbeefeebbeebbbbbeefebbbbbeeefeebbeeeebbeebefeebbeeefeeebbeeffeebeeeeffebeefffebbbeeffffeeeeeeefebefffeebeeeffffffeeeebeeebeffeebbefffeeeeefffeeeebbefeebbbeffeebbeeffffffeebeeebbeeefeebbeefeeeeefeebeebbeefffebbeeffebebeeebbbbbbefffeebeeffeebebbbbbbbbbeefggebbeeeeebbebbbbbbbbbeefggeebbbbbbbbebbbbbbbbbbeefffeeebbbbbbebeeeebbbbbbeeefffeeeeeeeeeeffeebbbbbbbeeffffgggggggffffebbbbbbbbeefffgggggggfffeebbbbbbbbbeeffgggggggffeebbbbbbbbbbbeeefffffffeeebbbbbbbbbbbbbbeeeeeeeeebbbb",
+  "beacons": {
+    "Greenso (North)": { "type": "wh", "x": 1, "y": 2 },
+    "Greenso (South)": { "type": "wh", "x": 0, "y": 14 },
+    "Propus": { "type": "wh", "x": 24, "y": 19 },
+    "13": { "type": "xh", "x": 15, "y": 0 }
+  }
+}

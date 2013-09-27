@@ -1,0 +1,14 @@
+{
+  "cluster": "Lane",
+  "sector": "Aandti",
+  "width": 22,
+  "height": 13,
+  "tiles": "bbbbbbeeebeeebbbbbbbbbbbbeebeeebefeebbbbbbbbbbeeebbebbeffeebbbbbbbbeefeeeeeeeofeebbbbbbbbeffffffffoofebbeebbbbbeffffffffoffeeeeeeeebeefffffffofoofffffffeeeeffffffffooffffeeefeebeefffffoofoffeeebeeebbbeeffffffofffebbbbbbbbbbeeefffffffeebbbbbbbbbbbbeeffffeeebbbbbbbbbbbbbbeeeeeebbbbbbbbbb",
+  "beacons": {
+    "Vecelia": { "type": "wh", "x": 7, "y": 1 },
+    "Baar": { "type": "wh", "x": 1, "y": 6 },
+    "Hooth": { "type": "wh", "x": 21, "y": 6 },
+    "Waolex": { "type": "wh", "x": 6, "y": 11 },
+    "Aandti": { "x": 5, "y": 6 }
+  }
+}

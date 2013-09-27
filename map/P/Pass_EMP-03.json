@@ -1,0 +1,11 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "Pass EMP-03",
+  "width": 25,
+  "height": 20,
+  "tiles": "bbbbeeeeeebbbeeeeeeeeebbbbeeeeffffeebbeeeeffffeebbeeffffffffebeeebefffffebbeeeefeeeeeebeeeeeeeeffeeebbbeeebeeeebbeeeeebeeeffebbbbbbbefeebbbeeeebbbeeeebbbbeeeeeebbbeefeebbbbbbbbbbeeffeebbbbefeebbbbbbbbbeeeffeebbbbeefebeeeebbbbbefeeeebbbbbeefeeeffeebbbeefebbbbbbbbbeeffffffeebbeffebbbbbbbbbbeeeeeeefebbeffeebbbbbbbbbbbbbbbeeeebeeffebbbbbbbbbbbbeebbefeebeffeebbbbbbeeeeeeeebeffebeeffebeeeeeeeeeeeeeeeffebbeffeeefffeeebbbbeffffeebbeefffffffebbbeeeefffeebbbbeeeeeeefeeeeeeeeeeeebbbbbbbbeebeeeeeeeebbeebbbb",
+  "beacons": {
+    "Grecein": { "type": "wh", "x": 1, "y": 2 },
+    "Ackandso": { "type": "wh", "x": 23, "y": 4 }
+  }
+}

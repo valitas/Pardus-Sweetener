@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "Greandin",
+  "width": 14,
+  "height": 23,
+  "tiles": "bbbbbbeeebbbbbbbbbeeefeeebbbbbbeefffffeebbbbbefffffffebbbbeefffffffeebbbegggffffffeebeegggffgggggebefgggfggggggebeeeeffggggggebbbbeffgggggeebeebeffgggggebeeeeefffgggeebeeeeffffffeebbbbbeefffffebbbbbbbeefoffeebbbbbbbefffofeebbbbbbeffooooebbbbbeefeeeofebbbbbeffebefeebbbbeefeebeeebbbbeefeebbbbbbbeeeeeebbbbbbbbeeeebbbbbbbbbb",
+  "beacons": {
+    "Iniolol": { "type": "wh", "x": 7, "y": 0 },
+    "Regulus": { "type": "wh", "x": 0, "y": 11 },
+    "Aeg": { "type": "wh", "x": 0, "y": 22 },
+    "Greandin": { "x": 8, "y": 4 }
+  }
+}

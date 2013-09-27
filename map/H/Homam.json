@@ -1,0 +1,13 @@
+{
+  "cluster": "Union Keldon Core",
+  "sector": "Homam",
+  "width": 17,
+  "height": 22,
+  "tiles": "bbbbbbbbbbeeeebbbbbbbbbbeeeeffeebbbbbbbbbeeffgggebbbbbbbbbeefggggebbbbbbbbbeefggggebbbbeebbeeffggggeebbeeeeeeffffffffebeegggggffffffffeeeggggggffffffffeeeggggggfffffeeeebeggggggfffffebeebeggggggfffffeebbbeggggggffffffeeebeggggggffffffffeeeegggfffffffffeeebeffeeeeefffeeebbbefeeeebefooebbbbbeeeeeebeoofeebbbbbefffebeefofeebbbbeeefebbeeeeeebbbbbbefebbbbeebbbbbbbbeeebbbbbbbbbb",
+  "beacons": {
+    "WW 2-934": { "type": "wh", "x": 13, "y": 0 },
+    "Matar": { "type": "wh", "x": 16, "y": 13 },
+    "Pass UNI-05": { "type": "wh", "x": 6, "y": 20 },
+    "Homam": { "x": 9, "y": 9 }
+  }
+}

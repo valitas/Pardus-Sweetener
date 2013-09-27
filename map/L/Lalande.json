@@ -1,0 +1,10 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "Lalande",
+  "width": 7,
+  "height": 10,
+  "tiles": "bbbbeeebbeeefebeeeeeeeefebbbeggeebbeggfeebeeeeeebbebbeebeeebbbbeeebbbb",
+  "beacons": {
+    "Beta Proxima": { "type": "wh", "x": 5, "y": 1 }
+  }
+}

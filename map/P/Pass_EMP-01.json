@@ -1,0 +1,11 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Pass EMP-01",
+  "width": 20,
+  "height": 25,
+  "tiles": "bbbbeeebbbbbbbbbbbbbbbbbeeebbbbbeebbbbbbbbbbbebbbbbeeeeebbbbbbbeeeebbbbeoofeeebbbeeefeebbbeefofffeebbeffeebbbbefffffffebeeffebbbbbeffeeeeeebefffeebbbeefeebbeebbeefffeebbeffebbbeebbbeffffeeeeffeebbeeebbeefffeeeefffebbeeebbbeeffebbeffeebbbeebbbbefeebbeefebbbbeebbbbeeebbbbeeebbbbeebbbbbbbbbbbbbbbbbbeebbbbbbbbbbbbbbbbbbeebbbbbbbbbbbbbbbbbeeeebbbbbbbbbbbbbbeeefeebbbbbbbbbbbbbeefeeebbbbeebbbbbbbbefeebbbeeeeeebbbbbbeefebbbbeeeeeeeeeeeeeeeebbbbbebbeefffffeeebbbbbbeeebbeeeeeeebbbbbbbbeeebbbbbbbbbbbbbbbbb",
+  "beacons": {
+    "TG 2-143": { "type": "wh", "x": 5, "y": 0 },
+    "Iceo": { "type": "wh", "x": 1, "y": 24 }
+  }
+}

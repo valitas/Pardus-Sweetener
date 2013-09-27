@@ -1,0 +1,13 @@
+{
+  "cluster": "Pardus Federation Contingent",
+  "sector": "Fornacis",
+  "width": 25,
+  "height": 30,
+  "tiles": "bbbbbbeeeeebbbbbbbbbbbbbbbbbbbeefffeeebbbbbbbbbbbbbbbbbeefffffeeeebbbbbbbbbbbbbbbeeeeeffffeebbbbbbbbbbeeebbbbbefffffeebbbbbbbbbefeeeeebefggggfeebbbbbbbbeoffffeeefgggggfeebbbbbbbeffffeeeeeggggggfebbbbbbeefggeebbbefgggggfebbbbbbeffggebbbeefgggggfebbbbbbefffeebbbefgggggggeebbbbbeffeebbbeefgggggggfeeebbeeffebbbbeffgggggggfffeebeeffeebbbeeffffffffffffebbefffebbbbeffgggfeeeeffebbeeeeebbbbeefgggeebbeffebbbbebbbbbbbeegggebbeeffeebbeeeeeebbbbefffebeeffffebbeeffeebbbeefffeeefffffebbbeffebbbeeggggffffffffebbeeffebbeefggggffffffffeeeefffebbeffggggfeeefffeeeeffffeeeeffffffeebeffeebbefffeebbeffeeefebbeeeebbbefffebbbeefebefeebbbbbbbeefeeebbbbeeeeeffeebbbbbbefeebbbbbbbeffffffeebbbbbefebbbbbbbbeeffffffeebbbbefebbbbbbbbbeeeffffeebbbbeeebbbbbbbbbbbeeeeeebbbbb",
+  "beacons": {
+    "Sargas": { "type": "wh", "x": 20, "y": 10 },
+    "Ras Elased (East)": { "type": "wh", "x": 19, "y": 28 },
+    "Ras Elased (West)": { "type": "wh", "x": 1, "y": 29 },
+    "Fornacis": { "x": 21, "y": 19 }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "cluster": "East Pardus Rim",
+  "sector": "Diphda",
+  "width": 20,
+  "height": 20,
+  "tiles": "bbeeebbbbbbeeebbbbbbbeefebbeebbeeebbbbbbeeffeeeeeebbebbbbbbbefffebbefeeeeeebbbbbeoffebbeefffffeebbbbeefeebbbeffffffebbbbbeeebbeeeffffffeeeeebbbbbeeffffffffffeeebbbbbeefffffffffeebbbeeebbefggggggfeebbbeefeeeefggggggfebbbbeefoofffggggggfebeeebefoooofggggggfeeefebeeffoffggggggfebeeebbeeffffggggggfebbbbbbbeeffffgggggfeebbbbbbbeeeeefgggfffebbbbbbbbbbbeeffffeeebbbbbbbbbbbbeefeeebbbbbbbbbbbbbbbeeebbbbbbb",
+  "beacons": {
+    "Pass UNI-03": { "type": "wh", "x": 12, "y": 1 },
+    "Thabit": { "type": "wh", "x": 18, "y": 6 },
+    "EH 5-382": { "type": "wh", "x": 5, "y": 7 },
+    "Phao": { "type": "wh", "x": 11, "y": 19 },
+    "Diphda": { "x": 11, "y": 7 }
+  }
+}

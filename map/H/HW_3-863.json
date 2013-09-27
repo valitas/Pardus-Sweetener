@@ -1,0 +1,12 @@
+{
+  "cluster": "East Pardus Rim",
+  "sector": "HW 3-863",
+  "width": 16,
+  "height": 20,
+  "tiles": "bbbbbbeeebbbbbbbbbbbbbefebbbbbbbbbbbbbefebbbbbbbbbeeeeefeeebbbbbbeefffffffeeeeebeeffffeeeeeoffeeeefeeeebbbeeeffeeefebbbbbbbbeffebeeeeeebbeeeefeebbefffeeeeffeeebbbefgggggggfebbbbbefgggggggfeebbbeefggggggggfeebbeffggggggggffebbeeeggggggggfeebbbbeoffeeefffebbbeeeoffebeeffeebbeeffffeebeefeebbbeeeeffebbeeeebbbbbbeeeebbbbbbb",
+  "beacons": {
+    "Wasat": { "type": "wh", "x": 7, "y": 0 },
+    "Nex 0004": { "type": "wh", "x": 15, "y": 6 },
+    "Rotanev": { "type": "wh", "x": 7, "y": 18 }
+  }
+}

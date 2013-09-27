@@ -1,0 +1,13 @@
+{
+  "cluster": "North Pardus Rim",
+  "sector": "Daaya",
+  "width": 26,
+  "height": 25,
+  "tiles": "bbbbbbbbbbbbbeeebbbbbbbbeebbbbbbbbbbbbeefebbbbbeeeeebbbbbbbeebbbeffeebbbeefffebbbbbbeeeebbefffebeeefffeebeebbbeffebeefffebeeeffeebbeeebeefeebeefffeeeeeeeebbbefebeffebbbeffffffffebbbbbefeeeffeebeefggggggfeeebbeefffffffeeefggggggggffebbeffffggggfffgggggggggffeebeefffggggfffggggfggggffeebbeeefggggfffggggfgggffeebbbbbeffffffffeeefeeeefeebbbbeeeffffffeeebeeebbeeebbbbeefffffffeebbbbbbbbbebbbbbeefffffffebbbbbbbbbbebbbbbbeefffffeebbbbbbbbbbebbbbbbbeefffeebbeeebbeeeeebbbbbbbbeggfebbeefeeeeffeeebbbbbbbeggfebeefffffffffeebbbbbbeefffeeefffffffoooebbbbbbbefeeeebefffffffoooeebbbbeeeeebeebeeffeeeefofeebbbbefeebbbbbbeeeebbeeeeebbbbbeeebbbbbbbbeebbbbbbbbbbbbb",
+  "beacons": {
+    "Nex 0002": { "type": "wh", "x": 14, "y": 0 },
+    "Ururur": { "type": "wh", "x": 25, "y": 1 },
+    "WO 3-290": { "type": "wh", "x": 2, "y": 4 },
+    "Laedgre": { "type": "wh", "x": 1, "y": 23 }
+  }
+}

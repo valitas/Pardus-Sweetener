@@ -1,0 +1,12 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "Pass UNI-07",
+  "width": 23,
+  "height": 24,
+  "tiles": "bbbbbbbbeeebbeeebbbbeebbbbbbbbeefeeeefeeebbeeebbbbbeeeeeebbefeeeeeefebbbbeeeeebbbeefeeebbeeebbbbeeebbbbeefffeebbbebbbbeeebbbbeefffeebbbbebbbbeeebbbeeffeeebbbeeeeeebeebbbbeeeeebbbbeeffeeeeeeebbbeebeeeebeeffeeeebefeebbeeeeffeeeffeebbbbeffeebeefffggffffebbbbbeeeeebbeeefggfffeebbbbeeeeebbeeeefffeeeebbbbeeeeeebeefeeefeebbbbbbbeeebeeeefeebefebbbbbbbbbeeeeffffebbefeebbbbbbbbeeefffeeebbeffeebbbbbbbbbeeeeebbbbeeeeebbbbbbbbbbbbbbbbbeeebeeebbbbbbbbbbbbbbbbeeeeeeebbbbbbbbbbbbbbbbbeeeeebbbbbbbbbbbbbbbbbbbbeebbbbbbbbbbbbbbbbbbbbbeebbbbbbbbbbbbbbbbbbbbbeebbbbbb",
+  "beacons": {
+    "BU 5-773": { "type": "wh", "x": 14, "y": 0 },
+    "Uressce": { "type": "wh", "x": 22, "y": 7 },
+    "Ioquex": { "type": "wh", "x": 0, "y": 8 }
+  }
+}

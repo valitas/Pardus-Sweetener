@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Phekda",
+  "width": 8,
+  "height": 17,
+  "tiles": "bbbeebbbbeeeeeebeegggfebeegggfebbegggfeebeeeeffebbbbeffebeebeffebeeeefeebeebefebbbbbefeebbeeeffebeeffeeebeeffebbbbeefebbbbbeeebbbbbeebbb",
+  "beacons": {
+    "Famiay": { "type": "wh", "x": 3, "y": 0 },
+    "Bedaho": { "type": "wh", "x": 1, "y": 8 },
+    "Epsilon Indi": { "type": "wh", "x": 7, "y": 12 }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "XH3819",
+  "width": 16,
+  "height": 12,
+  "tiles": "bbbbbbbbbbbbbbeebbbbbbbbbbbbbbeebbbbbbbbbbbbeeeebbbbbeeeeeebeffebbeeeeffffeeeeeebeefoffeeefffebbeefooofebeeffeebeefooffebbeeefebbeeffofebbeeeeebbbeeefeebbeefebbbbbbeeebbbbeeebbbbbbbeebbbbeebbb",
+  "beacons": {
+    "Ericon": { "type": "wh", "x": 14, "y": 0 },
+    "Lave": { "type": "wh", "x": 5, "y": 11 },
+    "Orerve": { "type": "wh", "x": 11, "y": 11 }
+  }
+}

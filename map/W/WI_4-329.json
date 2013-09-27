@@ -1,0 +1,13 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "WI 4-329",
+  "width": 16,
+  "height": 21,
+  "tiles": "bbbbbbbbbbeeebbbbeeeebeebeefeebbbeffeeeebeeffeebbeeffffeebeffeebbbefffffeeefeebbbbeeeeeffffeebbbbbbebbeefggebbbbbeeeebbefggeebbbbeefebbeeffoeeebbbefeeeeefffofeeeeefebbbeeofoofeeeeeebbbbeffooeeeebeebbbeefffoebeeeeebbbeffoofebeeefeebbeeffoeebeeeeeebbbeeffebbeeeebbbbbbeffeebbbbbbbbbbbefffeebbbbbbbbbbeefffebbbbbbbbbbbeeeeebbbbbbbbbbbbeebb",
+  "beacons": {
+    "Veliace": { "type": "wh", "x": 12, "y": 1 },
+    "Lagreen": { "type": "wh", "x": 2, "y": 2 },
+    "Pass UNI-08": { "type": "wh", "x": 8, "y": 14 },
+    "Miola": { "type": "wh", "x": 0, "y": 16 }
+  }
+}

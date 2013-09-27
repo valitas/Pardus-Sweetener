@@ -1,0 +1,14 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "Usube",
+  "width": 14,
+  "height": 30,
+  "tiles": "bbeebbbbbbbbbbbbeeebbbbbbbbbbbeeebbbbbbbbbbeeebbbbbbbeeebefeeeebbbeefebeffffebbeefeeeeooofebbefeebefoooeebeeeebbeooooebbefebbbeefofeeeeeebbbbeeffffffebbbbbbeefgggfebbbbbbbefgggfeebbbbbeegggggfeeebbeegggggggffebbefggggggggfeebefgggggggggfeeefgggffggggfeeffffffffgggfeeeffffffffffeebeffffffffffebbeefffffffffebbbeefffffffeebbbbeffffffeebbbbbefeeeefebbbbbbeeebbefebbbbbbbebbbeeeebbbbbeeebbbeeebbbbbeeebbbbeeebbbbbbbbbbbeeeb",
+  "beacons": {
+    "Begreze": { "type": "wh", "x": 3, "y": 0 },
+    "Laolla": { "type": "wh", "x": 12, "y": 4 },
+    "Urhoho": { "type": "wh", "x": 3, "y": 28 },
+    "Edmize": { "type": "wh", "x": 11, "y": 29 },
+    "Usube": { "x": 6, "y": 20 }
+  }
+}

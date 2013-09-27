@@ -1,0 +1,12 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "Abeho",
+  "width": 25,
+  "height": 13,
+  "tiles": "beeeeeeebbbeebbeeeeeeebbbbeffgggeebbeebeegggggeebbeefgggggebeeeeegggggggeebegggggggeeefggfggggggggebeggggggggggggggggggggggebegggggggggggggggggfggggeeegggggggeeefgggggfffgggfeeggggggeebeffffffeeeefffeefgggggebeeeeeeeeebbeeffeeegggggebeeebeebebbbbeeeebegggggebbbbbbbbebbbbbbbbbeefffeebbbbbbbeeeeeebbbbbbeeeeebbbbbbbbeeeeeebbbb",
+  "beacons": {
+    "PA 2-013": { "type": "wh", "x": 11, "y": 1 },
+    "Olaso": { "type": "wh", "x": 24, "y": 8 },
+    "Abeho": { "x": 18, "y": 4 }
+  }
+}

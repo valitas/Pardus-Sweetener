@@ -1,0 +1,11 @@
+{
+  "cluster": "Lane",
+  "sector": "Polaris",
+  "width": 10,
+  "height": 14,
+  "tiles": "bbbbbeeebbbeeeeefeebeeffffmmebeeffffmmeebeeeefffeebbbbeefeebbbbbbefebbbbbbeefeebbbbeeffeebbbeefeeebbbbeffebbbbbbeffeebbbbbeefeebbbbbbeeebbbb",
+  "beacons": {
+    "Qumia": { "type": "wh", "x": 1, "y": 2 },
+    "Ioquex": { "type": "wh", "x": 4, "y": 12 }
+  }
+}

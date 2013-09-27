@@ -1,0 +1,13 @@
+{
+  "cluster": "Union Rashkir Core",
+  "sector": "Ackwada",
+  "width": 22,
+  "height": 15,
+  "tiles": "eeeebbbbbbbbeebbbbbbbbeefeebbbbeeeeebbbbbbbbbeffeebbeefffeeeebbbbbbeeffeebefffffffeeebbbbbefffeeefggggffffebbbbbeffffffggggggggfeebbbeeffffffggggggggffebbbeeffffffggggggggffeebbbeeeeefffeeeeeeeeffeebbbeebeeeeebbeebbeeeeeeebeeebbbbbbbeebbbbbeeeeeeeebbbbbbeeeebbbbbbeebeebbbbbeeeffebbbbbbbbbbbbbbbbeeffeebbbbbbbbbbbbbbbbbeeeebbbbbbb",
+  "beacons": {
+    "Vega": { "type": "wh", "x": 0, "y": 0 },
+    "Menkent": { "type": "wh", "x": 21, "y": 9 },
+    "Daured": { "type": "wh", "x": 1, "y": 11 },
+    "Ackwada Station": { "x": 5, "y": 4 }
+  }
+}

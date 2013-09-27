@@ -1,0 +1,11 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Zeaex",
+  "width": 12,
+  "height": 14,
+  "tiles": "bbeeeebbbbbbbeeffeebbbbbbeffffeebbbbbefeeefeebbbeeeebeefeeebefebbbeeffebefeebbbeefebeefeeebbeeeebeeeeeebbeeebbbbefebbeebbbbeefebeeebbeeeffeeeeebeefeeeeeeebbeeeebbeebbbb",
+  "beacons": {
+    "Bedaho": { "type": "wh", "x": 10, "y": 4 },
+    "Maia": { "type": "wh", "x": 0, "y": 12 }
+  }
+}

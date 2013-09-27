@@ -1,0 +1,11 @@
+{
+  "cluster": "South Pardus Rim",
+  "sector": "Urioed",
+  "width": 21,
+  "height": 9,
+  "tiles": "bbbbbbbeeeeebbbbbbbbbbbbbbbeefffeeeebbbbbbbbbbbeefffffffeebbbbbbeeebefffffffffebeeeeeefeeeeeeefffffeeeffeeeeebeebbefffffebeeeebbbbbbbbbefgggeebbbbbbbbbbbbbbeegggebbbbbbbbbbbbbbbbeeeeebbbbbb",
+  "beacons": {
+    "GM 4-572": { "type": "wh", "x": 0, "y": 4 },
+    "Tiliala": { "type": "wh", "x": 20, "y": 4 }
+  }
+}

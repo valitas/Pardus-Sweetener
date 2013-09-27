@@ -1,0 +1,13 @@
+{
+  "cluster": "Lane",
+  "sector": "Solaqu",
+  "width": 25,
+  "height": 25,
+  "tiles": "bbbbbbbbbbbbbbbbbeeeeeeebbbbbbbbbbbbbbbbbeefffffebbbbbbbbbbbbbbbbeefffffeebbbbbbbbbbbbbbbeeffffffebbbbbbbbeeebbbbeefggfffoeebbbbbbeefebbbbeefggffoofebbbbbeeffeebbbbeeggffffeebbbbeeffffebbbbbeeffffeebbbbbefffffeebbbbbeeeeeebbbbbbeffffffebbbbbbbeebbbbbbbbeefffffeebbbbbeeeeeebbbbbbeeeffffeeebbeeffffeebbbbbbbeffffffeeeeffffffeeeeebeeeffffoffffffffffffeefeeefffffoooffffffffffeeeeffffffooooofoffffffeeebbeffffffffoooofffffeeebbbbeeeeffffffofffeeeeebbbbbbbbbeeefffffffeebebbbbbbbbbbbbbeffffffeebbebbbbbbbbbbbbeeffffggebbbebbbbbbbbbbbeefffffggebbeeebbbbbbbbbbeefffffeeebbefebbbbbbbbbbbeeeefeebbbbeeebbbbbbbbbbbbbbeeebbbbbbbbbbbbbb",
+  "beacons": {
+    "Qumia": { "type": "wh", "x": 7, "y": 5 },
+    "Ioquex": { "type": "wh", "x": 24, "y": 13 },
+    "Waolex": { "type": "wh", "x": 1, "y": 14 },
+    "Solaqu": { "x": 8, "y": 21 }
+  }
+}

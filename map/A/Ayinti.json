@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "Ayinti",
+  "width": 20,
+  "height": 20,
+  "tiles": "bbbbbbbbbbbbeeebbbbbbbbeebbbbeeeefeeeebbbbeeebbbeeffffeeeeebbeefeeeeeffffeebefebbeffffffffgggebeefebeeffgggggggggeeefeebeeefgggggggggeefeebbbbefggggggggfeeeebbbeeefggggggggeeeebbbbeeffggggggggeeebbbbbbefffggggfffffebbbbbbefgggffffffffeebbbbbefgggfffffffffeebbbbefgggfffffffffeebbbbeefffffffeeeeeebbbbbbefofffffebbeebbbbbbbeooooffeebbeebbbbbbbeefoooeebbeeeebbeebbbeefeeebbbeffeeeeebbbbeeebbbbbeeeebbee",
+  "beacons": {
+    "Anayed": { "type": "wh", "x": 17, "y": 2 },
+    "YS 3-386": { "type": "wh", "x": 1, "y": 8 },
+    "Ayinti": { "x": 10, "y": 11 }
+  }
+}

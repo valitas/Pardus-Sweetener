@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "SZ 4-419",
+  "width": 12,
+  "height": 7,
+  "tiles": "eeebbbbbbeeeeeeebeeeeefebeeeeefffeeebbeffofofebbeeeoofeeeeebeeeefeebeeeebbbeeebbbeee",
+  "beacons": {
+    "Eta Cassiopeia (North)": { "type": "wh", "x": 0, "y": 0 },
+    "Urlafa": { "type": "wh", "x": 11, "y": 0 },
+    "Eta Cassiopeia (South)": { "type": "wh", "x": 0, "y": 4 },
+    "Regulus": { "type": "wh", "x": 10, "y": 5 }
+  }
+}

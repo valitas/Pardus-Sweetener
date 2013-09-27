@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Essaa",
+  "width": 11,
+  "height": 22,
+  "tiles": "bbbbbeeeeebbbbeeeeeeebbbbeeeebeeebbbeeeeeefebbeeeeefffebeefebeeeeebeeeebbbeebbbebbbbbbbbeeeebbbbbbbeefeebbbbbbbeeeebbbbbbbbeebbbbbbbbeeeeeeebeeeefffffeeeeeffffffebeeeeffffeebbbbeeffeebbbbbbeffebbbbbbbeefeebbbbbbbeeeebbbbbbbbbeebbbbbbbbbeebbbb",
+  "beacons": {
+    "Tiacan": { "type": "wh", "x": 1, "y": 13 },
+    "Pass FED-07": { "type": "wh", "x": 10, "y": 13 },
+    "YC 3-268": { "type": "wh", "x": 6, "y": 20 }
+  }
+}

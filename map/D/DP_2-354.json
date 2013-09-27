@@ -1,0 +1,11 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "DP 2-354",
+  "width": 16,
+  "height": 14,
+  "tiles": "bbbbbeeeeeebeebbbbbeeeffffeeeeebbbeeeeeeeeeeefeebeefebbbebebeefebeeeebbeeeeebeeeeeebbbeeoofeeeebefebbeefooofofebefebeeeeeofeeeeeefeeeeebeeeebefeeeebeebbbebbeefebebbeebeeeeeeffeeeeeeeeeffffffeeefffeeeeeeeeeeebeeeeebeebbbbbbbb",
+  "beacons": {
+    "Pass EMP-08": { "type": "wh", "x": 14, "y": 1 },
+    "Fawaol": { "type": "wh", "x": 1, "y": 12 }
+  }
+}

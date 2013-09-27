@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Nionquat",
+  "width": 15,
+  "height": 20,
+  "tiles": "bbbeeebbbbbbbbbbbeefeeebbbbbbbbbefgggeebbbbbbbeegggggeeebbbbbegggggggfeeebbbegggggggfffeebbegggggggffffebeeggggggfffffeeeeggggggffffffebeeggggffffffeebbeeeffffffffebbbbbefffffffeebbbeeeffffffeebbbeeffffffffebbbbefffffoffeebbbeefffooooeebbbbeeffffoofebbbbbbeffeeefeebbbbbbeeeebeeebbbbbbbeebbbbbbbbbbbb",
+  "beacons": {
+    "GV 4-652": { "type": "wh", "x": 14, "y": 8 },
+    "Famiay": { "type": "wh", "x": 1, "y": 18 },
+    "Nionquat": { "x": 10, "y": 8 }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "cluster": "Union Keldon Core",
+  "sector": "Phaet",
+  "width": 17,
+  "height": 16,
+  "tiles": "bbbbbbbbbbbbbbeeebbbeebbeeebeeeefebbeeeeeefeeefffeebbeffffffffggfeebbeeffffffffggfebbbeffffffffffffeebbefffffffffffffeeeeffffffffeeefeeeeeffffffffebeeebbbeeffffeeeeebbbbbbbeffffebeeeeebbbbbeefffeebeeeeeebbbbeffeeebeeeffeebbbeeeeeebeefeefebbbbeebbbbbeeeeeebbbbbbbbbbbbeeeeb",
+  "beacons": {
+    "Achird": { "type": "wh", "x": 15, "y": 0 },
+    "Subra": { "type": "wh", "x": 8, "y": 12 },
+    "Phaet": { "x": 5, "y": 5 }
+  }
+}

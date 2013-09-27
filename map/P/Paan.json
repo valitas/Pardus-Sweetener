@@ -1,0 +1,16 @@
+{
+  "cluster": "South Pardus Rim",
+  "sector": "Paan",
+  "width": 25,
+  "height": 23,
+  "tiles": "bbbbeeeeeebbbbbbeeeebbeebbbeeegggfeebeeebeffeeeeeebeeggggggfeeefeeefffgggfeeefggggggfffffffffffgggeeeefggggggffeeeeeefffgggebbeeggggffeeebeebeeeffffeebbegggffeebbbbbbbbeeffffebeeffffeebbbbbbbbbbeefffebeggffeebbbbeeeebbbbeeffeeeggfeebbbeeeffeebbbbeffeeffffebbbbefooooeebbbefeeefffeebbbbeeooofeebbeefebefffebbbbbbefoeeebbbeefebeffeebbbbbeeofebbbbbbefeeeffebbbbbbefffebeeeebeefeefeebeeeebefffeeefeebbefeefebbeffeeefffebeeebbeefeefebbeeeebeeffebbbbbbeffeeeebbbbbbbbeefeeebbbbeeeebbebbbbbbbbbefffeeebbbbeebbbbbbbbbbbeefffffebbbbbbbbbbbbbbbbbeeffeeeebbbbbbbbbbbbbbbbbbeeeebbbbbbbbb",
+  "beacons": {
+    "Nex 0003": { "type": "wh", "x": 13, "y": 1 },
+    "Cemiess": { "type": "wh", "x": 23, "y": 12 },
+    "Cabard": { "type": "wh", "x": 0, "y": 13 },
+    "Paan (Inner West)": { "type": "wh", "x": 3, "y": 15 },
+    "Paan (Inner East)": { "type": "wh", "x": 21, "y": 16 },
+    "Paan (East)": { "type": "wh", "x": 19, "y": 15 },
+    "Paan (West)": { "type": "wh", "x": 5, "y": 16 }
+  }
+}

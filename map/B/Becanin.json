@@ -1,0 +1,12 @@
+{
+  "cluster": "South Pardus Rim",
+  "sector": "Becanin",
+  "width": 17,
+  "height": 14,
+  "tiles": "bbbbbbbeeebbbbbbbbbbbbeeefeeebbbbbbbbbbefffffeebbbbbbbbeeffffffeebbbbbbeeffffffffebbbbbbefffffffffebbbbbeefffffffffeebbbbefffffffffffeebbeeffffffofffffebbefffffooooffffeeeefffffofoofffffeeffffffeeeefffffeeffffeeebbeeffffeeeeeeebbbbbeeeeee",
+  "beacons": {
+    "GM 4-572": { "type": "wh", "x": 1, "y": 13 },
+    "Tiliala": { "type": "wh", "x": 16, "y": 13 },
+    "Becanin": { "x": 8, "y": 4 }
+  }
+}

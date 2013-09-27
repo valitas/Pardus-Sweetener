@@ -1,0 +1,12 @@
+{
+  "cluster": "Gap",
+  "sector": "Algol",
+  "width": 19,
+  "height": 25,
+  "tiles": "bbbbbeeebbbbbbbbbeebbbbbefeeebbbbbbeeebbbbbeeffeebbbbeefebbbbbbeeffeebbbeffeeebbbbbefffeeeeefeeeebbeebefffebbbeeebeeeeeeeefffeebbbbbbeeffffffffffebbbbbbbefffeeeffffebbbbbbeefffebeefffebbbbbbeffffebbeeffebeebbbeefffeebbeffeeeebbbbeeeefeebeffebeebbbbbbbeeeeeeffebbbbeebbbbbbefffffeeebeeebbbbeeefffffffeeefebeeeeffoffffffeeefeeefoooeeeeffeeebeeeefooofebbeeeebbbbeeeeeoooebbeeebbbbbbbbbeeffeeeefebbbbbbbbbbeeofffffeebbbbbbbbbbeeefffeeebbbbbbbbbbbbeefeebbbbbbbbbbbbbbbeeebbbbbbbbb",
+  "beacons": {
+    "Elnath": { "type": "wh", "x": 6, "y": 1 },
+    "Pass UNI-09": { "type": "wh", "x": 14, "y": 11 },
+    "Vecelia": { "type": "wh", "x": 8, "y": 24 }
+  }
+}

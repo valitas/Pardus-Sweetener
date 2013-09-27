@@ -1,0 +1,11 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "RV 2-578",
+  "width": 14,
+  "height": 12,
+  "tiles": "eebbbbbbbeeebbeeeebbbbeefeebeeeeebbeefofebbbeeeebeeoooebbbbefeebeoooebbbbeffeeefofebbbeefffeeeffeebbeefffebeefeebbbeeefebbeeebbbbbbeeebbbeebbbbbbbeeebbbbbbbbbbbeeebbbbb",
+  "beacons": {
+    "Olbea": { "type": "wh", "x": 0, "y": 0 },
+    "Urandack": { "type": "wh", "x": 7, "y": 11 }
+  }
+}

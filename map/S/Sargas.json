@@ -1,0 +1,13 @@
+{
+  "cluster": "Pardus Federation Contingent",
+  "sector": "Sargas",
+  "width": 30,
+  "height": 25,
+  "tiles": "bbbbbbbbbbbbeeeebbbbbbbbbbbbbbbbbbbbbbbbbeeffebbbbeebeeeeebbbbbbbbbbbbeefffeebbeeeeeeefeebbbbbbbbbbbefffffebeeffffeeffeebbbbbbbbbbeeffffeeeffffffffeeebbbbbbbbbbbeeefffffffffffeeebbbbbbbbbbbbbbbeefeeeeffffeebbbbbbbbbbbbbbbbbbefebbeffeeebbbbbbbbbeeeebbbeeeefebbeffebbbbbbbbbeeeffeebeeffffeeeeffeeeebbbbbeefffffeeefffffffffffeeeebeebeeffffffffeeeefeeeefffebeeeeeeeeefffffffebbefebbefffeeefffeebbeeeeffffeeeefeebeeeeeeeeeeeebbbbbefffffffgggeeeebbeeeebeeebbeeeefgggggfgggfffeeeeffeebbbbeeffffgggggffffffffffffffebbbbefffffgggggffeeefffffffffeebbbefffffgggggffebeefffffffffeebbefffffgggggffebbeeeffffffffeebeeffffeeefffoeebbbefffffffffebbeffffebeffoofebbbeefffffffeebbeefeeebeffofeebbbbeefeeeeeebbbbeeebbbeefeeebbbbbbeeebbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbb",
+  "beacons": {
+    "Remo": { "type": "wh", "x": 13, "y": 1 },
+    "Quaack": { "type": "wh", "x": 27, "y": 2 },
+    "Fornacis": { "type": "wh", "x": 2, "y": 10 },
+    "Sargas": { "x": 24, "y": 19 }
+  }
+}

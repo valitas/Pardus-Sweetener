@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Lamice",
+  "width": 25,
+  "height": 22,
+  "tiles": "bbbbbbbbeeeeebbbeeeeebbeebbbbbeeeefffeeeeefffeebeebbbbeegggggggggfffeeeeeeebbbeeggggggggggffeebeeeeebbbefggggggggggffebbbbeebbbeegggggggggggggeeebbbbbbbefgggggggggfgggffeebbbbbbefggggffffffgggfffeeebbbbeeffffffffffffffffffeebbbbeffffffffeeeeefffoofeeeeeeffffffffebbbeefffooeeeeeefffffffeebbbbeffeeeebbbbeeefffffebbbbeeffebeebbbbbbeeffffebbbbefffebebbbbbbbbeffffebbbeefffeeebbbbbbbbeffffeebeegggfeeebbbbbbbeefffffeeegggggebbbbbbbeeefooffffffgggggeeebbbbeefooooofeeeegggggffeebbbeefooooffebbeeeeeeffeebbbbeeeeeffeebbbbeebefeebbbbbbbbbeeeebbbbbbbbeeebbb",
+  "beacons": {
+    "Canaab": { "type": "wh", "x": 24, "y": 0 },
+    "Exinfa": { "type": "wh", "x": 0, "y": 10 },
+    "Grecein": { "type": "wh", "x": 22, "y": 14 },
+    "Lamice": { "x": 8, "y": 9 }
+  }
+}

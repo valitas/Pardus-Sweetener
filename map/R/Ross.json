@@ -1,0 +1,16 @@
+{
+  "cluster": "North Pardus Rim",
+  "sector": "Ross",
+  "width": 17,
+  "height": 15,
+  "tiles": "bbbbbbbeebbbbbbbbbbbbbbbeeebeebbbbbbbbeebefeeeebbbbbbbeeeeeffffeebbbbbeeffffffoffeebbbbeffffffffoffeebbeeffffeeeeooofeeeefffffebbeeoofeeeefffffeebbeoffebbeffffffeeeeffeebeefffffeeefffeebbeefeeefebeffeebbbbeeebeeebeefebbbbbbeebbeebbeeebbbbbbbbbbbbbbeebbbbb",
+  "beacons": {
+    "SD 3-562 (West)": { "type": "wh", "x": 8, "y": 1 },
+    "SD 3-562 (East)": { "type": "wh", "x": 12, "y": 2 },
+    "Famiso": { "type": "wh", "x": 16, "y": 6 },
+    "BQ 3-927": { "type": "wh", "x": 0, "y": 7 },
+    "Enaness": { "type": "wh", "x": 2, "y": 12 },
+    "Remo": { "type": "wh", "x": 11, "y": 13 },
+    "Ross": { "x": 5, "y": 7 }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "cluster": "South Pardus Rim",
+  "sector": "Exbeur",
+  "width": 25,
+  "height": 25,
+  "tiles": "bbbbbbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbbbbeefebbbbbbbbbbbbbbbbbbbeeeffebbbbbbbbbbbbbbbbbbbefffeebbbbbbbbbbbbbbbbbbeeffeebbbbbbbbbbbbbbbbbbeeffeebbbbbbbbbbbbbbbbbbbeffeebbbbbbbbbbbbbbbbbbbeefeebbbbbbbbbbbbbbbbbbeeeggebbbbbbbbbbbbbbeeeeeeffggebbbbbbbeeebbeeeffffffffeebbbbbbeefeeeeffffffffffebbbbbbbegggggffffffffffeebbbbbbeeggggggffffffffeebbbbbbbefggggggffffffffebbbbbbbbefggggggfffeeeefeeebbbbbbefggggggfffebbefffeebbbbbeefggggffffebbefffeebbbbbbeeggggfgggeeeefeeebbbbbbbbeggggggggffoofebbbbbbbbbeeffggggggfooofeebbbbbbbbefffggggggfofffeebbbbbbbbeeefggggggeeeeeebbbbbbbbbbbeeeffffeebbbbbbbbbbbbbbbbbbeeeeeebbbbbbbbbbbbbb",
+  "beacons": {
+    "DH 3-625": { "type": "wh", "x": 24, "y": 0 },
+    "Veareth": { "type": "wh", "x": 18, "y": 16 },
+    "Tiliala": { "type": "wh", "x": 2, "y": 22 },
+    "Exbeur": { "x": 11, "y": 12 }
+  }
+}

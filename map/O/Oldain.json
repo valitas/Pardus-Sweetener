@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "Oldain",
+  "width": 18,
+  "height": 18,
+  "tiles": "bbbbbbbbbeebbbbbbbbbbbbeeeeeeeeebbbbbbbeeegggggggeebbbeeeefggggggggeebbbeefffggggggggebbbbbeeffggggggggeeeebbbefffgggggggfffeebbeffffffffffooeeebeefffffeeeeoofebbbefffffeebbefeeebbbeefffeebbeeeebbbbbbeffeebbeefebbbbbbbeffebbeeffebbbbbbbeefeeeefffeeeebbbbbefffffffffffeebbbeeeeffeeeeffffebeeeeeeeeebbefeeeebeeeebbbbbbbeeebbbb",
+  "beacons": {
+    "Watibe": { "type": "wh", "x": 1, "y": 3 },
+    "CC 3-771": { "type": "wh", "x": 0, "y": 16 },
+    "Miackio": { "type": "wh", "x": 14, "y": 16 },
+    "Oldain": { "x": 5, "y": 8 }
+  }
+}

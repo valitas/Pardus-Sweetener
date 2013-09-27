@@ -1,0 +1,14 @@
+{
+  "cluster": "East Pardus Rim",
+  "sector": "Phao",
+  "width": 21,
+  "height": 20,
+  "tiles": "bbbbbbbeeebbbbbbbbbbbbbbbbbeefeebbbbbbbbbbbbbbbeefffeebbbbbbbbbbbbbbeeffffeeebeebbbbbbbbbbefgggffeeeeebbbbbbbbeegggggffffeebbbbeeebefgggggggffebbbbeefeeefgggggggffeebbbeefeeefgggggggfffeebbbeeebeffggggffgggfebbbbbbbeefffffffggggeebbbbbbbeeffffffgggggebbbbbbbbeffffffgggggeebbbbbeeeofffffgggggeebbbbbeoffffffffggggebbbbbbeeoooffffffffeebbbbbbbefofoffeeeeeebbbbbbbbeeofffeebeebbbbbbbbbbbeefeeebbbbbbbbbbbbbbbbeeebbbbbbbbbb",
+  "beacons": {
+    "Diphda": { "type": "wh", "x": 8, "y": 0 },
+    "Thabit": { "type": "wh", "x": 17, "y": 4 },
+    "Seginus": { "type": "wh", "x": 16, "y": 17 },
+    "Mebsuta": { "type": "wh", "x": 12, "y": 18 },
+    "Phao": { "x": 11, "y": 11 }
+  }
+}

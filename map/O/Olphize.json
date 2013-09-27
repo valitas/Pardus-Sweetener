@@ -1,0 +1,15 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "Olphize",
+  "width": 19,
+  "height": 21,
+  "tiles": "bbbbbbbbbbeeeebbeeebbbbbbbbeeefeebbeeebbbbeeebeoofebbbeebbbbeefeeeoofeebeeebbbbeeefffooffebeeebbbbbbefffffffeeeebbbeebeeggggffffffeebbeeeegggggffffeeeebbeeffgggggfffeebbbbbbeffgggfgggeebbbbbbbegggfffgggebbeeeebeegggfffgggeeeefeeeefggggfgggeeeefeebeefggggggggebbeeebbbeffgggggggeebbbbbbbeeffggggggfeebbbbbbbefffggggfooeebbbbbbeefeeefeeefoeeebbbbbeeebefebeeffoeebbbbbbbbeeebbeeeoeebbbbbbbbbeebbbbeeebb",
+  "beacons": {
+    "HO 2-296": { "type": "wh", "x": 13, "y": 0 },
+    "Grefaho": { "type": "wh", "x": 4, "y": 2 },
+    "Beethti": { "type": "wh", "x": 15, "y": 5 },
+    "Edbeeth": { "type": "wh", "x": 18, "y": 10 },
+    "Canexin": { "type": "wh", "x": 8, "y": 20 },
+    "Olphize": { "x": 7, "y": 11 }
+  }
+}

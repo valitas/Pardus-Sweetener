@@ -1,0 +1,10 @@
+{
+  "cluster": "Union Keldon Core",
+  "sector": "Keid",
+  "width": 20,
+  "height": 20,
+  "tiles": "bbeebbbbbbbbbbbbbbbbbbeebbeeebbbbbbbbbbbbeeebeefeeebbbbbbbbbeefebeffffeeebbbbbbbeeeeeeeeeeeeebbbbbbbeeeeeeebeebeeeebbbbbeefebbbbeebbefebeebbbeeeeeeeeeeeefeeeeebbbeeeeeeeeeeefeeefeebbbbebeebbbbeeebeeeebbbbebbbbbbbbeebeebbbbbbebbbbbbbbbbbeeebbbbbebbbbeeebeeeefeebbbeeeeeeefeeefeeeeebbeefeeefeeeeeeebbbbbbeeeebeeebeebeeebbbbbeeeeeeebeeeeeeebbbbbeeefeeebeeffeebbbbbbbbeeebbbbeeeebbbbbbbbbbbbbbbbbeebbbbbb",
+  "beacons": {
+    "Cebalrai": { "type": "wh", "x": 17, "y": 10 }
+  }
+}

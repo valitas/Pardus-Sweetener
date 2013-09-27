@@ -1,0 +1,11 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "Mizar",
+  "width": 16,
+  "height": 23,
+  "tiles": "bbbbbeeebbbbbbbbbbbbeefeeebbbbbbbbbeefoffebbbbbbbbbefoooeebbbbbbbbbeffofebbbbbbbbbbefffeebbbbbbbbbbefffebbbbbbbbbbeefggebbbbbbbbbbeefggeeeeebbbbbbbeefffffeebbbbbbbbeeeeefebbbbbbbbbbeebeeebbbbbbbbbbeebbbbbbbbbbbbeeeeebbbbeeeebbeefffeeebeeeeeeeeffffffeeefeeeeffffffffffffebbefffffffffeeeeebefggfeeeefebefeeefggfebbefeeeffeeefffebbefeeefeebeeefeeeeeebeeebbbbeeeeeeebbbeeb",
+  "beacons": {
+    "Quince": { "type": "wh", "x": 15, "y": 14 },
+    "Faphida": { "type": "wh", "x": 0, "y": 16 }
+  }
+}

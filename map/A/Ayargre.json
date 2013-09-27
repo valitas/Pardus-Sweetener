@@ -1,0 +1,13 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "Ayargre",
+  "width": 18,
+  "height": 18,
+  "tiles": "bbbbbbbbeeebbbbbbbbbbbbeebeeebbbbbbbbbbbeeebbeebbeeebbbbbbeeeebeebeefeebbbbbbefeeeeeefffeebbbbbefffffffffffebbbbbeffffffffffeebbbbeeffffffffffebbbbeefffffffffffebbbbefffffffffffeebeebefgggfffffeeebbeeeefggggggffebbbbeebefgggggggfeebbbbbbeefggggggffeeebbbbbeffgggggffffeebbbbeefffffeeeeefebbbbbeeefeeebbbeeebbbbbbbeeebbbbbbee",
+  "beacons": {
+    "Grefaho": { "type": "wh", "x": 9, "y": 0 },
+    "Pass FED-02": { "type": "wh", "x": 0, "y": 11 },
+    "Begreze": { "type": "wh", "x": 17, "y": 17 },
+    "Ayargre": { "x": 10, "y": 8 }
+  }
+}

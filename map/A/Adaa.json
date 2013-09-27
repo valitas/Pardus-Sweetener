@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Adaa",
+  "width": 22,
+  "height": 24,
+  "tiles": "bbbbbbbeebbbbbeeebbbebbbbeebbeebbbbeefeebeeebbbeeeeeeeebbefffeeeeebbeeffffffeebefoofeeeebbeffggggffeeeoofeeeebbeefgggggfggggfffeebbbbefggggggggggggffebbbbbeggggggggggggggfeeeebbeggggggggggggggffffeeeegggggggggggggggfoofeefgggggggggggggggfoofeeefggggggggggggggffoeebeffggggggggggggffffebbeffffgggggggggffffeebbeeffffgggfffffffffebbbbefffffffffffffffeebbbbefffffffffffeeeeebbbbbeefffffeeeffebbbbbbbbbbefffffebeffeebbbbbbbbbeeffffebeffeebbbbbbbbbbeefeeebeeeebbbbbbbbbbbbeeebbbbeebbbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbbeeebbbbbbbb",
+  "beacons": {
+    "Zeolen": { "type": "wh", "x": 7, "y": 0 },
+    "Olbea": { "type": "wh", "x": 21, "y": 1 },
+    "Ska": { "type": "wh", "x": 12, "y": 22 },
+    "Adaa Station": { "x": 14, "y": 16 }
+  }
+}

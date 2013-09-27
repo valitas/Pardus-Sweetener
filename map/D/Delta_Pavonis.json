@@ -1,0 +1,14 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "Delta Pavonis",
+  "width": 14,
+  "height": 27,
+  "tiles": "bbbeebbbbbbbbbbbbeeebbbbbbbbbbbeeeeebbeeeebbbbeffeeeeeeebbbeefffffeebbbbbefofffeebbbbbeeoooffebbbbbeeofofffebbbbbeeofgggfeebbbbbeegggggfeebbbbbegggggfeebbeeeegggggfebbbeeefgggggfebbbbbefgggggfeeeebeefffgggffeeeeefffffeeeeeebeefffeeeebbbebbeeeeeebebbbebbbebebebebbbebbbebebebebbbebbeeeeeeeebbbebbeeffffeeebeeebbeefffffeeefebbbeeeffeebeeebbbbbeeeebbbbbbbbbbeebbbbbbbbbbbbeebbbbbbb",
+  "beacons": {
+    "PI 4-669": { "type": "wh", "x": 4, "y": 0 },
+    "Eta Cassiopeia": { "type": "wh", "x": 13, "y": 2 },
+    "Quator": { "type": "wh", "x": 0, "y": 11 },
+    "Keldon": { "type": "wh", "x": 5, "y": 26 },
+    "Delta Pavonis Base": { "x": 5, "y": 21 }
+  }
+}

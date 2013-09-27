@@ -1,0 +1,12 @@
+{
+  "cluster": "Split",
+  "sector": "Phiandgre",
+  "width": 24,
+  "height": 20,
+  "tiles": "bbbbbbbeeeeeebbbbbbbbbbbbbbbbbbeffffebbbeeeeebbbbbbbbbbeeeffebeeeoooeebbbbeebbbbbeeeebefoooooeebbeeeeebbbbbebbefffooffebeefffeeebbbebbeffofoffebeefffffeebbebeefffffffeebeefgggfeeeeeefffffffffebbefgggffeeeeeffffffffeebbefgggffebbbeefffffeeebbbefgggffeebbbeeeeeeebbbbbefffffffeebbbbbbebbbbbbeeffffffffebeebbbebbbbbbefffffffffeeeeeeeeebbbbbeefffffffgggggggggeebbbbbeeeeefffgggggggggfeebbbbbebbeeefgggggggggffebbeeeeebbbeefffffggggeeebbefffeebbbeffeeefffeebbbbeeeeeebbbeeeebeeeeebbbbb",
+  "beacons": {
+    "Canolin": { "type": "wh", "x": 2, "y": 3 },
+    "Ladaen": { "type": "wh", "x": 20, "y": 17 },
+    "Phiandgre": { "x": 6, "y": 12 }
+  }
+}

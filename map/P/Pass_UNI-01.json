@@ -1,0 +1,11 @@
+{
+  "cluster": "Union Rashkir Core",
+  "sector": "Pass UNI-01",
+  "width": 25,
+  "height": 16,
+  "tiles": "bbbbbbeebbbeeeeeebbbbbbbbbbbbeeeeebbefeeeebbbbbbbbbbbeefffeeeefebeebbbbbbbbbbbeefffffffeebeeebbbbbbbbbbbefeeeeeeebbefebbbbbbbeebeeeebeeeeebbefebeeebbbeeeefebbbbbbbbbefeeefebeeeebefeebbbbbbbbeeeeefeeeebbbeffebbeeeebbbeebefebeebbbefeebeeffeebbbbbefebbbbbbefebbeeeefebbbbbefeebbbbeefebeeebefeebbbbeffeebbbeffebefebeffeeeeeeeeeeebbeefeeeeebeefebbbbeebeeebbbeefeeebbbeeeeeeeeeeeebbbbbeeebbbbbbeeeeeeeeeeeb",
+  "beacons": {
+    "Anphiex": { "type": "wh", "x": 1, "y": 6 },
+    "Gretiay": { "type": "wh", "x": 24, "y": 7 }
+  }
+}

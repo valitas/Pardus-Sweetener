@@ -1,0 +1,10 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Zeolen",
+  "width": 15,
+  "height": 12,
+  "tiles": "bbbbeebbbbbbbbbbbeeeeebbbbeeebbeefffeeeeeefeebefffeebbbbeeeeeefffebbbbbbebbeffffeebbbbbebbeeffeeebbbbbebbbeeeebbbbbbbebbbbeebbbbbbbeeebbbeeebbbbbeeeebbeeeebbbbbeeebbbeeebbbbbbbbbbb",
+  "beacons": {
+    "Adaa": { "type": "wh", "x": 2, "y": 11 }
+  }
+}

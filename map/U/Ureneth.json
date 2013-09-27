@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation South Human",
+  "sector": "Ureneth",
+  "width": 18,
+  "height": 17,
+  "tiles": "bbbbbbbbbbeeebbbbbbbbbeeeebbeeebbbbbbbbeeeeebbbebbbbbbbbeefebbeebebbbbbbbeeffeeeeeeeeebbbbeefffebbeffffeeebbeffffeeeeffffffebbeffofebbeffffffeebeefffeeeefffffffebbeeooebeefffffffeebbefoeeefffffffoeebbeooebeffffffooebbeeofebeffffoofeebbeoooebeeffoofoebbbefoeebbeeffofeebbbeeeebbbbeeeeeebbbbbbbbbbbbbbeebbbbb",
+  "beacons": {
+    "Pass FED-10": { "type": "wh", "x": 11, "y": 0 },
+    "Qumiin": { "type": "wh", "x": 0, "y": 5 },
+    "Ayqugre": { "type": "wh", "x": 9, "y": 15 },
+    "Ureneth": { "x": 11, "y": 7 }
+  }
+}

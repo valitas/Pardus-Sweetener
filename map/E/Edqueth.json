@@ -1,0 +1,11 @@
+{
+  "cluster": "Split",
+  "sector": "Edqueth",
+  "width": 17,
+  "height": 10,
+  "tiles": "beeeebbbbbbbbeeeeeeffebbbbbbbeeeeeeffeebbbbbbbeeeeeeeeebbeebbbbbeeeebeebeeeeebeeebeeebbbbefffebeeeeeeebbbbeeffeeefeeeebbbbbbeeeeeeeeeeebbbbbbbeebeebeebbbbbbbbbbbbbbbeebbb",
+  "beacons": {
+    "PP 5-713 (West)": { "type": "wh", "x": 8, "y": 4 },
+    "Ceina": { "type": "wh", "x": 6, "y": 8 }
+  }
+}

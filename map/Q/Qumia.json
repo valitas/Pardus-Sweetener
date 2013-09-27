@@ -1,0 +1,14 @@
+{
+  "cluster": "Lane",
+  "sector": "Qumia",
+  "width": 20,
+  "height": 15,
+  "tiles": "bbbeeebbbbbeeeeebbbbbbbeeebbbbeeffoeeebbbbbeebbbbbeffooofeebbeeeeeebbbeeffffeeebbeggggeebbbeeffeebbbbegggggeebbbeeeebbbbeeggggggeebbbebbbbbbefggggggfeebeeebeeeeeeggggggffeeefeeefeebefgggggffffffebeeebbefgggffffffffebbbbbeefffeeeeffffeebbbbbefffeebbeeffeebbbbbbefeeebbbbeeeebbbbbbbeeebbbbbbbeebbbbbbbb",
+  "beacons": {
+    "Pass UNI-06": { "type": "wh", "x": 4, "y": 1 },
+    "Atlas": { "type": "wh", "x": 0, "y": 7 },
+    "Polaris": { "type": "wh", "x": 18, "y": 8 },
+    "Solaqu": { "type": "wh", "x": 11, "y": 13 },
+    "Dark Harbour Qumia": { "x": 0, "y": 14 }
+  }
+}

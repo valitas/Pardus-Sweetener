@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Maia",
+  "width": 20,
+  "height": 13,
+  "tiles": "bbbbbbeeebbbbbbbeeeebbbbeeefeeeebbbeeffebbbeeffffffeebeeffeebbbefffgggffebefeeebbbeeeeegggffeeefebbbeeefebeggggfffffebeeeffeebeggggggggfeeeeeefebbeggggggggfffeebeeeeeegggffggffeeebbbeeffffffffggeeebbbbbbeeefffffffeebbbbbbbbbbeffffeeeebbbbbbbbbbbeeeeeebbbbbbbbb",
+  "beacons": {
+    "Zeaex": { "type": "wh", "x": 19, "y": 0 },
+    "Inena": { "type": "wh", "x": 0, "y": 6 },
+    "Micanex": { "type": "wh", "x": 19, "y": 6 },
+    "Maia": { "x": 11, "y": 8 }
+  }
+}

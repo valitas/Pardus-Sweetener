@@ -1,0 +1,11 @@
+{
+  "cluster": "Union Keldon Core",
+  "sector": "Pass UNI-04",
+  "width": 25,
+  "height": 25,
+  "tiles": "bbeeeebbeebbbbeebeeeeeebbbeeffeeeeeebbeeeeeffffeebeefeeeefffeeeeeeeeeeeefeeeffebbeeeeeffeebebebbeeeeeffeebbeebeeeebbebebbbbebeeffeebbbbbbbbbbebebeeeeebefffeebbbbbbbbeeeeeeffeebeefffeeebbbeeeeeefffeeebbbeeefffeeeeefffeeeeeebbbbbbbefeeefffeeefeeebeebeebbbbefebeeeeebeeebbbeeeeebbbeefebbbbbbbbbbbeeeebeebbbeffeebbbbbbbbbeeffebbbeebefffeebbbbbbbbefffebbbeeeefffeebeeebbbbeeeeeebbeebeffeebeefeeeebbeeeeebbbbbefeebeefffffebbeefebbbbbeeeebeeffeeefeeebefeebbbbefebbeffeebeffeebeffebbbbefeebefeebeeffebeefeebbbbeffebefebbeeffebeffebbbbbeefeeefebbbeefeeeffebbbbbbefffffebbbbeffffeeebbbbbbeeefeeebbbbeeefebbbbbbbbbbbeeebbbbbbbbeeebbbbbb",
+  "beacons": {
+    "Dsiban": { "type": "wh", "x": 24, "y": 10 },
+    "YV 3-386": { "type": "wh", "x": 0, "y": 14 }
+  }
+}

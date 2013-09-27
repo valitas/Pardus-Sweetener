@@ -1,0 +1,12 @@
+{
+  "cluster": "East Pardus Rim",
+  "sector": "Zaniah",
+  "width": 16,
+  "height": 16,
+  "tiles": "bbbbeebbbbbbeebbbbeeeeebbbeeeeebbeefffebbeeeeeebeefffeebbeeebbbbeeeffebbbbeeebbbbbeffeebbeefebbbbbefffeebeeeebbbeeeffffeebeebbbbefffffffeeeeeebbeefffffffffffeebbefffffeeeeeeeebbeffffeebbeebbbbbefffeebbbeeeebbbeeffebbbeeggeebbbeeeebbbefggfeebbbeebbbbeeeeeee",
+  "beacons": {
+    "Mebsuta": { "type": "wh", "x": 4, "y": 1 },
+    "Zuben Elakrab": { "type": "wh", "x": 4, "y": 15 },
+    "Zaniah": { "x": 5, "y": 8 }
+  }
+}

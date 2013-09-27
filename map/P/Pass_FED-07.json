@@ -1,0 +1,11 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Pass FED-07",
+  "width": 27,
+  "height": 15,
+  "tiles": "bbbbbbbbbbbeebbeeebbbbbbbbbbbbbbbbbbbeeebeefeeeebbbbbbbbbbbbeebeefeeefffffeebbbbbbbbbbbeeeeffeeeeeeeffeeeeebbbbbbbeebeefeeebbbeeefffeebbbbbbbbbbbeeefeebbbbeefeebbbbbbbbbbbbbbeefeebbbbefebbbeebeebbbbbbbbeefebbbbeeebeeeeeeebbbbbbbbbefeebbbbeeeeeeebeeebbbeeeebeefebbbbeebeebbbefeeeeeeeeebefeebbbbbbbbbbbeefffffeefeeeffebbbbbbbbbbbbeefffeeeeffffeebbbbbbbbbbbbbeeeeebbeeefeebbbbbbbbbbbbbbeebbbbbbbeeebbbbbbbbbb",
+  "beacons": {
+    "Essaa": { "type": "wh", "x": 0, "y": 8 },
+    "UZ 8-466": { "type": "wh", "x": 25, "y": 8 }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "Edvea",
+  "width": 32,
+  "height": 24,
+  "tiles": "bbbbbeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbeefeeeeeebbbbbbeeebbeeeeebbbbbbbefffoffoeeeeebeeeebbeeffeebbbbbbeefffoooofofeeeeebeebeeeeebbbbbbbeeeoffooofofffebeeeebeebbbbbbbbbbbeeeffofofeeeeeeffeeeeebbbbbbbbbbbbeeofofeebefffffffffebbbbbbbbbbbbbeeeefebeefffffggggeeebbbeebeebbbeebefebeffffffggggggebbeeeeeeebbeeeefebeffffffggggggebbefffffeeeeffffebeffffffggggggeebefffgggffffffeebeffffffggggggeebeeffggggggggfebeefffffffgggggebbbeefggggggggfeeefffffffffgggeebbbbeffgggggggfebeffffffeeefeeebbbbbeeefggggggfeeeffofffebeeebbbbbbbbbeffffffffffeeefoffeebeeebbbbbbbbeeeefeeeffeebeoooffeeefeeebbbbbbbeeeeebeeeebbeooooeeeefffebbbeebeefeebbbbbbbbefoooebbeeeeebbeeebeffebbbbbbbbbeefofeebbbeebbeefeeefeebbbbbbbbbbeeeofeeeebbbbefeeeeeebbbbbbbbbbbbbeeeeeeebbbbeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "beacons": {
+    "RX 3-129": { "type": "wh", "x": 28, "y": 1 },
+    "Belati": { "type": "wh", "x": 28, "y": 19 },
+    "Miackio": { "type": "wh", "x": 1, "y": 22 },
+    "Edvea": { "x": 21, "y": 9 }
+  }
+}

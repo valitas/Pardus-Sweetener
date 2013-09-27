@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "Vewaa",
+  "width": 22,
+  "height": 15,
+  "tiles": "bbbbbeebbbeeeebbbbbbbbbbbeeeebbeeffeeeebbbbbbbeeffebeeffffffeebbbbbeefffeeeffffffffeebbbbefgggffgggffffffeebbbbegggggfgggffffffebbbbeegggggfggggfffffebbbbeegggggfggggfffffeebeebeefgggffgggeeefeeeeeebbeeefffffffebeeeeebeebbbbefffeeeeebbeeeebbbbbeeeffeebeebbbbbbbbbbbeeeeefebbbbbbbbbbbbbbeeeebeeebbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbb",
+  "beacons": {
+    "Laanex": { "type": "wh", "x": 6, "y": 0 },
+    "Wolf": { "type": "wh", "x": 21, "y": 8 },
+    "Exackcan": { "type": "wh", "x": 1, "y": 13 },
+    "Vewaa": { "x": 13, "y": 4 }
+  }
+}

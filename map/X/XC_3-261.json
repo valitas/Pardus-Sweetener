@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "XC 3-261",
+  "width": 16,
+  "height": 13,
+  "tiles": "bbbbbbbeeebbbbbbbbbbbbbeeebbbbbbbbbbbbeeebbbbbbbbbeeeeeeebbbbbbbbeefffeebbbbbbbbeeffffebbbbeeeeeeeffffeebbeeeeeebefffffeeeefebbbeeeeeofofffeebbbeeebefofffeebbbbbebbeefoofebbbbbeeebbeeeeeebbbbbeeebbbeebbbbbbbb",
+  "beacons": {
+    "Lianla": { "type": "wh", "x": 8, "y": 0 },
+    "Waiophi": { "type": "wh", "x": 15, "y": 5 },
+    "Pass EMP-09": { "type": "wh", "x": 1, "y": 12 }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "ZS 3-798",
+  "width": 13,
+  "height": 20,
+  "tiles": "bbbbeeebbbbbbbbbeefeeebbbbbeeeffffeebbbeeffeeeefeebbeefeebbeefeebbefebeebeffebbeeebeebeffeebbeeebbeefffebbefeeeeffeeebbefeeeefeebbbeeffffffebbbbeggfeeeeebbbeeggfebeebbbbefeeeeebbbbbbefebeeebeebeeefeebeeeeeeeeeefeeeffeeeeebeeeeeeeebbeebbbbeebeeeeeebbbbeebeeeeee",
+  "beacons": {
+    "Belati (North)": { "type": "wh", "x": 2, "y": 2 },
+    "Quaphi": { "type": "wh", "x": 12, "y": 6 },
+    "Belati (South)": { "type": "wh", "x": 1, "y": 16 }
+  }
+}

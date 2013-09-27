@@ -1,0 +1,13 @@
+{
+  "cluster": "East Pardus Rim",
+  "sector": "Nusakan",
+  "width": 25,
+  "height": 19,
+  "tiles": "bbbbbbbeebbbbbbbeeeebbbbbbbbbbeeeeebbbbeeeffeeebbbbbbbbefffebbbeefffoooebbbbbeeeeffeebbbeffffffeebbbbeeggggfebbbbefffeeeebbbbbegggggfeebbbeeeeebbbbbbbeeggggggfeebbbeebbbbbbbbbefggggggffeeeeeeeeeeeebbbefggggggfffffffffeeeeebbbeeggggggffffffffffffoebeebeefffffffeeeeeefffffeeeebbeeffooffeeeebeeeeeeebeebbbeeefoffeebbbbbebbbbbbbbbbbbeeefffeeebeeeeeeebbbbbbbbbbeeefffeeefffggeebbbbbbbbbbbeffeebefffggeebbbbbbbbbbbeffebbeefeeeebbbbbbbbbbbbeeeebbbeeebbbbbbbbbbbbbbbbeebbbbeebbbbbbb",
+  "beacons": {
+    "Seginus": { "type": "wh", "x": 8, "y": 0 },
+    "Pass UNI-05": { "type": "wh", "x": 23, "y": 10 },
+    "Yildun": { "type": "wh", "x": 10, "y": 18 },
+    "Bio Weapon Station Nusakan": { "x": 1, "y": 7 }
+  }
+}

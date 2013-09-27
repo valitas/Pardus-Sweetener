@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "Daurlia",
+  "width": 14,
+  "height": 15,
+  "tiles": "bbbbbbeeebbbbbbbbbbbeeebbbbbbbeebbbebbbbbbbeeeeeeeeebbbbbefffffffeebbbbefffffffeebbbeeffffggfebbbbeeffffggfeeeeebeefffffffffeebbefffffgggeebbbeffeeegggebbbeefeebeffeebbeeeeebbeeeebbbeeebbbbbeebbbbeebbbbbbbbbbbb",
+  "beacons": {
+    "Pass EMP-04": { "type": "wh", "x": 7, "y": 0 },
+    "PI 4-669": { "type": "wh", "x": 13, "y": 7 },
+    "Quator": { "type": "wh", "x": 0, "y": 13 },
+    "Daurlia": { "x": 4, "y": 6 }
+  }
+}

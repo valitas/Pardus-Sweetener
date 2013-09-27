@@ -1,0 +1,13 @@
+{
+  "cluster": "North Pardus Rim",
+  "sector": "Miphimi",
+  "width": 22,
+  "height": 18,
+  "tiles": "bbbbbbbbbeeeeeeebbbbbbbbbeeebeeefffffeeebbbbbbeefeeefffffffffeeebbbbefgggggggffffffffebbeeefgggggggffffffffeebeeefgggggggfffffffffebbbeffggggffggfffffffebbbeegggffffggfffffffeebbbeggggeeeffeeefffffebbeeggggebeeeebeeffffebbefggggebbeebbbefffeebbeegggeebbeebbeefffebbbbeefeebbeeebbeooofebbbbbeeebbbeeebeefoooebbbbbbeebbbeebbeffooeebbbbbbbbbbbbbbeefffeebbbbbbbbbbbbbbbeeeeeebbbbbbbbbbbbbbbbbbeebbbbb",
+  "beacons": {
+    "Phiagre": { "type": "wh", "x": 0, "y": 5 },
+    "WO 3-290": { "type": "wh", "x": 21, "y": 9 },
+    "Olcanze": { "type": "wh", "x": 10, "y": 14 },
+    "Miphimi": { "x": 15, "y": 4 }
+  }
+}

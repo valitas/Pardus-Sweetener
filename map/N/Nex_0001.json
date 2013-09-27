@@ -1,0 +1,14 @@
+{
+  "cluster": "Lane",
+  "sector": "Nex 0001",
+  "width": 23,
+  "height": 25,
+  "tiles": "bbbbeebbbbbbbbbbbbbbeebbbbbeeebbbbeeebbbbbeeebbbbeefeebbeefeebbbeefebbeeefeeebbefffeebbeffebbeffeebbbbeffffebbeefebeeffebbbeeeeeefebbbefeeefffebbeeeeebefeebeeffeeeeeebbefeeebeefebeffeebeeeeeeefffebbefebeffebbeeffffeeefebbeeeeefeebbbeeeffebefebbbefffeebbbbbbefeebefeebbeffeebbbbbbeeeebbeffebeeeeebbbbbeeefebbeefeebefebbbbbbbeeefeeeeffebbeeeeeebbbeeeefffeeeeebbbefffeebbeefffeeebbeebbeeffffeebbeffeebbbbeebbeeeeeefebbeefebbbbeeeebeeeebefebbbefeebbbeffeeefeebefebbeeffeebbeefffffebbefebbefffeebbbeeefeeebbefebeefeeebbbbbbeeebbbbeeeeefeebbbbbbbbbbbbbbbbefeeeebbbbbbbbbbbbbbbbbeee",
+  "beacons": {
+    "Gilo (West)": { "type": "wh", "x": 5, "y": 0 },
+    "Gilo (East)": { "type": "wh", "x": 20, "y": 0 },
+    "BL 6-511 (East)": { "type": "wh", "x": 21, "y": 23 },
+    "BL 6-511 (West)": { "type": "wh", "x": 0, "y": 24 },
+    "11": { "type": "xh", "x": 12, "y": 0 }
+  }
+}

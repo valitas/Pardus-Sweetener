@@ -1,0 +1,14 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "Faphida",
+  "width": 22,
+  "height": 14,
+  "tiles": "bbbbbbbbbbbbbbbbeeebbbbbbbbbeeeeeebbbeeeebbbbbbbeeeffffeebbeeebbbbbbeeefffffffebeeebbbbbbeefffffffffebefebbbbbeeffffffffffeeefebbbbbefffffffffffffffeeebbbeeffffffffffffffffebbbbeefffffffffffffffeeebbbeffoofofffffffooffebbbefooooofffffffooofeebbeeffooeeeefeeefoffeebbbeeefeebbeeebeefeeebbbbbbbebbbbeebbbeeebbb",
+  "beacons": {
+    "Zamith": { "type": "wh", "x": 17, "y": 0 },
+    "Edmize": { "type": "wh", "x": 0, "y": 6 },
+    "Mizar": { "type": "wh", "x": 21, "y": 10 },
+    "Datiack": { "type": "wh", "x": 12, "y": 13 },
+    "Faphida": { "x": 8, "y": 6 }
+  }
+}

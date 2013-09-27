@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Ackexa",
+  "width": 20,
+  "height": 15,
+  "tiles": "bbbbbbbbbbbeeebbbbbbbbbbbbbbeeeefeeeebbbbbbbbbbeefffffffeebbbbbbbbeefffffffffeebbbbbbbefffffffffffeebbeeeeeffggfffffffeeeeefffffggggffffffebeeefffffggggfffffeebbbeffggfeeeeeffffebbbbeffggeebbbefooeebbbbeefffebeebeeooebbbbbbeeffeeeebbefoebbbbbbbeeeebeeebeefeebbbbbbbbbbbeeebbeeeebbbbbbbbbbbbbbbbbeebbb",
+  "beacons": {
+    "YC 3-268": { "type": "wh", "x": 19, "y": 4 },
+    "Omicron Eridani": { "type": "wh", "x": 0, "y": 6 },
+    "Pass FED-05": { "type": "wh", "x": 10, "y": 13 },
+    "Ackexa": { "x": 14, "y": 4 }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "Olexti",
+  "width": 8,
+  "height": 16,
+  "tiles": "bbeeebbbbbeeebbbbbbebbbbbbbebbbbbbbebbbbbbbebbbbeeeeebbbefmmebbbefmmeeeeeeeeeeeeeebebeebbbbebbbbbbbebbbbbbbebbbbbbeeeebbbbeeeebb",
+  "beacons": {
+    "Sol": { "type": "wh", "x": 2, "y": 0 },
+    "Andexa": { "type": "wh", "x": 5, "y": 15 }
+  }
+}

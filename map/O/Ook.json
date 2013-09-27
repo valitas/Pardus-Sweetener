@@ -1,0 +1,14 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "Ook",
+  "width": 15,
+  "height": 15,
+  "tiles": "eebbbbbbbbeebeeeeebbbbbbeeeeeeefebbbbeeeffeeeefebeeeefffeebbeeeeeggfffeebbbbeeffggfffebbbbbbegggfggfebbbbbbegggfggfebbbbbbegggfggfebbbbbbeefffggfebbbbbbeeeeefffeebbbbbbbebeeeeeeeebbbbbebbbbbeeeeebbbeeebbbbbbeeebbbeeebbbbbbbee",
+  "beacons": {
+    "Miarin": { "type": "wh", "x": 0, "y": 0 },
+    "Andexa": { "type": "wh", "x": 14, "y": 0 },
+    "Cesoho": { "type": "wh", "x": 14, "y": 13 },
+    "Pass FED-08": { "type": "wh", "x": 4, "y": 14 },
+    "Ook Ook": { "x": 6, "y": 7 }
+  }
+}

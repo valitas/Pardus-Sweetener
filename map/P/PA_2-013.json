@@ -1,0 +1,11 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "PA 2-013",
+  "width": 20,
+  "height": 17,
+  "tiles": "eeeebeeeeebbeeeebbbbeefeeeeeeeebeffeeeebbefffeebeeeeeeeeeeeebeeeeebbbeeeeebbeeeebbbebbbbbbbbbbbbebeebbbebbbbbbbbbbbbebeebbbebbbbbbbbbeeeeeeebbbebbbeeebbeeeeeeeebeeeeeeefebbeeebbbbbbefmmfeeeebbbeeeebbbbeemmfebebbbbeeeeeebbbeeeeebebbbbbbeefebbbbebbbbebbbbbbbeeebbbeeebbbebbbbbbbbeebbbefebbeeeeebbbbeeebbbeeebbeeffeeeeeeeebbbbbbbbbeeeeeeeeeebb",
+  "beacons": {
+    "Gresoin": { "type": "wh", "x": 1, "y": 0 },
+    "Abeho": { "type": "wh", "x": 10, "y": 15 }
+  }
+}

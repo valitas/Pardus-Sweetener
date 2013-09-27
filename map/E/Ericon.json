@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "Ericon",
+  "width": 15,
+  "height": 26,
+  "tiles": "bbbeeebbbbbbbbbbbbefebbbbbbbbbbbbeeebbbbeebbbbbbbeebbbeeeebbbbeeeeebeeffeebbeefffeeeffffebbefffffffffffeeeeffffffffffffeeffooffffffffeeefoooffffffffebeffooffffffffebeeffffggggfffebbeeeffggggfffebbbbefgggggfffebbbeeggggggfffeebeefgggggggfffeeeffgggggggfffeeffffggggggfeeeeffffffggggeebbeffffffggggebbbeffffffffffebbbeeffffffffeeebbbeeffffffeeeeeebbeffffffebbeeebbeeefffeebbbeebbbbeeeeebbbbbb",
+  "beacons": {
+    "Alpha Centauri": { "type": "wh", "x": 3, "y": 0 },
+    "XH3819": { "type": "wh", "x": 14, "y": 23 },
+    "Ericon I": { "x": 10, "y": 7 },
+    "Ericon II": { "x": 5, "y": 22 }
+  }
+}

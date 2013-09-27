@@ -1,0 +1,11 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "Miarin",
+  "width": 7,
+  "height": 20,
+  "tiles": "beebbbbbeeebbbbefeeebbefooebbeoooebbefoeebbeooebbbeooeebbeoofebeefffebeeofoeebeeoofebbeoooebbeoofebbefoeebbeooebbbeofebbbeefebbbbeeeebbbbeee",
+  "beacons": {
+    "Lave": { "type": "wh", "x": 2, "y": 0 },
+    "Ook": { "type": "wh", "x": 5, "y": 19 }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "cluster": "North Pardus Rim",
+  "sector": "Electra",
+  "width": 23,
+  "height": 16,
+  "tiles": "bbbbbeeeeebbbbbeeebbbbbbbbeeeeeeeeebbeefeebbbbbbeefeebeeeeeeefffeebbbbbeefebbbbeefeeefffebbbbbbefeebbbbeeebeeffeebbbbbeffeeeeeeebbbefffeebeebefffeeeefeebeefffeebeeeefeeebbeeeeeeeeefebbeebeeebbbbbbefffebeeeeebbbbeeebbbbeeffeebbeeeebbbbefeebbeefffebbbbeebbbbbeefeeeeffffeebbbeebbbbbbefffffeeeffeebbbbbbbbbbeefffeebeffeebbbbbbbbbbbeeeeebbeeeebbbbbbbbbbbbbbeebbbbbbbbbbbbb",
+  "beacons": {
+    "Laedgre": { "type": "wh", "x": 16, "y": 0 },
+    "Iozeio": { "type": "wh", "x": 1, "y": 7 },
+    "Hidden Laboratory North Electra": { "x": 9, "y": 0 },
+    "Dark Harbour Electra": { "x": 10, "y": 1 },
+    "Hidden Laboratory South Electra": { "x": 17, "y": 13 }
+  }
+}

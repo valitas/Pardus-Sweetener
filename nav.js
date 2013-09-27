@@ -56,6 +56,7 @@ PSNavPageDriver.prototype = {
     this.linkOptionCount = keys.length;
 
     keys.push('navShipLinks');
+    keys.push('miniMap');
     this.port.postMessage({ op: 'subscribe', keys: keys });
 
     // Insert a bit of script to execute in the page's context and
@@ -89,6 +90,9 @@ PSNavPageDriver.prototype = {
         getShips(box, "table/tbody/tr/td[position() = 2]/a", this.matchId);
       addShipLinks(ships);
     }
+
+    if(this.miniMapEnabled)
+      this.updateMiniMap();
   },
 
   matchId: function(url) {
@@ -111,36 +115,49 @@ PSNavPageDriver.prototype = {
   },
 
   onPortMessage: function(msg) {
-    if(msg.op != 'updateValue')
-      return;
-
-    var doc = this.doc, info = this.LINKS[msg.key];
-    if(info) {
-      this.enabledLinks[msg.key] = msg.value;
-      if(Object.keys(this.enabledLinks).length == this.linkOptionCount) {
-        // configuration is complete
-        this.linksConfigured = true;
-        var cbox = doc.getElementById('commands_content');
-        if(cbox)
-          this.setupLinks(cbox);
-      }
-    }
-    else if(msg.key == 'navShipLinks') {
-      // First of all, remove all links we may have added before. This
-      // function will be called if the configuration changes. The
-      // utility function removeElementsByClassName is currently in
-      // shiplinks.js, we may move it somewhere else later.
-      var sbox = doc.getElementById('otherships_content');
-      if(sbox) {
-        removeElementsByClassName(sbox, 'psw-slink');
-        this.shipLinksEnabled = msg.value;
-        // Now, if enabled, add them again.
-        if(this.shipLinksEnabled) {
-          var ships =
-            getShips(sbox, "table/tbody/tr/td[position() = 2]/a", this.matchId);
-          addShipLinks(ships);
+    switch(msg.op) {
+    case 'updateValue':
+      var doc = this.doc, info = this.LINKS[msg.key];
+      if(info) {
+        this.enabledLinks[msg.key] = msg.value;
+        if(Object.keys(this.enabledLinks).length == this.linkOptionCount) {
+          // configuration is complete
+          this.linksConfigured = true;
+          var cbox = doc.getElementById('commands_content');
+          if(cbox)
+            this.setupLinks(cbox);
         }
       }
+      else if(msg.key == 'navShipLinks') {
+        // First of all, remove all links we may have added before. This
+        // function will be called if the configuration changes. The
+        // utility function removeElementsByClassName is currently in
+        // shiplinks.js, we may move it somewhere else later.
+        var sbox = doc.getElementById('otherships_content');
+        if(sbox) {
+          removeElementsByClassName(sbox, 'psw-slink');
+          this.shipLinksEnabled = msg.value;
+          // Now, if enabled, add them again.
+          if(this.shipLinksEnabled) {
+            var ships =
+              getShips(sbox, "table/tbody/tr/td[position() = 2]/a",
+                       this.matchId);
+            addShipLinks(ships);
+          }
+        }
+      }
+      else if(msg.key == 'miniMap') {
+        this.miniMapEnabled = msg.value;
+        if(this.miniMapEnabled)
+          this.updateMiniMap();
+        else
+          this.disableMiniMap();
+      }
+      break;
+
+    case 'updateMap':
+      if(this.miniMapEnabled)
+        this.configureMiniMap(msg.sector);
     }
   },
 
@@ -188,6 +205,102 @@ PSNavPageDriver.prototype = {
         }
       }
     }
+  },
+
+  getCurrentSector: function() {
+    var elt = this.doc.getElementById('sector');
+    return elt ? elt.textContent : null;
+  },
+
+  getCurrentCoords: function(result) {
+    var elt = this.doc.getElementById('coords');
+    if(elt) {
+      var m = /^\[(\d+),(\d+)\]$/.exec(elt.textContent);
+      if(m) {
+        if(!result)
+          result = new Object();
+        result.col = parseInt(m[1]);
+        result.row = parseInt(m[2]);
+        return result;
+      }
+    }
+
+    return null;
+  },
+
+  updateMiniMap: function() {
+    var sector = this.getCurrentSector();
+    // If we can't find the sector, there's no point continuing.
+    if(!sector)
+      return;
+
+    // If we have no map, or if the sector currently displayed is not
+    // the one we're in, we need to reconfigure the map.
+    var map = this.map;
+    if(!map || this.miniMapSector != sector) {
+      this.port.postMessage({ op: 'requestMap', sector: sector });
+      return;
+    }
+
+    var ctx = map.get2DContext();
+    map.clear(ctx);
+
+    var c = this.getCurrentCoords();
+    if(c)
+      map.markTile(ctx, c.col, c.row, '#fc0');
+  },
+
+  disableMiniMap: function() {
+    if(this.map)
+      delete this.map;
+    if(this.miniMapSector)
+      delete this.miniMapSector;
+    if(this.mapContainer) {
+      this.mapContainer.parentNode.removeChild(this.mapContainer);
+      delete this.mapContainer;
+    }
+  },
+
+  configureMiniMap: function(sector) {
+    var doc = this.doc, map = this.map;
+    if(!map) {
+      var sbox = doc.getElementById('status_content');
+      if(!sbox)
+        return;
+      // status_content gets clobbered by partial refresh, so we don't
+      // add our canvas to it.
+      //
+      // partial refresh *appends* a new status_content to the parent
+      // of that node. so we don't add it there either, or the new
+      // partial_content will appear after our map. instead, we add a
+      // new tr to the table.
+      var sctd = sbox.parentNode, sctr = sctd.parentNode, tr, td;
+      tr = sctr.cloneNode(false);
+      td = sctd.cloneNode(false);
+      td.style.textAlign = 'center';
+      // This is needed because Pardus' tables are off centre with
+      // respect to the borders drawn as background images.  Crusty,
+      // old, early 2000's HTML there.
+      td.style.paddingRight = '3px';
+      sctr.parentNode.insertBefore(tr, sctr.nextSibling);
+      tr.appendChild(td);
+
+      var canvas = doc.createElement('canvas');
+      td.appendChild(canvas);
+      map = new PSMap();
+      map.setCanvas(canvas);
+
+      // Remember the map so we don't add it again
+      this.map = map;
+      // And remember the tr we added to the status table. Because
+      // that's the one we'll have to remove if the map should be
+      // switched off.
+      this.mapContainer = tr;
+    }
+
+    map.configure(sector, 180);
+    this.miniMapSector = sector.sector;
+    this.updateMiniMap();
   }
 };
 

@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation South Human",
+  "sector": "Pass FED-12",
+  "width": 21,
+  "height": 22,
+  "tiles": "bbbbbbbbbbbbbbeeebbbbbbbbbeeeeeeebeefeebbbbbbbeefffffeeeffeebbbbbbeeeeeeefeeefeebbbbbbbeeebbbeeebeeebbbbbbbbeebbbbbbbbbebbbbbbbbbeebbbbbbbbbebbbbbbbbbeebbbbbeebeeeeebeebbbeebbbbeeeeefffeeeebbbeeeebbeffeeeffebeeeebeffebbeeeebeffebbbeeeeffeebbbebbeffeebbeebefffebbbebbeeeeeebbbbeeeeebbbebbbeeefebbbeeeeebbbbebbbeeeeebbeefeeebbbbebbeeebeebeefeebbbeebebbefebeebefeebeeeeeeeebefeeeebefebeeeefeefeeefffeebeeeeefeefeeeefeeeeebbbeeffffeefeeeeebeebbbbbeeeeeeeeebbeebbbbbb",
+  "beacons": {
+    "Pass FED-11": { "type": "wh", "x": 16, "y": 0 },
+    "Daaze": { "type": "wh", "x": 20, "y": 8 },
+    "SF 5-674": { "type": "wh", "x": 0, "y": 11 }
+  }
+}

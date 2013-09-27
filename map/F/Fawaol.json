@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "Fawaol",
+  "width": 22,
+  "height": 25,
+  "tiles": "bbbbbbbbbbbbeebbbbbbbbbbbeeebbeeeeeeeebbbbbbbbeeeebeeffffffeeebbbbbeefebeefffffffooeebbbbeefeeeffffffoooofebbbbbeffffgggffffofooebbbbbefoffggggggggfofebbbbbeofffgggggggggfoebbbbbeeefffggggggggffebbbbbbbeeefffggggggfeebbbbbbbbbeefffggggfeebbbbbbbbbbbefffgggffebbbbbbbbbbbbefffgggffebbbbbbeebbbeeffffffffebbbbbeeeeeeefffffffffebbbbbeeebbbeeffffffffeebbbbbebbbbbefffffffffebbbbeeebbbbeeeeeeffffeebbbeeebbbbbebbbeeffeeebbbbebbbbbbebbbbeefeeebbbeeebbbbbebbbbbeeefeebbeeebbbbeeeebbbbbefeebeeeeeeeeeffeeeeeeefebbbeebbbbbeeeebbbbbeeeebbeebbbbbbbeebbbbbbeeebb",
+  "beacons": {
+    "DP 2-354": { "type": "wh", "x": 13, "y": 0 },
+    "Tiurio": { "type": "wh", "x": 4, "y": 1 },
+    "Iowagre": { "type": "wh", "x": 18, "y": 23 },
+    "Fawaol": { "x": 12, "y": 14 }
+  }
+}

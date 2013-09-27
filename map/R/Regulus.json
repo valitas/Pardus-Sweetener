@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "Regulus",
+  "width": 16,
+  "height": 16,
+  "tiles": "eebbbbeeebbbbbbbeeeeeeefebbbbbbbeebbbbefeebbbbbbbbbbbbeffebbbbbbbbbbbbefeebbbbbbbbbbeeefebbbbbbbbbbeemmfeebbbbbbbbbefmmffebbbbeebbbeeffffeeeeeeebbbbeeeeeebbbbeebbbbbbbebbbbbbbbbbbbbbbebbbbbbbbbbbbbbbebbbbbbeebbbbbbbebbbbeeeebbbbbbeeebbbeffebbbbbbeeebbbeeee",
+  "beacons": {
+    "SZ 4-419": { "type": "wh", "x": 0, "y": 1 },
+    "Greandin": { "type": "wh", "x": 15, "y": 8 },
+    "Cassand": { "type": "wh", "x": 7, "y": 15 },
+    "Aeg": { "type": "wh", "x": 15, "y": 15 }
+  }
+}

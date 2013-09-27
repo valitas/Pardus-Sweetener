@@ -1,0 +1,11 @@
+{
+  "cluster": "Federation South Human",
+  "sector": "JG 2-013",
+  "width": 20,
+  "height": 8,
+  "tiles": "bbbbbeeebbbbbbbbbbbbeeeeeefebbeeebeeeeebeefffffeeeefeeefffeebeefffffeeffffffeeeebbefeeefeeffffggebeebbeeebefffeeeeggeebbbbbbbbeeeeebbeeeeebbbbbbbbbbbeebbbbbbbbb",
+  "beacons": {
+    "Faedho": { "type": "wh", "x": 11, "y": 1 },
+    "Hobeex": { "type": "wh", "x": 3, "y": 5 }
+  }
+}

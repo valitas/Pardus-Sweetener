@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "WG 3-288",
+  "width": 9,
+  "height": 13,
+  "tiles": "bbeeeebbbbbeeeebbbbbbbeeebbbbbbefeebbbbbeffebbbbeeffeeeeeefffeeeeefffeebbbeeffebbbbbeefeeebbbbeeefebbbbbbeeebbbbbbbee",
+  "beacons": {
+    "LN 3-141": { "type": "wh", "x": 2, "y": 0 },
+    "Urlafa": { "type": "wh", "x": 0, "y": 6 },
+    "Iniolol": { "type": "wh", "x": 8, "y": 11 }
+  }
+}

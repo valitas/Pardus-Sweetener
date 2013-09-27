@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "Laanex",
+  "width": 15,
+  "height": 16,
+  "tiles": "eeebbbbbbbbbbbbefebbbeebbbbbbbeeeebeeeeebeebbbeeeeegggeeeeebbbefffgggffeeebbbeeffgggffebbbbbbeeffffffeebbbbbbefffffffeebbbbbeffffffffebbbbeeffffffffeebbbefffffffffeebbbeeffeeeeeeebbbbbeeeebeebbbbbbbbbeebbbbbbbbbbbbbeeebbbbbbbbbbbbeeebbbbbbb",
+  "beacons": {
+    "Tianbe": { "type": "wh", "x": 1, "y": 1 },
+    "KU 3-616": { "type": "wh", "x": 13, "y": 3 },
+    "Vewaa": { "type": "wh", "x": 5, "y": 15 },
+    "Laanex": { "x": 8, "y": 8 }
+  }
+}

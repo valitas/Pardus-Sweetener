@@ -1,0 +1,11 @@
+{
+  "cluster": "Union Rashkir Core",
+  "sector": "CP 2-197",
+  "width": 16,
+  "height": 13,
+  "tiles": "bbbbbbeeeebbbbbbbbbeeeeffeeeebbbbbbeggggffffeeebbbeegggggggfffeebbeegggggggfffeebbbeggggggggffebbeeeggggggggfeebeefffgggggggeebbeeeeeeeeeeefebbbbbbbbeebeeefebbbbbbbbbbbeefeebbbbbbbbbbbbeeebbbbbbbbbbbbbeebbbbb",
+  "beacons": {
+    "Naos": { "type": "wh", "x": 2, "y": 6 },
+    "Zaurak": { "type": "wh", "x": 5, "y": 9 }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "GV 4-652",
+  "width": 12,
+  "height": 12,
+  "tiles": "bbbbbeeebbbbbbbbbeeebbbbbbbbbbebbbbbbbbbeeeeeebbbeeeeffffeeeeeffeeeffeeeeeffebeffebbbeffeeefeebbbeeeffeeebbbbbbeffebbbbbbbbeeeebbbbbbbbbeebbbbbb",
+  "beacons": {
+    "Pass FED-13": { "type": "wh", "x": 6, "y": 0 },
+    "Sohoa": { "type": "wh", "x": 11, "y": 4 },
+    "Nionquat": { "type": "wh", "x": 0, "y": 5 },
+    "Betelgeuse (West)": { "type": "wh", "x": 5, "y": 11 }
+  }
+}

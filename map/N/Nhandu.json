@@ -1,0 +1,14 @@
+{
+  "cluster": "Pardus Union Contingent",
+  "sector": "Nhandu",
+  "width": 28,
+  "height": 40,
+  "tiles": "bbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbbbbbbbeefeeeebbbbbbbbbbbbbbbbbbbbbefooffeebbbbbbbbbbbbbbbbbbbeeooofffeebbbbbbbbbbbbbbbbbeefooooffeebbbbbbbbbbbbbbbbeefffffffeebbbbeeebbbbbbbbbeefeeeeeffebbbbbefeebbbbbbbbefeebbbeefeebbbeeffebbbbbbbeefebbbbbeefeebbefofeebbbbbeeffebeeebbeffebbefoffebbbbbeffeebebeebeefeebefffeebbbbeeffebbebbebbeffeeeffeebbbbbeoofebbeeeebbeffeeeeeebbbbbbeoffeebbebbbeeffebbbbbbbbbbbeffffeeeeeeeefffeeebbbbbbbbeefffffffeeeffeeeggeebbbbbbbeeeeeeeeeebeeeebeggeebbbbbeeeebeebbeebbbebbbeeeebbbbbbeefeeeebbbbbbbebbbbeebbbbbbbbeffffeebbbbeeeeebbbbbbbbbbbbeffffeebbbeefffeeebbbbbbbbeeefffeebbbbeffffffebbbbbbbbefffeeebbbbeefffffeebbbbbbbbeeffebbbbbbeeeeefeebbbbbbbbbbeffeeeebbbbebbeeebbbeeeeebbbeefeeeeebbbebbbbbbbbeoooebbbbefebefeebeeebbbbbbbeoooebbbbefeeeffeeefeebbbbbbeoooebbbbeeffffffffffeebbbbbeeeeebbbbbefffgggggfffeebbbeeebbbbbbbbeefggggggggffeeeeefebbbbbbbbbefgggggggggfffffffebbbbbbbbbefgggggggggfffffffeebbbbbbeeefgggggggggffffffffebbbbbbeffeeegggggggffffffffebbbbbbeeeebeggggggfffffffffebbbbbbbbbbeeggggffffffffffeebbbbbbbbbbeeeefffffffeeeeebbbbbbbbbbbbbbbeeefffeeebbbbbbbbbbbbbbbbbbbbbeeeeebbbbbbbbbbbb",
+  "beacons": {
+    "Cebece": { "type": "wh", "x": 18, "y": 2 },
+    "Pardus (NE)": { "type": "wh", "x": 0, "y": 21 },
+    "Baham": { "type": "wh", "x": 11, "y": 39 },
+    "Nhandu": { "x": 18, "y": 33 },
+    "Feral Serpent Den": { "x": 23, "y": 26 }
+  }
+}

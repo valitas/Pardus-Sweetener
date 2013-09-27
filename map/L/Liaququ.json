@@ -1,0 +1,12 @@
+{
+  "cluster": "Union Rashkir Core",
+  "sector": "Liaququ",
+  "width": 17,
+  "height": 24,
+  "tiles": "bbbbbeeeebbbbbbbbbbbbeeffeebbbbbbbbbeeeffffebbbbbbbbeeffffffebbbbbbbbeffffffeebbbbbbbeeffffffebbeeebbbefffffffeeeefeebbefffffffffffofebbeffffffffooofoeebeffffffffoooofeebefffffffooofeeebbeefffffffofeebbbbbeffffffffeebbeeebeeeeeffffebbbefebbbbbeeeffeebbefebbbbbbbeeefebeefebbbbbbbeeefeeeeeebbbbbbbeefffffeeebbbbbbbbeeeeeffeebbbbbbbeeebbefeebbbbbbbbefeeeeeebbbbbbbbbeefeeeebbbbbbbbbbbeeebbbbbbbbbbbbbbeebbbbbbb",
+  "beacons": {
+    "Gretiay": { "type": "wh", "x": 8, "y": 0 },
+    "Spica": { "type": "wh", "x": 16, "y": 12 },
+    "Liaququ": { "x": 4, "y": 6 }
+  }
+}

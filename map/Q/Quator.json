@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "Quator",
+  "width": 18,
+  "height": 18,
+  "tiles": "bbbbbbbeeebbbbbbbbbbbbbbeefeebbeebbbbbbbbeefooeebeeebbbbbbbeeooooeeefebbbeebbbefoofofffebbeeeeebeffffffffeebeeffeeegggfffffeebbefggggggggfeeeebbbefggggggggfebbbbbbefggggggggfeebbbbbeefgggggffffeeeeebbeegggggfffffeeeebbbeffffffffffebbbbbeefffffffffeebbbbbefeeefffffeebbbbbeeeebeffffeebbbbbeeeebbeeeeeebbbbbbeeebbbbbbbbbbbbbbb",
+  "beacons": {
+    "Daurlia": { "type": "wh", "x": 13, "y": 1 },
+    "Delta Pavonis": { "type": "wh", "x": 16, "y": 10 },
+    "Zezela": { "type": "wh", "x": 1, "y": 16 },
+    "Quator": { "x": 10, "y": 12 }
+  }
+}

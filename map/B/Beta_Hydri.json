@@ -1,0 +1,14 @@
+{
+  "cluster": "Union Rashkir Core",
+  "sector": "Beta Hydri",
+  "width": 24,
+  "height": 20,
+  "tiles": "beebbbbbbbbbbbbbbbbbbbbbeeeebbbbbbbbbbbbbbbbbbbbeffeebbbbbeeebbbbbbbbbbbefffeebbbbefeebbbbbbbbeeefggfeeeeeeffeebbbbbbbeeefggeebbbbefmmeebbbbbeeeeeffebbbbbefmmfeeeeeeefebeffeebbbbeefeeebbbbbeeeeefffeeebbbeeebbbbbbbbeeeefffggebbbbbbbbbbbbbbbbbefffggeeebbbbbbbbbbbbbbbeeffffffebeeeebbbbbbbbbbbeeeffffeeeffeeebbbbbbbbbbbefffffffffffeebbbbbbbbbbefffeeeeffooeebbbbbbbbbeeeeeebbefofoebbbbbbbbbeefebbbbbeeffeebbbbbbbbbeffeebbbbbeeeebbbbbbbbbbeefeebbbbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbb",
+  "beacons": {
+    "Exiool": { "type": "wh", "x": 1, "y": 0 },
+    "Naos": { "type": "wh", "x": 22, "y": 6 },
+    "Edethex": { "type": "wh", "x": 0, "y": 9 },
+    "Vega": { "type": "wh", "x": 3, "y": 19 },
+    "Beta Hydri Station": { "x": 4, "y": 12 }
+  }
+}

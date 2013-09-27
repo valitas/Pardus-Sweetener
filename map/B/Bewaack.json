@@ -1,0 +1,13 @@
+{
+  "cluster": "Gap",
+  "sector": "Bewaack",
+  "width": 14,
+  "height": 25,
+  "tiles": "beeeeebbbbeebbbeeffebbbeeeebbbeeeebeeeffeebbbbebbefffffebbbbebbeeffffebbbeeeebeffffebbeeffeeeffffebeefggggggffeebeefggggggffebbbefggggggfeebbeeffffffffebbbeeeeeeffffebbbbbbbbeffffeebbeebeeefffffeeeeebeffffffffeeeeeeffffffffebeffffffffffeebefoofofffffebbefoooofffffebbefooffeeeffebbeefoooebeeeebbbefoofeebeebbbbeefoffeebbbbbbbefeeeeebbbbbbbeeebbbbbbbb",
+  "beacons": {
+    "Miayda (North)": { "type": "wh", "x": 11, "y": 0 },
+    "JO 4-132": { "type": "wh", "x": 2, "y": 10 },
+    "Miayda (South)": { "type": "wh", "x": 9, "y": 22 },
+    "Bewaack": { "x": 9, "y": 13 }
+  }
+}

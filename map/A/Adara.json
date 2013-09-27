@@ -1,0 +1,11 @@
+{
+  "cluster": "East Pardus Rim",
+  "sector": "Adara",
+  "width": 15,
+  "height": 21,
+  "tiles": "bbbbbbeebbbbbbbbbbbbeeebbbbbbbbbbbbefeebbbbbbbbbbeeffebbbbbbbbeeefffeebbbbbbeeeeefffeebbbbbefebeffeeeeebbeefebeffeeffeebeeeeeeffffeeeebbbeeeeeeeeebbbbbbbbbeebbeeeebbbbeeeeeeeeffeeebeeffeeeeffffeebeeffebbemmeeebbbeefeeeemmebbbbbbeeffffffeebbbbbbeeffeeeeeebbbbbbeefebbefebbbbbbbefeeeeeebbbbbbbefeeeeebbbbbbbbeeebbbbbb",
+  "beacons": {
+    "Thabit": { "type": "wh", "x": 7, "y": 1 },
+    "Seginus": { "type": "wh", "x": 7, "y": 20 }
+  }
+}

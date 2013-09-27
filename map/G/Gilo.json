@@ -1,0 +1,13 @@
+{
+  "cluster": "Lane",
+  "sector": "Gilo",
+  "width": 18,
+  "height": 21,
+  "tiles": "bbbbbbeeebbbbbbbbbbbbbbbeeeebbbbbbbbbbbbbbbefebbbbbbbbbbeebbbefebbbbbbbbbeeeebeefebbbeeebbbeffeeefeeeeeefeeeeeffffffebeeeffoeeefggggggeeeefoofeeefgggggggeeeooooeeefgggggggfffoofeeeeffggggggfffffoeeeeeffggggfffffffeeeeeeffgggfffffffeeeeeeefffffffffffebbbbbbeffffffffffeebbbbbefffggeeeeffebbbbeefffggeeeeffebbbeeffeeeeeeeeefeebbeffeeeeeeeebeffebbeeeebbbbbbbbeefebbbeebbbbbbbbbbeee",
+  "beacons": {
+    "UZ 8-466": { "type": "wh", "x": 7, "y": 1 },
+    "Nex 0001 (West)": { "type": "wh", "x": 3, "y": 19 },
+    "Nex 0001 (East)": { "type": "wh", "x": 16, "y": 19 },
+    "Gilo": { "x": 9, "y": 12 }
+  }
+}

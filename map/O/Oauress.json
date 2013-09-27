@@ -1,0 +1,12 @@
+{
+  "cluster": "Split",
+  "sector": "Oauress",
+  "width": 22,
+  "height": 16,
+  "tiles": "bbbbbeeebbbbeeeeeeeeebbeebeefeeebeegggggggeeeeeeeffffeeegggggggggeefffffgggggggggggggggeeeffffgggggggggggggggebeeeffggggggggggggggfebbbeeefffeeeegggggggeebbbeeefffebbeefeeeffebbbbefffffeebbefebeeeebbbeeffffffeebeeeebbbbbbbeffffffffeebefeeebbbbbeeffffffeeeeefeeeebbbbbeffffffeeffffeefebbbbbeeeeffffeeeeeffeebbbbbbbbeeeeeebbbeeeebbbbbbbbbbbbbbbbbbbbeebbb",
+  "beacons": {
+    "PP 5-713 (East)": { "type": "wh", "x": 2, "y": 1 },
+    "Sowace": { "type": "wh", "x": 18, "y": 13 },
+    "Oauress": { "x": 6, "y": 10 }
+  }
+}

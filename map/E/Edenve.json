@@ -1,0 +1,13 @@
+{
+  "cluster": "Lane",
+  "sector": "Edenve",
+  "width": 25,
+  "height": 25,
+  "tiles": "bbbbbbbbbbeeebbbbbbbbbbbbbbbbbbbbbbefeebbbbbbbbbbbbbbbbbbeeeeffeeebeeebbbbbbbbbbeeefffffffeeefeebbbbbbeeeeffffffffffffffeebbbbeeffffffeeeeeeffffeeebbbbeefffffeebeebeeefeebbbbbbbeeeeffebbbbbbbefebbbbbbbbbbbeffeeebbeeeefeeeeeebbbbbbeeeffeeeefffffffffeebbbbbbbefffffffooffffoooebbbeebeeffffffooofffooffebbbeeeeffoooeeeeeeefoffeebbbeebefffooebbbbbeofeeebbbbbbbefffffebeeebeffebbbbbbbbbeeffffeeeoeeeffeebbbbbbbbbeeeffffoofoooffeebbbbbbbbbbeeeffffffoofffebbbbbbbbbbeeefffeeeffffeebbbbbbbbbeeffffeebefeeeebbbbbbbbbbeffmmfebbefebbbbbbbbbbbbbeefmmfeebeeeeeeebbbbbbbbbbeffffeebbeefffeebbbbbbbbbeeffeebbbbeeeeeebbbbbbbbbbeeeebbbbbbbbbbb",
+  "beacons": {
+    "Zelada": { "type": "wh", "x": 11, "y": 1 },
+    "Lasolia": { "type": "wh", "x": 19, "y": 4 },
+    "Famiso": { "type": "wh", "x": 4, "y": 12 },
+    "Faarfa": { "type": "wh", "x": 23, "y": 22 }
+  }
+}

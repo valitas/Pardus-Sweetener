@@ -1,0 +1,14 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "BU 5-773",
+  "width": 25,
+  "height": 8,
+  "tiles": "eeebeebbbbeeeebbbbbbeeebbefeeeebbeeeffeeebbeeefeebeffffebeeggggggeebeefffeeeefffeeefggggggfeebeffffebefffeeffggggggooeeefeeeebeeffeefffeeeeeeffffeebbbbbeeefffeeebbbbeefffebbbbbbbbeeeeebbbbbbbeeeeebbbb",
+  "beacons": {
+    "Sobein (West)": { "type": "wh", "x": 4, "y": 0 },
+    "Tigrecan": { "type": "wh", "x": 0, "y": 1 },
+    "Sobein (East)": { "type": "wh", "x": 19, "y": 1 },
+    "Zeaay": { "type": "wh", "x": 23, "y": 1 },
+    "Pass UNI-07": { "type": "wh", "x": 10, "y": 6 }
+  }
+}

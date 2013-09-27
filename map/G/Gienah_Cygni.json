@@ -1,0 +1,12 @@
+{
+  "cluster": "Union Keldon Core",
+  "sector": "Gienah Cygni",
+  "width": 15,
+  "height": 26,
+  "tiles": "bbbbbbbbbbbbeebbbbbbbbbbbbbeeebbbbbbbbbbbeefebbbeeebbbbbefeebeeeeebbbbeeeebbeffeeebeeeebbbbeeeeeeeeffebbbbbbbefffffeebbbbeeeefffffebbbbeeffffffffeebbbeefffffffffebbbbefffffffffeebbbefffffggggfebbeeffffggggggebbeeffffggggggebbbeeeffggggggebbbbbeffggggggebbbbbeefggggggebbbbbbeffggggeebbbbbeeffffeeebbbbbbeeefffebbbbbbbbbbefffeebbbbbbbbbeefooeebbbbbbbbbeooofebbbbbbbbbeeofeebbbbbbbbbbeeeebbbb",
+  "beacons": {
+    "Sirius": { "type": "wh", "x": 2, "y": 4 },
+    "UG 5-093": { "type": "wh", "x": 3, "y": 20 },
+    "Gienah Cygni": { "x": 4, "y": 11 }
+  }
+}

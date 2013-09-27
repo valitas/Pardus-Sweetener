@@ -1,0 +1,14 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "Andexa",
+  "width": 20,
+  "height": 15,
+  "tiles": "bbbeeeebbbbbbbeeebeeeeeeffeeeeeeebefeeeeeeefffgggfffeeefeeeebbefffggggfffffeebbbbbeeffggggfffffebbbbbbbeffggggfffffeeeeebbbeffgggffffffffffebeeefggggfffffffffeeeeffgggggfffffffffebefffgggggffffffffeebeeeegggggffffffeeebbbbbeggggffffffeeebbbbbbeggggffffffeebbbbeeeefgggfffffeebbbbbeeeeeeeeeeeeeebbbbbb",
+  "beacons": {
+    "Olexti": { "type": "wh", "x": 14, "y": 0 },
+    "Daceess": { "type": "wh", "x": 19, "y": 0 },
+    "Orerve": { "type": "wh", "x": 0, "y": 2 },
+    "Ook": { "type": "wh", "x": 0, "y": 13 },
+    "Andexa": { "x": 12, "y": 6 }
+  }
+}

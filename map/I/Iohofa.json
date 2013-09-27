@@ -1,0 +1,13 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "Iohofa",
+  "width": 24,
+  "height": 16,
+  "tiles": "beebeeeeeeeebbbbbbbbeebbeeeeegggggfeeebbbbeeeeebeffgggggggfffebbbeeeeeeeeefgggggggfffeebbefebefebeefggggggffffeeeefebefebbeeffgggfffffffeeeebefebbbeeefffffeeefeeeebbefebbbbbefffffebeeebbbbbeeebbbbbeeffffeebbbbbbbeeebbbbbbbeeefffeebbbbbeefebbbbbbbbbeffffeebbbbeefebbbbbbbbbeeefffeebbbbeeebbbbbbbbbbbeeeffeebbbbbbbbbbbbbbbbbbbeeffebbbbbbbbbbbbbbbbbbbbeefebbbbbbbbbbbbbbbbbbbbbeeebbbbbbb",
+  "beacons": {
+    "Zeaay": { "type": "wh", "x": 1, "y": 2 },
+    "Olaso": { "type": "wh", "x": 21, "y": 10 },
+    "Lagreen": { "type": "wh", "x": 16, "y": 14 },
+    "Iohofa": { "x": 11, "y": 4 }
+  }
+}

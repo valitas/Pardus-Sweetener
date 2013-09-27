@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "Tianbe",
+  "width": 19,
+  "height": 15,
+  "tiles": "bbeebbbbeeebbbbbbbbbbeeebeeefeeeebbbbbbbeeeeeffffggeebbbbbbbeeffgggfggfeeebbbbbbeffggggffgggebbbbbbeeeggggffgggeebbbbbbbefgggffgggfeebbbbeeefggggggggfeebbbbefffggggggggeebbbbeeggffgggggggebbbeeefggeeeffffffeebbeeeefeebeefeeeefebeeebeeebbbeeebbeeeeeeebbeebbbbbbbbbeeebbbbbbbbbbbbbbbbbee",
+  "beacons": {
+    "Zezela": { "type": "wh", "x": 3, "y": 1 },
+    "Fomalhaut": { "type": "wh", "x": 1, "y": 13 },
+    "Laanex": { "type": "wh", "x": 17, "y": 13 },
+    "Tianbe": { "x": 12, "y": 5 }
+  }
+}

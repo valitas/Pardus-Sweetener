@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation South Human",
+  "sector": "Faedho",
+  "width": 14,
+  "height": 25,
+  "tiles": "bbbbeebeebbbbbbbeeeeeeebbbbbbeefffffeebbbbbefffffffeeebbbeefffffffeebbbbeeeeefggebbbbbbbebefggeebbbbeeeeeffffebbbbeefffffffeebbbbefffeefffebbbbeeeeeeffeebbbbbebefggfebbbbbbebeeggfebbbbbbebbeggfebbbbbeeeeeffeebbbeeegggfeeebbbeeeggggfebbbbbefggggggeebbbbefggggggfeebbbeeggggggffebeebegggggfffeeeebeeeefeeeeebeebeebefebeebbbbbbbeefeebbbbbbbbbeeeeebbbbbb",
+  "beacons": {
+    "Leesti": { "type": "wh", "x": 4, "y": 0 },
+    "Xewao": { "type": "wh", "x": 11, "y": 3 },
+    "JG 2-013": { "type": "wh", "x": 4, "y": 24 },
+    "Faedho Station": { "x": 6, "y": 6 }
+  }
+}

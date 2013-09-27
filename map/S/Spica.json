@@ -1,0 +1,12 @@
+{
+  "cluster": "Union Rashkir Core",
+  "sector": "Spica",
+  "width": 20,
+  "height": 23,
+  "tiles": "bbbbbbeeebbbbbbeebbbbbbeeeefebeeebeeeeebbbeegggfeeefeeegggebbbefggggfffffffgggeebbeegggggffffffffffebbbeggggggggggggffeebbbeggggggggggggfeebbbbeggggggggggggfebbbbbeggggggggggfffebbeebefgggggggffgggeebeeeefgggffffggggggeeeebeegggfgggggggggfebbbbeeeffgggggggggfebbbbbbeeegggggggggeebbbbbbbbefffggggggebbbeebbbeeeeegggeeeebbeeeeeeeeebeffeebbbbeeffffeeebeefeebbbbbeeeeeeebbbeffebbbbbbbeeeebbbbeefeebbbbbbbeeeebbbbeeeebbbbbbbbbeebbbbbbeebbbbbbbbbbbbbbbbbbeebbbbbbbb",
+  "beacons": {
+    "DI 9-486": { "type": "wh", "x": 11, "y": 1 },
+    "Liaququ": { "type": "wh", "x": 1, "y": 10 },
+    "Wainze": { "type": "wh", "x": 11, "y": 21 }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "cluster": "North Pardus Rim",
+  "sector": "SD 3-562",
+  "width": 23,
+  "height": 19,
+  "tiles": "bbbbbbbbbbeeebbbbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbbbbebbeebbbbbbbbbbbbbbbbeeeebeeebbbbbbbbbbbbbeeefeebefeebbbbbbbbbbeeeffeebbeffeeeebbbbbeeefffeebbbefffffeebbbeefffffebbbbeefffffebbeefeeeeeebbbbbeffgggeebefeebebebbbbbbeffgggfeeefebbebebbbbbbeeeeefeeeefeebebebbbbbbbeebeeebbeffeeeeeebbbbbeeebbbbbbeeffffffeebbbbefebbbbbbbeeefffffebbbeefebbbbbbbbbeeeeffeebbeeeebbbbbbbbbbbbeeffeebbbebbbbbbbbbbbbbbeeefebbeeebbbbbbbbbbbbbbbeeebbeeebbbbb",
+  "beacons": {
+    "Pass FED-06": { "type": "wh", "x": 11, "y": 0 },
+    "Ross": { "type": "wh", "x": 12, "y": 18 },
+    "Ross (East)": { "type": "wh", "x": 16, "y": 17 }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Omicron Eridani",
+  "width": 16,
+  "height": 19,
+  "tiles": "bbbbbbbbbbbeebbbbbbbbbbbbeeeeebbbbbbbbbbeegggeebbbbbbbbbeggggfebbbbbbbbbeggggeebbbbbbbbeeggggebbbbbbbbbegggggebbbbbbbbbeggggeebbbeebbbeegggfebbbeeebbbefffffebeeefeebbefffffeeeeeffebeeffffeebeeeffebefffffebbbbeffebefffffeeeebeefeeeffffofoeebbeeeffffeeeooebbbbbefffeebeooeebbbbeefeebbeeefebbbbbeeebbbbbeeeb",
+  "beacons": {
+    "Rashkan": { "type": "wh", "x": 1, "y": 9 },
+    "Ackexa": { "type": "wh", "x": 14, "y": 10 },
+    "Omicron Eridani Base": { "x": 6, "y": 12 }
+  }
+}

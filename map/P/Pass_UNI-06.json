@@ -1,0 +1,14 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "Pass UNI-06",
+  "width": 17,
+  "height": 19,
+  "tiles": "bbbeeebbbbbbbbbeebeeefeebbbbbbbeeeeeffffebbbbbbeeeeeeffffeebbbbbeeebbefffffeeeebbbebbbeefffffffeebeeebbbeeeefffffeeeeebbbbbbeeeggfebeebbbbbbbbbeggeebeebbbbbbbbbeeeebbbbbbbbbbbbbbeebbbeeebbbbbbbbeeeeeeefeebbbbbbbeeeeeeeeeebbbbbbbbbbbbbbbeebbbbbeeeeeebbbbeebbbbbeeeeeeeebeeebbbbbbebbeefeeefebbbbbeeebbeeeeeeebbbbbeeebbbeebeeb",
+  "beacons": {
+    "Dadaex": { "type": "wh", "x": 3, "y": 0 },
+    "Lavebe": { "type": "wh", "x": 16, "y": 0 },
+    "Tigrecan": { "type": "wh", "x": 13, "y": 6 },
+    "Qumia": { "type": "wh", "x": 6, "y": 18 },
+    "Pass-Io": { "x": 4, "y": 4 }
+  }
+}

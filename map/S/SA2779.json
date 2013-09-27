@@ -1,0 +1,11 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "SA2779",
+  "width": 16,
+  "height": 5,
+  "tiles": "eeeebbbbbbeeeeebeefebbeeeeefffeebeeeeeefffeeeffebbeeefffeeebeeeebbbbeeeeebbbbbbb",
+  "beacons": {
+    "Sol": { "type": "wh", "x": 1, "y": 1 },
+    "Beta Proxima": { "type": "wh", "x": 14, "y": 2 }
+  }
+}

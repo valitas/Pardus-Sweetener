@@ -1,0 +1,12 @@
+{
+  "cluster": "South Pardus Rim",
+  "sector": "Ophiuchi",
+  "width": 22,
+  "height": 20,
+  "tiles": "bbbbbbbbbbeebbbbbbbbbbbbbeeeebbbeeebbbbbbbbbbeeeffeebbefebbbbeeebbeefffffebbefeebbeefeebeegggfeebeeffebbefffeebegggfebbeeeeebeefffeebegggfebbbeebbbefeefebbegggfebbeeeebeefeefebbegggfeebeffeeeffffeebeegggffebefffffggggebbefgggffeeefffggggggeebeeffffffffffgggggggfebbeefeeefffffgggggggfebbbeeebeeffffggggggfeebbbeebbbefffffgggffeebbbbeebbbefmmfffffeeebbbbbbbbbeefmmfffeeebbbbbbbbbbbeffffffeebbbbbbbbbbbbbeeffeeeebbbbbbbbbbbbbbbeeeebbbbbbbbbbb",
+  "beacons": {
+    "Facece (South)": { "type": "wh", "x": 11, "y": 1 },
+    "Sodaack": { "type": "wh", "x": 1, "y": 3 },
+    "Lahola": { "type": "wh", "x": 20, "y": 3 }
+  }
+}

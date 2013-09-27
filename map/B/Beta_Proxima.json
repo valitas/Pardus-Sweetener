@@ -1,0 +1,14 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "Beta Proxima",
+  "width": 19,
+  "height": 19,
+  "tiles": "beeeeeeeeeeeeeeeeeebefffffgggggggggffebeeffffgggggggggfeebbeefffgggggggggeebbbbeeeffgggggggeebbbbbbbeeefgggeeeebbbbbbbbbbeffffebbbbbbbbbbbbeeffffeeebbbbbbeeeeefffffffeeeebbeeffffffffffffffeeeefoffffffffffffffeefooofffffffffffffeeoooooffffffffffffeefoooffffeeeffffffeefffofeeeebeeefeeeeeeffffebbbbbbefebeebeefffeebbeeeeeebbbbbeeeffeebeffeebbbbbbbbeeeeebeeeebbbbb",
+  "beacons": {
+    "SA2779": { "type": "wh", "x": 2, "y": 1 },
+    "ZZ2986": { "type": "wh", "x": 17, "y": 1 },
+    "Lalande": { "type": "wh", "x": 6, "y": 17 },
+    "BL3961": { "type": "wh", "x": 11, "y": 17 },
+    "Beta Proxima Station": { "x": 8, "y": 8 }
+  }
+}

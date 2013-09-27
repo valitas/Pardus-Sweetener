@@ -1,0 +1,11 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "TG 2-143",
+  "width": 11,
+  "height": 12,
+  "tiles": "bbbbbbbbeeebbbbbeeeeeebbbeeefeeebbeeeeeeebbbbeefebbbbbbbbeeeeeeeebbbbeeeeefebbbbbbbbeeeebbbbbbbbefebbbeeeeeeeeeeeefffeeebeeeeeeeebbb",
+  "beacons": {
+    "Edmize": { "type": "wh", "x": 9, "y": 0 },
+    "Pass EMP-01": { "type": "wh", "x": 0, "y": 11 }
+  }
+}

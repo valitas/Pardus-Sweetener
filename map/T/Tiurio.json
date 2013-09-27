@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "Tiurio",
+  "width": 25,
+  "height": 14,
+  "tiles": "eebbbbbbbbbbbbbbbbbeebbbbeeeebbbbeebeeeebbbbeebbbbeefeeeeeeeeefeebbeeeeeebbbeeeeefffebeeebbbeefffebbbbbbbefffebbbbbeebeffeebbbbeebefffebbeeeeeeeffebbbbeeeeefffeeeeggggfffeebbbeefffffffebbeggggffeebbbbeeeffffffebbeggggfeebeeeebbeoffoffeeeefggfeebeefeebeeffooofeeeeffffebeeffebbeffeeofeebbeffffeeeffeebeeeeeefeebbbeeeeeebeeeebbeeebbeeebbbbbeebbbbbeebbb",
+  "beacons": {
+    "Greliai (West)": { "type": "wh", "x": 0, "y": 0 },
+    "Greliai (East)": { "type": "wh", "x": 19, "y": 0 },
+    "Fawaol": { "type": "wh", "x": 22, "y": 12 },
+    "RX 3-129": { "type": "wh", "x": 0, "y": 13 }
+  }
+}

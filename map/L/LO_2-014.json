@@ -1,0 +1,11 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "LO 2-014",
+  "width": 10,
+  "height": 3,
+  "tiles": "eebeeeeebbeeeeeeeeeeeebeebeeee",
+  "beacons": {
+    "Epsilon Indi": { "type": "wh", "x": 4, "y": 0 },
+    "Micanex": { "type": "wh", "x": 0, "y": 1 }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "cluster": "Gap",
+  "sector": "Miayda",
+  "width": 25,
+  "height": 17,
+  "tiles": "bbbbbeeeeeeeeeeebbbbbbbbbbbeeeefffffffffeeeeeebbbbbbefffggggggggggffffeeebbbeeffgggggggggggggggffeeebefggggggggggggggggggfffeeefgggggfeeefgggggggggffeeefggggeeebeeeggggggggffebefggggebbbbbegggggggffeebeeegggebeebbeeggggggeeebbbbeeefebeeebbeggggggeebbbbbbbefeeefebbeggggggeeebbeeeeefebeeebeegggggggfeeeefffffebbbbbeggggggggffeeffffffeeebeeeggggggggfeeeeeffffffeeeffggggggggfebbbeeefffeeefffffffffffeebbbbbeeeeebeeeeeeeeeeeeebb",
+  "beacons": {
+    "Silaad": { "type": "wh", "x": 24, "y": 3 },
+    "Bewaack (North)": { "type": "wh", "x": 0, "y": 5 },
+    "Bewaack (South)": { "type": "wh", "x": 0, "y": 13 },
+    "Xeho": { "type": "wh", "x": 24, "y": 13 }
+  }
+}

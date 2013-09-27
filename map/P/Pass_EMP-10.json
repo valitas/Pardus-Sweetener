@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "Pass EMP-10",
+  "width": 25,
+  "height": 25,
+  "tiles": "bbeebbbbbbeeebbbbeeeeebbbbeeeebbbbbeeebbbbeeeeebbbeeffeeebbbbebbbbbbbebbbbbeeffffeeeeeeebbbbbeeebbbbbefeeeffffffebbbeeefeeebbeefebeeeffeeebbeeffeefebbeffebbbeeeebbbbeeefeefebbeefebbbbbbbbbbeeeefeeeeebbeeeeeeeeeeeeeeffeeebefebbbefffeeeefffeeeeebbbefeebbeeefebbeeeeeeebbbbeefeebbbbeeebbbbeebbbbbbeeffebbbbbbeeebbbbbbbbbbeeffeebbbbbbeeebbbbbeeeeeeeeeebbbbbbbeeebbbeeefffggebbbbbbeeeeeeebbeeffeeeggeebbbbbeeeeeebbbeeefebeeeeeeeeebbebbebbbbbbeeeeeebeeeeeebbebbebbeeebbeeffebeebbbbbeeeeeebeeebbbeefeebbbbbbeeeeeeebbebbeebeefeebbbbbeeebbbbbbebbeeebefeebbbbbbeeeeeebeeebefeeeeebbbbbbbeeeeeeeefeeefffeebbbbbbbbbbbbeebeeebeeeeebbbbbbbb",
+  "beacons": {
+    "Ceina": { "type": "wh", "x": 11, "y": 0 },
+    "Pass EMP-11": { "type": "wh", "x": 24, "y": 16 },
+    "Anayed": { "type": "wh", "x": 9, "y": 23 }
+  }
+}

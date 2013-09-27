@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "Anayed",
+  "width": 15,
+  "height": 16,
+  "tiles": "bbbbbbbbbeebbeebeeebbbeeeeeeeebeeebeeeffofoeebbebbeffoooofebbeeeeeooooofoeebefffffofofoeeeeeffffffoeeeebbeffffffffebbbbbeefffffffebbbbbbeeefffffeebbbbbbbeffffffeebbbbeeeeeeffffebbbbeffebeefffeebbbeefeebeffffeebbbeeeebeefeeeebbbbbbbbbeeebbbb",
+  "beacons": {
+    "Pass EMP-10": { "type": "wh", "x": 2, "y": 1 },
+    "Ayinti": { "type": "wh", "x": 0, "y": 6 },
+    "RX 3-129": { "type": "wh", "x": 13, "y": 14 },
+    "Anayed Base": { "x": 5, "y": 10 }
+  }
+}

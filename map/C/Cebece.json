@@ -1,0 +1,13 @@
+{
+  "cluster": "Pardus Union Contingent",
+  "sector": "Cebece",
+  "width": 27,
+  "height": 18,
+  "tiles": "bbbbbbbbbeeeebbbbbbbbbbbbbbbbbbbbbbeeffeebbbbbbbbbbbbbbbbbbbeeeffffeebbbbbbbbbbbbbbbbbeeffffffeebbbbbeebbbbbbbbbeeffgggfeebbbbeeeeeeebbbbbeeffggggfebbbeeefffffebbbbeefgggggggeebeefffffffeebbbeffggggggggeeefffffffffebbbeffgggggggggfffffffffffebbeeffgggggggggfffffffffffeebefffffffffffffffffffffffeeeeggffeeefffffffeeefffffeebefggfeebeffoffeeebeeffeeebbefeeeebbeeoooeebbbbeeeeeeebeeebbbbbbeoooebbbbbeeefeeebbeebbbbbbefofeebbbbeeffeeebbbbbbbbbbbeofeebbbbbeeefeebbbbbbbbbbbeeeebbbbbbbbeeebb",
+  "beacons": {
+    "Gomeisa": { "type": "wh", "x": 12, "y": 0 },
+    "Nhandu": { "type": "wh", "x": 2, "y": 14 },
+    "Etamin": { "type": "wh", "x": 24, "y": 16 },
+    "Cebece": { "x": 20, "y": 8 }
+  }
+}

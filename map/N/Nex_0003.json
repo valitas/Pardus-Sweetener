@@ -1,0 +1,11 @@
+{
+  "cluster": "South Pardus Rim",
+  "sector": "Nex 0003",
+  "width": 25,
+  "height": 20,
+  "tiles": "bbeebbbbbbbbbbbeeebbbbbbbbeeeeeeebbbbbeeefeeebbbbbbefffffeeeebeefffffeeebbbeefeeeefffeeefeeeeeffeebbefeebbeeeefffeebbbeeefeebefebbbbbbeefeebbbbbbeefebefebbbbeeeefebbeeebbbefeeefebbbeeeeefeeeefebbbeefeefebbeeffffffeeeeeebbbefeefeebefeeefffebbeeeebbefeeefebeeebeeffeebbefebeefebefebbeebbefffebbefebefeebefebbeebbeefeebbeeeeefebbefebeeebbbeeebbbbeffffeebefebefebbbbbbbbeeeffffeeeefeeeeebbeebbbeeffffffebeeffffebbeeeebeefffeeefebbeefffeeeeffeeeffeeebeeebbbeeeffffffeeeeefebbbbeebbbbbeeeeeeeebbbeeebbbbbbb",
+  "beacons": {
+    "Paan": { "type": "wh", "x": 13, "y": 18 },
+    "12": { "type": "xh", "x": 11, "y": 0 }
+  }
+}

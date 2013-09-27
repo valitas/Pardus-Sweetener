@@ -1,0 +1,12 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "Gresoin",
+  "width": 25,
+  "height": 21,
+  "tiles": "eeeeebbbbbbbbbbbeeebbbbbbefffebbbeeebbbbeefeeeebbbeeeeebbbeeebbbbeoffofeebbbbbebbbbbebbbbbeffooooeebbbbebeeeeeeeebbefooofffebbeeeeeffffffebeeffoooooebeeffffffffffeeeffooofofeeeffffffgggffebefffofofffeeefffffgggeeebeeefggggggebefffffffeebbbbbefggggggebeeefffffeeeeeeeefggggggebbbeeeefffffffffffggggggebbbbbbefffeeeeeeeefgggggebbbbbeeffeebbbbbbefggggeeeebbbefffeeebbbbeeffffeebeebbeeffffeebbeeefffffebbeebeeffoofeeeeeeffffffebbeeeefoffffeeeeeeffffffeebeebeeffeeeebbbeeeefffffebeebbeeeebbbbbbbbbeeeefeebeebbbbbbbbbbbbbbbbbbeeebb",
+  "beacons": {
+    "Uv Seti": { "type": "wh", "x": 0, "y": 7 },
+    "PA 2-013": { "type": "wh", "x": 22, "y": 19 },
+    "Gresoin": { "x": 13, "y": 11 }
+  }
+}

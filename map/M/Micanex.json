@@ -1,0 +1,14 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Micanex",
+  "width": 20,
+  "height": 20,
+  "tiles": "bbbbbbbbeeebbbbbbbbbbbbbbeeeefeebbbbbbbbbbbbeefffffebbbbbbbbbbbeefffffoeebbbbbbbbbeefffffffeebbbbbbbbbeffffffooebbbbbbbbbbeeffffoooeebbbbbbbbbbeeeffooffeebeebbbbbbbbefffofffeeeebbbbbeeeefoffffffeeeeeeeeefffffoffeeeeeeeeeeeefffoofeeebeeeebbbbbeeffoofebbbeebbbbbbbbefooffeeebbbbbbbbbbbeefofofeebbbbbbbbbbbbefffooebbbbbbbbbbbbbeeeeffeebbbbbbbbbbbbbbbeeefebbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbeebbbbbbbb",
+  "beacons": {
+    "Bedaho": { "type": "wh", "x": 9, "y": 0 },
+    "LO 2-014": { "type": "wh", "x": 18, "y": 9 },
+    "Maia": { "type": "wh", "x": 0, "y": 10 },
+    "HC 4-962": { "type": "wh", "x": 11, "y": 19 },
+    "Micanex": { "x": 6, "y": 4 }
+  }
+}

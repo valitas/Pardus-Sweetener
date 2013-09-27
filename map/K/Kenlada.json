@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Kenlada",
+  "width": 25,
+  "height": 20,
+  "tiles": "bbbbbbbbbbbbbbbbbbbbbbeebbbbbbbbbbbbbeebbbbbbbeeebbeeeebbbbeeeeeeeeebbeeeebbbeeeebbeefffffffeebeeebbbbefeeeeegggffgfffeeeebbbbbeeeffffggggggggffffebbbbbbbefgggggggggggffffebbbbbbeefgggggggggggffffeebbeeeeffggggggggggffffffebbeffffffgggggggggffffffeebeefffffgggggggggfffffffebbeeffffgggggggggfggggffebbbeefffggggffgggfggggffebbbbeeefffffeeefffggggffeebbbbbefffffebeeffffffffeebbbbbeffffeebbeeeeeeeffebbbbbbeefeeebbeeebbbbeefebbbbbbbeeebbbbeeebbbbbeeebbbbbbbbbbbbbbbeeebbbbeebbbbbbbbbbbbbbbbeeebbbbbbbb",
+  "beacons": {
+    "PO 4-991": { "type": "wh", "x": 22, "y": 0 },
+    "Inliaa": { "type": "wh", "x": 1, "y": 2 },
+    "Lianla": { "type": "wh", "x": 15, "y": 19 },
+    "Kenlada Station": { "x": 21, "y": 7 }
+  }
+}

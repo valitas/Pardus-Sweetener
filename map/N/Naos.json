@@ -1,0 +1,13 @@
+{
+  "cluster": "Union Rashkir Core",
+  "sector": "Naos",
+  "width": 17,
+  "height": 18,
+  "tiles": "bbbbbbeeebbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbebbbeeebbbbbbbeebebbeeeebbbbbeeeeeeebefebbbbbeefffffeeefeebbbeeffffffeeeffeeebeeefffffebeffffeebbeeffffeeefggfeebbbeeeeffffgggeebbbbbbbeffffgggebbbbbbbeeffoogggebbbbbbeeffooffeeebbbbbeeffooooeebbbbbbbeeeefoofebbbbbbbbbbbeeffeebbbbbbbbbbbbeeeebbbbbbbbbbbbbeebbbbbbbb",
+  "beacons": {
+    "Pass UNI-08": { "type": "wh", "x": 7, "y": 0 },
+    "Beta Hydri": { "type": "wh", "x": 1, "y": 6 },
+    "CP 2-197": { "type": "wh", "x": 16, "y": 8 },
+    "Naos Station": { "x": 8, "y": 6 }
+  }
+}

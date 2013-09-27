@@ -1,0 +1,13 @@
+{
+  "cluster": "East Pardus Rim",
+  "sector": "Thabit",
+  "width": 25,
+  "height": 25,
+  "tiles": "bbbbbeebbeeeeebbbbbbbbbbbbbbeeeebeefffeebbbbbeeebbbeeeffeeefffffeebbbeefeebbeeeeeebeeffffoebbeefffebbeebeebbbeeeeeoebbeffffebeeebbbbbbbebbeeebbeeeeeebefeebbbbeeeebbbbbbeebeebbeffeebbeeffebbbbbbbbbeeebeeffeebeffeebbeebbbbeefeebeeffeeeffebbbeeebbeeffeebbefffoffeebbeefeeeefeeebeeeffffffebbeefffffffebbbeeeefffffeeeefggggggfeebbeebeeeeffffffgggggggeeebbbbbbbbeffffffgggggggebbbbbbbbeeeffffffgggggggebeeebbeeeffffffffgggggggeeefebbefffffffffffgggfffebeeebeefffffeeefffffeeeeebbbbbeeffffeebeeffffebeebbbbbeeffeeeebbbefffeebeeeeebbeeffebbbbbbefffebbefffeebbeeeebbbbbbeeffebbeefffebbbeebbbbbbbbeeeebbbeeeeebbbbbbbbbbbbbbbeebbbeebbbb",
+  "beacons": {
+    "Diphda": { "type": "wh", "x": 1, "y": 12 },
+    "Phao": { "type": "wh", "x": 1, "y": 21 },
+    "Adara": { "type": "wh", "x": 14, "y": 24 },
+    "Thabit": { "x": 9, "y": 15 }
+  }
+}

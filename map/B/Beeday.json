@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "Beeday",
+  "width": 16,
+  "height": 15,
+  "tiles": "bbbbbeeeeeeeebbbbbbbeeofoofoeeebbbbeeffoooofffeebbbeeeeefooooffebbbbebbeffofofeebbbeeebeeeeeeeebeebefebbebbbbebbeeeefeebebbbbebbeebeffeeeeebbebbbbbeffffffeeeeebbbbeeffffffgggeebbbbeefffffgggfebbbbbeeffffggeeebbbbbbeeeefffebbbbbbbbbbbeeeeebb",
+  "beacons": {
+    "Ackarack": { "type": "wh", "x": 15, "y": 3 },
+    "Watibe": { "type": "wh", "x": 13, "y": 14 },
+    "Beeday": { "x": 8, "y": 11 }
+  }
+}

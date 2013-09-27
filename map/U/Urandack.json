@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Urandack",
+  "width": 20,
+  "height": 15,
+  "tiles": "bbbeeeeebbbeeebbbbbbbeeefffeebbefeebbbbbeegggggfeebeffeebbbbefgggggffeeeeeeebbbbefggggfffffeebbbbbbbeefgggffffeebbbbbbbbbefgggfffeebbbeebbbbbefgggfffebbbbeeeeeebeeffffffeeeeeeffeeebbeefeeeeebbbbefeebbbbbefebeebbbbeefebbbbbeeeebbbbbbbeefeeeebeeeebbbbbbbbbeefmmeeeeebbbbbbbbbbbefmmeeeebbbbbbbbbbbbeeeee",
+  "beacons": {
+    "RV 2-578": { "type": "wh", "x": 12, "y": 0 },
+    "An Dzeve": { "type": "wh", "x": 19, "y": 7 },
+    "PO 4-991": { "type": "wh", "x": 0, "y": 14 },
+    "Urandack Station": { "x": 9, "y": 5 }
+  }
+}

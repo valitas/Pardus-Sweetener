@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "Hource",
+  "width": 19,
+  "height": 16,
+  "tiles": "bbbbbbbbbbbbbeeebbbbbbbbbbbbbeeeefeebbbbbbbbbbbeefofofeebbbbbbbbbeefofoooeebbbbbbbbeefffffooebbeeebeeeeffeeefffeeeefeeefffeeebeffeeeeeffffffeebbeeffebeeeeeeeeeebbbefffeebbbbbeebbbeeeeffffebbbbbbbbbeeggggggfeebbbbeebbefgggggggfebbbeeeeeefgggggggeebbbefebbeeeffffeeebbbbeeebbbbeeffeebbbbbbeebbbbbbeeeebbbbb",
+  "beacons": {
+    "Iowagre": { "type": "wh", "x": 0, "y": 6 },
+    "Pass EMP-09": { "type": "wh", "x": 18, "y": 6 },
+    "Hource Station": { "x": 12, "y": 7 }
+  }
+}

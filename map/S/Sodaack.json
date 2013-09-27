@@ -1,0 +1,14 @@
+{
+  "cluster": "South Pardus Rim",
+  "sector": "Sodaack",
+  "width": 15,
+  "height": 16,
+  "tiles": "bbbbbbbeeebbbbbbbbbbeeeeebbeebbbbbeeffebbeeebbbbeefffeeeefebbbeeffffffgggebbbefffffffgggebbeefffffffffeebeeffffffffffebbeeffffffgggfeebbeffgggfggggfeebeefggggggggffebbefggggfgggffebbefggggffffffebbeefgggfeeeffebbbeefffeebeefebbbbeeeeebbbeee",
+  "beacons": {
+    "Quince": { "type": "wh", "x": 2, "y": 4 },
+    "Facece": { "type": "wh", "x": 13, "y": 8 },
+    "Ophiuchi": { "type": "wh", "x": 13, "y": 14 },
+    "ZP 2-989": { "type": "wh", "x": 7, "y": 15 },
+    "Sodaack": { "x": 7, "y": 6 }
+  }
+}

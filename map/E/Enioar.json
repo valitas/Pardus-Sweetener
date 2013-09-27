@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation South Human",
+  "sector": "Enioar",
+  "width": 21,
+  "height": 13,
+  "tiles": "bbbbbbbeeebbbbbbbbbbbbeeebbbeeebbbbbbeebbbeefeebbbebbbbbeeeebbbeeffeeeeeeeeeeeffeebbbeffffffffffffffeeebbbeefgggfffffffffebbbbbbeegggfffffffffeebeebbbegggeeeffffggfeeeebbeeffeebefeeeggfebeebeeoofebbefebeeeeebbbbeeooeebbefeeeebbbbbbbbeofebbbeeffeebbbbbbbbeeeebbbbeeeebbbbbbb",
+  "beacons": {
+    "Pass FED-09": { "type": "wh", "x": 20, "y": 7 },
+    "Liaface": { "type": "wh", "x": 12, "y": 12 },
+    "Enioar Station": { "x": 16, "y": 4 }
+  }
+}

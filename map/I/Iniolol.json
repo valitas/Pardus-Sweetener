@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "Iniolol",
+  "width": 17,
+  "height": 14,
+  "tiles": "bbbbbbbbeeebbbbbbbbbbbeeeefeeeebbbbbeebeggggggfebeebbeeeegggggggeeeebeefffggggggfebeeeefffffffffffebbbeefffffeeefffeebbbefffffebeeffoebbbeeffffebbeeooeebbbeffffeebbeoooeebbeeefffebbeefofebbbbeeefebbbeefeebbbbbbeeebbbbeeebbbbbbbbeebbbbbbbb",
+  "beacons": {
+    "WG 3-288": { "type": "wh", "x": 2, "y": 2 },
+    "Greandin": { "type": "wh", "x": 7, "y": 13 },
+    "Iniolol Station": { "x": 7, "y": 5 }
+  }
+}

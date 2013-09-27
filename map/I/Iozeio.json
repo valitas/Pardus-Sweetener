@@ -1,0 +1,12 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "Iozeio",
+  "width": 19,
+  "height": 13,
+  "tiles": "bbbeebbbbeeeeebbbbbbbeeeebbeeoooeebbbbbeeffeeeeffoffeebbbbefffffeeeeeeeeebbbbeeffffebbbebebbbbbbbeffffebeeeeeeebeebbeffffeeefffffeeeebbefffeebeeeeefebeebeefffebbbebbeeebbbbeffffeebeeebbebbbbeeeeeffeeefeeeeebbbefebeeeeeeefffeebbbeeebbeebbbeeeeebbbb",
+  "beacons": {
+    "Electra": { "type": "wh", "x": 17, "y": 6 },
+    "HO 2-296": { "type": "wh", "x": 1, "y": 11 },
+    "Iozeio": { "x": 4, "y": 5 }
+  }
+}

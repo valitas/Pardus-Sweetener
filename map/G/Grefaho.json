@@ -1,0 +1,13 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "Grefaho",
+  "width": 21,
+  "height": 20,
+  "tiles": "bbbbbbbbeebbbbbbbbeeebbbbbbeeeeebbbbbbeeeebbbbbeefooeebbbbeefebbbbbbefooofeeebbefeebbbbbbeffoofffeeeefebbbbbbbeffgggfffgggfebbeebeeefggggggggggfebbeeeefffggggggggggfeebeebeeffgggggggggfffebbbbbefffggggggggffeebbbbeefffffggggggffebbbbbeffffffgggggffeebbbbeefffffffggggfeebbbbbefffffffffgggfebbbbbbeeefeeefffffffebbbbbbbbefebeeeeffffebbbbbbbbeeebbbbeeeffeebbbbbbeeebbbbbbbeeefeeebbbbefebbbbbbbbbeeeeeebbbeeebbbbbbbbbbbbeee",
+  "beacons": {
+    "Olphize": { "type": "wh", "x": 20, "y": 0 },
+    "Pass FED-01": { "type": "wh", "x": 0, "y": 7 },
+    "Ayargre": { "type": "wh", "x": 4, "y": 19 },
+    "Zirr": { "type": "wh", "x": 20, "y": 19 }
+  }
+}

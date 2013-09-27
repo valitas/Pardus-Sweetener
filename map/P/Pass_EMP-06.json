@@ -1,0 +1,11 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "Pass EMP-06",
+  "width": 25,
+  "height": 13,
+  "tiles": "bbbbbbbeeeeebbeebeebbbbbbbbbbbbeefffeeeeeeeeeeeebbbbbbbbeeeefeeffffffeeeeebbbeebbbbbeeeeffffeeebefeebeeeeebbbbeeefeeeeeeeeeeeeefffeeeebbbeeebeeeeffebbeeffffeeeeebbbbbbbbeffeebbeffffeeeeeeebbbeeeeffeebbeeeeeefeeggeeeeefffffebbbbeebbeeeeggffeeffeeffebbbeeeebbbbeeeffeeffeeeeebbbeeeebbbbbbeefffeeeeebbbbbbbbbbbbbbbbeeeeebbbbbbbb",
+  "beacons": {
+    "Zuben Elakrab": { "type": "wh", "x": 7, "y": 1 },
+    "LN 3-141": { "type": "wh", "x": 4, "y": 10 }
+  }
+}

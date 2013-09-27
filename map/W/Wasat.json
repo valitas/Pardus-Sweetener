@@ -1,0 +1,14 @@
+{
+  "cluster": "East Pardus Rim",
+  "sector": "Wasat",
+  "width": 25,
+  "height": 19,
+  "tiles": "bbbbbbbbbbeebbbbbbbbbeebbbbbeeebbbeeeebbbbbbbeeeebbbeeeebbeeffeeebbbbeeffeebbefebbbefffffebbeeeeefeebeefebbeeffffeebbeefeefebeeffebeefffffebbbbefeeeebeeffeeeffffffebbbeefebbbbbeeefffffffffeebbeeeebbbbbbbeeeffffffffebeeeeeebbbbbbbbefgggggffebeeeefeeebbbbbbefggggggfeeeebeeeeebbbbbbefggggggggffeeeebeebbbbbeefggggggggfffeeebeebbbbeefffgggggggeeeeeeeeebbbbefffffggggggebeeffeeebbbbeefeeefffffeebbeeeebbbbbbbeeebeffffeebbbbbbbbbbbbbbbbbbeefeeebbbbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbb",
+  "beacons": {
+    "Kitalpha (East)": { "type": "wh", "x": 22, "y": 0 },
+    "Kitalpha (West)": { "type": "wh", "x": 4, "y": 1 },
+    "HW 3-863": { "type": "wh", "x": 10, "y": 18 },
+    "Wasat": { "x": 10, "y": 6 },
+    "Hidden Laboratory Wasat": { "x": 23, "y": 14 }
+  }
+}

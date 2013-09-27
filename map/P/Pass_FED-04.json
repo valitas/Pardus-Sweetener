@@ -1,0 +1,11 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Pass FED-04",
+  "width": 25,
+  "height": 22,
+  "tiles": "bbbbbbbbbbbbbbbbbbeeeebbbbeeeeeeebbbbbbeeeeeffeebbeefeeeeeeebbbeefeeeeeeeebeefebbeefeebeeeeebbbbefebbeeeebbeefebefebbbbbeefebbbeeeebbefebefebbbbeeeeebbbbeeeebefebefebbbbeeeeebbbbbefebeeeeefeebbeeebbbbeebeeeebbeffeeeebbeeeebbbeeeefebbbeffebbbbbbefebeeeebefeebbeffeeebbbbefeeeebbbefeebeeeeefeebbeefebeebbeefebbeeebeefebbeefebbbbeeeeebbeebbbefebbbeeebbbbefebbbbeebbbefebbbbeeebbeefebbbeeebbeeeebbbbefeebeefebbeeeebbeeebbbeeefeebbefeeeefebbeeebbeeefffebbbbeffffeebbefebeeeeefeebbbbeefeeebbbeeeeeeebeeebbbbbbeeebbbbbbefeeebbbbbbbbbbbbbbbbbbbbeeebbbbbbbbbb",
+  "beacons": {
+    "HC 4-962": { "type": "wh", "x": 0, "y": 9 },
+    "Phiagre": { "type": "wh", "x": 24, "y": 10 }
+  }
+}

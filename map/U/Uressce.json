@@ -1,0 +1,13 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "Uressce",
+  "width": 20,
+  "height": 17,
+  "tiles": "bbbbbbbbeeeebbbbbbbbbbbbeebeefeebbbbbbbbbbeeeeeeffebbbbbbbbbbbefeeeffeebbbeebbbbbeefebefeebbbeeebbbbbeffeeefebeeeeeebbbbeeffgggfeeeffeebbbbbeeefgggfggggfebbbeebbbeegggfggggfeebeeeebbbegggfggggffeeeffebbeefffffggfffffffeebeefffffffeeeefffeebbeefffffffebbeefeebbbbeeeeffffeebbeeebbbbbbbbeefffeebbbbbbbbbbbbbbeeeeebbbbbbbbbbbbbbbbbeebbbbbbbbbb",
+  "beacons": {
+    "Lagreen": { "type": "wh", "x": 9, "y": 1 },
+    "Pass UNI-07": { "type": "wh", "x": 2, "y": 8 },
+    "Miola": { "type": "wh", "x": 19, "y": 8 },
+    "Uressce": { "x": 7, "y": 11 }
+  }
+}

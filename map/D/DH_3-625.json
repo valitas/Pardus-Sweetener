@@ -1,0 +1,12 @@
+{
+  "cluster": "South Pardus Rim",
+  "sector": "DH 3-625",
+  "width": 16,
+  "height": 13,
+  "tiles": "bbbbeebeebeebbbbbbbeeeeeeeeeeebbbbeefffffffffeebbbeeffeeeeeeeeebbbbeefebeebbbebbbbbbefebbeebeeebeeebefebeeeeefeeefeeefebefebeeeeeeffffeeefebbbbbbeeeffffeeebbbbbbbbeeeefeeebbbbbbbbbbbefeeebbbbbbbbbbbeeebbbbbbb",
+  "beacons": {
+    "Rotanev": { "type": "wh", "x": 13, "y": 6 },
+    "Exbeur": { "type": "wh", "x": 0, "y": 8 },
+    "Veareth": { "type": "wh", "x": 7, "y": 12 }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "WP3155",
+  "width": 17,
+  "height": 7,
+  "tiles": "bbbbbbbeebeeeeebbbbbeeeeeeeeffeebbbbeefffffffeeebbbbbeffffffffebbbbbbeeeeeeeeffebbbeeeeeebbbbeefeeeeeeeeebbbbbbeeebbbee",
+  "beacons": {
+    "Tau Ceti": { "type": "wh", "x": 14, "y": 0 },
+    "Pass FED-02": { "type": "wh", "x": 16, "y": 5 },
+    "Siberion": { "type": "wh", "x": 0, "y": 6 }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Lianla",
+  "width": 20,
+  "height": 20,
+  "tiles": "bbbbbbbbbeebbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbeeeebbbeebbbbbbbeeeeefebbbeeeebbbbbeefooffebeeeffeebbbbefoooffeeefffffebbbeeffofofffggggfeebbbeeeefffffgggggfebbbbbbbeeffffgggggfeebbbbbbbeffffgggggffebeebbeeeffffggggfffeeeeeeefffffffggggggfeeebbeffffffgggggggfebbbbefffffggggggggeebbbeefffffggggggfeebbbeefeeeefggggfeeebbbbeeeebbeeeeeeeebbbbbbbeebbbeebbebbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbeeebbbbbbbbb",
+  "beacons": {
+    "Kenlada": { "type": "wh", "x": 10, "y": 0 },
+    "Pass EMP-08": { "type": "wh", "x": 0, "y": 11 },
+    "XC 3-261": { "type": "wh", "x": 9, "y": 19 },
+    "Lianla": { "x": 9, "y": 10 }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "cluster": "Pardus Union Contingent",
+  "sector": "Gomeisa",
+  "width": 31,
+  "height": 23,
+  "tiles": "bbbbbbbbeebeebbeeebbbbbbbbbbbbbbbbbbbbeeeeeeeeefeeebbbbbeeeebbbbbbbbbeeefeefffmmfeebbbeeffeebbbbbbbbbbeeeefffmmffeeeeeeeeeeebbbbbbbbbbeeeefffffeebbbeeeeeeebbbbeebbbbbbbeeffffebbbbbbeefeebeeeeeebbbbbbeeffeeebbbbbbbefebbefgggeebbbbbefffeeebbbbbbeeeebeefgggeebbbeeeggggeebbbbbbefeebeffgggebbbbeffggggebbbbbbbeeeebeffgggebbbbeefggggebbbbbbbbeeebeeffffebeebbefggggebbbbeeeeeeebbeefffeeeeebeefgggeebbbeeeebeebbbeefffffeebbeeefffeebeeffeeeebbbbefffffebbbbbefeefeeefeeefeebbbbefffffeeebeeefeefffffebeeebbbbbeeffffffeeefffffffeeeeeeebbbbbbbeefffffgggffffeeeebeffeebbbbbbbbeeefffgggffeeebbbbeeeebbbbbbbbbbbefffffffeebbbbbbbeebbbbbbbbbbbbeefeeeffebbeeeebbbbbbbbbbbbbbbbbeeebeffeeeeffebbbbbbbbbbbbbbbbbbbbbeeeebbeeeebbbbbbbbb",
+  "beacons": {
+    "Cor Caroli": { "type": "wh", "x": 0, "y": 8 },
+    "Cebece": { "type": "wh", "x": 21, "y": 17 }
+  }
+}

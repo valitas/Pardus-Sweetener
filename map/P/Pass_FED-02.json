@@ -1,0 +1,11 @@
+{
+  "cluster": "Federation Human Core",
+  "sector": "Pass FED-02",
+  "width": 13,
+  "height": 19,
+  "tiles": "bbbbbbbbeeebbbbbeebeeefeebbbbeeeeffffebbbbeebeefffebbbbeebbeefeebbbeeebbbeeebbeeeeebbbbeebbeffebbbbbeebbefeebbbbeeebbeeebbbbbeeebbbbbbbbbbeebbbbbbbbbbeeebbbbbbbeeeeebbbbbbbbefeebbbbbbbeeefebbbeebbeefffeeeeeebbeffffebbbeeebeefffeeeeefebbeeeeebbbeee",
+  "beacons": {
+    "WP3155": { "type": "wh", "x": 1, "y": 8 },
+    "Ayargre": { "type": "wh", "x": 12, "y": 17 }
+  }
+}

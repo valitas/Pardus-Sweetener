@@ -1,0 +1,11 @@
+{
+  "cluster": "Lane",
+  "sector": "Hooth",
+  "width": 25,
+  "height": 13,
+  "tiles": "bbbbbbeebbbbbeeeebeeeeebbbbbbbbeeebbeeeffeeefffeebbbbbeeefeeeefffffffffffeebbbeeffffffffffeeeffffffebbeegggffffeeeeebeefffffeeeefgggfffeebbebbbeeffffeeeeffffeeeebbeeebbbeeffeebbeefeeebebbbefeeebbeffebbbbeeebbbebbeefffeeeefeebbbbbbbbbeeeeefffeebbeeebbbbbbbbbbeeffffffebbbbbbbbbbbbbbbbbeeeeeeeebbbbbbbbbbbbbbbbbbbeebeebbbbbbbbb",
+  "beacons": {
+    "Aandti": { "type": "wh", "x": 1, "y": 5 },
+    "Atlas": { "type": "wh", "x": 24, "y": 6 }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Pass EMP-07",
+  "width": 25,
+  "height": 23,
+  "tiles": "bbeeeeeeeebbbbbbbbbbbbbbbbeefeeeefeebbeeeeebbbbbbbbeefebbeefeeeefeeeeebbbbbbbeeeeeeefeeeefebefebbbbbbbbeebbbeeebbeeebefebbbbbbbbeebbbbbbbbbeeeeffbbbbbbbbeebbbeebbbbeeeeefebbbbeebeeeebeebbbbbeebefebbbbeeeeffeeeebbbbeeebefeebeeeebeffebeeebbbeeeeeffeeeebbbeefebeeebbbbeeeeeeebeebbbbefebbebbbbbbbbbbeebbbbbbbefeebebbbbbbbbeeeebbbbbbeeffeeeebbeebeeeffebbbbbbeeeeeeeebbeeeeeeeeeebbbbbbebebebbbbefffebbefebbbbbeeeeeeebbeeeeeeeeeeebbbbeeeeeffebbefebeeeeeebbbbbeeebeeeebbefeeeebeebbbbbbbeeeeebbbeeffeeebbbbbbbbbbeeefeeeeeffeebbbbbbbbbbbbbbeeeeffeeeebbbbbbbbbbbbbbbbbbeeeebbbbbbbbbbbbb",
+  "beacons": {
+    "PP 5-713 (East)": { "type": "wh", "x": 0, "y": 8 },
+    "Quana": { "type": "wh", "x": 24, "y": 9 }
+  }
+}

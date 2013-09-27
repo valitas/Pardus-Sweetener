@@ -1,0 +1,10 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "Beethti",
+  "width": 15,
+  "height": 20,
+  "tiles": "bbbbbeeebbbbbbbbbbeeefeeeebbbbbbeeggggggeeebbbbefggggggffebbbeegggggggffeebbefgggggggfffebeegggggggffffebefgggggfffeeeebeegggggfeeebbbbbegggggfebbbbbbbeeggggfebeebbbbbeeefffeeeeeebbbbbeeeffffffeebbbbbbeeffffofebbbbbbbefffoooebbbbbbbeffffooebeeeeeeefffffeeeeffeeeefffffebefeeebbeeefeeebeeebbbbbbeeebbb",
+  "beacons": {
+    "Olphize": { "type": "wh", "x": 0, "y": 19 }
+  }
+}

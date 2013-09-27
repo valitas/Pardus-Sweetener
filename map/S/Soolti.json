@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation South Human",
+  "sector": "Soolti",
+  "width": 21,
+  "height": 20,
+  "tiles": "bbbbbbbbbeebbbbbbbbbbbeeeeebeeeeebbbbbbeebeefffeeefffeebbeeeeebeefgggffffffebbeeeeebbefgggggggfeebeeebeebbeegggggggfebbefeeeeebbegggggggfebeeeeeeeebbegggggggfeeefebbeebbbeggggggggfffeebbbbbbeegggggggggffebeebbbbefgggfgggggffeeeeebbbefffffffgggffffffebbbeeffffffffffffffeebbbbefffffffffffoooebbbbbefffffffffoooofeebbbbeefeeeeffffoooofebbbbbeeebbeeffffoofeebbbbbbbbbbbeeffofoeebbbbbbbbbbbbbeeeeeeebbbbbbbbbbbbbbbeebbbbbbbb",
+  "beacons": {
+    "Ceanze (North)": { "type": "wh", "x": 19, "y": 1 },
+    "SF 5-674": { "type": "wh", "x": 1, "y": 3 },
+    "Ceanze (South)": { "type": "wh", "x": 18, "y": 12 },
+    "Soolti": { "x": 6, "y": 12 }
+  }
+}

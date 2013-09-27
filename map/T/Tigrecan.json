@@ -1,0 +1,13 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "Tigrecan",
+  "width": 19,
+  "height": 13,
+  "tiles": "eeebbbbbeebbbbbbbbbeeeeeebeeeeebbbbbbbbeeefeeefffeebbbbbbbbbeffffffffebbeeeebeeeooooffffeeeeeeeeeffoggoooffffffffeeefooggooffffffffeebeefoooofeeefffeeebbbeefofeeebeeefebbbbbbefffebbbbbeeebbbbeeeffeebbbbbbbbbbbbeefeeebbbbbbbbbbbbbbeeebbbbbbbbbbbbbb",
+  "beacons": {
+    "Lavebe": { "type": "wh", "x": 0, "y": 0 },
+    "Let": { "type": "wh", "x": 12, "y": 2 },
+    "Pass UNI-06": { "type": "wh", "x": 0, "y": 6 },
+    "BU 5-773": { "type": "wh", "x": 14, "y": 9 }
+  }
+}

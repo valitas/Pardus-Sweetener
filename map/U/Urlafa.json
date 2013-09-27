@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "Urlafa",
+  "width": 17,
+  "height": 16,
+  "tiles": "bbbbeeeebbbbeeeeebbeeeffeebbeeeeeebeegggggeebeeebbbeegggggggeeeebbbbefgggggggggfeebbbeegggggggggffeebbbeeggggggggfffebbbbegggggffffffeebbbeefffffffffffeebbbeeffgggggeeeeebbbbefggggggebbeebbeeefggggggeebbbbbeeffgggggggeebbbbbeeegggggggfebbbbbbbeeffeeeeeebbbbbbbbeeeebbbbbbb",
+  "beacons": {
+    "LN 3-141": { "type": "wh", "x": 16, "y": 0 },
+    "WG 3-288": { "type": "wh", "x": 16, "y": 9 },
+    "SZ 4-419": { "type": "wh", "x": 2, "y": 12 },
+    "Urlafa": { "x": 11, "y": 7 }
+  }
+}

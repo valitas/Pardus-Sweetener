@@ -1,0 +1,14 @@
+{
+  "cluster": "Lane",
+  "sector": "Waolex",
+  "width": 25,
+  "height": 25,
+  "tiles": "bbeeebbbbbbbbbbbbbbbbbbbbbbefebbbbbbbeebbbbbbbbbbbeeefeeebbeeeeeeebbbbbbbbbefffffeeeefffffeebbbbbbbbeefffffffgggffffeebbbbbbbbeeffffffggggfffeebbbbbbbbbeffffffggggffeebbbbbbbbbbeffffffgggggfebbbbeebeebbefgggggfggggfeeeeeeeeeebeegggggggfgggffffffffffeeefggggggggfggfeeeeeeeeeeeffggggggggffffebeebbbbbbeefggggggggfeeeeebbbbbbbbbeeffffgggffebeeeebeeebbbbbeffeeefffeebbefeeefeebbbeefeebeeffebbbeeffffeebbbeeeebbbeffebbbbeeefeebbbbbeebbbbeefeebbbbbeeebbbbbbbbbbbbbeefebbbbbbebbbbbbbbbbbbbbbefebbbbbeeebeeebbbbbbbbbbeeeebbbbefeeefebbbbbbbbbbbefebbbbeeebeeebbbbbbbbbbbeeeebbbbbbbbbbbbbbbbbbbbbbefebbbbbbbbbbbbbbbbbbbbbbeeebbbbbbbbbb",
+  "beacons": {
+    "Aandti": { "type": "wh", "x": 2, "y": 0 },
+    "UZ 8-466": { "type": "wh", "x": 0, "y": 3 },
+    "Solaqu": { "type": "wh", "x": 24, "y": 9 },
+    "Anphiex": { "type": "wh", "x": 13, "y": 24 },
+    "Waolex": { "x": 6, "y": 6 }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "cluster": "Pardus Union Contingent",
+  "sector": "Etamin",
+  "width": 31,
+  "height": 24,
+  "tiles": "bbbbbeeeebbbbbbbbbbbbbbbbbbbbbbbeeeeeffeebbeeebbbbbeeebbbbbbbbbeeffffggebeefeebbbeefeebbbbbbbeefffffggeeegggeeeeeeeeeebbbbbbeeefffeeeeeegggggggfebefebbeebbbbeffeebbeeeeeeggggeebefeeeeeebbbeefebbeefeebeeeeeebeefffffeebbbbefeeeefeebbbbbeebbeeeeefeebbbbbeeeeeeeebbbbbbbbbbeebbefebbbbbbbbefffebbbbbbbbbbbbbbbefeebbbbbbeefffeebbbbbbbbbbbbbeefeebbbbbeefeeeeebbbbbbbbbbbbbeefebbbbbbeeeebbeeebbbbbbbbbbbbbefeeebbbbbbeebbefebbbbbbbbbbbbbefffebbbbbbeeeeeeebbbbeebbbbbbbeeeeeebbbbbeeffeebbbbeeeeebbbbeeeeefebbbbbbeeeebbbbeeeeeeeeeeefeeeeebbbbbbeeeeebbeefebeeeeeeefffeebbbbbbbeffeebeeffeeeebbbbefffebbbbbbbbeffebbefeeeffeeeeeeffeebbbbbbbbeffeeeefebeeeebbbbeeeebbbbbbbbbeefffffeebbbbbbbbbbbbbbbbbbbbbbbeeffeeebbbbbbbbbbbbbbbbbbbbbbbbbeeeebbbbbbbbbbbbbbbbbbb",
+  "beacons": {
+    "Cebece": { "type": "wh", "x": 2, "y": 1 },
+    "Kitalpha": { "type": "wh", "x": 30, "y": 14 }
+  }
+}

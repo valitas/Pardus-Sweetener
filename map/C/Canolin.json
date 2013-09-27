@@ -1,0 +1,14 @@
+{
+  "cluster": "Split",
+  "sector": "Canolin",
+  "width": 16,
+  "height": 15,
+  "tiles": "bbbeeebbbbbbbbbbbbeefeebbeeeeeebbeefffebeeffffebbeffffebefffffeeeeffffeeeffffffeeffffeebefffffeeeefffebbefffffebbeffeebeeffffeebeefeebbefgggfebbeffebbeeggggeebbefeebbefggggebbbeeebbeefggggeebbeebbbeffggggeebbbbbbeeffeeeeebbbbbbbeeeeebbbbbbb",
+  "beacons": {
+    "Nex 0005 (West)": { "type": "wh", "x": 2, "y": 1 },
+    "Nex 0005 (East)": { "type": "wh", "x": 14, "y": 1 },
+    "Quexho": { "type": "wh", "x": 1, "y": 11 },
+    "Phiandgre": { "type": "wh", "x": 4, "y": 14 },
+    "Canolin": { "x": 11, "y": 5 }
+  }
+}

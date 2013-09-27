@@ -1,0 +1,13 @@
+{
+  "cluster": "Union North Rashkir",
+  "sector": "Olaso",
+  "width": 25,
+  "height": 20,
+  "tiles": "bbbbbbbbbbbbeebbeeeebbbbbbbbbbbbbbbeeeeebeefeeebbbbbbbbbbbbeeggfeebeofoeebbbbbbbbbbbeeggggeeeooffeebbbbbbbbbbbeggggebeofoooebeeebbbbbbbeggggeeeffoofebeeeebbbbeeegggffeeeooooeebeeebbbeefffffffebefofofebbeeebbeefffffffeeeofffeebbeeebbbefffffffebeefofebbeeeebbbefffffffeebeoooebeeffebeeeffffffffeeefofeeeefeebeeeefffffffebeefofebeeebeeebeeffffffeebeefoebbeeeefebbeeffffffeebeeeebbeeeeeebbbeeffffffeebbeebbbeebeebeebeeeeffffeebbbbbbbbeeeeeeeeebefffffeebbbbbbbeeeeeefeebeeeffeeebbbbbbbbbbbbeeebbbbeeeebbbb",
+  "beacons": {
+    "Iohofa": { "type": "wh", "x": 0, "y": 5 },
+    "Abeho": { "type": "wh", "x": 8, "y": 6 },
+    "Veliace": { "type": "wh", "x": 21, "y": 18 },
+    "Olaso": { "x": 13, "y": 11 }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "cluster": "Union Rashkir Core",
+  "sector": "Wainze",
+  "width": 17,
+  "height": 16,
+  "tiles": "bbbbbbbeebbbbbbbbbbbbbbeeeebbeebbbbbbbbeeffeebeeeebbbbbeeffffebeffeebbbeefffffebeffeebbeeffffffeeeffebbbefffffffffffeebbeeffffffffffeebbbefeeefffffffebbbeefebeefffffoeebbeeeebbefffoffoeebeeeebeeofooofofebbeebbefffoofffeebbbbbbeefffffeeebbbbbbbbeffffeebbbbbbbbbbeeeeeebbbbb",
+  "beacons": {
+    "Spica": { "type": "wh", "x": 8, "y": 1 },
+    "Daured": { "type": "wh", "x": 14, "y": 3 },
+    "YV 3-386": { "type": "wh", "x": 8, "y": 15 },
+    "Wainze": { "x": 8, "y": 7 }
+  }
+}

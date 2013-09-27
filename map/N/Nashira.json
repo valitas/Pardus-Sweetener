@@ -1,0 +1,14 @@
+{
+  "cluster": "Union Keldon Core",
+  "sector": "Nashira",
+  "width": 24,
+  "height": 21,
+  "tiles": "bbbbbbbbbeeeebbbbbbeebbbbbbbbbbeeeffeebbeeeeeeebbbbbbbbefeeffebbefffffeebbbbbbbeeeeffebeeffeeefebbbbbbbbeefffeeefggebeeebbbbbbbbbefffffffggebbbbbeeeebbbbeeggggggffeeebbeeofeebbbbeggggggffffeebeffofebbbeeggggggfffffebeeoooeeeeefgggggffffffebbefooofffffgggggffffffebbeefoofffffgggggffffffebbbeffofeeeeffggfffffffeebbeefffeeeefggggffffffeebbbefffeeeefgggggfffeeebbeeefffeeeefgggggfffebbbbeffffffggffgggggeeeeebbeeffffffggffggggeebefeeeeffffeeefffffeeeebeeffeeeefeeebeeeeeeebbbbeeeeebbeeebbbbbbbbbbbbbbbbbbbb",
+  "beacons": {
+    "Dsiban": { "type": "wh", "x": 11, "y": 0 },
+    "Wezen": { "type": "wh", "x": 22, "y": 3 },
+    "Turais": { "type": "wh", "x": 22, "y": 18 },
+    "Lazebe": { "type": "wh", "x": 1, "y": 19 },
+    "Nashira": { "x": 19, "y": 10 }
+  }
+}

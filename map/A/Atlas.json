@@ -1,0 +1,12 @@
+{
+  "cluster": "Lane",
+  "sector": "Atlas",
+  "width": 21,
+  "height": 15,
+  "tiles": "bbbbbbbbbbbbeebbbbbbbbbbbbbbbbbbeeeeebbbbbbbbbbbbbeeeeffeebbbbbbbbbbbeeefffofebbbbbbbbeebbefffoofeebbeeebeeeebbeffooofebbeefeeeffeeeefffoofebeefffeeeeoffggfffffeeefffeebbeeeegggfffffffffeebbbbbbegggffffffffeebbbbbbbegggffffffffebbbbbbbbeeeffffffffeebbbbbbbbbbeeffffffeebbbbbbbbbbbbeeeeffeebbbbbbbbbbbbbbbbeeeebbbbbb",
+  "beacons": {
+    "Qumia": { "type": "wh", "x": 20, "y": 5 },
+    "Hooth": { "type": "wh", "x": 0, "y": 6 },
+    "Atlas": { "x": 13, "y": 10 }
+  }
+}

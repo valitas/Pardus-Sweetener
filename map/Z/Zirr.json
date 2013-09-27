@@ -1,0 +1,14 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "Zirr",
+  "width": 25,
+  "height": 18,
+  "tiles": "eeebbbbbbbeeeeeebbbbbbbbbeeeebbbeeeefgggeeebbbbbbbbefebbeeffgggggggeebbbbbbbeeeebeffggggggggfebbbbbbbbefeeeggggggggggfebbbbbbbbeffffggggggggfffeebeebbbbeffffggggggggffffeeeeebbeefffffggggggfeeeeeeeeeebefffffffgggfffebbbeebeeeeefooffffeeefffeeebbbbbbbefooooffeebeffffeebbeebbbeefoofffebbeffffebbeeeebbbefffffeebeeffffeeeeffeebbeeeeefebbeeffffffffffeebbbbbbefebbbeefffffffffebbbbbbbeeebbbbeeeefffffeebbbbbbbbeeebbbbbbeeeffeebbbbbbbbbeeebbbbbbbbeeeebbbb",
+  "beacons": {
+    "Grefaho": { "type": "wh", "x": 0, "y": 0 },
+    "Canexin": { "type": "wh", "x": 24, "y": 7 },
+    "Begreze": { "type": "wh", "x": 7, "y": 17 },
+    "Dark Harbour Zirr": { "x": 23, "y": 13 },
+    "Zirr": { "x": 19, "y": 14 }
+  }
+}

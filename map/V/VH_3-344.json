@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "VH 3-344",
+  "width": 8,
+  "height": 16,
+  "tiles": "bbbeebbbbbeeebbbbeefeebbeefffeebeffffeebeeffeebbbeffebbbbeffeeeebeeffeeebbeefebbbbbefeebbbeeffebbeeffeebeeffeebbeeeeebbbeebbbbbb",
+  "beacons": {
+    "Sigma Draconis": { "type": "wh", "x": 4, "y": 0 },
+    "Edeneth": { "type": "wh", "x": 7, "y": 7 },
+    "Waiophi": { "type": "wh", "x": 0, "y": 14 }
+  }
+}

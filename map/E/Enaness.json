@@ -1,0 +1,11 @@
+{
+  "cluster": "North Pardus Rim",
+  "sector": "Enaness",
+  "width": 21,
+  "height": 12,
+  "tiles": "eeebbbbbeebeeeebbbeeeeeebbbeeeeeeffeeeeefebebbbeeffffffeebbbeeeeeebeefffffffebbbbbbbefebefgggffffeeebbbbbeeeeefgggffffffeeebbbbeebeggggggffffffeebbbbbbeggggggfeeefffeebbbbbeggggggfebeffffebbbbbeeffgggeebefffeebbbbbbeeeeeeebbeefeebbbbbbbbbbbbeebbbeeebbb",
+  "beacons": {
+    "Ururur": { "type": "wh", "x": 1, "y": 1 },
+    "Ross": { "type": "wh", "x": 19, "y": 1 }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "cluster": "Union Rashkir Core",
+  "sector": "Pass UNI-02",
+  "width": 10,
+  "height": 10,
+  "tiles": "bbeeeeeebbbeeffffeebeefeeeefeeeefebbeffebefebeefeeeeeebeeeebefebbbbbbbefeeebbbbbeeffeebbbbbeeeeebbbb",
+  "beacons": {
+    "Urfaa": { "type": "wh", "x": 5, "y": 4 },
+    "EH 5-382": { "type": "wh", "x": 4, "y": 7 }
+  }
+}

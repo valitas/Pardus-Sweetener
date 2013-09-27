@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Tiacan",
+  "width": 15,
+  "height": 18,
+  "tiles": "bbbbbbbbbeebbbbbbbbbbbeeeeebbbbbbbbeeefffeebbbbbbbeffffffebbbbbbbefffffeebbbbbbbefffffebbbbbbbeefffffebbbbbeeeffffffebbbeeeffffffffeebbeeeefffgggffeeebbbefggggggfffebbbeegggggggfeebbbbegggggggfebbbbbefggggggfebbbbbefgggggfeebbbbbeeffffffebbbbbbbeeeffeeebbbbbbbbbeeeebbbb",
+  "beacons": {
+    "Betelgeuse (East)": { "type": "wh", "x": 1, "y": 8 },
+    "Essaa": { "type": "wh", "x": 14, "y": 10 },
+    "Tiacan": { "x": 8, "y": 5 }
+  }
+}

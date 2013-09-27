@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "An Dzeve",
+  "width": 23,
+  "height": 18,
+  "tiles": "bbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbeeefeeeebbbbbbbbbbbbbbeefgggffeeebbbbbbbbbbbbeggggggggfeebbbbbbbbbbeegggggggggfeebbbbbbbbbegggggggggggfebbbbbbbbbegggggggggggeebbbbbbbbbegggggggggggebbbbbbbbbbegggggggggggebbeebbbbbeefggggfffgggebbeeeeeeeeffgggfffffffeebeebbbbbefffffffffffffebbbbbbbeefffffffffffffebbbbbbbefeeeefffffffffeebbbbbbefebbeeeffffffffebbbbbbeeeebbbeeffffffeebbbbbbbeeebbbbeeeeffeebbbbbbbbbeebbbbbbbeeeebb",
+  "beacons": {
+    "Urandack": { "type": "wh", "x": 0, "y": 10 },
+    "Canaab": { "type": "wh", "x": 9, "y": 17 },
+    "An Dzeve": { "x": 17, "y": 12 }
+  }
+}

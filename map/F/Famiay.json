@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Famiay",
+  "width": 15,
+  "height": 13,
+  "tiles": "bbbbbbbbbbbeebbbbbbeeebbbeeeebbbbbefebbeeffeebbbeeoeebeffffebbbeoooebeffffeeebefofeeeffffeeeeefffffffffeeeeeefffffffffebbbbeeffffffffebbbbbeeeeeeefeebbbbbbbeebbeeebbbbbbbbeeebbeebbbbbbbbeeebbbbbb",
+  "beacons": {
+    "Nionquat": { "type": "wh", "x": 13, "y": 1 },
+    "Nebul": { "type": "wh", "x": 0, "y": 6 },
+    "Phekda": { "type": "wh", "x": 7, "y": 12 },
+    "Famiay Station": { "x": 9, "y": 5 }
+  }
+}

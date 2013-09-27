@@ -1,0 +1,14 @@
+{
+  "cluster": "Union Keldon Core",
+  "sector": "UG 5-093",
+  "width": 22,
+  "height": 23,
+  "tiles": "bbbeebbbbbbbbbbbbbbbbbbbeeeebbbbbbbbeeebbbbbbeeffeeebbbbbeefebbbbbbeeffffeebbbbeffeebbbbbbeefeefeebbbefffeebbbbbbeeeeffebbbeeefeebbbbbbbeefffeebeeeefebbbbbbbbbeefffeeefffeebbbbbbbbbbeeefffffffebbbbbbeebbbbbefgggggfebbbbbeeeeebeeefgggggfeebbbbefffeeefffgggggffeeebbeefffffffffffffffffeebbeeffeeeeefffeeefeefebbbeeeeeebeeefebeeeefebbbbbeeeebeeefeebefffeebbbbbbbbeeffeeebeffofebbbeebbeefffebbbefoooebbbeeeeefffeebbeeffoeebbeefeeffeeebbbeffffebbbeefeeffebbbbeeffffebbbbeefeeeebbbbeeffeeebbbbbeeeeebbbbbbeeeebbb",
+  "beacons": {
+    "Sirius": { "type": "wh", "x": 3, "y": 1 },
+    "Gienah Cygni": { "type": "wh", "x": 16, "y": 3 },
+    "Matar": { "type": "wh", "x": 1, "y": 11 },
+    "Nekkar": { "type": "wh", "x": 3, "y": 20 },
+    "Achird": { "type": "wh", "x": 17, "y": 22 }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "cluster": "Pardus Empire Contingent",
+  "sector": "Nari",
+  "width": 34,
+  "height": 37,
+  "tiles": "bbbbbbbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbbbbbbbbbeeebeefeebbbbbbbbbbbbbbbbbbbbbbbbeefeeefffeeebbbbbbbbbbbbbeeebbbbbbefffffffffeebbbbbbbbbbbbeefeebbbbeeffffeeeffebbbbbbbbbbbbeefffebbbbegggfeebeefeebbbbbbbbbbbeeeffebbbbegggfebbbeffeeeebbbbbeeeeeefebbbbbegggfebbbefffffeeebbeeeeeeeeebbbbeeggggeebeefgggfffebbefeeebbeebbeeefggggfeeeffgggfeeebbeeefeeeeebeefffggggfebeffffeeebbbbbbeeeeefeeefffffffffeeefffeebbbbbbbbbbbbefffffffffffffebefffeebbbbbbbbbbbeefffffffffffffeeeffffebbbbbbbbbbbeeeefffffffffeeebeefffeebbbbbbbbbbeebeeeeffffffeeeebeefffeebbbbbbbbbeeeeebeeffffeeeeebbeeoffeebbbbbbbeefffebbeeeeeebbeebbbeffffebbeebbbeffffeebbbebbbbeeebbeefoffeeeeeeebefffffeeeeeebbeefebeeoooofeeefffeeeffggggggffebeeffeeefoooofebeeffebeefgggggggfeeefffebeefoofoebbeeeebbefgggggggfgggggfebbeeeeeeebbeebbbbeefggggggfgggggfeebbeebbeebbbbbbbbbeefgggggfgggggffebbbbbbbbbbbbbbbbbbeffgggfffggggffeebbbbbbbbbbbbbbbbeeffffffffggggfffeeeeeebbbbbbbbbbeeggggffffffffggggggfffeebbbbbbbbbeeggggffffffffgggggggfffeebbbbbbbbbegggggfffffffggggggggeeeebbbbbbbbbeegggggffffffffggggggebbbbbbbbbbbbbegggggfffffeeefgggggeebbbbbbbbbbbbeeggggffffeebeffggggfeeebbbbbbbbbbbeeeeffffoebbeeffffffffeebbbbbbbbbbbbbeeffooeebbeeeeeffffeebbbbbbbbbbbbbbeeeeofebbbbbbeeefeebbbbbbbbbbbbbbbbbbeeeebbbbbbbbeeebb",
+  "beacons": {
+    "Enif": { "type": "wh", "x": 10, "y": 4 },
+    "Heze (North)": { "type": "wh", "x": 31, "y": 7 },
+    "Aya": { "type": "wh", "x": 3, "y": 10 },
+    "Heze (South)": { "type": "wh", "x": 31, "y": 35 },
+    "Nari I": { "x": 16, "y": 13 },
+    "Nari II": { "x": 16, "y": 28 }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "YS 3-386",
+  "width": 14,
+  "height": 20,
+  "tiles": "eebbbbbbbbbbbbeeeeebeeebbbbbeeffeeefeebbbbbeeffffffeebbbbbeffffeeeeebbbeeffffebefeeeeefffffeeeeeeeeefffffffeebbbbeeffffeeebbbbbbefeeeebbeebbeeeeebebeeeeebeeeebeeeeeeeeebeebbefeeebeeebbbbbeeebbbeebbbbbbbeeebeeebbbbbbeefeeeeebbbeeeeeeebeebbeeeeeeeeebeebbeeeebeeeeeeebbeebbbbbeebeebb",
+  "beacons": {
+    "Zearla": { "type": "wh", "x": 0, "y": 0 },
+    "Ayinti": { "type": "wh", "x": 13, "y": 5 },
+    "Watibe": { "type": "wh", "x": 1, "y": 11 }
+  }
+}

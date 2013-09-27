@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "KU 3-616",
+  "width": 12,
+  "height": 8,
+  "tiles": "bbbbbbeebbbbbbbbbbeebbbbbbbbbbeeebbbbbbbbeefeebbbbeeeefffebbbbefffeeeeebbeeeeeebeeeebeeebbbbbeee",
+  "beacons": {
+    "Keldon": { "type": "wh", "x": 6, "y": 0 },
+    "Laanex": { "type": "wh", "x": 2, "y": 7 },
+    "Pollux": { "type": "wh", "x": 11, "y": 7 }
+  }
+}

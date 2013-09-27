@@ -1,0 +1,12 @@
+{
+  "cluster": "Split",
+  "sector": "FR 3-328",
+  "width": 12,
+  "height": 20,
+  "tiles": "bbbbeeebbbbbbbbbeeebeeebbbbbbebbefeebbeeeeeeeeeebbeffffffeeebeeffeeefffeeegggeeeeeeeeggggeeeebbbegggggffeeebegggggggffeeeggggggggffeeeffggggggfebeeeggggggfebbbeggggggfeeeeeggggggfeeeffggggggfebeffggggggfeeeffffffffeeeffeeeeeeeebeeeebbbbbbbb",
+  "beacons": {
+    "Pass FED-08": { "type": "wh", "x": 5, "y": 1 },
+    "Liaackti": { "type": "wh", "x": 11, "y": 6 },
+    "Beurso": { "type": "wh", "x": 1, "y": 18 }
+  }
+}

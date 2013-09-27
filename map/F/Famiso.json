@@ -1,0 +1,12 @@
+{
+  "cluster": "North Pardus Rim",
+  "sector": "Famiso",
+  "width": 22,
+  "height": 15,
+  "tiles": "bbbbbbbbbeebbbbbbbbbbbbbbbbbbbbeebbbbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbeeefeebbbbbbbbbbbbbbbbeggggebbbbbbbbbbbbbbbbeggggeebeeebbbbeeebbbeeggggfebeeeebbbefeebbeffffffebbefebeeeefeeeeffffffeebefeeeebeefffffffffffeeefebeebbeffffffffffffffeebbbbbeeffeeeffffeeeeebbbbbbbeeeebefffeebeebbbbbbbbbeebbeeeeebbbbbbbbbbbbbbbbbbeebbbbbbbbbbb",
+  "beacons": {
+    "Ross": { "type": "wh", "x": 0, "y": 6 },
+    "Edenve": { "type": "wh", "x": 20, "y": 8 },
+    "Famiso": { "x": 10, "y": 9 }
+  }
+}

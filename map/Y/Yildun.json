@@ -1,0 +1,12 @@
+{
+  "cluster": "East Pardus Rim",
+  "sector": "Yildun",
+  "width": 14,
+  "height": 17,
+  "tiles": "bbbbbbbbeebbbbbbeebbbbeebbbbbeeeebbeeeebbbbeffeeeeffeebbbeggggfffffeebbeggggffffffebbeegggffffffeebbegggffffffeebbeeffffffeeebbbbeeefffeebbbbbbbbeffoebbbbbbeeeefooeebbbeeeffffoofeebbeeeeffofooeebbbbbeffeeeeebbbbbbeeeebbbbbbbbbbbeebbbbbbbb",
+  "beacons": {
+    "Nusakan": { "type": "wh", "x": 8, "y": 0 },
+    "Zuben Elakrab": { "type": "wh", "x": 0, "y": 12 },
+    "Yildun": { "x": 8, "y": 5 }
+  }
+}

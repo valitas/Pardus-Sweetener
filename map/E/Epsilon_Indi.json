@@ -1,0 +1,13 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Epsilon Indi",
+  "width": 20,
+  "height": 13,
+  "tiles": "bbbbbbbbbbeeeeebbeebbbbbbbbbbeegggeebeeebbbbbbbeeegggggeeeeebbbbbbbeeggggggffeebeebeebbbeggggggfeebbeeeeeebeeggggggfebbbeeeffeeefggggggfeebbbbeeffffffffggfffebbbbbefffffffffffffeebbbbeeeeffeeeefffffebbbbbbbeeeebbeefffeebbbbbbbeebbbbbeeeeebbbbbbbbeebbbbbbbeebbb",
+  "beacons": {
+    "Rashkan": { "type": "wh", "x": 18, "y": 0 },
+    "Phekda": { "type": "wh", "x": 0, "y": 5 },
+    "LO 2-014": { "type": "wh", "x": 7, "y": 11 },
+    "Epsilon Indi": { "x": 15, "y": 8 }
+  }
+}

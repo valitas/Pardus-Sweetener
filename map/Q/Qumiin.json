@@ -1,0 +1,14 @@
+{
+  "cluster": "Federation South Human",
+  "sector": "Qumiin",
+  "width": 18,
+  "height": 20,
+  "tiles": "eeeeebeebbbeeeebbbefffeeeeebeefeebbbeffeebefebeeeebbbbeeeebbefebbebbbbbbbebbbbefeeeeebbbeebebbeeefffffebeeeebebeefggggffeeeffebebefgggggffffffeebeeeggggggfffffeebeeefggggggfffeeebbeffggggggfeeeebbbbefggggggfeebeebbeeefgggggffebeeeeeeeefgggffffeeefebbeeeefffeeefffffeebbbbeeffebeefffffeebbbbeefeebeffffffeebbbbeeeebeefeeeefeebbbbbeebbeeebbeefebbbbbbbbbbbbbbbeee",
+  "beacons": {
+    "Ureneth": { "type": "wh", "x": 17, "y": 5 },
+    "UF 3-555": { "type": "wh", "x": 0, "y": 10 },
+    "Xewao": { "type": "wh", "x": 5, "y": 18 },
+    "Ayqugre": { "type": "wh", "x": 17, "y": 19 },
+    "Qumiin Station": { "x": 9, "y": 11 }
+  }
+}

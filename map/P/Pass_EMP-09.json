@@ -1,0 +1,11 @@
+{
+  "cluster": "Empire West Skaari",
+  "sector": "Pass EMP-09",
+  "width": 25,
+  "height": 25,
+  "tiles": "bbbbbbbbbbeeebbbeebeebbbbbeeeeeebbbeeebbeeeeeeeebbeeeeffeebbbebbbeeffeeeeebeeeefffeeeeeebbbeeeebefebbefeeeeffffeebbeeebbbefeeeefebbeeffeebbbefeebeeeeeeefeebbeeeebbbeefeebeeebbbeefeebbbbbbbeeeeebbbeeeebbeffeebbbbeeefebbbbeefeebbeeffeeeeeefffeebbeeeeebbbbeeeffeeeeeeefebbefebbbbbbbbeeeeeebebeeeebeeebeebbbbbbbeeeeeeebefebbeeeeeeebeeebbbefffeeefeebeebeeeeeefeebbeefggeeeeebbbbbbeebeffeebbeeggebbeeeeebbbbbbeeeeefbbefeebeebeeeeebbbbbeeeffbeefebbeeeeeeeeebbbeefeebbeffebbbbbbbbefebeeeeeebbeefeebbeeeebeefebeefebbbeeeeebbeeffeeeeeebbefeeeeeeebbbbeeeeeffebbbbeeefffeebbbbbbebbeeeebbbbbbeefeebbbbbbeeebbeebbbbbbbbeeebbbbbbbeeebbbbbbb",
+  "beacons": {
+    "XC 3-261": { "type": "wh", "x": 11, "y": 0 },
+    "Hource": { "type": "wh", "x": 0, "y": 14 }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "cluster": "Empire Keldon Core",
+  "sector": "Pollux",
+  "width": 20,
+  "height": 10,
+  "tiles": "eeebbbbbbbbbbbeebbbbeeeeebbbbeeebeeeebbbbeffeebbeefeeeffeebbbeeffeebeffgggggfeebbbeeffeeeffgggggffebbbbeffffffffffffffeebbbeefffffffffggfeeebbbbeeffffeeefggeebbbbbbbeeeeeebeeeeebbbbbbbbbbbeebbbeebbbbb",
+  "beacons": {
+    "KU 3-616": { "type": "wh", "x": 0, "y": 0 },
+    "Besoex": { "type": "wh", "x": 19, "y": 6 },
+    "Pollux Station": { "x": 8, "y": 4 }
+  }
+}

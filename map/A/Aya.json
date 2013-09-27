@@ -1,0 +1,13 @@
+{
+  "cluster": "Pardus Federation Contingent",
+  "sector": "Aya",
+  "width": 40,
+  "height": 35,
+  "tiles": "bbbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbbbbbbbeeeebbbbbbbbeefeebbbbbbbbbbbbbbbbbbbbbbbeeeeeeeeebbbefffebbbbbbeeebeeebbbbbbbbbbbbegggggeeeeeffeebbbbbeefeeefeebbbbbbbbbeeegggggfffffffebbbeeeefofffffeebbbbbbbeefggggggfffffffeeeeeeefffffffffeebbbeebeefggggggffffeeefeeffeeeeeeffeeefebbeeebbefggggggfffeebeeeefgggebbefeebeeebbeeeeeeffggggfeeeebbbefffgggebeefebbbebbbbeefooffgggffebbbbbbeffffffeeeffeebeeebbbbeooooffffggeebeeeeeeeefffffffffeeefebbbbeefofofffggfeeeffffebeeeeeeeeeeefffebbbbbeeeefgggffffffffffebbbeebbebbbeeefebbbbbbbbefgggggffffffffeebbbbbeeeebbbefeebbbbbbbeeggggggffffffffeebbbeeffeebbeffebbbbbbbbefgggggfffffffffebbeeffffeeeefeebbeeeeeeefgggggffffffffeebbeffeeeebbefebbeefffeeefgggggffffffffebbbeffebbbbeeeebeeeeefebefggggfffffffffeebbeffebbbeeeebbefebeeebeefffggggggfffffebbeeeebbeefebbbeeebeebbbefggggggggfffffeebbeebbeeffebbbbeebeebbbefggggggggfffffeebbeebbefffeebbbeebeebbeefggggggggfffffebeeeebeeffffeebeeebeeebeffggggggggfffffeeeffeeeffffffeeeeeeeeeeefffgggggfeeeffffffffffffffffffebeeffebbeffffffffeebeefffggfoeeeffofffeebbeeeeeeefffeeeffebbbeefoggffebeeoooffebbeeeeebbeffeebeffebbbbeeefofeebbefofffebbefffeebeeeebbeffebbbbbbeefoebbbeefoffebbefeeeebbbbbbbeffeeeebbbbeeeebbbbeeffeebbefebeeebbbbbeefffffeebbbbeebbbbbbefeebbbefeeefebbbbbefffffffebbbbbbbbbbbbeeebbbbeeeeeeebbbbeeffffffeebbbbbbbbbbbbbbbbbbbbeeeeebbbbbeeefffeeebbbbbbbbbbbbbbbbbbbbbbbeebbbbbbbbeeeeebbbbbbbbbbbbbbbbbbbbb",
+  "beacons": {
+    "Mintaka": { "type": "wh", "x": 5, "y": 6 },
+    "Nari": { "type": "wh", "x": 34, "y": 6 },
+    "Aya I": { "x": 17, "y": 16 },
+    "Aya II": { "x": 17, "y": 31 }
+  }
+}

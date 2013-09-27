@@ -1,0 +1,15 @@
+{
+  "cluster": "West Pardus Rim",
+  "sector": "Tiacken",
+  "width": 19,
+  "height": 28,
+  "tiles": "bbbbbbbbbbbbbbbeebbbbbbbbbbbbbbbbbeebbbbbbbbbbbbbbbbeeeebbbbeeeeebbbeeeeffebbbeefffeeeeefffffeebeefffffffffffffffeeefffffffffffffffeeefffffffffffffffeebeeffffffffffffffebbbeffffffgggfffeeebbbeeffffgggggffebbbbbbeffgggggggffebeeebbeffgggggggffeeeebbbefggggggggeeeeeebbeeggggggggfebbbbbbeegggggggggfeebbbbbefgggggggggffeeeebbefgggggggggfffffeebeegggggffffffooffebbefgggfeeeffoooofebbeeffffebeeffooofeebbeffffebbeffffooeebeeffffeebeefffffebbefffffeebbeeeeeeebbefffffebbeeebbeebbbeffffeebbeeebbbbbbbeefeeebbbbeebbbbbbbbeeebbbbbbbbbbbbbb",
+  "beacons": {
+    "Laolla": { "type": "wh", "x": 16, "y": 0 },
+    "Nex Kataam": { "type": "wh", "x": 16, "y": 8 },
+    "Soessze": { "type": "wh", "x": 18, "y": 11 },
+    "Edmize": { "type": "wh", "x": 11, "y": 25 },
+    "Tiacken I": { "x": 5, "y": 7 },
+    "Tiacken II": { "x": 4, "y": 24 }
+  }
+}

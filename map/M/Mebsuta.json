@@ -1,0 +1,12 @@
+{
+  "cluster": "East Pardus Rim",
+  "sector": "Mebsuta",
+  "width": 17,
+  "height": 19,
+  "tiles": "bbbbeeebbbbbbbbbbbbeeefeebbeebbbbbbbeffffebbeebbbbbbbeefffeeeeebbbbbbbbeeffggggeeebbbbbbbefggggggfeebbeebeefggggggffebbeeeeffggggggffeebefffffgggggffffebefffffgggggfffeebeffofofggggfeeebbefffofffffeeebbbbeeoooofoffebbbbbbbeffofofffeeeeeeebeeffoffffeeefffebbeffffffeebefffebbeeffffeebbefffebbbeeeeeebbbeeffebbbbbbbbbbbbbeeee",
+  "beacons": {
+    "Phao": { "type": "wh", "x": 5, "y": 0 },
+    "Nex 0004": { "type": "wh", "x": 0, "y": 6 },
+    "Zaniah": { "type": "wh", "x": 5, "y": 17 }
+  }
+}

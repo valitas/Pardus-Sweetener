@@ -1,0 +1,12 @@
+{
+  "cluster": "Union Keldon Core",
+  "sector": "Turais",
+  "width": 20,
+  "height": 22,
+  "tiles": "beeebbbbbbbeeeeeeeeeeefeeebbbbeeeefeeeeeeefffeebbbeeeefeeebbbeffffebbbbeeffeeeebbeefffeebbbbeeeeefeebbeefffebbbbbbefeefeeebeeeeeebbeeeefeefeeeeeebefebeeeeeeffeeeeffeeefeeefebeefeebbeffebefebeeeeeefebbbeefebefebbeeeeefeebbbefeeeeebbbbbbeffebeeeffffebbbbbbeeffebeffffffeebbbbeefeeebefeeefffeebbbeffeeeeeeebeeeefebbbefffeeebeeeeebefeeebeggfebbeefffebeeffeeeggfebbeeeefebbefffffffeebbbeeeeebbeefffeeeebbbbeeeebbbbeeeeebbbbbbbbeebbbbbbbbbbbbbbbb",
+  "beacons": {
+    "Wezen": { "type": "wh", "x": 19, "y": 0 },
+    "Nashira": { "type": "wh", "x": 1, "y": 1 },
+    "Bellatrix": { "type": "wh", "x": 3, "y": 20 }
+  }
+}

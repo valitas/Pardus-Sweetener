@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Ska",
+  "width": 40,
+  "height": 25,
+  "tiles": "bbbbbbbbbbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbbbbbbbbbbeeeeeeeeebbbbeefebbbbbbbbbbbbbbbbbbbbbeeefffffffeebbbeffebbbbbbbbbbbbbbbbeeebeefffffoofffeebbeeeebbbbbbbbbbbbbbbbefeeefffffoooooffebbbeebbbeeeebbbbbbbbbbeeffgggfoooooffffeebeeebbbeffeebbbbbbbbbbeffgggffoooffffffebefeebeefffeebbbbbbbbbeffffffffffffffffeeeffeeefffffeeeebbbbeeefggggffffffffffffffffffffgggffffeebbbeffgggggfffffffffffffffffffggggggfffeebeeffgggggffffffffffffffffffgggggggggffebefffggggffffffffffffffffgggggggggggggfeeeeefffffffffeeeeffffffffgggggggggggggffebbefooooffffebbeefffffffgggggggggggggffebeeffoooffffeebbefffffffffgggggggggggfeeeeffffoooffffeeeeffffffffgggfgggggggffebefffffffffffffffffffffffgggggffffffffeebeeffffffffffeeeeeefffffggggggggffffffebbbefeeeefffggebbbbeeffffggggggggfffffeebbbeeebbefffggebbbbbeffffggggggggfeeeeebbbbeebbeefffffebbbbbeffffgggggfffeebeebbbbbbbbeefeeeeeebbbbeeffooooffeeefebbbbbbbbbbbbeeeebbbbbbbbbefffffoofeebeeebbbbbbbbbbbbbbbbbbbbbbbbbeeeeeffeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbeeeebbbbbbbbbbbbbbb",
+  "beacons": {
+    "Adaa": { "type": "wh", "x": 24, "y": 1 },
+    "Tiexen": { "type": "wh", "x": 3, "y": 4 },
+    "PO 4-991": { "type": "wh", "x": 34, "y": 20 },
+    "Skara": { "x": 21, "y": 12 }
+  }
+}

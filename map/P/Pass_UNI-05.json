@@ -1,0 +1,12 @@
+{
+  "cluster": "Union Keldon Core",
+  "sector": "Pass UNI-05",
+  "width": 25,
+  "height": 26,
+  "tiles": "bbbbbbeeebbbbbbbbbbbbbbbbbbbbeeefeeebbbbbeeeebbbbbbbeeeffeefeebbbeeffeebbbbbeefeeeeeeeeebbeffffeebbbeefeebeeeeefeeeeeefoeebbbefeebbbbeeeeefffeefffebbbefebbbbbbeebeeeeeeeeeebbbeeeebbbbbbbbbbbbbebbebbbbbefeeebbbbbbbbbbbebbebbbbbeeeeeebbbbbbbbbbebeeeebbbbbbefeebbbbbbeeeeeeffeebbbbbeffebbbbbbefffffeeeeebbbeefeebbbbbeefeeefebeeebbbefeebbbbbbeeeebeeeeeebbbbeeebbbbbbbeeeebbeeefeeeebeebbbbbbbbeffebbbbeeeeeeeeeeebbbbbeefeebbbbbeebeebeffeebbbbeffebbbbbbbbbbbbeeffeebbbeefebbbbbbbbbbbbbeeeeebbbbefeebbbbbbbbbbbbeebeeebbeefeebbbbbbbbbbbbeeeefeeeefeebbbbbbbbbbbbbeefffffeefebbbbbbbbbbbbbbbeefeeeeefeebbbbbbbbbbbbbbbeeebeeeeeebbbbbbbbbbbbbbbbbbbbbbeebbbbbbbbbb",
+  "beacons": {
+    "Homam": { "type": "wh", "x": 18, "y": 1 },
+    "BE 3-702": { "type": "wh", "x": 23, "y": 15 },
+    "Nusakan": { "type": "wh", "x": 0, "y": 16 }
+  }
+}

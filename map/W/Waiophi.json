@@ -1,0 +1,13 @@
+{
+  "cluster": "Empire Ska'ari Core",
+  "sector": "Waiophi",
+  "width": 17,
+  "height": 15,
+  "tiles": "bbbbbbbbbbeeebbeebbbbbbbeeeefebeeebbbbbbeeffffeeeeebbbbbeefffffffeebbbbbeeffffffffebbbeeeefffffffffeeeeeffffffffffffffeeeefffffffffgggfebbeeeffffffggggeebbbbeefeeegggggebbbbbbefebegggggebbbbbbefeeegggggebbbbbbeefffgggeeebbbbbbbeeeffeeebbbbbbbbbbbeeeebbbbb",
+  "beacons": {
+    "VH 3-344": { "type": "wh", "x": 16, "y": 0 },
+    "XC 3-261": { "type": "wh", "x": 0, "y": 7 },
+    "Waiophi": { "x": 8, "y": 5 },
+    "EM Weapon Station Waiophi": { "x": 7, "y": 12 }
+  }
+}

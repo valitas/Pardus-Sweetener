@@ -1,0 +1,12 @@
+{
+  "cluster": "Federation Rashkir Core",
+  "sector": "Inena",
+  "width": 14,
+  "height": 21,
+  "tiles": "bbbbbbeebbbbbbbbbbbeeebbbbbbbbbbeefebbbbbbbbeeeffeebbbbbbbefgggfebbbbbbeefggggeebbbbbeggggggfebbbbbeggggggfeebbbbeggggggffeeeeeeffgggfffffeeeeeefffffffeebbbbeeefffffebbbbbbbefffffeebbbeeeeffffffeebeeffeeeffffeebefffebeffffebeeffeebeefffebeeffebbbeefeebbeefeebbbeeebbbbeeeebbbbbbbbbbbbeebbbbbbbb",
+  "beacons": {
+    "Maia": { "type": "wh", "x": 13, "y": 8 },
+    "Alioth": { "type": "wh", "x": 5, "y": 19 },
+    "Inena": { "x": 8, "y": 11 }
+  }
+}

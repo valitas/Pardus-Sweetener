@@ -1,0 +1,12 @@
+{
+  "cluster": "East Pardus Rim",
+  "sector": "Zuben Elakrab",
+  "width": 25,
+  "height": 17,
+  "tiles": "bbbbbbbeebbbbbbbbeeeeeebbbbbbbbbeebbbbbbbeeffffeebbbbbbbbeeebbbbbbeffffffeebbbbbeeefebbbbbeefffffggebbbbeefffebbeebeeeeeeeggebbbeeffffeeeeebeebbbbefeebbbeeffffggggeeeeebbbeeebbbbbeefffggggggffeebbbbbbbbbbbeeffggggggfffeebbbbbbeeebbeeffggggggggfeeebbbeefeebbeeeeffffggggffeeeeeggfeeeeebeffffgggggffffeeggfffffebeefffgggggfffeeeggfffffebbeeeegggggffeebefffffooebbbebeggggeeeebbeeeffooeebbeeeeeeeeebbbbbbbeeeeeebbbeeebbeebbbbbbb",
+  "beacons": {
+    "Zaniah": { "type": "wh", "x": 8, "y": 1 },
+    "Yildun": { "type": "wh", "x": 24, "y": 11 },
+    "Pass EMP-06": { "type": "wh", "x": 12, "y": 15 }
+  }
+}
