@@ -6,7 +6,7 @@
   "tiles": "bbbbbbbbeeebbbbbbbbbbeeeefeeebbbbbbeeeffgggfeebbbbeefggggggffebbbbeegggggggfeebbbbbeggggggfeebbbbbeeggggggfebbbbeeefffgggffeebeeeeeeeeffffffeeeebbbbbeeefffffeeebbbbbbbefffffebbbbbbbeeefffffebbbbbbeeffffffeebbbbbbeffffffeebbbbbbbeeffffeebbbbbbbbbeffeeebbbbbbbbbbeeeebbbbbbbbbbbbeebbbbbbbbb",
   "beacons": {
     "Quurze": { "type": "wh", "x": 0, "y": 8 },
-    "ZZ2986": { "type": "wh", "x": 15, "y": 8 },
+    "ZZ 2986": { "type": "wh", "x": 15, "y": 8 },
     "Hoanda Base": { "x": 7, "y": 9 }
   }
 }

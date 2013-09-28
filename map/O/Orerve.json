@@ -5,7 +5,7 @@
   "height": 15,
   "tiles": "bbbbbbbeeebbbbbbbbbbbbbeeefebbeeeebbbbeeeefffebbeffebbbeeffffffebeeffeebeefffffffeeeffffeeeffffffffffffffffeeefffffffffffffffebefffeeeeeffffffeebeeffebbbeeeefffebbbeffebbbbbbeeffeebeeffeeeeeebbeefeeeefffgggggeebbefebeeffggggggfebbeeebbeeeggggggfeebbeeebbbeeeeeeeeeebbeee",
   "beacons": {
-    "XH3819": { "type": "wh", "x": 8, "y": 1 },
+    "XH 3819": { "type": "wh", "x": 8, "y": 1 },
     "Andexa": { "type": "wh", "x": 16, "y": 14 },
     "Oreve II": { "x": 3, "y": 5 },
     "Oreve I": { "x": 14, "y": 5 }

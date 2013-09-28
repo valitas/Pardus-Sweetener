@@ -6,6 +6,6 @@
   "tiles": "bbbbbbbbbbeebbbbbbbbbbbbbeeeeeeebbbbbeebeeeffoofeebbeeeeeeffffffofebbefffffeeeeeeffebeeeeeeeebeebeeeeeeeebeebbbbbbeeeeebeebeebbbbbeeeeebbeeeeeebbbbeeffeebeefffeeebbbeeeeebbeefeefeebbbbeebbbbeeeeffeebbbbbbbbbbeeeeeeebbbbbbbbbbbbbbbeeebbbbbbbbbbbbbbeeebbbbb",
   "beacons": {
     "Alioth": { "type": "wh", "x": 15, "y": 10 },
-    "PJ3373": { "type": "wh", "x": 10, "y": 14 }
+    "PJ 3373": { "type": "wh", "x": 10, "y": 14 }
   }
 }

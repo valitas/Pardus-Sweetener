@@ -5,7 +5,7 @@
   "height": 32,
   "tiles": "bbbbbbbbeebbbbbbbbbbbbbbbeeeeebbbeeebbbbbbeefffeeeeefebbbbbbefgggfffffeebbbbbeefggggfffeebbbbbeefgggggffeebbbbbbefggggggffebbbbbbeeggggggfffeebbbbbegggggggffffebbbbeeggggggfffeeebbbeefgggggfeeeebbbbbeefgggggfebbbbbbbbbeeeggggfebbbbbbbbbbbeeefffeebeebbbbbbbbbeffffeeeeebbbbbbbeeffffffffeebbbbeeeffffffffffebbbbeeefeeeffffffebbbbbbeeebefffffeebbbbbbbbbbefffeeebbbbbbbbbbbefffebbbbbbbbbbbbeefffeebbbbbbbbbeeefffffeeeebbeeeeeffffffeeeeebeeffooffffffebbbbeeffoooffffofebbbbeefffoffffoooeeebbbeeeffffffooeeeebbbbbeffffffoeebeeebbeeeffffffeebbeeeeeeeeeffeeeebbbbeeeeeebeeeebbbbbbbbee",
   "beacons": {
-    "PJ3373": { "type": "wh", "x": 16, "y": 2 },
+    "PJ 3373": { "type": "wh", "x": 16, "y": 2 },
     "Quurze": { "type": "wh", "x": 17, "y": 23 },
     "Faexze": { "type": "wh", "x": 0, "y": 30 },
     "Sol": { "type": "wh", "x": 17, "y": 30 },

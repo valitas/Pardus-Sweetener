@@ -6,7 +6,7 @@
   "tiles": "bbbeeeeeeebbbbeeeeeeeeeebeeefffffeeeeeefffoofffeeeffffffffffffffoooooffeeffffffffffffffoooooofeeeefffffffffffffoooffeeebbefffffffffffffffffeebbbbeeffffffffffffoeefebbbbbbefffffffffffffeefeeeeebbeffffffffffffffeeeeefebeefffffffffffoofebbbeeebefffggggggfffoooebbbbbbeefffgggggggfffofeeeebbbeefffgggggggggffffffeeebbefffgggggggggffffffffeebefgggfgggggggfffffffffebefggggggggggggfffffffeebefgggggfggggggggffffeebbeggggggfggggggggffffebbeeggggggggggggggfffffebbefgggggfgggggggfggggfeebefgggggfgggggggggggggfebeeggggfggggggggggggggfeebeffoffggggggggggggggffebeeooffggggggggggggggffebbeffffggggggggggggggffebeefffffggggggggggggffeeeefffeeefgggggfggggfeeebefffeebeeffeeeffffeeebbbeeeeebbbeeeebeeeeeebbbbb",
   "beacons": {
     "Epsilon Eridani": { "type": "wh", "x": 1, "y": 1 },
-    "SA2779": { "type": "wh", "x": 22, "y": 8 },
+    "SA 2779": { "type": "wh", "x": 22, "y": 8 },
     "Alpha Centauri": { "type": "wh", "x": 1, "y": 27 },
     "Olexti": { "type": "wh", "x": 14, "y": 28 },
     "Earth": { "x": 7, "y": 4 },
