@@ -49,7 +49,8 @@ PSOptionsPageDriver.prototype = {
              'allianceQLsOrionEnabled', 'personalQLOrionEnabled',
              'personalQLOrion', 'allianceQLsPegasusEnabled',
              'personalQLPegasusEnabled', 'personalQLPegasus',
-             'miniMap', 'sendmsgShowAlliance' ];
+             'miniMap', 'miniMapPosition', 'sendmsgShowAlliance' ];
+
     for(i = 0, end = keys.length; i < end; i++) {
       var key = keys[i];
       var control = doc.getElementById(key);
@@ -86,6 +87,8 @@ PSOptionsPageDriver.prototype = {
       addEventListener('click', this.updateAlarmControlsDisable.bind(this));
     controls.autobots.
       addEventListener('click', this.updateAutobotControlsDisable.bind(this));
+    controls.miniMap.
+      addEventListener('click', this.updateMiniMapControlsDisable.bind(this));
     this.wireAutobotsPreset(controls.autobotsArtemisPreset,
                             controls.autobotsArtemisPoints);
     this.wireAutobotsPreset(controls.autobotsOrionPreset,
@@ -210,6 +213,8 @@ PSOptionsPageDriver.prototype = {
       case 'personalQLPegasusEnabled':
         this.updateQLControlsDisable();
         break;
+      case 'miniMap':
+        this.updateMiniMapControlsDisable();
       }
       break;
     case 'select-one':
@@ -303,6 +308,10 @@ PSOptionsPageDriver.prototype = {
       !controls.personalQLOrionEnabled.checked;
     controls.personalQLPegasus.disabled =
       !controls.personalQLPegasusEnabled.checked;
+  },
+
+  updateMiniMapControlsDisable: function() {
+    this.controls.miniMapPosition.disabled = !this.controls.miniMap.checked;
   }
 };
 

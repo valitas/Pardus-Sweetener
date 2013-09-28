@@ -57,6 +57,7 @@ PSNavPageDriver.prototype = {
 
     keys.push('navShipLinks');
     keys.push('miniMap');
+    keys.push('miniMapPosition');
     this.port.postMessage({ op: 'subscribe', keys: keys });
 
     // Insert a bit of script to execute in the page's context and
@@ -91,7 +92,7 @@ PSNavPageDriver.prototype = {
       addShipLinks(ships);
     }
 
-    if(this.miniMapEnabled)
+    if(this.miniMapEnabled && this.miniMapPosition)
       this.updateMiniMap();
   },
 
@@ -128,30 +129,50 @@ PSNavPageDriver.prototype = {
             this.setupLinks(cbox);
         }
       }
-      else if(msg.key == 'navShipLinks') {
-        // First of all, remove all links we may have added before. This
-        // function will be called if the configuration changes. The
-        // utility function removeElementsByClassName is currently in
-        // shiplinks.js, we may move it somewhere else later.
-        var sbox = doc.getElementById('otherships_content');
-        if(sbox) {
-          removeElementsByClassName(sbox, 'psw-slink');
-          this.shipLinksEnabled = msg.value;
-          // Now, if enabled, add them again.
-          if(this.shipLinksEnabled) {
-            var ships =
-              getShips(sbox, "table/tbody/tr/td[position() = 2]/a",
-                       this.matchId);
-            addShipLinks(ships);
+      else {
+        switch(msg.key) {
+        case 'navShipLinks':
+          // First of all, remove all links we may have added before.
+          // This function will be called if the configuration
+          // changes.  The utility function removeElementsByClassName
+          // is currently in shiplinks.js; we may move it somewhere
+          // else later.
+          var sbox = doc.getElementById('otherships_content');
+          if(sbox) {
+            removeElementsByClassName(sbox, 'psw-slink');
+            this.shipLinksEnabled = msg.value;
+            // Now, if enabled, add them again.
+            if(this.shipLinksEnabled) {
+              var ships =
+                getShips(sbox, "table/tbody/tr/td[position() = 2]/a",
+                         this.matchId);
+              addShipLinks(ships);
+            }
+          }
+          break;
+        case 'miniMap':
+          this.miniMapEnabled = msg.value;
+          if(this.miniMapEnabled) {
+            if(this.miniMapPosition)
+              this.updateMiniMap();
+            // else we haven't yet received the position, so we'll
+            // update when we get it
+          }
+          else
+            this.disableMiniMap();
+          break;
+        case 'miniMapPosition':
+          if(this.miniMapPosition != msg.value) {
+            if(this.miniMapPosition)
+              // position may have changed; get shot on the displayed
+              // map, if any.
+              this.disableMiniMap();
+
+            this.miniMapPosition = msg.value;
+            if(this.miniMapEnabled)
+              this.updateMiniMap();
           }
         }
-      }
-      else if(msg.key == 'miniMap') {
-        this.miniMapEnabled = msg.value;
-        if(this.miniMapEnabled)
-          this.updateMiniMap();
-        else
-          this.disableMiniMap();
       }
       break;
 
@@ -228,7 +249,11 @@ PSNavPageDriver.prototype = {
     return null;
   },
 
+  // This is only called when both the miniMap setting has been
+  // received and is true, and miniMapPosition has been received.  We
+  // check this.
   updateMiniMap: function() {
+console.log('updating map');
     var sector = this.getCurrentSector();
     // If we can't find the sector, there's no point continuing.
     if(!sector)
@@ -251,6 +276,7 @@ PSNavPageDriver.prototype = {
   },
 
   disableMiniMap: function() {
+console.log('disabling map');
     if(this.map)
       delete this.map;
     if(this.miniMapSector)
@@ -262,43 +288,71 @@ PSNavPageDriver.prototype = {
   },
 
   configureMiniMap: function(sector) {
+console.log('configuring map for '+sector.sector);
     var doc = this.doc, map = this.map;
     if(!map) {
-      var sbox = doc.getElementById('status_content');
-      if(!sbox)
-        return;
-      // status_content gets clobbered by partial refresh, so we don't
-      // add our canvas to it.
-      //
-      // partial refresh *appends* a new status_content to the parent
-      // of that node. so we don't add it there either, or the new
-      // partial_content will appear after our map. instead, we add a
-      // new tr to the table.
-      var sctd = sbox.parentNode, sctr = sctd.parentNode, tr, td;
-      tr = sctr.cloneNode(false);
-      td = sctd.cloneNode(false);
-      td.style.textAlign = 'center';
-      // This is needed because Pardus' tables are off centre with
-      // respect to the borders drawn as background images.  Crusty,
-      // old, early 2000's HTML there.
-      td.style.paddingRight = '3px';
-      sctr.parentNode.insertBefore(tr, sctr.nextSibling);
-      tr.appendChild(td);
+      if(this.miniMapPosition == 'statusbox') {
+        // Add map to status box
+        var sbox = doc.getElementById('status_content');
+        if(!sbox)
+          return;
+        // status_content gets clobbered by partial refresh, so we
+        // don't add our canvas to it.
+        //
+        // partial refresh *appends* a new status_content to the
+        // parent of that node. so we don't add it there either, or
+        // the new partial_content will appear after our map. instead,
+        // we add a new tr to the table.
+        var sctd = sbox.parentNode, sctr = sctd.parentNode, tr, td;
+        tr = sctr.cloneNode(false);
+        td = sctd.cloneNode(false);
+        td.style.textAlign = 'center';
+        // This is needed because Pardus' tables are off centre with
+        // respect to the borders drawn as background images.  Crusty,
+        // old, early 2000's HTML there.
+        td.style.paddingRight = '3px';
+        sctr.parentNode.insertBefore(tr, sctr.nextSibling);
+        tr.appendChild(td);
 
-      var canvas = doc.createElement('canvas');
-      td.appendChild(canvas);
-      map = new PSMap();
-      map.setCanvas(canvas);
+        var canvas = doc.createElement('canvas');
+        td.appendChild(canvas);
 
-      // Remember the map so we don't add it again
-      this.map = map;
-      // And remember the tr we added to the status table. Because
-      // that's the one we'll have to remove if the map should be
-      // switched off.
-      this.mapContainer = tr;
+        map = new PSMap();
+        // Remember the map so we don't add it again
+        this.map = map;
+
+        map.setCanvas(canvas);
+        map.configure(sector, 180);
+        // Remember the tr we added to the status table. Because
+        // that's the one we'll have to remove if the map should be
+        // switched off.
+        this.mapContainer = tr;
+      }
+      else {
+        // Add map on top of the right-side bar.
+        var rtd = doc.getElementById('tdTabsRight');
+        if(!rtd)
+          return;
+        var div = doc.createElement('div');
+        div.style.textAlign = 'center';
+        div.style.width = '208px';
+        div.style.margin = '0 2px 24px auto';
+        var canvas = doc.createElement('canvas');
+        canvas.style.border = '1px outset #a0b1c9';
+        div.appendChild(canvas);
+        rtd.insertBefore(div, rtd.firstChild);
+
+        map = new PSMap();
+        // Remember the map so we don't add it again
+        this.map = map;
+
+        map.setCanvas(canvas);
+        map.configure(sector, 200);
+
+        this.mapContainer = div;
+      }
     }
 
-    map.configure(sector, 180);
     this.miniMapSector = sector.sector;
     this.updateMiniMap();
   }
