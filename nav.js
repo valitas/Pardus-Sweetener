@@ -159,14 +159,14 @@ PSNavPageDriver.prototype = {
             // update when we get it
           }
           else
-            this.disableMiniMap();
+            this.removeMiniMap();
           break;
         case 'miniMapPosition':
           if(this.miniMapPosition != msg.value) {
             if(this.miniMapPosition)
               // position may have changed; get shot on the displayed
               // map, if any.
-              this.disableMiniMap();
+              this.removeMiniMap();
 
             this.miniMapPosition = msg.value;
             if(this.miniMapEnabled)
@@ -228,7 +228,7 @@ PSNavPageDriver.prototype = {
     }
   },
 
-  getCurrentSector: function() {
+  getCurrentSectorName: function() {
     var elt = this.doc.getElementById('sector');
     return elt ? elt.textContent : null;
   },
@@ -253,16 +253,16 @@ PSNavPageDriver.prototype = {
   // received and is true, and miniMapPosition has been received.  We
   // check this.
   updateMiniMap: function() {
-    var sector = this.getCurrentSector();
+    var sectorName = this.getCurrentSectorName();
     // If we can't find the sector, there's no point continuing.
-    if(!sector)
+    if(!sectorName)
       return;
 
     // If we have no map, or if the sector currently displayed is not
     // the one we're in, we need to reconfigure the map.
     var map = this.map;
-    if(!map || this.miniMapSector != sector) {
-      this.port.postMessage({ op: 'requestMap', sector: sector });
+    if(!map || !this.miniMapSector || this.miniMapSector.sector != sectorName) {
+      this.port.postMessage({ op: 'requestMap', sector: sectorName });
       return;
     }
 
@@ -274,7 +274,7 @@ PSNavPageDriver.prototype = {
       map.markTile(ctx, c.col, c.row, '#fc0');
   },
 
-  disableMiniMap: function() {
+  removeMiniMap: function() {
     if(this.map)
       delete this.map;
     if(this.miniMapSector)
@@ -287,70 +287,66 @@ PSNavPageDriver.prototype = {
 
   configureMiniMap: function(sector) {
     var doc = this.doc, map = this.map;
-    if(!map) {
-      if(this.miniMapPosition == 'statusbox') {
-        // Add map to status box
-        var sbox = doc.getElementById('status_content');
-        if(!sbox)
-          return;
-        // status_content gets clobbered by partial refresh, so we
-        // don't add our canvas to it.
-        //
-        // partial refresh *appends* a new status_content to the
-        // parent of that node. so we don't add it there either, or
-        // the new partial_content will appear after our map. instead,
-        // we add a new tr to the table.
-        var sctd = sbox.parentNode, sctr = sctd.parentNode, tr, td;
-        tr = sctr.cloneNode(false);
-        td = sctd.cloneNode(false);
-        td.style.textAlign = 'center';
-        // This is needed because Pardus' tables are off centre with
-        // respect to the borders drawn as background images.  Crusty,
-        // old, early 2000's HTML there.
-        td.style.paddingRight = '3px';
-        sctr.parentNode.insertBefore(tr, sctr.nextSibling);
-        tr.appendChild(td);
 
-        var canvas = doc.createElement('canvas');
-        td.appendChild(canvas);
+    this.removeMiniMap();
 
-        map = new PSMap();
-        // Remember the map so we don't add it again
-        this.map = map;
+    if(this.miniMapPosition == 'statusbox') {
+      // Add map to status box
+      var sbox = doc.getElementById('status_content');
+      if(!sbox)
+        return;
+      // status_content gets clobbered by partial refresh, so we
+      // don't add our canvas to it.
+      //
+      // partial refresh *appends* a new status_content to the
+      // parent of that node. so we don't add it there either, or
+      // the new partial_content will appear after our map. instead,
+      // we add a new tr to the table.
+      var sctd = sbox.parentNode, sctr = sctd.parentNode, tr, td;
+      tr = sctr.cloneNode(false);
+      td = sctd.cloneNode(false);
+      td.style.textAlign = 'center';
+      // This is needed because Pardus' tables are off centre with
+      // respect to the borders drawn as background images.  Crusty,
+      // old, early 2000's HTML there.
+      td.style.paddingRight = '3px';
+      sctr.parentNode.insertBefore(tr, sctr.nextSibling);
+      tr.appendChild(td);
 
-        map.setCanvas(canvas);
-        map.configure(sector, 180);
-        // Remember the tr we added to the status table. Because
-        // that's the one we'll have to remove if the map should be
-        // switched off.
-        this.mapContainer = tr;
-      }
-      else {
-        // Add map on top of the right-side bar.
-        var rtd = doc.getElementById('tdTabsRight');
-        if(!rtd)
-          return;
-        var div = doc.createElement('div');
-        div.style.textAlign = 'center';
-        div.style.width = '208px';
-        div.style.margin = '0 2px 24px auto';
-        var canvas = doc.createElement('canvas');
-        canvas.style.border = '1px outset #a0b1c9';
-        div.appendChild(canvas);
-        rtd.insertBefore(div, rtd.firstChild);
+      var canvas = doc.createElement('canvas');
+      td.appendChild(canvas);
 
-        map = new PSMap();
-        // Remember the map so we don't add it again
-        this.map = map;
+      map = new PSMap();
+      map.setCanvas(canvas);
+      map.configure(sector, 180);
+      // Remember the tr we added to the status table. Because
+      // that's the one we'll have to remove if the map should be
+      // switched off.
+      this.mapContainer = tr;
+    }
+    else {
+      // Add map on top of the right-side bar.
+      var rtd = doc.getElementById('tdTabsRight');
+      if(!rtd)
+        return;
+      var div = doc.createElement('div');
+      div.style.textAlign = 'center';
+      div.style.width = '208px';
+      div.style.margin = '0 2px 24px auto';
+      var canvas = doc.createElement('canvas');
+      canvas.style.border = '1px outset #a0b1c9';
+      div.appendChild(canvas);
+      rtd.insertBefore(div, rtd.firstChild);
 
-        map.setCanvas(canvas);
-        map.configure(sector, 200);
+      map = new PSMap();
+      map.setCanvas(canvas);
+      map.configure(sector, 200);
 
-        this.mapContainer = div;
-      }
+      this.mapContainer = div;
     }
 
-    this.miniMapSector = sector.sector;
+    this.map = map;
+    this.miniMapSector = sector;
     this.updateMiniMap();
   }
 };
