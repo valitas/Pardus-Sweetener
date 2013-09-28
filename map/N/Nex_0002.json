@@ -6,7 +6,7 @@
   "tiles": "bbbbbbbbeeebbbbbbbbbbbbbbbbeefeebbeeeebbbbbbbbeefffeeeeffeebbeeebbeeffeebbefffeebefeebbeeeebbeeffeeebeffeeeeeeeeeefggebbbeefffeeeeebbefggeebbbefeeebbeebbeefffebbbeeebbbeeeebbefffeebbbebbeeeffeeeeffooeeeeeebefffffffffoooeeeffebeefffeeeeffofebeffebbeffeebbefffeeeeffeebeffebbeefffebegggfeeeffeebeefffebegggfffffffebbeeffeeegggfeeefeeebbbeffeeegggeebefebbbbeeffebeffeebbeeeebeeefffebeefebbbbeeebeeeeefebbefeebbbbebbeebbefebbeefeebbeeeeeebeefebbbeefeebeffffeeefeebbbbeefeeeeeeeeeeeebbbbbbeeebeebbeebeebbb",
   "beacons": {
     "Daaya": { "type": "wh", "x": 10, "y": 23 },
-    "9": { "type": "xh", "x": 2, "y": 0 },
+    "X-hole": { "type": "xh", "x": 9, "y": 2 },
     "Nex 0002 Station": { "x": 7, "y": 11 }
   }
 }

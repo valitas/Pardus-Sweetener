@@ -7,7 +7,7 @@
   "beacons": {
     "Retho": { "type": "wh", "x": 16, "y": 0 },
     "Tiacken": { "type": "wh", "x": 1, "y": 20 },
-    "13": { "type": "xh", "x": 13, "y": 0 },
+    "X-hole": { "type": "xh", "x": 13, "y": 13 },
     "Kataam": { "x": 11, "y": 19 }
   }
 }

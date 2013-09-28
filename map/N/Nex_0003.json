@@ -6,6 +6,6 @@
   "tiles": "bbeebbbbbbbbbbbeeebbbbbbbbeeeeeeebbbbbeeefeeebbbbbbefffffeeeebeefffffeeebbbeefeeeefffeeefeeeeeffeebbefeebbeeeefffeebbbeeefeebefebbbbbbeefeebbbbbbeefebefebbbbeeeefebbeeebbbefeeefebbbeeeeefeeeefebbbeefeefebbeeffffffeeeeeebbbefeefeebefeeefffebbeeeebbefeeefebeeebeeffeebbefebeefebefebbeebbefffebbefebefeebefebbeebbeefeebbeeeeefebbefebeeebbbeeebbbbeffffeebefebefebbbbbbbbeeeffffeeeefeeeeebbeebbbeeffffffebeeffffebbeeeebeefffeeefebbeefffeeeeffeeeffeeebeeebbbeeeffffffeeeeefebbbbeebbbbbeeeeeeeebbbeeebbbbbbb",
   "beacons": {
     "Paan": { "type": "wh", "x": 13, "y": 18 },
-    "12": { "type": "xh", "x": 11, "y": 0 }
+    "X-hole": { "type": "xh", "x": 12, "y": 11 }
   }
 }

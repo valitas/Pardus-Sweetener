@@ -7,7 +7,7 @@
   "beacons": {
     "Canolin (East)": { "type": "wh", "x": 20, "y": 21 },
     "Canolin (West)": { "type": "wh", "x": 2, "y": 24 },
-    "12": { "type": "xh", "x": 4, "y": 0 },
+    "X-hole": { "type": "xh", "x": 12, "y": 4 },
     "Hidden Laboratory Nex 0005": { "x": 1, "y": 3 }
   }
 }
