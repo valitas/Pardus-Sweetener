@@ -114,7 +114,7 @@ function PardusSweetener() {
     personalQLPegasus:       new StringOption(''),
 
     miniMap:                 new BooleanOption(true),
-    miniMapPosition:         new StringOption('statusbox'),
+    miniMapPosition:         new StringOption('topright'),
     sendmsgShowAlliance:     new BooleanOption(true)
   };
   this.ports = new Array();
