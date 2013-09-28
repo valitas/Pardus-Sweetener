@@ -253,7 +253,6 @@ PSNavPageDriver.prototype = {
   // received and is true, and miniMapPosition has been received.  We
   // check this.
   updateMiniMap: function() {
-console.log('updating map');
     var sector = this.getCurrentSector();
     // If we can't find the sector, there's no point continuing.
     if(!sector)
@@ -276,7 +275,6 @@ console.log('updating map');
   },
 
   disableMiniMap: function() {
-console.log('disabling map');
     if(this.map)
       delete this.map;
     if(this.miniMapSector)
@@ -288,7 +286,6 @@ console.log('disabling map');
   },
 
   configureMiniMap: function(sector) {
-console.log('configuring map for '+sector.sector);
     var doc = this.doc, map = this.map;
     if(!map) {
       if(this.miniMapPosition == 'statusbox') {
