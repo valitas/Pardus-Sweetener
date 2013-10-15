@@ -17,6 +17,7 @@ Features
 
  * Audible alarm on combat and user-configurable game events
  * Desktop notifications on combat and user-configurable game events
+ * Minimap of current sector in the nav screen.
  * Robot autofill in NPC combat screen
  * Missile and rounds autoselect in combat screens
  * Stored personal and alliance quicklists

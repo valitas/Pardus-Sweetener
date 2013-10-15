@@ -1,264 +1,376 @@
-// This object handles auto-missiles, auto-highest-rounds, bot fill
-// and display damage. It's used in the ship v ship and ship v npc
-// screens.
+// This content script drives the ship2ship, ship2opponent, and
+// building pages, which are much alike.
 
-// The port is intended to be shared with code outside this object.
-// This object will register itself as a message listener on the port,
-// but it won't subscribe to the values it needs; this has to be done
-// by the caller; the property 'configkeys' in this object contains an
-// array of keys that can be passed in a subscribe message (along with
-// whatever other keys the page needs).
+'use strict';
 
-function PSWCombatScreenDriver(doc, port, configmap) {
-  this.doc = doc;
-  this.port = port;
-  this.configmap = configmap;
-  this.configkeys = Object.keys(this.configmap);
-  this.configcount = this.configkeys.length;
+(function( doc, ConfigurationSet, ShipLinks, Universe ){
 
-  this.config = new Object();
+var config, shipLinksAdded, botsAvailable, shipCondition, damageDisplayed;
 
-  var self = this;
+function start() {
+	var match, pageShipLinks, autoRoundsKey, autoMissilesKey,
+		cs, universeName, features;
 
-  this.port.onMessage.addListener(function(msg) { self.messageHandler(msg); });
+	// Enable features depending on which page we're running on.
+	var featureSets = {
+		building: {
+			shipLinks: true,
+			autoRoundsKey: null,
+			autoMissilesKey: 'pvbMissileAutoAll'
+		},
+		ship2opponent_combat: {
+			shipLinks: false,
+			autoRoundsKey: 'pvmHighestRounds',
+			autoMissilesKey: 'pvmMissileAutoAll'
+		},
+		ship2ship_combat: {
+			shipLinks: true,
+			autoRoundsKey: 'pvpHighestRounds',
+			autoMissilesKey: 'pvpMissileAutoAll'
+		}
+	};
+	match = /^\/([^./]+)\.php/.exec( doc.location.pathname );
+	features = featureSets[ match[1] ];
+
+	if ( !features ) {
+		throw new Error('running on unexpected pathname');
+	}
+
+	cs = new ConfigurationSet();
+	universeName = Universe.getName( doc );
+	cs.addKey( 'autobots' );
+	cs.addKey( 'autobots' + universeName + 'Points', 'autobotsPoints' );
+	cs.addKey( 'autobots' + universeName + 'Strength', 'autobotsStrength' );
+	cs.addKey( features.autoMissilesKey, 'autoMissiles' );
+	cs.addKey( 'displayDamage' );
+
+	if ( features.shiplinks ) {
+		cs.addKey( 'navShipLinks' );
+
+	}
+	if ( features.autoRoundsKey ) {
+		cs.addKey( features.autoRoundsKey, 'autoRounds' );
+	}
+
+	config = cs.makeTracker( applyConfiguration );
 }
 
-PSWCombatScreenDriver.prototype = {
-  messageHandler: function(msg) {
-    if(msg.op != 'updateValue')
-      return;
+// Called by the configuration tracker when something changes.
+function applyConfiguration() {
+	var ships;
 
-    var key = this.configmap[msg.key];
-    if(key)
-      this.config[key] = msg.value;
-    if(Object.keys(this.config).length >= this.configcount)
-      this.configure();
-  },
+	// Ship links
+	if ( shipLinksAdded ) {
+		ShipLinks.removeElementsByClassName( doc, 'psw-slink' );
+	}
+	if ( config.navShipLinks ) {
+		ships = ShipLinks.getShips( doc,
+			"//table/tbody[tr/th = 'Other Ships']/tr/td/a", matchShipId );
+		ShipLinks.addShipLinks( ships );
+		shipLinksAdded = true;
+	}
 
-  // called when configuration is complete
-  configure: function() {
-    if(this.config.highestRounds)
-      this.selectHighestRounds();
-    if(this.config.missileAutoAll)
-      this.checkAllMissiles();
-    if(this.config.autobots)
-      this.fillBots();
-    if(this.config.displayDamage) {
-      this.registerPSSHandlers();
-      this.displayDamage();
-    }
-  },
+	// Autobots
+	if ( config.autobots ) {
+		if ( ! botsAvailable ) {
+			botsAvailable = getBotsAvailable( doc );
+		}
+		if ( ! shipCondition ) {
+			shipCondition = getShipCondition();
+		}
 
-  selectHighestRounds: function() {
-    var doc = this.doc, sel,
-    xpr = doc.evaluate('//select[@name = "rounds"]', doc, null,
-                       XPathResult.UNORDERED_NODE_ITERATOR_TYPE, null);
-    while((sel = xpr.iterateNext())) {
-      if(sel.style.display == 'none' &&
-         sel.nextElementSibling.tagName == 'SELECT')
-        // for some reason, Pardus now hides the rounds select,
-        // and instead adds a second, visible select element, with
-        // a gibberish name.
-        sel = sel.nextElementSibling;
+		fillBots( botsAvailable, shipCondition.components,
+				  config.autobotsPoints, config.autobotsStrength );
+	}
 
-      this.selectMaxValue(sel);
-    }
-  },
+	// Automissiles
+	if ( config.autoMissiles ) {
+		checkAllMissiles();
+	}
 
-  selectMaxValue: function(select) {
-    var opts = select.options, max = -1, maxindex = -1;
-    for(var i = 0, end = opts.length; i < end; i++) {
-        var n = parseInt(opts[i].value);
-        if(n > max)
-            maxindex = i;
-    }
-    if(maxindex >= 0)
-      select.selectedIndex = maxindex;
-  },
+	// Autorounds
+	if ( config.autoRounds ) {
+		selectHighestRounds();
+	}
 
-  checkAllMissiles: function() {
-    var am = this.doc.getElementById("allmissiles");
-    if(am)
-      am.checked = true;
-    // this is what the game's javascript does in this case, more or less:
-    var ms = this.doc.getElementsByTagName('input');
-    for(var i = 0; i < ms.length; i++) {
-      var m = ms[i];
-      if(m.type == 'checkbox' && m.name.indexOf('_missile') != -1)
-        m.checked = true;
-    }
-  },
+	// Display damage
+	if ( config.displayDamage && !damageDisplayed ) {
+		if ( ! shipCondition ) {
+			shipCondition = getShipCondition();
+		}
+		displayDamage( shipCondition );
+		damageDisplayed = true;
+	}
+}
 
-  // This function scans the combat page and extracts the stuff we need
-  // for bot autofill.  It doesn't modify anything.  If successful, it
-  // returns an object with properties "available" (integer) and "input"
-  // (node). Otherwise, it'll return null.
+function matchShipId( url ) {
+	var r, match;
 
-  getBotsInfo: function() {
-    if(this.botsInfo !== undefined)
-      return this.botsInfo;
+	// This could be smarter, doing proper URL-decode of the
+	// building.php query string, but it isn't likely that'll be
+	// needed, and it would slow things down.
+	match =
+		/building\.php\?detail_type=([A-Za-z]+)&detail_id=(\d+)$/.exec( url );
+	if ( match ) {
+		r = { type: match[ 1 ], id: parseInt( match[ 2 ] ) };
+	}
 
-    this.botsInfo = null; // run only once
-    var tr, xpr, available, input;
+	return r;
+}
 
-    tr = this.doc.evaluate("//tr[td/input[@name = 'resid' and @value = 8]]",
-                           this.doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
-                           null).singleNodeValue;
-    if(tr) {
-      xpr = this.doc.evaluate("td[position() = 2]|td/input[@name = 'amount']",
-                              tr, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
-      available = xpr.iterateNext();
-      if(available) {
-        available = parseInt(available.textContent);
-        if(available > 0) {
-          input = xpr.iterateNext();
-          if(input)
-            this.botsInfo = { available: available, input: input };
-        }
-      }
-    }
+// Looks for robots in the "use resources" form.  Returns an object
+// with properties: count (an integer) and input (the text field where
+// you type how many robots to use). If no bots are found, an object
+// will still be returned, but these properties won't be defined.
 
-    return this.botsInfo;
-  },
+function getBotsAvailable() {
+	var tr, xpr, available, input, result = {};
 
-  // This function scans the combat page and extracts stuff we need for
-  // bot autofill and damage tracking.  It doesn't modify anything.  If
-  // successful, it returns an object with properties "selfHull",
-  // "selfArmor" (thusly mispelled grr :P), "otherHull", etc.
+	tr = doc.evaluate(
+		"//tr[td/input[@name = 'resid' and @value = 8]]",
+		doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+		null ).singleNodeValue;
+	if ( tr ) {
+		xpr = doc.evaluate(
+			"td[position() = 2]|td/input[@name = 'amount']",
+			tr, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null );
+		available = xpr.iterateNext();
+		if ( available ) {
+			result.count = parseInt( available.textContent );
+			if ( result.count > 0 ) {
+				input = xpr.iterateNext();
+				if ( input ) {
+					result.input = input;
+				}
+			}
+		}
+	}
 
-  getShipStatus: function() {
-    if(this.shipStatus)
-      return this.shipStatus;
+	return result;
+}
 
-    this.shipStatus = { };
-    this.shipStatusTextElements = { };
+// Given bot availability and ship condition data, as collected by
+// getBotsAvailable and getShipCondition, this computes the number of
+// bots required to repair the ship's armour as close as possible to
+// the desired points, without wasting bots.
+//
+// Returns the positive number of bots required, or zero if the
+// armour requires no repairs, or -1 if the result can't be
+// computed.
 
-    var fs = this.doc.getElementsByTagName('font');
-    for(var i = 0; i < fs.length; i++) {
-      var f = fs[i];
-      var t = f.firstChild;
+function requiredBots( available, componentsCondition,
+					   configuredPoints, configuredStrength ) {
+	var n, avbcount, points;
 
-      if(t && t.nodeType == 3) {
-        var m = /^(Hull|Armor|Shield) points(?:: (\d+))?$/.exec(t.nodeValue);
-        var key, o;
-        if(m) {
-          var v = m[2];
-          if(v) {
-            key = 'self' + m[1];
-            o = { value: parseInt(v), accurate: true };
-          }
-          else {
-            key = 'other' + m[1];
-            o = { inferred: true };
+	avbcount = available.count;
 
-            var a, n, table = f.nextElementSibling;
-            if(table && table.tagName == 'TABLE') {
-              a = table.attributes['width'];
-              if(a) {
-                v = parseInt(a.value);
-                o.value = 2*v;
-                o.accurate = (v < 300);
-              }
-            }
-          }
+	if ( avbcount == undefined || !(avbcount >= 0) ||
+		 !componentsCondition.selfArmor ||
+		 !( configuredPoints > 0 ) || !( configuredStrength > 0 ) ) {
+		return -1;
+	}
 
-          this.shipStatus[key] = o;
-          this.shipStatusTextElements[key] = t;
-        }
-      }
-    }
+	points = componentsCondition.selfArmor.points;
 
-    return this.shipStatus;
-  },
+	if ( points < configuredPoints ) {
+		n = Math.floor( (configuredPoints - points) / configuredStrength );
+		return ( n > avbcount ? avbcount : n );
+	}
 
-  fillBots: function() {
-    var pts = parseInt(this.config.autobotsPoints);
-    var str = parseInt(this.config.autobotsStrength);
-    if(pts && str) {
-      var bi = this.getBotsInfo();
-      if(bi) {
-        var armour = this.getShipStatus().selfArmor;
-        if(armour) {
-          armour = armour.value;
-          if(armour < pts) {
-            var n = Math.floor((pts - armour) / str);
-            if(n > bi.available)
-              n = bi.available;
-            if(n > 0)
-              bi.input.value = n;
-          }
-        }
-      }
-    }
-  },
+	return 0;
+}
 
-  registerPSSHandlers: function() {
-    if(this.pssHandlersRegistered)
-      return;
-    this.pssHandlersRegistered = true;
+// Computes the required amount of bots and fills the amount field
+// as appropriate.
 
-    var fs = this.doc.forms;
-    var self = this;
-    for(var i = 0; i < fs.length; i++) {
-      var form = fs[i];
-      form.addEventListener('submit', function() { self.savePSS(); }, null);
-    }
-  },
+function fillBots( available, componentsCondition,
+				   configuredPoints, configuredStrength ) {
+	var n;
 
-  savePSS: function() {
-    if(this.shipStatus) {
-      this.shipStatus.timestamp = Math.floor(Date.now() / 1000);
-      var v = JSON.stringify(this.shipStatus);
-      port.postMessage({ op: 'setValue', key: 'previousShipStatus', value: v });
-    }
-  },
+	n = requiredBots( available, componentsCondition,
+					  configuredPoints, configuredStrength);
+	if ( n >= 0 && available.input ) {
+		available.input.value = n > 0 ? n : '';
+	}
+}
 
-  displayDamage: function() {
-    if(this.damageDisplayed)
-      return;
+// Looks for ship statuses in combat and building pages - those are
+// the green, yellow or red thingies that say "Hull points: 225", etc.
+//
+// Sadly, even after the 2013-09-14 update, which touched this very
+// bit, at least for the building page, Pardus still doesn't add a
+// proper id to those fields, like it does in the nav page.
+//
+// So we have to identify these heuristically. These bits are in
+// <font> tags (yeah, deprecated tags, too).  There aren't that many
+// font tags in the document, so we just use getElementsByTagName and
+// find them by matching the text in each one.
+//
+// If any ship statuses are found, this returns an object with two
+// properties: shipComponents, and textElements. Each of those contain
+// properties selfHull, selfArmor (thusly mispelled :P), selfShield,
+// and, if the page shows an opponent, also otherHull, otherArmor,
+// otherShield.  Don't rely on any of these to be present, except
+// perhaps selfHull.
 
-    this.damageDisplayed = true;
-    var ss = this.getShipStatus();
-    var pss;
+function getShipCondition() {
+	var fonts, i, end, font, textElement, match, key, value, points,
+		table, width, rx = /^(Hull|Armor|Shield) points(?:: (\d+))?$/,
+		result, componentCount = 0;
 
-    if(this.config.previousShipStatus) {
-      pss = JSON.parse(this.config.previousShipStatus);
-      var now = Math.floor(Date.now() / 1000);
+	result = {
+		components: {},
+		textElements: {}
+	};
 
-      // XXX - hardcoded 5. PSS is saved when the user clicks on combat.
-      // so, if we get a new combat screen within 5 seconds of having
-      // left another, we assume this is the same combat continuing and
-      // show damage.  I don't think this is unreasonable...
+	fonts = doc.getElementsByTagName( 'font' );
+	for (i = 0, end = fonts.length; i < end; i++ ) {
+		font = fonts[ i ];
+		textElement = font.firstChild;
 
-      if(!pss.timestamp || Math.abs(now - pss.timestamp) > 5)
-        pss = null;
-    }
+		if ( textElement && textElement.nodeType == 3 ) {
+			match = rx.exec( textElement.nodeValue );
+			if ( match ) {
+				points = match[ 2 ];
+				if ( points ) {
+					key = 'self' + match[ 1 ];
+					value = { points: parseInt( points ), accurate: true };
+				}
+				else {
+					key = 'other' + match[ 1 ];
+					value = { inferred: true };
 
-    for(var key in ss) {
-      var st = ss[key];
-      var te = this.shipStatusTextElements[key];
-      var s = te.data;
-      var l = s.length;
+					table = font.nextElementSibling;
+					if ( table && table.tagName == 'TABLE' ) {
+						width = table.attributes[ 'width' ];
+						if ( width ) {
+							points = parseInt( width.value );
+							value.points = 2 * points;
+							value.accurate = ( points < 300 );
+						}
+					}
+				}
 
-      if(st.inferred) {
-        if(st.accurate)
-          s += ': ' + st.value;
-        else
-          s += ': ' + st.value + '+';
-      }
+				result.components[ key ] = value;
+				result.textElements[ key ] = textElement;
+				componentCount++;
+			}
+		}
+	}
 
-      if(pss) {
-        var pst = pss[key];
-        if(st.accurate && pst.accurate && st.value != pst.value) {
-          var diff = st.value - pst.value;
-          if(diff > 0)
-            diff = '+' + diff;
-          s += ' (' + diff + ')';
-        }
-      }
+	result.count = componentCount;
+	return result;
+}
 
-      if(l != s.length)
-        te.data = s;
-    }
-  }
-};
+function checkAllMissiles() {
+	var allMissiles, inputs, input, i, end;
+
+	allMissiles = doc.getElementById( 'allmissiles' );
+	if ( allMissiles ) {
+		allMissiles.checked = true;
+	}
+
+	// This is what the game's javascript does in this case, more or less:
+	inputs = doc.getElementsByTagName( 'input' );
+	for ( i = 0, end = inputs.length; i < end; i++ ) {
+		input = inputs[ i ];
+		if ( input.type == 'checkbox' &&
+			 input.name.indexOf( '_missile' ) != -1 ) {
+			input.checked = true;
+		}
+	}
+}
+
+function selectHighestRounds() {
+	var select;
+
+	select = doc.evaluate(
+		'//select[@name = "rounds"]', doc, null,
+		XPathResult.ANY_UNORDERED_NODE_TYPE, null ).singleNodeValue;
+	if ( select ) {
+		if ( select.style.display == 'none' &&
+				select.nextElementSibling.tagName == 'SELECT' ) {
+			// for some reason, Pardus now hides the rounds select,
+			// and instead adds a second, visible select element, with
+			// a gibberish name.
+			select = select.nextElementSibling;
+		}
+
+		selectMaxValue( select );
+	}
+}
+
+function selectMaxValue( select ) {
+	var opts = select.options, i, end, n, max = -1, maxindex = -1;
+
+	for ( i = 0, end = opts.length; i < end; i++) {
+		n = parseInt( opts[ i ].value );
+		if ( n > max )
+			maxindex = i;
+	}
+
+	if ( maxindex >= 0 ) {
+		select.selectedIndex = maxindex;
+	}
+}
+
+function displayDamage( shipCondition ) {
+	var pscc, psccTimestamp, now, key, component, previousComponent,
+		textElement, text, textLength, diff;
+
+	// See if there's a saved ship condition stored in the top window
+
+	now = Math.floor( Date.now() / 1000 );
+	pscc = top.psSCC,
+	psccTimestamp = top.psSCCTimestamp || 0;
+	if ( pscc ) {
+		// Hardcoded 5. PSS is saved when the user clicks on combat.
+		// so, if we get a new combat screen within 5 seconds of having
+		// left another, we assume this is the same combat continuing and
+		// show damage.  I don't think this is unreasonable...
+		if ( Math.abs( now - psccTimestamp ) > 5 ) {
+			pscc = undefined;
+		}
+	}
+
+	// And save the ship condition
+	top.psSCC = shipCondition.components;
+	top.psSCCTimestamp = now;
+
+	for ( key in shipCondition.components ) {
+		component = shipCondition.components[ key ];
+		textElement = shipCondition.textElements[ key ];
+		text = textElement.data;
+		textLength = text.length;
+
+		if ( component.inferred) {
+			if ( component.accurate ) {
+				text += ': ' + component.points;
+			}
+			else {
+				text += ': ' + component.points + '+';
+			}
+		}
+
+		if ( pscc ) {
+			previousComponent = pscc[ key ];
+			if ( component.accurate && previousComponent &&
+					previousComponent.accurate &&
+					component.points != previousComponent.points ) {
+				diff = component.points - previousComponent.points;
+				if ( diff > 0 ) {
+					diff = '+' + diff;
+				}
+				text += ' (' + diff + ')';
+			}
+		}
+
+		if ( textLength != text.length ) {
+			textElement.data = text;
+		}
+	}
+}
+
+start();
+
+})( document, ConfigurationSet, ShipLinks, Universe );

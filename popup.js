@@ -1,93 +1,128 @@
-function PSPopUpPageDriver(doc) { this.initialise(doc); }
+'use strict';
 
-PSPopUpPageDriver.prototype = {
-  initialise: function(doc) {
-    this.doc = doc;
-    doc.addEventListener('DOMContentLoaded',
-                         this.onDOMContentLoaded.bind(this));
-  },
+(function( doc ){
 
-  onDOMContentLoaded: function() {
-    this.controls = new Object();
-    var doc = this.doc,
-        keys = [ 'muteAlarm', 'alarmCombat', 'alarmAlly', 'alarmPM' ];
-    for(var i = 0, end = keys.length; i < end; i++) {
-      var key = keys[i], control = doc.getElementById(key);
-      this[key] = control;
-      control.addEventListener('click', this.onSettingClick.bind(this));
-    }
+// All simple booleans, and all bound to a checkbox.  This simplifies
+// things a bit.  Keep muteAlarm as first element (see loop in
+// updateAlarmControlsDisable).
+var CONFIG_KEYS = [
+	'muteAlarm', 'alarmCombat', 'alarmWarning', 'alarmAlly', 'alarmPM'
+];
 
-    this.testAlarm = doc.getElementById('testAlarm');
-    this.testAlarm.addEventListener('click', this.onTestAlarmClick.bind(this));
-    this.muteAlarm.addEventListener('click',
-                                    this.updateAlarmControlsDisable.bind(this));
+var controls, testAlarm, openOptions, port;
 
-    this.openOptions = doc.getElementById('openOptions');
-    this.openOptions.addEventListener('click', this.onOpenOptions.bind(this));
+function start() {
+	doc.addEventListener( 'DOMContentLoaded', onDOMContentLoaded );
+}
 
-    this.port = chrome.extension.connect();
-    this.port.onMessage.addListener(this.onMessage.bind(this));
-    this.port.postMessage({ op: 'subscribe', keys: keys });
-  },
+function onDOMContentLoaded() {
+	controls = {};
 
-  onSettingClick: function(event) {
-    var target = event.target;
-    this.port.postMessage({ op: 'setValue',
-                            key: target.id,
-                            value: target.checked });
-  },
+	for ( var i = 0, end = CONFIG_KEYS.length; i < end; i++ ) {
+		var key = CONFIG_KEYS[ i ], control = doc.getElementById( key );
 
-  onMessage: function(msg) {
-    if(msg.op == 'updateValue') {
-      var control = this[msg.key];
-      if(control) {
-        control.checked = msg.value;
-        if(msg.key == 'muteAlarm')
-          this.updateAlarmControlsDisable();
-      }
-    }
-  },
+		controls[ key ] = control;
+		control.addEventListener( 'click', onSettingClick );
+	}
 
-  onTestAlarmClick: function() {
-    if(this.testAlarm.value == 'Stop Alarm') {
-      this.port.postMessage({ op: 'stopAlarm' });
-      this.testAlarm.value = 'Test Alarm';
-    }
-    else {
-      this.port.postMessage({ op: 'soundAlarm' });
-      this.testAlarm.value = 'Stop Alarm';
-    }
-  },
+	testAlarm = doc.getElementById( 'testAlarm' );
+	testAlarm.addEventListener( 'click', onTestAlarmClick );
+	//controls.muteAlarm.addEventListener( 'click', updateAlarmControlsDisable );
 
-  disableTestAlarm: function() {
-    this.port.postMessage({ op: 'stopAlarm' });
-    this.testAlarm.value = 'Test Alarm';
-    this.testAlarm.disabled = true;
-  },
+	openOptions = doc.getElementById( 'openOptions' );
+	openOptions.addEventListener( 'click', onOpenOptions );
 
-  updateAlarmControlsDisable: function() {
-    var disabled = this.muteAlarm.checked;
-    var keys = [ 'alarmCombat', 'alarmAlly', 'alarmPM' ];
-
-    for(var i = 0, end = keys.length; i < end; i++)
-      this[keys[i]].disabled = disabled;
-    if(disabled)
-      this.disableTestAlarm();
-    else
-      this.testAlarm.disabled = false;
-  },
-
-  onOpenOptions: function(event) {
-    event.preventDefault();
-    var optionsUrl = chrome.extension.getURL('options.html');
-    chrome.tabs.query({url: optionsUrl},
-                      function(tabs) {
-                        if(tabs.length)
-                          chrome.tabs.update(tabs[0].id, {active: true});
-                        else
-                          chrome.tabs.create({url: optionsUrl});
-                      });
-  }
+	// Request our configuration
+	chrome.storage.local.get( CONFIG_KEYS, onConfigurationReady );
 };
 
-var ps_pagedriver = new PSPopUpPageDriver(document);
+function onConfigurationReady( items ) {
+	for ( var key in items) {
+		updateControlState( controls[key], items[key] );
+	}
+
+	// Listen for changes in configuration.
+	chrome.storage.onChanged.addListener( onConfigurationChange );
+
+	// Connect to the extension. We need a connection to drive the
+	// alarm test.
+	port = chrome.runtime.connect();
+	port.onMessage.addListener( onPortMessage );
+	port.postMessage({ watchAlarm: true });
+}
+
+function onConfigurationChange( changes, area ) {
+	if ( area == 'local' ) {
+		for ( var key in changes ) {
+			if ( controls.hasOwnProperty(key) ) {
+				updateControlState( controls[key], changes[key].newValue );
+			}
+		}
+	}
+}
+
+function updateControlState( control, value ) {
+	control.checked = value;
+	if ( control === controls.muteAlarm ) {
+		updateAlarmControlsDisable();
+	}
+}
+
+function onSettingClick( event ) {
+	var control = event.target, items = {};
+	items[ control.id ] = control.checked;
+	chrome.storage.local.set( items );
+}
+
+function onTestAlarmClick() {
+	var alarm = ( testAlarm.value != 'Stop Alarm' );
+	port.postMessage({ alarm: alarm });
+}
+
+//function disableTestAlarm() {
+//	port.postMessage({ alarm: false });
+//	testAlarm.value = 'Test Alarm';
+//	testAlarm.disabled = true;
+//}
+
+function updateAlarmControlsDisable() {
+	var disabled = controls.muteAlarm.checked;
+
+	// We start at 1, because muteAlarm is first.
+	for ( var i = 1, end = CONFIG_KEYS.length; i < end; i++ ) {
+		controls[ CONFIG_KEYS[i] ].disabled = disabled;
+	}
+
+	testAlarm.disabled = disabled;
+
+/*	if ( disabled ) {
+		disableTestAlarm();
+	}
+	else {
+		testAlarm.disabled = false;
+	}*/
+}
+
+function onPortMessage( message ) {
+	testAlarm.value = message.alarmState ? 'Stop Alarm' : 'Test Alarm';
+}
+
+function onOpenOptions( event ) {
+	var optionsUrl = chrome.extension.getURL( 'options.html' ),
+		queryInfo = { url: optionsUrl },
+		callback = function( tabs ) {
+			if ( tabs.length ) {
+				chrome.tabs.update( tabs[0].id, { active: true } );
+			}
+			else {
+				chrome.tabs.create( queryInfo );
+			}
+		};
+
+	event.preventDefault();
+	chrome.tabs.query( queryInfo, callback );
+}
+
+start();
+
+})( document );

@@ -1,371 +1,458 @@
-// server reset is at 5.30 UTC every day
+// Clock prototypes
 
-function APTimer(doc) {
-  this.createNode(doc, 'AP', 'Time to next 24 AP and next shield recharge');
-}
+'use strict';
 
-APTimer.prototype = {
-  createNode: function(doc, label, title) {
-    this.element = doc.createElement('span');
-    this.element.appendChild(doc.createTextNode(' ' + label + ' '));
-    var inner = doc.createElement('span');
-    this.textNode = doc.createTextNode('-:--');
-    inner.appendChild(this.textNode);
-    this.element.appendChild(inner);
-    this.element.appendChild(doc.createTextNode(' '));
-    this.element.style.margin = '0 0 0 7px';
-    this.element.style.cursor = 'default';
-    this.element.title = title;
-  },
+var PSClock = (function() {
 
-  // 'now' is the Unix time, an integer, in seconds.
-  // AP ticks happen every 6 minutes, starting at minute 0.
-  // So period is 6m (360 s), and offset is zero
-  update: function(now) {
-    var next_ap = 359 - now % 360;
-    this.element.style.color = this.computeColour(next_ap, 10, 30, 60);
-    this.textNode.data = this.formatTime(next_ap);
-  },
+	// This is the prototype of the basic timer. The clock creates
+	// timers by instantiating an object from this prototype, then
+	// mixing in specific functionality.
 
-  formatTime: function(seconds) {
-    var hours = Math.floor(seconds / 3600);
-    seconds -= hours*3600;
-    var minutes = Math.floor(seconds / 60);
-    seconds -= minutes*60;
+	var timerBase = {
+		createNode: function( doc ) {
+			var element, inner, textNode;
 
-    var s;
-    if(hours > 0) {
-      s = hours + ':';
-      if(minutes < 10)
-        s += '0';
-    }
-    else
-      s = '';
+			element = doc.createElement( 'span' );
+			textNode = doc.createTextNode( ' ' + this.label + ' ' );
+			element.appendChild( textNode );
 
-    s += minutes;
-    s += ':';
-    if(seconds < 10)
-      s += '0';
-    s += seconds;
+			inner = doc.createElement( 'span' );
+			textNode = doc.createTextNode( '-:--' );
+			inner.appendChild( textNode );
+			element.appendChild( inner );
+			element.appendChild( doc.createTextNode( ' ' ) );
+			element.style.margin = '0 0 0 7px';
+			element.style.cursor = 'default';
+			element.title = this.title;
 
-    return s;
-  },
+			this.element = element;
+			this.textNode = textNode;
 
-  computeColour: function(now, red_threshold,
-                          yellow_threshold, green_threshold) {
-    if(now <= red_threshold)
-      return 'red';
-    if(now <= yellow_threshold)
-      return 'yellow';
-    else if(now <= green_threshold)
-    return 'lime';
+			return element;
+		},
 
-    return 'inherit';
-  }
-};
+		formatTime: function( seconds ) {
+			var hours, minutes, s;
 
-function BuildingTimer(doc) {
-  this.createNode(doc, 'B', 'Time to next building tick');
-}
+			hours = Math.floor( seconds / 3600 );
+			seconds -= hours*3600;
+			minutes = Math.floor( seconds / 60 );
+			seconds -= minutes*60;
 
-// Building ticks happen every 6 hours, 25 minutes past the hour,
-// starting at 01:00 UTC.
-// Period is 6h (21600 s). Offset is 1h 25m (5100 s)
-BuildingTimer.prototype = {
-  update: function(now) {
-    var next_tick = 21599 - (now-5100) % 21600;
-    this.element.style.color = this.computeColour(next_tick, 30, 180, 600);
-    this.textNode.data = this.formatTime(next_tick);
-  },
+			if ( hours > 0 ) {
+				s = hours + ':';
+				if ( minutes < 10 ) {
+					s += '0';
+				}
+			}
+			else {
+				s = '';
+			}
+			s += minutes;
+			s += ':';
 
-  createNode: APTimer.prototype.createNode,
-  formatTime: APTimer.prototype.formatTime,
-  computeColour: APTimer.prototype.computeColour
-};
+			if ( seconds < 10 ) {
+				s += '0';
+			}
+			s += seconds;
 
-function PlanetTimer(doc) {
-  this.createNode(doc, 'P', 'Time to next planet tick');
-}
+			return s;
+		},
 
-// Planet ticks happen every 3 hours, 25 minutes past the hour,
-// starting at 02:00 UTC.
-// Period is 3h (10800 s). Offset is 2h 25m (8700 s)
-PlanetTimer.prototype = {
-  update: function(now) {
-    var next_tick = 10799 - (now-8700) % 10800;
-    this.element.style.color = this.computeColour(next_tick, 30, 180, 600);
-    this.textNode.data = this.formatTime(next_tick);
-  },
+		computeColour: function( now,
+								 red_threshold,
+								 yellow_threshold,
+								 green_threshold ) {
+			if ( now <= red_threshold ) {
+				return 'red';
+			}
 
-  createNode: APTimer.prototype.createNode,
-  formatTime: APTimer.prototype.formatTime,
-  computeColour: APTimer.prototype.computeColour
-};
+			if ( now <= yellow_threshold ) {
+				return 'yellow';
+			}
 
+			if ( now <= green_threshold ) {
+				return 'lime';
+			}
 
-function StarbaseTimer(doc) {
-  this.createNode(doc, 'S', 'Time to next starbase tick');
-}
+			return null;
+		},
 
-// Starbase ticks happen every 3 hours, 25 minutes past the hour,
-// starting at 0:00 UTC.
-// Period is 3h (10800 s). Offset is 25m (8700 s)
-StarbaseTimer.prototype = {
-  update: function(now) {
-    var next_tick = 10799 - (now-1500) % 10800;
-    this.element.style.color = this.computeColour(next_tick, 30, 180, 600);
-    this.textNode.data = this.formatTime(next_tick);
-  },
+		// This is used by most timers. It returns the number of
+		// seconds remaining until the next tick, where ticks occur at
+		// regular intervals.
+		//
+		// "now" is the Unix time.
+		//
+		// "offset" is the time at which the first tick of the day
+		// occurs, expressed in seconds after midnight.
+		//
+		// (Strictly, it is the time at which the first interval
+		// occurred in the epoch.  But, since all these Pardus
+		// intervals are defined such that the length of the day is an
+		// exact multiple of the length of the interval, it doesn't
+		// matter if you think of it as the first tick on the 1st of
+		// January 1970, or today, or any other day.)
+		//
+		// "period" is the time between ticks, in seconds.
+		secondsToTick: function( now, offset, period ) {
+			// It actually breaks if "now" is before the first tick of
+			// the epoch.  Big deal huh.
+			return period - 1 - ( now - offset ) % period;
+		},
 
-  createNode: APTimer.prototype.createNode,
-  formatTime: APTimer.prototype.formatTime,
-  computeColour: APTimer.prototype.computeColour
-};
+		// This is used by NPC and Z timers.  It returns the number of
+		// seconds remaining until the next tick, where ticks occur at
+		// a fixed number of arbitrary times distributed within a
+		// regular interval.
+		//
+		// The regular interval is defined by offset and period, as
+		// above.  Crontab is an array of integers in ascending order,
+		// which define the times, in seconds after the start of the
+		// interval, at which ticks occur.
+		secondsToCrontabTick: function( now, offset, period, crontab ) {
+			var n, i, end;
 
-function LeechTimer(doc) {
-  this.createNode(doc, 'L', 'Time to next leech armour repair');
-}
+			// This is the number of seconds elapsed since the last
+			// tick.
+			n = ( now - offset ) % period;
 
-// Leech ticks happen every 20 minutes, starting at 00:00 UTC
-// Period is 20m (1200 s), offset is zero.
-LeechTimer.prototype = {
-  update: function(now) {
-    var next_rep = 1199 - now % 1200;
-    this.element.style.color = this.computeColour(next_rep, 10, 60, 180);
-    this.textNode.data = this.formatTime(next_rep);
-  },
+			// Find the first entry that is larger than n. If n is
+			// larger than all of them, then this will be the length
+			// of the interval.
+			for ( i = 0, end = crontab.length; i < end; i++ ) {
+				var t = crontab[i];
+				if ( t > n ) {
+					return t - 1 - n;
+				}
+			}
 
-  createNode: APTimer.prototype.createNode,
-  formatTime: APTimer.prototype.formatTime,
-  computeColour: APTimer.prototype.computeColour
-};
+			return period - 1 - n;
+		}
+	};
 
+	// This object contains mixins that extend the basic timer to suit
+	// the specific Pardus clocks.
+	var timerMixins = {
+		AP: {
+			label: 'AP',
+			title: 'Time to next 24 AP and next shield recharge',
 
-function EMatterTimer(doc) {
-  this.createNode(doc, 'E', 'Time to next e-matter regeneration');
-}
+			// AP ticks happen every 6 minutes, starting at minute 0.
+			update: function( now ) {
+				var rem = this.secondsToTick( now, 0, 360 );
+				this.element.style.color =
+					this.computeColour( rem, 10, 30, 60 );
+				this.textNode.data = this.formatTime( rem );
+			}
+		},
 
-// E-matter ticks happen every hour, starting at 05:31 UTC
-// Period is 60m (3600 s), offset is 5h 31m (19860 s).
-EMatterTimer.prototype = {
-  update: function(now) {
-    var next_rep = 3599 - (now-19860) % 3600;
-    this.element.style.color = this.computeColour(next_rep, 10, 60, 180);
-    this.textNode.data = this.formatTime(next_rep);
-  },
+		B: {
+			label: 'B',
+			title: 'Time to next building tick',
 
-  createNode: APTimer.prototype.createNode,
-  formatTime: APTimer.prototype.formatTime,
-  computeColour: APTimer.prototype.computeColour
-};
+			// Building ticks happen every 6 hours, 25 minutes past
+			// the hour, starting at 01:00 UTC.
+			// Period is 6h (21600 s). Offset is 1h 25m (5100 s)
+			update: function( now ) {
+				var rem = this.secondsToTick( now, 5100, 21600 );
+				this.element.style.color =
+					this.computeColour( rem, 30, 180, 600 );
+				this.textNode.data = this.formatTime( rem );
+			}
+		},
 
+		P: {
+			label: 'P',
+			title: 'Time to next planet tick',
 
-function NPCTimer(doc) {
-  this.createNode(doc, 'N',
-                  'Time to next roaming NPC move (not Z series, Lucidi)');
-}
+			// Planet ticks happen every 3 hours, 25 minutes past the
+			// hour, starting at 02:00 UTC.
+			// Period is 3h (10800 s). Offset is 2h 25m (8700 s)
+			update: function( now ) {
+				var rem = this.secondsToTick( now, 8700, 10800 );
+				this.element.style.color =
+					this.computeColour( rem, 30, 180, 600 );
+				this.textNode.data = this.formatTime( rem );
+			}
+		},
 
-// NPCs roam 7 times an hour, at minutes 08, 17, 26, 35, 44, 53, 59.
-// 7x period is 1h (3600 s), offset is 8m (480 s). But within that
-// period, intervals are irregular...
-NPCTimer.prototype = {
-  crontab: [ 539, // (17-8)*60 - 1
-             1079, // (26-8)*60 - 1
-             1619, // (35-8)*60 - 1
-             2159, // (44-8)*60 - 1
-             2699, // (53-8)*60 - 1
-             3059, // (59-8)*60 - 1
-             3599  // (68-8)*60 - 1
-           ],
-  update: function(now) {
-    var n = (now-480) % 3600;
-    var next_rep;
-    //console.log(n);
-    for(var i = this.crontab.length - 1; i >= 0; i -= 1) {
-      var t = this.crontab[i];
-      if(t < n)
-        break;
-      next_rep = t - n;
-    }
-    this.element.style.color = this.computeColour(next_rep, 10, 30, 60);
-    this.textNode.data = this.formatTime(next_rep);
-  },
+		S: {
+			label: 'S',
+			title: 'Time to next starbase tick',
 
-  createNode: APTimer.prototype.createNode,
-  formatTime: APTimer.prototype.formatTime,
-  computeColour: APTimer.prototype.computeColour
-};
+			// Starbase ticks happen every 3 hours, 25 minutes past
+			// the hour, starting at 0:00 UTC.
+			// Period is 3h (10800 s). Offset is 25m (1500 s)
+			update: function( now ) {
+				var rem = this.secondsToTick( now, 1500, 10800 );
+				this.element.style.color =
+					this.computeColour( rem, 30, 180, 600 );
+				this.textNode.data = this.formatTime( rem );
+			}
+		},
 
+		L: {
+			label: 'L',
+			title: 'Time to next leech armour repair',
 
-function ZTimer(doc) {
-  this.createNode(doc, 'Z', 'Time to next Z series and Lucidi NPC move');
-}
+			// Leech ticks happen every 20 minutes, starting at 00:00
+			// UTC.
+			// Period is 20m (1200 s), offset is zero.
+			update: function( now ) {
+				var rem = this.secondsToTick( now, 0, 1200 );
+				this.element.style.color =
+					this.computeColour( rem, 10, 60, 180 );
+				this.textNode.data = this.formatTime( rem );
+			}
+		},
 
-// Zs and Lucies roam in like fashion as other NPCs, but their timing
-// is a bit different, at minutes 08, 17, 26, 33, 41, 51, 59.
-ZTimer.prototype = {
-  crontab: [ 539, // (17-8)*60 - 1
-             1079, // (26-8)*60 - 1
-             1499, // (33-8)*60 - 1
-             1979, // (41-8)*60 - 1
-             2579, // (51-8)*60 - 1
-             3059, // (59-8)*60 - 1
-             3599  // (68-8)*60 - 1
-           ],
-  update: NPCTimer.prototype.update,
-  createNode: APTimer.prototype.createNode,
-  formatTime: APTimer.prototype.formatTime,
-  computeColour: APTimer.prototype.computeColour
-};
+		E: {
+			label: 'E',
+			title: 'Time to next e-matter regeneration',
 
+			// E-matter ticks happen every hour, starting at 05:31 UTC
+			// Period is 60m (3600 s), offset is 5h 31m (19860 s).
+			update: function( now ) {
+				var rem = this.secondsToTick( now, 19860, 3600 );
+				this.element.style.color =
+					this.computeColour( rem, 10, 60, 180 );
+				this.textNode.data = this.formatTime( rem );
+			}
+		},
 
-function ResetTimer(doc) {
-  this.createNode(doc, 'R', 'Time to next server reset');
-}
+		N: {
+			label: 'N',
+			title: 'Time to next roaming NPC move (not Z series, Lucidi)',
 
-// Server reset occurs at 05:30 UTC every day.
-// Period is 1d (86400 s). Offset is 5h 30m (19800 s)
-ResetTimer.prototype = {
-  update: function(now) {
-    var next_tick = 86399 - (now-19800) % 86400;
-    this.element.style.color = this.computeColour(next_tick, 30, 180, 600);
-    this.textNode.data = this.formatTime(next_tick);
-  },
+			// NPCs roam 7 times an hour, at minutes 08, 17, 26, 35,
+			// 44, 53, 59.  So the encompassing period is 1h (3600 s),
+			// offset is 8m (480 s), and ticks occur at the start of
+			// the period, and 6 more times within the interval.
+			update: function( now ) {
+				// Times in the crontab are (17-8)*60, (26-8)*60, etc.
+				var crontab = [540, 1080, 1620, 2160, 2700, 3060],
+					rem = this.secondsToCrontabTick( now, 480, 3600, crontab );
+				this.element.style.color =
+					this.computeColour( rem, 10, 30, 60 );
+				this.textNode.data = this.formatTime( rem );
+			}
+		},
 
-  createNode: APTimer.prototype.createNode,
-  formatTime: APTimer.prototype.formatTime,
-  computeColour: APTimer.prototype.computeColour
-};
+		Z: {
+			label: 'Z',
+			title: 'Time to next Z series and Lucidi NPC move',
 
+			// Zs and Lucies roam in like fashion as other NPCs, but
+			// their timing is a bit different, at minutes 08, 17, 26,
+			// 33, 41, 51, 59.
+			update: function( now ) {
+				var crontab = [540, 1080, 1500, 1980, 2580, 3060],
+					rem = this.secondsToCrontabTick( now, 480, 3600, crontab);
+				this.element.style.color =
+					this.computeColour( rem, 10, 30, 60 );
+				this.textNode.data = this.formatTime( rem );
+			}
+		},
 
-// This is not a timer per se, it just displays current UTC
-function UTCTimer(doc) {
-  // ... and we call it "GMT" because people get confused otherwise
-  this.createNode(doc, 'GMT', 'Greenwich Mean Time');
-}
+		R: {
+			label: 'R',
+			title: 'Time to next server reset',
 
-UTCTimer.prototype = {
-  update: function(now) {
-    var t = now % 86400;
-    this.textNode.data = this.formatTime(t);
-  },
+			// Server reset occurs at 05:30 UTC every day.
+			// Period is 1d (86400 s). Offset is 5h 30m (19800 s)
+			update: function( now ) {
+				var rem = this.secondsToTick( now, 19800, 86400 );
+				this.element.style.color =
+					this.computeColour( rem, 30, 180, 600 );
+				this.textNode.data = this.formatTime( rem );
+			}
+		},
 
-  formatTime: function(seconds) {
-    var hours = Math.floor(seconds / 3600);
-    seconds -= hours*3600;
-    var minutes = Math.floor(seconds / 60);
-    seconds -= minutes*60;
+		// This is not a timer per se, it just displays current UTC
+		UTC: {
+			// ... and we call it "GMT" because people get confused otherwise
+			label: 'GMT',
+			title: 'Greenwich Mean Time',
 
-    var s = '';
-    if(hours < 10)
-      s += '0';
-    s += hours;
-    s += ':';
-    if(minutes < 10)
-      s += '0';
-    s += minutes;
-    s += ':';
-    if(seconds < 10)
-      s += '0';
-    s += seconds;
+			update: function( now ) {
+				var t = now % 86400;
+				this.textNode.data = this.formatTime( t );
+			},
 
-    return s;
-  },
+			// Override formatTime, as this is not a countdown and we
+			// don't want to lose the leading zeros.
+			formatTime: function( seconds ) {
+				var hours, minutes, s;
 
-  createNode: APTimer.prototype.createNode
-};
+				hours = Math.floor( seconds / 3600 );
+				seconds -= hours*3600;
+				minutes = Math.floor( seconds / 60 );
+				seconds -= minutes*60;
 
+				s = '';
+				if ( hours < 10 ) {
+					s += '0';
+				}
+				s += hours;
+				s += ':';
+				if ( minutes < 10 ) {
+					s += '0';
+				}
+				s += minutes;
+				s += ':';
+				if ( seconds < 10 ) {
+					s += '0';
+				}
+				s += seconds;
 
-function VClock(doc) {
-  this.doc = doc;
-  var body = doc.querySelector('body');
-  this.div = doc.createElement('div');
-  //this.div.style.fontSize = '10px';
-  this.div.style.position = 'fixed';
-  this.div.style.top = 0;
-  this.div.style.right = '10px';
-  this.div.style.width = 'auto';
-  this.timers = new Object();
+				return s;
+			}
+		}
+	};
 
-  body.insertBefore(this.div, body.firstChild);
-}
+	// Names of all available timers. Bit redundant, as we already
+	// have these names, as keys in timerMixins. But this defines the
+	// order in which we render them.
+	var TIMERS = [ 'AP', 'B', 'P', 'S', 'L', 'E', 'N', 'Z', 'R', 'UTC' ];
 
-VClock.prototype = {
-  timerInfo: {
-    AP:  { tc: APTimer,       order:  10 },
-    B:   { tc: BuildingTimer, order:  20 },
-    P:   { tc: PlanetTimer,   order:  30 },
-    S:   { tc: StarbaseTimer, order:  40 },
-    L:   { tc: LeechTimer,    order:  50 },
-    E:   { tc: EMatterTimer,  order:  60 },
-    N:   { tc: NPCTimer,      order:  70 },
-    Z:   { tc: ZTimer,        order:  80 },
-    R:   { tc: ResetTimer,    order:  90 },
-    UTC: { tc: UTCTimer,      order: 100 }
-  },
+	// Creates an instance of the clock object.
+	function PSClock( doc ) {
+		this.doc = doc;
+		this.enabledTimers = {};
+		this.needRebuild = false;
+	}
 
-  setEnabled: function(which, enabled) {
-    var changed;
-    var t = this.timers[which];
+	PSClock.prototype = {
+		setEnabled: function( which, enabled ) {
+			var timer = this.enabledTimers[ which ];
 
-    if(enabled) {
-      if(!t) {
-        t = new Object();
-        t.info = this.timerInfo[which];
-        if(!t.info)
-          return;
-        this.timers[which] = t;
-      }
+			if ( enabled ) {
+				if ( !timer ) {
+					var mixin = timerMixins[ which ];
+					if ( !mixin ) {
+						throw new Error( 'Unknown timer ' + which );
+					}
 
-      if(!t.enabled) {
-        if(!t.instance)
-          t.instance = new t.info.tc(this.doc);
-        changed = t.enabled = true;
-        t.instance.update(Math.floor(Date.now() / 1000));
-      }
-    }
-    else {
-      if(t && t.enabled) {
-        t.enabled = false;
-        changed = true;
-      }
-      // otherwise we don't care - timer wasn't created yet, or was disabled
-    }
+					timer = Object.create( timerBase );
 
-    if(changed) {
-      // rebuild the div
-      var ta = new Array();
-      for(t in this.timers)
-        if(this.timers[t].enabled)
-          ta.push(this.timers[t]);
-      ta.sort(function(a,b) { return a.info.order - b.info.order; });
+					for ( var key in mixin ) {
+						timer[ key ] = mixin[ key ];
+					}
 
-      while(this.div.hasChildNodes())
-        this.div.removeChild(this.div.firstChild);
+					this.enabledTimers[ which ] = timer;
+					this.needRebuild = true;
+				}
+				// else it's fine, we already had it enabled
+			}
+			else {
+				if ( timer ) {
+					delete this.enabledTimers[ which ];
+					// We could actually optimise removing of a timer
+					// without requiring a rebuild.  Not very useful
+					// tho, just a tiny performance gain while you're
+					// mucking about with settings, probably not even
+					// watching the pardus tab...
+					this.needRebuild = true;
+				}
+				// else nop, wasn't enabled anyway
+			}
+		},
 
-      for(var i = 0; i < ta.length; i++)
-        this.div.appendChild(ta[i].instance.element);
-    }
-  },
+		createContainer: function() {
+			var doc = this.doc, body = doc.body,
+				div = doc.createElement( 'div' );
 
-  start: function() {
-    var self = this;
-    self.update();
-    setInterval(function() { self.update(); }, 1000);
-  },
+			//div.style.fontSize = '10px';
+			div.style.position = 'fixed';
+			div.style.top = 0;
+			div.style.right = '10px';
+			div.style.width = 'auto';
+			body.insertBefore( div, body.firstChild );
+			this.container = div;
+		},
 
-  update: function() {
-    // this is non-standard, but since Chrome and Firefox support
-    // Date.now()... (should be (new Date).milliseconds(), or some such)
-    var now = Math.floor(Date.now() / 1000);
-    for(var k in this.timers) {
-      var t = this.timers[k];
-      if(t.enabled)
-        t.instance.update(now);
-    }
-  },
+		resetContainer: function() {
+			var child, div = this.container;
 
-  sink: function(sunk) {
-    this.div.style.zIndex = sunk ? '-1' : 'inherit';
-  }
-};
+			if ( div ) {
+				while (( child = div.firstChild )) {
+					div.remove( child );
+				}
+			}
+		},
+
+		removeContainer: function() {
+			var div = this.container;
+
+			if ( div ) {
+				div.parentNode.removeChild( div );
+				delete this.container;
+			}
+		},
+
+		rebuild: function() {
+			if ( Object.keys( this.enabledTimers ).length > 0 ) {
+				var doc, container;
+
+				// We're going to add at least one. We need a div.
+				if ( this.container ) {
+					this.resetContainer();
+				}
+				else {
+					this.createContainer();
+				}
+
+				doc = this.doc;
+				container = this.container;
+
+				// Add the enabled timers in the proper order
+				for ( var i = 0, end = TIMERS.length; i < end; i++ ) {
+					var timer = this.enabledTimers[ TIMERS[i] ];
+					if ( timer ) {
+						var element = timer.createNode( doc );
+						container.appendChild( element );
+					}
+				}
+			}
+			else {
+				// No timers enabled. Remove the div if we inserted one
+				if ( this.container ) {
+					this.removeContainer();
+				}
+			}
+
+			this.needRebuild = false;
+		},
+
+		update: function() {
+			if ( this.needRebuild ) {
+				this.rebuild();
+			}
+
+			// Date.now() is non-standard, but Chrome supports it
+			// (and Firefox, too).
+			//
+			// (should be (new Date()).milliseconds() or some such).
+			var now = Math.floor( Date.now() / 1000 );
+			for ( var k in this.enabledTimers ) {
+				this.enabledTimers[k].update( now );
+			}
+		},
+
+		start: function() {
+			this.update();
+			var self = this, callback = function() { self.update(); };
+			this.doc.defaultView.setInterval( callback, 1000 );
+		},
+
+		sink: function( sunk ) {
+			if ( this.container) {
+				this.container.style.zIndex = sunk ? '-1' : 'inherit';
+			}
+		}
+	};
+
+	return PSClock;
+
+})();

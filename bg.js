@@ -1,409 +1,537 @@
-// Pardus Sweetener
-// The guts.
+// This is the extension proper, the event page.  We've taken most
+// functionality out from it. What remains is code to sound the alarm,
+// display notifications, and obtain sector maps from JSON files
+// installed with the extension.
 
-// Include Alarm and Notifier before this.
+'use strict';
 
-// The following objects have a simple duty: they convert values
-// stored in localStorage to and from values we can use in the rest of
-// the extension.  The method 'parse' assumes the value supplied comes
-// from localStorage, so null will be assumed to mean the option
-// wasn't saved yet, and the default value will be supplied. The
-// objects don't access localStorage directly, because this
-// translation is also useful for storage events, in which case we get
-// the values through other means.
+(function( window ) {
 
-function BooleanOption(defaultValue) { this.defaultValue = defaultValue; }
-BooleanOption.prototype = {
-  DICT: { 'true': true, 'false': false },
-  stringify: function(value) { return value ? 'true' : 'false'; },
-  parse: function(string_value) {
-    var r = this.DICT[string_value];
-    return r == undefined ? this.defaultValue : r;
-  }
+// These hold our state
+var config, connections, audio, currentSoundId, notificationTimer;
+
+function start() {
+	// We set an initial value for config here because, in this
+	// particular page, we have no guarantee that onConfigurationReady
+	// will be called with a full config.  The very first time the
+	// extension runs, it'll be called with an empty 'items', then
+	// onInstall will complete and trigger onConfigurationChange.
+	// These defaults will then be overwritten with sensible values
+	// anyway, but we need config to have the properties by the time
+	// onConfigurationChange is called, because of the logic in
+	// that function.
+	config = { muteAlarm: null, alarmSound: null };
+
+	connections = [];
+	chrome.storage.onChanged.addListener( onConfigurationChange );
+	chrome.runtime.onInstalled.addListener( onInstalled );
+	chrome.runtime.onMessage.addListener( onMessage );
+	chrome.runtime.onConnect.addListener( onConnect );
+	chrome.storage.local.get( [ 'muteAlarm', 'alarmSound' ],
+							  onConfigurationReady );
 }
 
-function StringOption(defaultValue) { this.defaultValue = defaultValue; }
-StringOption.prototype = {
-  stringify: function(value) { return value; },
-  parse: function(string_value) {
-    return (string_value == null) ? this.defaultValue : string_value;
-  }
-};
+function onConfigurationReady( items ) {
+	var key;
 
+	for ( key in items ) {
+		config[ key ] = items [ key ];
+	}
 
-// The main object
-
-function PardusSweetener() {
-  this.options = {
-    muteAlarm:         new BooleanOption(false),
-    alarmSound:        new StringOption('timex'),
-    alarmCombat:       new BooleanOption(true),
-    alarmAlly:         new BooleanOption(false),
-    alarmWarning:      new BooleanOption(false),
-    alarmPM:           new BooleanOption(false),
-    alarmMission:      new BooleanOption(false),
-    alarmTrade:        new BooleanOption(false),
-    alarmPayment:      new BooleanOption(false),
-    alarmInfo:         new BooleanOption(false),
-
-    desktopCombat:     new BooleanOption(true),
-    desktopAlly:       new BooleanOption(true),
-    desktopWarning:    new BooleanOption(false),
-    desktopPM:         new BooleanOption(true),
-    desktopMission:    new BooleanOption(false),
-    desktopTrade:      new BooleanOption(false),
-    desktopPayment:    new BooleanOption(false),
-    desktopInfo:       new BooleanOption(false),
-
-    clockUTC:          new BooleanOption(false),
-    clockAP:           new BooleanOption(true),
-    clockB:            new BooleanOption(true),
-    clockP:            new BooleanOption(true),
-    clockS:            new BooleanOption(true),
-    clockL:            new BooleanOption(false),
-    clockE:            new BooleanOption(false),
-    clockN:            new BooleanOption(false),
-    clockZ:            new BooleanOption(false),
-    clockR:            new BooleanOption(false),
-
-    pvpMissileAutoAll: new BooleanOption(true),
-    pvpHighestRounds:  new BooleanOption(true),
-    pvmMissileAutoAll: new BooleanOption(false),
-    pvmHighestRounds:  new BooleanOption(false),
-    pvbMissileAutoAll: new BooleanOption(true),
-
-    autobots:                new BooleanOption(false),
-    autobotsArtemisPreset:   new StringOption('0'),
-    autobotsArtemisPoints:   new StringOption('0'),
-    autobotsArtemisStrength: new StringOption('36'),
-    autobotsOrionPreset:     new StringOption('0'),
-    autobotsOrionPoints:     new StringOption('0'),
-    autobotsOrionStrength:   new StringOption('36'),
-    autobotsPegasusPreset:   new StringOption('0'),
-    autobotsPegasusPoints:   new StringOption('0'),
-    autobotsPegasusStrength: new StringOption('36'),
-
-    displayDamage:           new BooleanOption(true),
-    previousShipStatus:      new StringOption(''),
-
-    navEquipmentLink:        new BooleanOption(true),
-    navPlanetTradeLink:      new BooleanOption(true),
-    navSBTradeLink:          new BooleanOption(true),
-    navBldgTradeLink:        new BooleanOption(true),
-    navBMLink:               new BooleanOption(true),
-    navHackLink:             new BooleanOption(true),
-    navBBLink:               new BooleanOption(true),
-
-    navShipLinks:            new BooleanOption(true),
-
-    overrideAmbushRounds:    new BooleanOption(true),
-    allianceQLsArtemisEnabled: new BooleanOption(true),
-    allianceQLsArtemis:      new StringOption('[]'),
-    allianceQLsArtemisMTime: new StringOption('0'),
-    personalQLArtemisEnabled:  new BooleanOption(false),
-    personalQLArtemis:       new StringOption(''),
-    allianceQLsOrionEnabled: new BooleanOption(true),
-    allianceQLsOrion:        new StringOption('[]'),
-    allianceQLsOrionMTime:   new StringOption('0'),
-    personalQLOrionEnabled:  new BooleanOption(false),
-    personalQLOrion:         new StringOption(''),
-    allianceQLsPegasusEnabled: new BooleanOption(true),
-    allianceQLsPegasus:      new StringOption('[]'),
-    allianceQLsPegasusMTime: new StringOption('0'),
-    personalQLPegasusEnabled:  new BooleanOption(false),
-    personalQLPegasus:       new StringOption(''),
-
-    miniMap:                 new BooleanOption(true),
-    miniMapPosition:         new StringOption('topright'),
-    sendmsgShowAlliance:     new BooleanOption(true)
-  };
-  this.ports = new Array();
-  this.alarm = new Alarm(this.options.alarmSound.parse(localStorage['alarmSound']));
-  this.mute = this.options.muteAlarm.parse(localStorage['muteAlarm']);
-  this.notifier = new Notifier();
-
-  var self = this;
-  this.storageEventListener = function(e) { self.handleStorage(e); };
-  this.onConnectEventListener = function(port) { self.handleConnect(port); };
-
-  chrome.extension.onConnect.addListener(this.onConnectEventListener);
-  window.addEventListener('storage', this.storageEventListener, false);
+	updateAlarmState();
 }
 
-PardusSweetener.prototype = {
-  handleConnect: function(port) {
-    var self = this;
-    var pi = { port: port, keys: new Object() };
+function onConfigurationChange( changes, area ) {
+	var updated, key;
 
-    pi.messageListener = function(msg) { self.handleMessage(pi, msg); };
-    pi.disconnectListener = function(port) { self.handleDisconnect(pi); };
+	if ( area != 'local' ) {
+		return;
+	}
 
-    this.ports.push(pi);
-    port.onDisconnect.addListener(pi.disconnectListener);
-    port.onMessage.addListener(pi.messageListener);
+	updated = false;
 
-    if(pi.port.sender && pi.port.sender.tab) {
-      var tab = pi.port.sender.tab.id;
-      var path = this.mute ? 'icons/19mute.png' : 'icons/19.png';
-      chrome.pageAction.setIcon({ path: path, tabId: tab });
-      chrome.pageAction.show(tab);
-    }
+	for ( key in changes ) {
+		if ( config.hasOwnProperty( key ) ) {
+			config[ key ] = changes[ key ].newValue;
+			updated = true;
+		}
+	}
 
-    //console.log('connect - have ' + this.ports.length + ' ports');
-  },
+	if ( updated ) {
+		updateAlarmState();
+	}
+	else {
+		// We do check for a couple things here.
+		var items = {}, change, save;
 
-  handleDisconnect: function(pi) {
-    for(var i = this.ports.length - 1; i >= 0; i--) {
-      if(pi === this.ports[i]) {
-        this.ports.splice(i, 1);
-        break;
-      }
-    }
+		change = changes[ 'allianceQLsArtemisEnabled' ];
+		if ( change && !change.newValue ) {
+			items.allianceQLsArtemis = [];
+			items.allianceQLsArtemisMTime = 0;
+			save = true;
+		}
 
-    // this is likely not needed but hell, lets help the garbage collector
-    pi.port.onDisconnect.removeListener(pi.disconnectListener);
-    pi.port.onMessage.removeListener(pi.messageListener);
-    delete pi.disconnectListener;
-    delete pi.messageListener;
+		change = changes[ 'allianceQLsOrionEnabled' ];
+		if ( change && !change.newValue ) {
+			items.allianceQLsOrion = [];
+			items.allianceQLsOrionMTime = 0;
+			save = true;
+		}
 
-    if(this.ports.length < 1) {
-      this.alarm.switchOff();
-      this.notifier.hide();
-    }
+		change = changes[ 'allianceQLsArtemisEnabled' ];
+		if ( change && !change.newValue ) {
+			items.allianceQLsPegasus = [];
+			items.allianceQLsPegasusMTime = 0;
+			save = true;
+		}
 
-    //console.log('disconnect - have ' + this.ports.length + ' ports');
-  },
+		if ( save ) {
+			chrome.storage.local.set( items );
+		}
+	}
+}
 
-  handleMessage: function(pi, msg) {
-    if(msg.op) {
-      var hname = msg.op + "MsgHandler";
-      if(hname in this)
-        this[hname](pi, msg);
-    }
-  },
+function onMessage( request, sender, sendResponse ) {
+	var asyncResponse = false;
 
-  subscribeMsgHandler: function(pi, msg) {
-    var keys = msg.keys;
-    if(keys && keys.length) {
-      pi.keys = new Object();
-      for(var i = keys.length - 1; i >= 0; i--) {
-        var key = keys[i];
-        var option = this.options[key];
-        if(option) {
-          pi.keys[key] = true;
-          var v = option.parse(localStorage[key]);
-          pi.port.postMessage({ op: 'updateValue', key: key, value: v });
-          //console.log('subscription added to ' + key);
-        }
-      }
-    }
-  },
+	if ( sender.tab ) {
+		// Show the page action for all tabs sending us messages. This
+		// is slightly iffy but hey, it works.
+		showPageAction( sender.tab.id );
+	}
 
-  setValueMsgHandler: function(pi, msg) {
-    var option = this.options[msg.key];
-    if(option) {
-      var v = option.stringify(msg.value);
-      localStorage[msg.key] = v;
+	if ( request.hasOwnProperty( 'requestMap' ) ) {
+		asyncResponse = requestMap( request.requestMap, sendResponse );
+	}
+	else if ( request.hasOwnProperty( 'desktopNotification' )) {
+		if ( request.desktopNotification ) {
+			showDesktopNotification(
+				request.title || 'Meanwhile, in Pardus...',
+				request.desktopNotification, request.timeout );
+			sendResponse( true );
+		}
+		else {
+			clearDesktopNotification();
+			sendResponse( false );
+		}
+	}
 
-      // some specific tweaks we do on special events..
-      switch(msg.key) {
-      case 'alarmSound':
-        this.alarm.selectSample(v,
-                                function() {
-                                  pi.port.postMessage({op: 'sampleReady', sample: v});
-                                });
-        break;
-      case 'muteAlarm':
-        this.mute = msg.value;
-        for(var i = this.ports.length - 1; i >= 0; i--) {
-          var port = this.ports[i].port;
-          if(port.sender && port.sender.tab)
-            chrome.pageAction.setIcon({ path: this.mute ? 'icons/19mute.png' : 'icons/19.png',
-                                        tabId: port.sender.tab.id });
-        }
-      }
+	return asyncResponse;
+}
 
-      // apparently we won't get a storage event to trigger this,
-      // because that's only for changes from another window (XXX - need
-      // more research into this)
-      this.postUpdateValueNotifications(msg.key, msg.value, pi);
-    }
-  },
+function showPageAction( tabId ) {
+	var icon = ( config && config.muteAlarm ) ?
+		'icons/19mute.png' : 'icons/19.png';
+	chrome.pageAction.setIcon({ path: icon, tabId: tabId });
+	chrome.pageAction.show( tabId );
+}
 
-  requestListMsgHandler: function(pi, msg) {
-    if(msg.name == 'alarmSound')
-      pi.port.postMessage({ op: 'updateList',
-                            name: 'alarmSound',
-                            list: Alarm.prototype.sounds });
-  },
+function requestMap( sectorName, callback ) {
+	var rq = new XMLHttpRequest(),
+		url = chrome.runtime.getURL( 'map/' + sectorName[0] + '/' +
+			sectorName.replace( ' ', '_' ) + '.json'),
+		listener = function() {
+			onMapReadyStateChange( rq, callback );
+		};
 
-  dispatchNotificationsMsgHandler: function(pi, msg) {
-    //console.log('dispatch ' + JSON.stringify(msg));
-    if(!this.options.muteAlarm.parse(localStorage['muteAlarm']) &&
-       this.testIndicators('alarm', msg.indicators))
-      this.alarm.switchOn();
-    else
-      this.alarm.switchOff();
+	rq.onreadystatechange = listener;
+	rq.open( 'get', url );
+	rq.send();
 
-    if(this.testIndicators('desktop', msg.indicators))
-      this.notifier.show('Meanwhile, in Pardus...',
-                         this.indicatorsToHuman(msg.character_name, msg.indicators));
-    else
-      this.notifier.hide();
-  },
+	return true;
+}
 
-  soundAlarmMsgHandler: function(pi, msg) {
-    if(!this.options.muteAlarm.parse(localStorage['muteAlarm']))
-      this.alarm.switchOn();
-  },
+function onMapReadyStateChange( rq, callback ) {
+	if ( rq.readyState != 4 ) {
+		return;
+	}
 
-  stopAlarmMsgHandler: function(pi, msg) {
-    this.alarm.switchOff();
-  },
+	if ( rq.status == 200 ) {
+		callback( JSON.parse( rq.responseText ) );
+	}
+	else {
+		callback({ error: 'No map' });
+	}
+}
 
-  testNotificationMsgHandler: function(pi, msg) {
-    this.notifier.hide();
-    this.notifier.show('Meanwhile, in Pardus...',
-                       'You requested a sample desktop notification.');
-  },
+// Alarm stuff.
 
-  showNotificationMsgHandler: function(pi, msg) {
-    this.notifier.hide();
-    this.notifier.show(msg.title, msg.message, msg.duration);
-  },
+// We use long-lived ports for control of the alarm.  This is because
+// the alarm is an Audio object created by us, the event page, and so
+// we don't want to be unloaded by Chrome while the alarm is ringing,
+// because that would stop the sound.  However, we also don't want to
+// lock the event page in memory whenever a tab is navigating Pardus
+// (which was our behaviour on previous versions), and, even more
+// importantly, we don't want our racket to go on if the last of the
+// tabs that told us to sound the alarm goes away, without telling us
+// to shut it.
+//
+// Ports give us the behaviour we want.  When a tab or the page action
+// wants us to sound the alarm, we have it connect to us, and we have
+// it keep the connection for as long as it wants the alarm ringing.
+// While the port is connected, we can't be unloaded by Chrome.  When
+// the last of the tabs holding us for alarm functionality goes away,
+// so does its port, and we get notified and act accordingly.
+function onConnect ( port ) {
+	var connection = { port: port },
+		messageListener = function( message ) {
+			onPortMessage( connection, message );
+		},
+		disconnectListener = function() {
+			onPortDisconnect( connection );
+		};
 
-  requestMapMsgHandler: function(pi, msg) {
-    var sectorName = msg.sector;
-    var rq = new XMLHttpRequest(),
-        url = chrome.runtime.getURL('map/' + sectorName[0] + '/' +
-                                    sectorName.replace(' ', '_') + '.json');
-    rq.onreadystatechange = this.onMapRSC.bind(this, pi);
-    rq.open('get', url);
-    rq.send();
-  },
+	connections.push( connection );
+	port.onMessage.addListener( messageListener );
+	port.onDisconnect.addListener( disconnectListener );
+}
 
-  onMapRSC: function(pi, event) {
-    var rq = event.target;
-    if(rq.readyState != 4)
-      return;
-    if(rq.status == 200) {
-      var sector = JSON.parse(rq.responseText);
-      this.postUpdateMap(pi, sector);
-    }
-    else
-      this.postUpdateMap(pi, null);
-  },
+function onPortMessage( connection, message ) {
+	for ( var key in message ) {
+		switch ( key ) {
+		case 'alarm':
+			connection.alarm = message.alarm;
+			updateAlarmState();
+			break;
+		case 'watchAlarm':
+			// assignment, not comparison:
+			if (( connection.watchAlarm = message.watchAlarm )) {
+				// and give it an immediate update
+				var state =
+					( audio && audio.readyState == 4 && !audio.paused ) ?
+					true : false;
+				connection.port.postMessage({ alarmState: state });
+			}
+		}
+	}
+}
 
-  postUpdateMap: function(pi, sector) {
-    var msg = { op: 'updateMap' };
-    if(sector)
-      msg.sector = sector;
-    else
-      msg.error = true;
-    pi.port.postMessage(msg);
-  },
+function onPortDisconnect( connection ) {
+	var index = connections.indexOf( connection );
+	if ( index != -1 ) {
+		connections.splice( index, 1 );
+	}
+	updateAlarmState();
+}
 
-  // This is supposedly called on storage events. We haven't seen one
-  // yet, we need to research more about this... XXX
-  handleStorage: function(e) {
-    console.log("XXX handleStorage", e);
-    var option = this.options[e.key];
-    if(option)
-      this.postUpdateValueNotifications(e.key, option.parse(e.newValue), null);
-  },
+// This function turns the alarm on and off as needed.
+function updateAlarmState() {
+	if ( alarmWanted() ) {
+		// Bring the noise
+		if ( audio ) {
+			if ( currentSoundId == config.alarmSound ) {
+				if ( audio.readyState == 4 ) {
+					if ( audio.paused ) {
+						audio.play();
+						postAlarmState( true );
+					}
+					// else do nothing, we were already playing
+				}
+				// else do nothing, the canplay listener will call us again.
+			}
+			else {
+				// We need to change the sound id
+				setAlarmSound();
+			}
+		}
+		else {
+			// No audio yet, create it
+			audio = new Audio();
+			audio.loop = true;
+			audio.addEventListener( 'canplaythrough', onAudioCanPlayThrough );
+			setAlarmSound();
+			// and return now. the canplay listener will call us again.
+		}
+	}
+	else {
+		// Shut it
+		if ( audio && audio.readyState == 4 && !audio.paused ) {
+			audio.pause();
+			audio.currentTime = 0;
+			postAlarmState( false );
+		}
+		// otherwise do nothing, the alarm isn't playing
+	}
+}
 
-  postUpdateValueNotifications: function(key, value, exclude_pi) {
-    for(var i = this.ports.length - 1; i >= 0; i--) {
-      var pi = this.ports[i];
-      if(pi === exclude_pi)
-        continue;
+function onAudioCanPlayThrough() {
+	updateAlarmState();
+}
 
-      // check if this port requested notification for this key; if so,
-      // notify them
+// Figure out whether the alarm should be playing now.
+function alarmWanted() {
+	if ( !config.muteAlarm ) {
+		for ( var i = 0, end = connections.length; i < end; i++ )
+			if ( connections[ i ].alarm )
+				return true;
+	}
+	return false;
+}
 
-      if(pi.keys[key])
-        pi.port.postMessage({ op: 'updateValue', key: key, value: value });
-    }
-  },
+// This is always called when audio already exists, we make sure of that.
+function setAlarmSound() {
+	var soundId = config.alarmSound;
 
-  testIndicators: function(prefix, indicators) {
-    var r = false;
-    for(var suffix in indicators) {
-      var key = prefix + suffix;
-      var option = this.options[key];
-      if(option) {
-        if(option.parse(localStorage[key])) {
-          r = true;
-          break;
-        }
-      }
-    }
-    return r;
-  },
+	audio.src = 'sounds/' + soundId + '.ogg';
+	currentSoundId = soundId;
+}
 
-  indicatorsToHuman: function(character_name, indicators) {
-    var a = new Array();
-    var pendings, warn, notifs, stuff;
+function postAlarmState( state ) {
+	var message = { alarmState: state };
+	for ( var i = 0, end = connections.length; i < end; i++ ) {
+		var connection = connections[ i ];
+		if ( connection.watchAlarm ) {
+			connection.port.postMessage( message );
+		}
+	}
+}
 
-    if(indicators['Warning'])
-      warn = 'There is a game warning you should see in the message frame.';
-    else if(indicators['Info'])
-    warn = 'There is some information for you in the message frame.';
+function showDesktopNotification( title, text, timeout ) {
+	var options = {
+		type: 'basic',
+		title: title,
+		message: text,
+		iconUrl: 'icons/48.png'
+	};
 
-    if(indicators['Ally'])
-      a.push('alliance');
-    if(indicators['PM'])
-      a.push('private');
-    if(a.length > 0) {
-      pendings = 'unread ' + a.join(' and ') + ' messages';
-      a.length = 0;
-    }
+	if ( notificationTimer ) {
+		window.clearTimeout( notificationTimer );
+		notificationTimer = undefined;
+	}
 
-    if(indicators['Trade'] || indicators['Payment'])
-      a.push('money');
-    if(indicators['Mission'])
-      a.push('mission');
-    if(a.length > 0) {
-      notifs = a.join(' and ') + ' notifications';
-      a.length = 0;
-    }
+	if ( timeout > 0 && timeout < 20000 ) {
+		notificationTimer = window.setTimeout( onNotificationExpired, timeout );
+	}
 
-    if(pendings)
-      a.push(pendings);
-    if(notifs)
-      a.push(notifs);
-    if(a.length > 0) {
-      stuff = a.join(', and ') + '.';
-      a.length = 0;
-    }
+	chrome.notifications.clear( 'pardus-sweetener', function(){} );
+	chrome.notifications.create( 'pardus-sweetener', options, function(){} );
+}
 
-    if(warn)
-      a.push(warn);
+function clearDesktopNotification() {
+	if ( notificationTimer ) {
+		window.clearTimeout( notificationTimer );
+		notificationTimer = undefined;
+	}
 
-    if(indicators['Combat'] || stuff) {
-      if(character_name)
-        a.push((warn ? 'And your' : 'Your') + ' character ' + character_name);
-      else
-        a.push((warn ? 'And a' : 'A') + ' character of yours');
+	chrome.notifications.clear( 'pardus-sweetener', function(){} );
+}
 
-      if(indicators['Combat']) {
-        a.push('has been fighting with someone.');
-        if(stuff) {
-          if(character_name)
-            a.push(character_name + ' also has');
-          else
-            a.push('You also have');
-          a.push(stuff);
-        }
-      }
-      else {
-        a.push('has');
-        a.push(stuff);
-      }
-    }
+function onNotificationExpired() {
+	notificationTimer = undefined;
+	chrome.notifications.clear( 'pardus-sweetener', function(){} );
+}
 
-    return a.join(' ');
-  }
-};
+// There should be a way to get this out of the way. It's only needed
+// when installing/upgrading, yet it's always here making this script
+// fat.
 
-var sweetener = new PardusSweetener();
+function onInstalled( details ) {
+	var cfg;
+
+	switch ( details.reason ) {
+	case 'install':
+		// default values of all our parameters
+		cfg = {
+			alarmAlly: false,
+			alarmCombat: true,
+			alarmInfo: false,
+			alarmMission: false,
+			alarmPM: false,
+			alarmPayment: false,
+			alarmSound: 'timex',
+			alarmTrade: false,
+			alarmWarning: false,
+			allianceQLsArtemis: [],
+			allianceQLsArtemisEnabled: true,
+			allianceQLsArtemisMTime: 0,
+			allianceQLsOrion: [],
+			allianceQLsOrionEnabled: true,
+			allianceQLsOrionMTime: 0,
+			allianceQLsPegasus: [],
+			allianceQLsPegasusEnabled: true,
+			allianceQLsPegasusMTime: 0,
+			autobots: false,
+			autobotsArtemisPoints: 0,
+			autobotsArtemisPreset: 0,
+			autobotsArtemisStrength: 36,
+			autobotsOrionPoints: 0,
+			autobotsOrionPreset: 0,
+			autobotsOrionStrength: 36,
+			autobotsPegasusPoints: 0,
+			autobotsPegasusPreset: 0,
+			autobotsPegasusStrength: 36,
+			clockAP: true,
+			clockB: true,
+			clockE: false,
+			clockL: false,
+			clockN: false,
+			clockP: true,
+			clockR: false,
+			clockS: true,
+			clockUTC: false,
+			clockZ: false,
+			desktopAlly: true,
+			desktopCombat: true,
+			desktopInfo: false,
+			desktopMission: false,
+			desktopPM: true,
+			desktopPayment: false,
+			desktopTrade: false,
+			desktopWarning: false,
+			displayDamage: true,
+			fitAmbushRounds: true,
+			miniMap: true,
+			miniMapPlacement: 'topright',
+			muteAlarm: false,
+			navBlackMarketLink: true,
+			navBountyBoardLink: false,
+			navBulletinBoardLink: true,
+			navCrewQuartersLink: false,
+			navEquipmentLink: true,
+			navFlyCloseLink: true,
+			navHackLink: true,
+			navShipLinks: true,
+			navShipyardLink: false,
+			navTradeLink: true,
+			overrideAmbushRounds: false,
+			personalQLArtemis: '',
+			personalQLArtemisEnabled: false,
+			personalQLOrion: '',
+			personalQLOrionEnabled: false,
+			personalQLPegasus: '',
+			personalQLPegasusEnabled: false,
+			pvbMissileAutoAll: true,
+			pvmHighestRounds: false,
+			pvmMissileAutoAll: false,
+			pvpHighestRounds: true,
+			pvpMissileAutoAll: true,
+			sendmsgShowAlliance: true
+		};
+
+		chrome.storage.local.clear();
+		chrome.storage.local.set( cfg, function(){} );
+		break;
+
+	case 'update':
+		// localeCompare, aye.  Kinda flaky, this, but we've only
+		// released public versions 2.2, 2.3, and 2.4. Should be
+		// fine.
+		if ( details.previousVersion.localeCompare('2.5') >= 0 )
+			return;
+
+		// Here we migrate the previous Sweetener configurations, held
+		// on the event page's localStorage, to chrome.storage.
+
+		cfg = new Object();
+
+		// These were strings with the given defaults
+		cfg[ 'alarmSound' ] = localStorage[ 'alarmSound' ] || 'timex';
+		cfg[ 'personalQLArtemis' ] = localStorage[ 'personalQLArtemis' ] || '';
+		cfg[ 'personalQLOrion' ] = localStorage[ 'personalQLOrion' ] || '';
+		cfg[ 'personalQLPegasus' ] = localStorage[ 'personalQLPegasus' ] || '';
+		cfg[ 'miniMapPlacement' ] =
+			localStorage[ 'miniMapPosition' ] || 'topright';
+
+		// All these were booleans with default to false
+		var i, end, key, val, keys = [
+			'muteAlarm', 'alarmAlly', 'alarmWarning',
+			'alarmPM', 'alarmMission', 'alarmTrade', 'alarmPayment',
+			'alarmInfo', 'desktopWarning', 'desktopMission',
+			'desktopTrade', 'desktopPayment', 'desktopInfo',
+			'clockUTC', 'clockL', 'clockE', 'clockN', 'clockZ', 'clockR',
+			'pvmMissileAutoAll', 'pvmHighestRounds', 'autobots',
+			'personalQLArtemisEnabled', 'personalQLOrionEnabled',
+			'personalQLPegasusEnabled'
+		];
+		for ( i = 0, end = keys.length; i < end; i++ ) {
+			key = keys[ i ];
+			cfg[ key ] = ( localStorage[key] == 'true' );
+		}
+
+		// These were booleans with default to true
+		keys = [
+			'alarmCombat', 'desktopCombat', 'desktopAlly', 'desktopPM',
+			'clockAP', 'clockB', 'clockP', 'clockS',
+			'pvpMissileAutoAll', 'pvpHighestRounds', 'pvbMissileAutoAll',
+			'displayDamage', 'navEquipmentLink', 'navHackLink', 'navShipLinks',
+			'allianceQLsArtemisEnabled', 'allianceQLsOrionEnabled',
+			'allianceQLsPegasusEnabled', 'miniMap', 'sendmsgShowAlliance'
+		];
+		for ( i = 0, end = keys.length; i < end; i++ ) {
+			key = keys[ i ];
+			cfg[ key ] = ( localStorage[key] != 'false' );
+		}
+
+		// These three are now just one.  They all defaulted to true.
+		// If all three were disabled, we disable the new option.
+		cfg[ 'navTradeLink' ] =
+			!( localStorage[ 'navPlanetTradeLink' ] == 'false' &&
+			   localStorage[ 'navSBTradeLink' ] == 'false' &&
+			   localStorage[ 'navBldgTradeLink' ] == 'false' );
+
+		// These two were renamed.  They defaulted to true.
+		cfg[ 'navBlackMarketLink' ] = localStorage[ 'navBMLink' ] != 'false';
+		cfg[ 'navBulletinBoardLink' ] = localStorage[ 'navBBLink' ] != 'false';
+
+		// These defaulted to '0' and are now integers
+		keys = [ 'autobotsArtemisPreset', 'autobotsArtemisPoints',
+				 'autobotsOrionPreset', 'autobotsOrionPoints',
+				 'autobotsPegasusPreset', 'autobotsPegasusPoints',
+				 'allianceQLsArtemisMTime', 'allianceQLsOrionMTime',
+				 'allianceQLsPegasusMTime' ];
+		for ( i = 0, end = keys.length; i < end; i++ ) {
+			key = keys[ i ];
+			val = parseInt( localStorage[key] );
+			cfg[ key ] = isNaN( val ) ? 0 : val;
+		}
+
+		// These defaulted to '36' and are now integers
+		val = parseInt( localStorage[ 'autobotsPegasusStrength' ] );
+		cfg[ 'autobotsPegasusStrength' ] = isNaN( val ) ? 36 : val;
+		val = parseInt( localStorage[ 'autobotsArtemisStrength' ] );
+		cfg[ 'autobotsArtemisStrength' ] = isNaN( val ) ? 36 : val;
+		val = parseInt( localStorage[ 'autobotsOrionStrength' ] );
+		cfg[ 'autobotsOrionStrength' ] = isNaN( val ) ? 36 : val;
+
+		// These were JSON stringified arrays, and we haven't changed
+		// the array contents, so we'll just copy as is if they were set.
+		keys = [ 'allianceQLsArtemis', 'allianceQLsOrion',
+				 'allianceQLsPegasus' ];
+		for ( i = 0, end = keys.length; i < end; i++ ) {
+			key = keys[ i ];
+			try { val = JSON.parse( localStorage[key] ); }
+			catch ( x ) { val = null; }
+			cfg[ key ] = Array.isArray( val ) ? val : [];
+		}
+
+		// We don't migrate previousShipStatus.  It is no longer stored
+		// in config.
+
+		// And these are new
+		cfg.navShipyardLink     = false;
+		cfg.navCrewQuartersLink = false;
+		cfg.navFlyCloseLink     = true;
+
+		// Well, overrideAmbushRounds did exist. However, it was a bit
+		// hamfisted, and now we have fitAmbushRounds, which is
+		// better.  People who had oAR enabled, probably will be
+		// better served by fAR; people who had it disabled... well it
+		// probably was because of the hamfist thing, and fAR isn't
+		// likely to bother them.  So we don't migrate and set the
+		// defaults here instead.
+		cfg.fitAmbushRounds = true;
+		cfg.overrideAmbushRounds = false;
+
+		chrome.storage.local.clear();
+		chrome.storage.local.set( cfg, onUpgradeComplete );
+	} // switch
+}
+
+function onUpgradeComplete() {
+	localStorage.clear();
+}
+
+// Start the ball
+start();
+
+})( window );

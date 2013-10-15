@@ -1,56 +1,73 @@
 {
-  "name": "Pardus Sweetener",
-  "version": "2.4",
-  "manifest_version": 2,
-  "content_security_policy": "script-src 'self'; object-src 'self'",
-  "description": "User interface enhancements for the online game Pardus",
-  "background": {
-    "scripts": [ "alarm.js", "notifier.js", "bg.js" ],
-    "persistent": false
-  },
-  "options_page": "options.html",
-  "content_scripts": [
-    { "matches":    [ "*://*.pardus.at/msgframe.php*" ],
-      "js":         [ "clock.js", "msgframe.js" ],
-      "all_frames": true },
-    { "matches":    [ "*://*.pardus.at/ship2opponent_combat.php*" ],
-      "js":         [ "universe.js", "combat.js", "s2oframe.js" ],
-      "all_frames": true },
-    { "matches":    [ "*://*.pardus.at/ship2ship_combat.php*" ],
-      "js":         [ "combat.js", "s2sframe.js" ],
-      "all_frames": true },
-    { "matches":    [ "*://*.pardus.at/main.php*" ],
-      "js":         [ "map.js", "shiplinks.js", "nav.js" ],
-      "all_frames": true },
-    { "matches":    [ "*://*.pardus.at/game.php" ],
-      "js":         [ "game.js" ],
-      "all_frames": false },
-    { "matches":    [ "*://*.pardus.at/building.php*" ],
-      "js":         [ "universe.js", "combat.js", "shiplinks.js", "building.js" ],
-      "all_frames": true },
-    { "matches":    [ "*://*.pardus.at/myalliance.php*" ],
-      "js":         [ "universe.js", "slicer.js", "myalliance.js" ],
-      "all_frames": true },
-    { "matches":    [ "*://*.pardus.at/ambush.php*" ],
-      "js":         [ "universe.js", "ambush.js" ],
-      "all_frames": true },
-    { "matches":    [ "*://*.pardus.at/sendmsg.php*" ],
-      "js":         [ "sendmsg.js" ],
-      "all_frames": false }
-  ],
-  "page_action": {
-    "default_icon": "icons/19.png",
-    "default_title": "Change Pardus Sweetener settings",
-    "default_popup": "popup.html"
-  },
-  "icons": { "16":  "icons/16.png",
-             "48":  "icons/48.png",
-             "64":  "icons/64.png",
-             "128": "icons/128.png" },
-  "permissions": [ "notifications" ],
-  "web_accessible_resources": [
-    "icons/16.png",
-    "icons/48.png",
-    "icons/down.png"
-  ]
+	"background": {
+		"scripts": [ "bg.js" ],
+		"persistent": false
+	},
+	"content_scripts": [
+		{
+			"matches": [ "*://*.pardus.at/main.php*" ],
+			"js": [ "cfgset.js", "shiplinks.js", "map.js", "nav.js" ],
+			"all_frames": true
+		},
+		{
+			"matches": [ "*://*.pardus.at/msgframe.php*" ],
+			"js": [ "clock.js", "msgframe.js" ],
+			"all_frames": true
+		},
+		{
+			"matches": [
+				"*://*.pardus.at/ship2ship_combat.php*",
+				"*://*.pardus.at/ship2opponent_combat.php*",
+				"*://*.pardus.at/building.php*"
+			],
+			"js": [
+				"cfgset.js", "universe.js", "shiplinks.js", "combat.js"
+			],
+			"all_frames": true
+		},
+		{
+			"matches": [ "*://*.pardus.at/myalliance.php*" ],
+			"js": [ "slicer.js", "myalliance.js" ],
+			"all_frames": true
+		},
+		{
+			"matches": [ "*://*.pardus.at/ambush.php*" ],
+			"js": [ "cfgset.js", "universe.js", "ambush.js" ],
+			"all_frames": true
+		},
+		{
+			"matches": [ "*://*.pardus.at/sendmsg.php*" ],
+			"js": [ "sendmsg.js" ],
+			"all_frames": false
+		},
+		{
+			"matches": [ "*://*.pardus.at/game.php" ],
+			"js": [ "game.js" ],
+			"all_frames": false
+		}
+	],
+	"content_security_policy": "script-src 'self'; object-src 'self'",
+	"description": "User interface enhancements for the online game Pardus",
+	"icons": {
+		"16":  "icons/16.png",
+		"48":  "icons/48.png",
+		"64":  "icons/64.png",
+		"128": "icons/128.png"
+	},
+	"manifest_version": 2,
+	"minimum_chrome_version": "28",
+	"name": "Pardus Sweetener",
+	"options_page": "options.html",
+	"page_action": {
+		"default_icon": "icons/19.png",
+		"default_title": "Change Pardus Sweetener settings",
+		"default_popup": "popup.html"
+	},
+	"permissions": [ "notifications", "storage", "*://*.pardus.at/*" ],
+	"version": "3",
+	"web_accessible_resources": [
+		"icons/16.png",
+		"icons/48.png",
+		"icons/down.png"
+	]
 }

@@ -1,90 +1,121 @@
 // Display the recipient's alliance on the sendmsg form.
 // This is RIDICULOUSLY overengineered, don't laugh.
 
-function PSSendMsgPageDriver(doc) { this.initialise(doc); }
+(function( doc ) {
 
-PSSendMsgPageDriver.prototype = {
+var enabled, sweetened, allianceTR, mugshotTD;
 
-  // We rely on Chrome to call us after DOM is ready.
-  initialise: function(doc) {
-    this.doc = doc;
-    this.port = chrome.extension.connect();
-    this.port.onMessage.addListener(this.onPortMessage.bind(this));
-    this.port.postMessage({ op: 'subscribe', keys: [ 'sendmsgShowAlliance' ] });
-    this.sweeten();
-  },
+function start( doc ) {
+	chrome.storage.local.get( ['sendmsgShowAlliance'], onConfigurationReady );
+}
 
-  onPortMessage: function(msg) {
-    if(msg.op == 'updateValue' && msg.key == 'sendmsgShowAlliance') {
-      if(msg.value)
-        this.sweeten();
-      else
-        this.unsweeten();
-    }
-  },
+function onConfigurationReady( items ) {
+	enabled = items.sendmsgShowAlliance;
 
-  sweeten: function() {
-    if(this.sweetened)
-      return;
+	if ( enabled ) {
+		sweeten();
+	}
 
-    // The recipient field is contained in a TD. The next TD should
-    // contain the mugshot, and the mugshot's alt (or title) should
-    // contain the alliance name, which will be the text after the
-    // dash. Bail out if any of these assumptions doesn't hold.
-    var doc = this.doc,
-        recipient = doc.getElementById('recipient2');
-    if(!recipient)
-      return;
-    var recipient_td = recipient.parentNode;
-    if(!recipient_td || recipient_td.tagName != 'TD')
-      return;
-    var recipient_tr = recipient_td.parentNode;
-    if(!recipient_tr || recipient_tr.tagName != 'TR')
-      return;
-    var mugshot_td = recipient_td.nextElementSibling;
-    if(!mugshot_td || mugshot_td.tagName != 'TD' || mugshot_td.rowSpan != 2)
-      return;
-    var mugshot = mugshot_td.firstElementChild;
-    if(!mugshot || mugshot.tagName != 'IMG' || !mugshot.alt)
-      return;
-    var m = /^[^-]+-\s*(.+?)\s*$/.exec(mugshot.alt);
-    if(!m)
-      return;
-    var alliance_name = m[1];
+	// Listen for changes in configuration.
+	chrome.storage.onChanged.addListener( onConfigurationChange );
+}
 
-    // Ok all seems good, make the changes
-    var tr = doc.createElement('tr'),
-        td = doc.createElement('td');
-    tr.appendChild(td);
-    td = doc.createElement('td');
-    if(alliance_name == 'No alliance participation') {
-      var i = doc.createElement('i');
-      i.textContent = 'No alliance participation';
-      td.appendChild(i);
-    }
-    else
-      td.textContent = alliance_name;
-    tr.appendChild(td);
-    mugshot_td.rowSpan = 3;
-    recipient_tr.parentNode.insertBefore(tr, recipient_tr.nextSibling);
+function onConfigurationChange( changes, area ) {
+	if ( area != 'local' ) {
+		return;
+	}
 
-    // And remember what we need to undo them
-    this.allianceTR = tr;
-    this.mugshotTD = mugshot_td;
-    this.sweetened = true;
-  },
+	if ( changes.sendmsgShowAlliance ) {
+		enabled = changes.sendmsgShowAlliance.newValue;
+		if ( enabled ) {
+			sweeten();
+		}
+		else {
+			unsweeten();
+		}
+	}
+}
 
-  unsweeten: function() {
-    if(!this.sweetened)
-      return;
+function sweeten() {
+	var recipient, recipientTD, recipientTR, mugshot,
+		allianceName, match, td, i;
 
-    this.allianceTR.parentNode.removeChild(this.allianceTR);
-    this.mugshotTD.rowSpan = 2;
-    delete this.allianceTR;
-    delete this.mugshotTD;
-    delete this.sweetened;
-  }
+	if ( sweetened ) {
+		return;
+	}
 
-};
+	// The recipient field is contained in a TD. The next TD should
+	// contain the mugshot, and the mugshot's alt (or title) should
+	// contain the alliance name, which will be the text after the
+	// dash. Bail out if any of these assumptions doesn't hold.
 
-var ps_pagedriver = new PSSendMsgPageDriver(document);
+	recipient = doc.getElementById( 'recipient2' );
+	if ( !recipient ) {
+		return;
+	}
+
+	recipientTD = recipient.parentNode;
+	if ( recipientTD.tagName != 'TD' ) {
+		return;
+	}
+
+	recipientTR = recipientTD.parentNode;
+	if ( recipientTR.tagName != 'TR' ) {
+		return;
+	}
+
+	mugshotTD = recipientTD.nextElementSibling;
+	if ( !mugshotTD || mugshotTD.tagName != 'TD' || mugshotTD.rowSpan != 2 ) {
+		return;
+	}
+
+	mugshot = mugshotTD.firstElementChild;
+	if ( !mugshot || mugshot.tagName != 'IMG' || !mugshot.alt ) {
+		return;
+	}
+
+	match = /^[^-]+-\s*(.+?)\s*$/.exec( mugshot.alt );
+	if ( !match ) {
+		return;
+	}
+
+	allianceName = match[ 1 ];
+
+	// Ok all seems good, make the changes
+	allianceTR = doc.createElement( 'tr' );
+	td = doc.createElement( 'td' );
+	allianceTR.appendChild( td );
+
+	td = doc.createElement( 'td' );
+	if ( allianceName == 'No alliance participation' ) {
+		i = doc.createElement( 'i' );
+		i.textContent = 'No alliance participation';
+		td.appendChild( i );
+	}
+	else {
+		td.textContent = allianceName;
+	}
+	allianceTR.appendChild( td );
+
+	mugshotTD.rowSpan = 3;
+	recipientTR.parentNode.insertBefore( allianceTR, recipientTR.nextSibling );
+
+	// We're done. Remember this.
+	sweetened = true;
+}
+
+function unsweeten() {
+	if ( !sweetened ) {
+		return;
+	}
+
+	allianceTR.parentNode.removeChild( allianceTR );
+	allianceTR = undefined;
+	mugshotTD.rowSpan = 2;
+	mugshotTD = undefined;
+	sweetened = false;
+}
+
+start();
+
+})( document );

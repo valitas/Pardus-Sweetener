@@ -1,17 +1,27 @@
 // Universe detection
 
-// 'artemis', 'orion', 'pegasus'
-function detectUniverse(doc) {
-  if(!doc)
-    doc = document;
-  var m = /^([^.]+)\.pardus\.at$/.exec(doc.location.host);
-  if(m)
-    return m[1];
-  return null;
+var Universe = (function() {
+
+function getServer( doc ) {
+	var match;
+
+	match = /^([^.]+)\.pardus\.at$/.exec( doc.location.hostname );
+	if ( match ) {
+		return match[ 1 ];
+	}
+
+	return null;
 }
 
-// 'Artemis', 'Orion', 'Pegasus'
-function universeName(doc) {
-  var universe = detectUniverse(doc);
-  return universe.substr(0,1).toUpperCase() + universe.substr(1);
-}
+return {
+	// 'artemis', 'orion', 'pegasus'
+	getServer: getServer,
+
+	// 'Artemis', 'Orion', 'Pegasus'
+	getName: function( doc ) {
+		var server = getServer( doc );
+		return server.substr( 0, 1 ).toUpperCase() + server.substr( 1 );
+	}
+};
+
+})();

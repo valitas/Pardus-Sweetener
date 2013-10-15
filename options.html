@@ -39,7 +39,11 @@
     <div class="setting">
      Alarm sound:
      <select id="alarmSound">
-      <option value="-1">no sound</option>
+      <option value="buzz">Buzzer</option>
+      <option value="dive">Dive horn</option>
+      <option value="missile">Missile alert</option>
+      <option value="power">Power plant</option>
+      <option value="timex">Timex</option>
      </select>
      <input id="testAlarm" type="button" value="Test" />
     </div>
@@ -161,24 +165,13 @@
     <h3>Quick lists</h3>
 
     <p>
-     User interface additions for fast ambush setting.  Alliance QLs
-     are obtained from your My Alliance page, provided the page is
-     formatted properly (see
+     Alliance QLs are obtained from your My Alliance page; see
 
      <a target="_blank"
         href="https://github.com/valitas/Pardus-Sweetener/wiki/Quick-lists">here</a>
 
-     for details).
+     for details.
     </p>
-
-    <div class="setting">
-     <input type="checkbox" id="overrideAmbushRounds" />
-     <label for="overrideAmbushRounds">
-      Preselect the highest number of rounds you can ambush for.
-      <strong>This will override the rounds setting in any quicklist
-      you apply.</strong>
-     </label>
-    </div>   
 
     <div class="setting">
      <img src="icons/artemis.png" alt="Artemis" title="Artemis"
@@ -251,6 +244,24 @@
       </div>
      </div>
     </div>
+
+    <div class="setting">
+     <input type="checkbox" id="fitAmbushRounds" />
+     <label for="fitAmbushRounds">
+	  Fix QLs that call for more rounds than you can set,
+	  so that you set for your maximum rounds.
+     </label>
+    </div>   
+
+    <div class="setting">
+     <input type="checkbox" id="overrideAmbushRounds" />
+     <label for="overrideAmbushRounds">
+      Always select the highest number of rounds that you can set.
+      <strong>This will override the rounds setting in any quicklist
+      you apply.</strong>
+     </label>
+    </div>   
+
    </section>
 
    <section>
@@ -581,10 +592,10 @@
     <h3>Clocks</h3>
 
     <p>
-     Display countdowns to recurring in-game events. For these to be
-     accurate, your computer's time zone and clock should be properly
-     set.  Modern operating systems can keep your clock on the correct
-     time automatically; see
+     Countdowns to recurring in-game events. For these to be accurate,
+     your computer's clock and time zone should be set correctly.
+     Modern operating systems can keep your clock on the correct time
+     automatically; see
 
      <a target="_blank"
         href="http://www.ehow.com/how_7550535_sync-clock-server.html">this
@@ -603,7 +614,7 @@
    <div class="setting">
     <input type="checkbox" id="clockAP" />
     <label for="clockAP">
-     Show the time remaining to next 24 AP (shields recharge at this time, too)
+     Show the time remaining to next 24 AP
     </label>
    </div>
 
@@ -676,7 +687,7 @@
 
     <div class="setting">
      Map placement in the Nav page:
-     <select id="miniMapPosition">
+     <select id="miniMapPlacement">
       <option value="topright">Above the Cargo box</option>
       <option value="statusbox">Inside the Status box</option>
      </select>
@@ -701,29 +712,15 @@
     </div>
 
     <div class="setting">
-     <input type="checkbox" id="navPlanetTradeLink" />
-     <label for="navPlanetTradeLink">
-      Add link to trade with planets
+     <input type="checkbox" id="navTradeLink" />
+     <label for="navTradeLink">
+      Add link to trade with planets, starbases, and buildings
      </label>
     </div>
 
     <div class="setting">
-     <input type="checkbox" id="navSBTradeLink" />
-     <label for="navSBTradeLink">
-      Add link to trade with starbases
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="navBldgTradeLink" />
-     <label for="navBldgTradeLink">
-      Add link to trade with buildings
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="navBMLink" />
-     <label for="navBMLink">
+     <input type="checkbox" id="navBlackMarketLink" />
+     <label for="navBlackMarketLink">
       Add link to the black market at planets and starbases
      </label>
     </div>
@@ -737,9 +734,37 @@
     </div>
 
     <div class="setting">
-     <input type="checkbox" id="navBBLink" />
-     <label for="navBBLink">
+     <input type="checkbox" id="navBulletinBoardLink" />
+     <label for="navBulletinBoardLink">
       Add link to the bulletin board at planets and starbases
+     </label>
+    </div>
+
+    <div class="setting">
+     <input type="checkbox" id="navBountyBoardLink" />
+     <label for="navBountyBoardLink">
+      Add link to the bounty board at planets and starbases
+     </label>
+    </div>
+
+    <div class="setting">
+     <input type="checkbox" id="navShipyardLink" />
+     <label for="navShipyardLink">
+      Add link to the shipyard at planets and starbases
+     </label>
+    </div>
+
+    <div class="setting">
+     <input type="checkbox" id="navCrewQuartersLink" />
+     <label for="navCrewQuartersLink">
+      Add link to the crew quarters at planets and starbases
+     </label>
+    </div>
+
+    <div class="setting">
+     <input type="checkbox" id="navFlyCloseLink" />
+     <label for="navFlyCloseLink">
+      Add link to fly close to starbases
      </label>
     </div>
    </section>
@@ -780,7 +805,7 @@
      Copyright © 2011-2013 Val.  This software is free to use and
      modify: see legal notice in the file README.md included in the
      software package, or read it
-     <a href="https://github.com/valitas/Pardus-Sweetener/blob/master/README.md"
+     <a href="https://github.com/valitas/Pardus-Sweetener#credits-and-legal-notices"
         target="_blank">online</a>.
 
      Please report bugs and request enhancements in the
