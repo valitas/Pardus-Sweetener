@@ -10,11 +10,6 @@
 			"all_frames": true
 		},
 		{
-			"matches": [ "*://*.pardus.at/msgframe.php*" ],
-			"js": [ "clock.js", "msgframe.js" ],
-			"all_frames": true
-		},
-		{
 			"matches": [
 				"*://*.pardus.at/ship2ship_combat.php*",
 				"*://*.pardus.at/ship2opponent_combat.php*",
@@ -42,7 +37,7 @@
 		},
 		{
 			"matches": [ "*://*.pardus.at/game.php" ],
-			"js": [ "game.js" ],
+			"js": [ "clock.js", "game.js" ],
 			"all_frames": false
 		}
 	],

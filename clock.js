@@ -318,9 +318,11 @@ var PSClock = (function() {
 
 	// Creates an instance of the clock object.
 	function PSClock( doc ) {
-		this.doc = doc;
-		this.enabledTimers = {};
-		this.needRebuild = false;
+      if ( !doc )
+        throw new Error( 'PSClock constructor called with null doc' );
+	  this.doc = doc;
+	  this.enabledTimers = {};
+	  this.needRebuild = false;
 	}
 
 	PSClock.prototype = {
@@ -373,13 +375,11 @@ var PSClock = (function() {
 		},
 
 		resetContainer: function() {
-			var child, div = this.container;
-
-			if ( div ) {
-				while (( child = div.firstChild )) {
-					div.remove( child );
-				}
-			}
+          var div = this.container;
+          if ( div ) {
+            while( div.hasChildNodes() )
+              div.removeChild( div.firstChild );
+          }
 		},
 
 		removeContainer: function() {
