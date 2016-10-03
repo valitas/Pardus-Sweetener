@@ -142,7 +142,7 @@ var chrome, PSClock;
   // a reload.
   function onMsgFrameCheck() {
     var now = Date.now();
-    if ( now - lastRefresh > 60000 ) {
+    if ( now - lastRefresh > 60000 && msgframeURL ) {
       try {
         msgframe.contentWindow.location.replace( msgframeURL );
       }
