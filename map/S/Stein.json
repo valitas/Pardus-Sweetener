@@ -5,6 +5,7 @@
   "height": 16,
   "tiles": "bbbbbbeebbeeeebbbeeeeeeeebeefeebeeffffffebbeefeeeeffffffeebbeffebefffffffeeeeggebeeeffffffeeeggebbbeffffffebefeebbbefffffeebeeebbbbeofffeebbbbbbbeeeooffebbbbbbbbefoofffeebbbbbbbeeofffffeebbbbbbbefeeffffebeeebbeefeeeeefebefebbeeefeebeeeeefebbbbeeebbbeebeeeb",
   "beacons": {
+    "Beurso": { "type": "wh", "x": 2, "y": 5 },
     "Enwaand": { "type": "wh", "x": 8, "y": 9 },
     "Daaze": { "type": "wh", "x": 1, "y": 14 },
     "Stein": { "x": 6, "y": 4 }

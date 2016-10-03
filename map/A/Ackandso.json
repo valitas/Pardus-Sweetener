@@ -5,7 +5,7 @@
   "height": 20,
   "tiles": "bbbbbeeebeeebbbbbbeeebbbbbbbbbeefeeeeebbbbbbefeebbbbbbbbeoooebbbbbbbbeeffeebbbbbbbeeofebbbbbbbeeffffebbbbbbbbeoeebbbbbbeefgggfeebbbbbbbefebbbbbeeefggggffeebbbbbbeeebbbbeefggggggfffebbbbbbbebbeeeeffggggggfeeebbeebbeeeeefffffgggggeeebbbeeeeeeffffeeeeffggggebbbbbeeebbeeeeeebbeeefffeebbbbbbbbbbeebbbbbbbbefffebbbbbbbbbbbbbbbbbbbbbefffeebbbbbbbbbbbbbbbbbbbeeooffeebbbbbbbbbbbbbbbbbbefoofffeebbbbbbbbbbbbbbbbeeffoffffeebbbbbbbbbbbbbbbeeeeeeeeefeebbbbbbbbbbbbbbbeebbbbbeefebbbbbbbbbbbbbbbbbbbbbbbeeeebbbbbbbbbbbbbbbbbbbbbbbeee",
   "beacons": {
-    "Fomalhaut (West)": { "type": "wh", "x": 11, "y": 0 },
+    "Fomalhaut (West)": { "type": "wh", "x": 10, "y": 0 },
     "Fomalhaut (East)": { "type": "wh", "x": 18, "y": 0 },
     "Pass EMP-03": { "type": "wh", "x": 1, "y": 9 },
     "Exackcan": { "type": "wh", "x": 24, "y": 18 },
