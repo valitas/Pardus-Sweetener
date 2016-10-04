@@ -62,6 +62,14 @@ var chrome, PSClock;
       //
       // https://bugs.webkit.org/show_bug.cgi?id=33604
       msgframe.addEventListener( 'load', onMsgFrameLoad, false );
+
+      // And trigger an immediate call if we missed the load event altogether.
+      try {
+        if ( msgframe.contentDocument.location.pathname == '/msgframe.php' &&
+             msgframe.contentDocument.readyState == 'complete' )
+          msgframeLoaded = true;
+      }
+      catch( e ) {}
     }
   }
 
