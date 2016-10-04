@@ -36,7 +36,7 @@
 			"all_frames": false
 		},
 		{
-			"matches": [ "*://*.pardus.at/game.php" ],
+			"matches": [ "*://*.pardus.at/game.php*" ],
 			"js": [ "clock.js", "game.js" ],
 			"all_frames": false
 		}
