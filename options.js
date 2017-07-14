@@ -61,11 +61,11 @@ function onDOMContentLoaded() {
 		'personalQLArtemisEnabled', 'allianceQLsOrionEnabled',
 		'personalQLOrionEnabled', 'allianceQLsPegasusEnabled',
 		'personalQLPegasusEnabled', 'overrideAmbushRounds',
-		'fitAmbushRounds', 'miniMap', 'sendmsgShowAlliance' );
+		'fitAmbushRounds', 'miniMap', 'sendmsgShowAlliance', 'onlinelistEnabled');
 
 	// 2. Free-form strings
 	setupControls ( 'input', onControlInput,
-		'personalQLArtemis', 'personalQLOrion', 'personalQLPegasus' );
+		'personalQLArtemis', 'personalQLOrion', 'personalQLPegasus', 'onlinelist' );
 
 	// 3. Numeric fields
 	setupControls ( 'input', onNumericControlInput,
@@ -137,7 +137,9 @@ function onDOMContentLoaded() {
 					controls.personalQLOrion );
 	wireQLControls( controls.personalQLPegasusEnabled,
 					controls.personalQLPegasus );
-
+	wireQLControls( controls.onlinelistEnabled,
+					controls.onlinelist );
+					
 	// Request the configuration
 	chrome.storage.local.get( Object.keys( controls ),
 							  onConfigurationReady );
