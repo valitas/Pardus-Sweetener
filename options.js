@@ -257,6 +257,7 @@ function updateControlState( control, value ) {
 		case 'personalQLArtemisEnabled':
 		case 'personalQLOrionEnabled':
 		case 'personalQLPegasusEnabled':
+		case 'onlinelistEnabled':
 			updateQLControlsDisable();
 			break;
 		case 'miniMap':
@@ -345,6 +346,8 @@ function updateQLControlsDisable() {
 		!controls.personalQLOrionEnabled.checked;
 	controls.personalQLPegasus.disabled =
 		!controls.personalQLPegasusEnabled.checked;
+	controls.onlinelist.disabled = 
+		!controls.onlinelistEnabled.checked;
 }
 
 function updateMiniMapControlsDisable() {
