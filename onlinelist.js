@@ -1,11 +1,27 @@
+'use strict';
+
 (function() {
-    'use strict';
-	function applycolor (onlinelist) {
-		// Function applieds red bgcolor to cells that match the criteria.
-		
-		// Parse the options valule to an array.
-		onlinelist = onlinelist["onlinelist"].replace(/\n|\t/g,",").split(',');
+
+var config
+
+function start() {
+	var cs = new ConfigurationSet();
 	
+	cs.addKey( 'onlinelistEnabled' );
+	cs.addKey( 'onlinelist' );
+
+	config = cs.makeTracker( applyColor );
+	
+}
+    
+	function applyColor () {
+		// Function applieds red bgcolor to cells that match the criteria.
+		if (config.onlinelistEnabled) {
+			
+		// Parse the options valule to an array.
+		
+		var onlinelist = config.onlinelist.replace(/\n|\t/g,",").split(',');
+		
 		// Number of online players to check is on the webpage	
 		var onlineplayers = parseInt(document.getElementsByTagName('p')[0].innerHTML.split(' ')[3]);
     
@@ -20,14 +36,9 @@
 				}
 			}
 		}
-	}
-	
-	
-	function enableapplycolor (check) {
-		// Function determines if we want to highlight online pilots.
-		if (check['onlinelistEnabled']) { 
-			chrome.storage.local.get('onlinelist',applycolor);
 		}
 	}
-	chrome.storage.local.get('onlinelistEnabled',enableapplycolor);
+
+start();
+	
 })();
