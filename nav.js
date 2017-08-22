@@ -73,7 +73,8 @@ var LOCATION_LINKS = {
 // These variables hold state for the different bits and bobs on this
 // page:
 var config, configured, userloc, ajax, shiplinks,
-	showingLoclinks, minimap, minimapSector, minimapContainer;
+	showingLoclinks, minimap, minimapSector, minimapContainer,
+	fieldsTotal, navSizeHor, navSizeVer, tileRes ;
 
 function start() {
 	var cs = new ConfigurationSet();
@@ -91,7 +92,8 @@ function start() {
 	cs.addKey( 'navBulletinBoardLink' );
 	cs.addKey( 'navBountyBoardLink' );
 	cs.addKey( 'navFlyCloseLink' );
-
+	cs.addKey( 'pathfindingEnabled' ); 
+	
 	shiplinks = new ShipLinks.Controller
 		( 'table/tbody/tr/td[position() = 2]/a', matchShipId );
 	config = cs.makeTracker( applyConfiguration );
@@ -111,7 +113,6 @@ function applyConfiguration() {
 		// This may be a bit wasteful: we reinstall the minimap even
 		// if unrelated parameters changed.  Configuration changes are
 		// infrequent, though.
-
 		removeMinimap();
 		updateMinimap();
 	}
@@ -128,9 +129,10 @@ function applyConfiguration() {
 		doc.defaultView.addEventListener( 'message', onGameMessage );
 		var script = doc.createElement( 'script' );
 		script.type = 'text/javascript';
-		script.textContent = "(function() {var fn=function(){window.postMessage({pardus_sweetener:1,loc:typeof(userloc)=='undefined'?null:userloc,ajax:typeof(ajax)=='undefined'?null:ajax},window.location.origin);};if(typeof(addUserFunction)=='function')addUserFunction(fn);fn();})();";
+		//script.textContent = "(function() {var fn=function(){window.postMessage({pardus_sweetener:1,loc:typeof(userloc)=='undefined'?null:userloc,ajax:typeof(ajax)=='undefined'?null:ajax},window.location.origin);};if(typeof(addUserFunction)=='function')addUserFunction(fn);fn();})();";
+		script.textContent = "(function() {var fn=function(){window.postMessage({pardus_sweetener:1,loc:typeof(userloc)=='undefined'?null:userloc,ajax:typeof(ajax)=='undefined'?null:ajax,navSizeVer:typeof(navSizeVer)=='undefined'?null:navSizeVer,navSizeHor:typeof(navSizeHor)=='undefined'?null:navSizeHor,fieldsTotal:typeof(fieldsTotal)=='undefined'?null:fieldsTotal,tileRes:typeof(tileRes)=='undefined'?null:tileRes},window.location.origin);};if(typeof(addUserFunction)=='function')addUserFunction(fn);fn();})();";
 		doc.body.appendChild( script );
-
+		
 		configured = true;
 	}
 }
@@ -143,8 +145,12 @@ function onGameMessage( event ) {
 	if ( !data || data.pardus_sweetener != 1 ) {
 		return;
 	}
-
+	
 	userloc = parseInt( data.loc );
+	fieldsTotal = parseInt( data.fieldsTotal );
+	navSizeHor = parseInt( data.navSizeHor );
+	navSizeVer = parseInt( data.navSizeVer );
+	tileRes = parseInt( data.tileRes );
 	ajax = data.ajax;
 
 	// The shiplinks box is usually clobbered by partial refresh, so
@@ -156,6 +162,8 @@ function onGameMessage( event ) {
 	updateLocationLinks();
 
 	updateMinimap();
+
+	updatePathfinding();
 
 	configured = true;
 }
@@ -254,7 +262,7 @@ function matchShipId( url ) {
 
 function updateMinimap() {
 	var sectorName;
-
+	
 	if ( !config.miniMap ) {
 		return;
 	}
@@ -317,7 +325,7 @@ function configureMinimap( sector ) {
 	// If we were showing a map, get shot of it, we're rebuilding it
 	// anyway.
 	removeMinimap();
-
+	
 	if ( sector.error ) {
 		return;
 	}
@@ -445,7 +453,64 @@ function getCurrentCoords( result ) {
 	return null;
 }
 
-// Start the ball
+function updatePathfinding() {
+	
+	if (!config.pathfindingEnabled) {
+		return;
+	}
+	
+	var navDiv = doc.getElementById("nav").parentNode;
+	var horpix = navSizeHor * tileRes ;
+    var verpix = navSizeVer * tileRes ;
+	navDiv.style.width = (horpix + 2*navSizeHor).toString() + 'px';
+    navDiv.style.height = (verpix + 2*navSizeVer).toString() + 'px';
+	
+    for (var i = 0 ; i< fieldsTotal ; i++) {
+        var theCell = doc.getElementById('tdNavField'+String(i));
+        theCell.addEventListener('mouseover',function(){showpath(this);}, false);
+        theCell.addEventListener('mouseout',function(){clearpath();}, false);
+        theCell.style.borderWidth = "1px";
+        theCell.style.borderStyle = "solid";
+        theCell.style.borderColor = "black";
+    }
+}
+
+function showpath(cell){
+    cell.style.borderColor = "red";
+    var increment,x,APs = 0;
+    var selected = parseInt(cell.getAttribute('id').split('tdNavField')[1]);
+    var centerx = Math.floor(navSizeHor/2)+1;
+    var centery = Math.floor(navSizeVer/2)+1;
+	var selectedx = selected % navSizeHor - centerx + 1;
+    var selectedy = -(Math.floor(selected / navSizeHor) - centery + 1); // (0,0) is current position)
+    var n = (centery-1)*navSizeHor + centerx - 1;
+
+    document.getElementById('tdNavField' + String(n)).style.borderColor = "red";
+
+    for (var i = 0 ; i < Math.max(Math.abs(selectedx),Math.abs(selectedy)) ; i++) {
+
+		if (i < Math.min(Math.abs(selectedx),Math.abs(selectedy))) {
+			n += -Math.sign(selectedy)*navSizeHor + Math.sign(selectedx);
+			}
+		else if (i > Math.abs(selectedy)) {
+            n += Math.sign(selectedx);
+        }
+        else if (i > Math.abs(selectedx)) {
+            n += -Math.sign(selectedy)*navSizeHor;
+        }
+        var cur_tile = document.getElementById('tdNavField' + String(n));
+        cur_tile.style.borderColor = "red";
+
+    }
+}
+
+function clearpath() {
+    for (var i = 0 ; i< fieldsTotal ; i++) {
+        var theCell = document.getElementById('tdNavField'+String(i));
+        theCell.style.borderColor = "black";
+	}
+}
+	
 start();
 
 })( top, document, ShipLinks, SectorMap );

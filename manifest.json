@@ -39,6 +39,11 @@
 			"matches": [ "*://*.pardus.at/game.php*" ],
 			"js": [ "clock.js", "game.js" ],
 			"all_frames": false
+		},
+		{
+			"matches": [ "*://*.pardus.at/statistics.php?display=onlinelist" ],
+			"js": [ "cfgset.js", "onlinelist.js" ],
+			"all_frames": true
 		}
 	],
 	"content_security_policy": "script-src 'self'; object-src 'self'",

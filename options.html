@@ -20,7 +20,6 @@
    <header>
     <h1>Alarm and notifications</h1>
    </header>
-
    <section>
     <h3>Audible alarm</h3>
 
@@ -773,12 +772,36 @@
    </section>
 
    <section>
+    <h3>Online list</h3>
+    <div class="setting">
+	 <div class="compact" style="margin-left: 25px;">
+      <div>
+       <input type="checkbox" id="onlinelistEnabled" />
+       <label for="onlinelistEnabled">
+        Highlight the following pilots in the online list (seperated by comma, tab or newline)
+       </label>
+      </div>
+      <div style="padding-left: 20px">
+       <textarea id="onlinelist" cols="60" rows="4"
+                 disabled="disabled"></textarea>
+      </div>
+     </div>
+   </section>	
+	
+   <section>
     <h3>Other</h3>
 
     <div class="setting">
      <input type="checkbox" id="sendmsgShowAlliance" />
      <label for="sendmsgShowAlliance">
       Show the recipient's alliance name when composing a private message
+     </label>
+    </div>
+	
+	<div class="setting">
+     <input type="checkbox" id="pathfindingEnabled" />
+     <label for="pathfindingEnabled">
+      Enable highlighting of the ship path
      </label>
     </div>
    </section>
