@@ -61,7 +61,7 @@ function onDOMContentLoaded() {
 		'personalQLArtemisEnabled', 'allianceQLsOrionEnabled',
 		'personalQLOrionEnabled', 'allianceQLsPegasusEnabled',
 		'personalQLPegasusEnabled', 'overrideAmbushRounds',
-		'fitAmbushRounds', 'miniMap', 'sendmsgShowAlliance', 'onlinelistEnabled');
+		'fitAmbushRounds', 'miniMap', 'sendmsgShowAlliance', 'onlinelistEnabled', 'pathfindingEnabled');
 
 	// 2. Free-form strings
 	setupControls ( 'input', onControlInput,

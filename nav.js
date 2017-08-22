@@ -92,8 +92,7 @@ function start() {
 	cs.addKey( 'navBulletinBoardLink' );
 	cs.addKey( 'navBountyBoardLink' );
 	cs.addKey( 'navFlyCloseLink' );
-	
-	cs.addKey( 'onlinelist' ); 
+	cs.addKey( 'pathfindingEnabled' ); 
 	
 	shiplinks = new ShipLinks.Controller
 		( 'table/tbody/tr/td[position() = 2]/a', matchShipId );
@@ -455,6 +454,10 @@ function getCurrentCoords( result ) {
 }
 
 function updatePathfinding() {
+	
+	if (!config.pathfindingEnabled) {
+		return;
+	}
 	
 	var navDiv = doc.getElementById("nav").parentNode;
 	var horpix = navSizeHor * tileRes ;
