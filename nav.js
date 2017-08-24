@@ -93,6 +93,7 @@ function start() {
 	cs.addKey( 'navBountyBoardLink' );
 	cs.addKey( 'navFlyCloseLink' );
 	cs.addKey( 'pathfindingEnabled' ); 
+	cs.addKey( 'pathfindingPercentage' );
 	
 	shiplinks = new ShipLinks.Controller
 		( 'table/tbody/tr/td[position() = 2]/a', matchShipId );
@@ -459,25 +460,17 @@ function updatePathfinding() {
 		return;
 	}
 	
-	var navDiv = doc.getElementById("nav").parentNode;
-	var horpix = navSizeHor * tileRes ;
-    var verpix = navSizeVer * tileRes ;
-	navDiv.style.width = (horpix + 2*navSizeHor).toString() + 'px';
-    navDiv.style.height = (verpix + 2*navSizeVer).toString() + 'px';
-	
-    for (var i = 0 ; i< fieldsTotal ; i++) {
+	for (var i = 0 ; i< fieldsTotal ; i++) {
         var theCell = doc.getElementById('tdNavField'+String(i));
         theCell.addEventListener('mouseover',function(){showpath(this);}, false);
         theCell.addEventListener('mouseout',function(){clearpath();}, false);
-        theCell.style.borderWidth = "1px";
-        theCell.style.borderStyle = "solid";
-        theCell.style.borderColor = "black";
     }
 }
 
 function showpath(cell){
-    cell.style.borderColor = "red";
-    var increment,x,APs = 0;
+	var brightness = config.pathfindingPercentage.toString();
+	cell.style.filter = "brightness("+ brightness + "%)";
+	var increment,x = 0;
     var selected = parseInt(cell.getAttribute('id').split('tdNavField')[1]);
     var centerx = Math.floor(navSizeHor/2)+1;
     var centery = Math.floor(navSizeVer/2)+1;
@@ -485,8 +478,8 @@ function showpath(cell){
     var selectedy = -(Math.floor(selected / navSizeHor) - centery + 1); // (0,0) is current position)
     var n = (centery-1)*navSizeHor + centerx - 1;
 
-    document.getElementById('tdNavField' + String(n)).style.borderColor = "red";
-
+    document.getElementById('tdNavField' + String(n)).style.filter = "brightness("+ brightness + "%)";;
+	
     for (var i = 0 ; i < Math.max(Math.abs(selectedx),Math.abs(selectedy)) ; i++) {
 
 		if (i < Math.min(Math.abs(selectedx),Math.abs(selectedy))) {
@@ -499,7 +492,7 @@ function showpath(cell){
             n += -Math.sign(selectedy)*navSizeHor;
         }
         var cur_tile = document.getElementById('tdNavField' + String(n));
-        cur_tile.style.borderColor = "red";
+    	cur_tile.style.filter = "brightness("+ brightness + "%)";
 
     }
 }
@@ -507,7 +500,7 @@ function showpath(cell){
 function clearpath() {
     for (var i = 0 ; i< fieldsTotal ; i++) {
         var theCell = document.getElementById('tdNavField'+String(i));
-        theCell.style.borderColor = "black";
+    	theCell.style.filter = "brightness(100%)";
 	}
 }
 	
