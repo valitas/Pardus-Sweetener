@@ -772,22 +772,65 @@
    </section>
 
    <section>
-    <h3>Online list</h3>
+    <h3>Online list highlighting</h3>
+
+    <p>Highlight specific pilots in the online list. Write one name per line, or separate names with commas.</p>
+
     <div class="setting">
-	 <div class="compact" style="margin-left: 25px;">
+     <img src="icons/artemis.png" alt="Artemis" title="Artemis"
+          class="universe-icon" style="float: left" />
+
+     <div class="compact" style="margin-left: 25px;">
       <div>
-       <input type="checkbox" id="onlinelistEnabled" />
-       <label for="onlinelistEnabled">
-        Highlight the following pilots in the online list (seperated by comma, tab or newline)
+       <input type="checkbox" id="artemisOnlineListEnabled" />
+       <label for="artemisOnlineListEnabled">
+        Enable highlighting in Artemis
        </label>
       </div>
       <div style="padding-left: 20px">
-       <textarea id="onlinelist" cols="60" rows="4"
+       <textarea id="artemisOnlineList" cols="60" rows="4"
                  disabled="disabled"></textarea>
       </div>
      </div>
-   </section>	
-	
+    </div>
+
+    <div class="setting">
+     <img src="icons/orion.png" alt="Orion" title="Orion"
+          class="universe-icon" style="float: left" />
+
+     <div class="compact" style="margin-left: 25px;">
+      <div>
+       <input type="checkbox" id="orionOnlineListEnabled" />
+       <label for="orionOnlineListEnabled">
+        Enable highlighting in Orion
+       </label>
+      </div>
+      <div style="padding-left: 20px">
+       <textarea id="orionOnlineList" cols="60" rows="4"
+                 disabled="disabled"></textarea>
+      </div>
+     </div>
+    </div>
+
+    <div class="setting">
+     <img src="icons/pegasus.png" alt="Pegasus" title="Pegasus"
+          class="universe-icon" style="float: left" />
+
+     <div class="compact" style="margin-left: 25px;">
+      <div>
+       <input type="checkbox" id="pegasusOnlineListEnabled" />
+       <label for="pegasusOnlineListEnabled">
+        Enable highlighting in Pegasus
+       </label>
+      </div>
+      <div style="padding-left: 20px">
+       <textarea id="pegasusOnlineList" cols="60" rows="4"
+                 disabled="disabled"></textarea>
+      </div>
+     </div>
+    </div>
+   </section>
+
    <section>
     <h3>Other</h3>
 
@@ -797,7 +840,7 @@
       Show the recipient's alliance name when composing a private message
      </label>
     </div>
-	
+
 	<div class="setting">
      <input type="checkbox" id="pathfindingEnabled" />
      <label for="pathfindingEnabled">
