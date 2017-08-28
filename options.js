@@ -46,7 +46,8 @@ function onDOMContentLoaded() {
 	};
 
 	// 1. Checkboxes
-	setupControls ( 'click', onCheckboxClick,
+	setupControls (
+		'click', onCheckboxClick,
 		'muteAlarm', 'alarmCombat', 'alarmAlly', 'alarmWarning', 'alarmPM',
 		'alarmMission', 'alarmTrade', 'alarmPayment', 'desktopCombat',
 		'desktopAlly', 'desktopWarning', 'desktopPM', 'desktopMission',
@@ -61,12 +62,16 @@ function onDOMContentLoaded() {
 		'personalQLArtemisEnabled', 'allianceQLsOrionEnabled',
 		'personalQLOrionEnabled', 'allianceQLsPegasusEnabled',
 		'personalQLPegasusEnabled', 'overrideAmbushRounds',
-		'fitAmbushRounds', 'miniMap', 'sendmsgShowAlliance', 'onlinelistEnabled', 
-		'pathfindingEnabled');
+		'fitAmbushRounds', 'miniMap', 'sendmsgShowAlliance',
+		'artemisOnlineListEnabled', 'orionOnlineListEnabled',
+		'pegasusOnlineListEnabled', 'pathfindingEnabled'
+	);
 
 	// 2. Free-form strings
-	setupControls ( 'input', onControlInput,
-		'personalQLArtemis', 'personalQLOrion', 'personalQLPegasus', 'onlinelist' );
+	setupControls (
+		'input', onControlInput,
+		'personalQLArtemis', 'personalQLOrion', 'personalQLPegasus',
+		'artemisOnlineList', 'orionOnlineList', 'pegasusOnlineList' );
 
 	// 3. Numeric fields
 	setupControls ( 'input', onNumericControlInput,
@@ -137,17 +142,21 @@ function onDOMContentLoaded() {
 		enabled.addEventListener( 'change', listener );
 	}
 	wireQLControls( controls.personalQLArtemisEnabled,
-					controls.personalQLArtemis );
+			controls.personalQLArtemis );
 	wireQLControls( controls.personalQLOrionEnabled,
-					controls.personalQLOrion );
+			controls.personalQLOrion );
 	wireQLControls( controls.personalQLPegasusEnabled,
-					controls.personalQLPegasus );
-	wireQLControls( controls.onlinelistEnabled,
-					controls.onlinelist );
-					
+			controls.personalQLPegasus );
+	// Reuse the QL UI handling code for these because it does the same thing
+	wireQLControls( controls.artemisOnlineListEnabled,
+			controls.artemisOnlineList );
+	wireQLControls( controls.orionOnlineListEnabled,
+			controls.orionOnlineList );
+	wireQLControls( controls.pegasusOnlineListEnabled,
+			controls.pegasusOnlineList );
+
 	// Request the configuration
-	chrome.storage.local.get( Object.keys( controls ),
-							  onConfigurationReady );
+	chrome.storage.local.get( Object.keys( controls ), onConfigurationReady );
 }
 
 function onConfigurationReady( items ) {
@@ -262,8 +271,12 @@ function updateControlState( control, value ) {
 		case 'personalQLArtemisEnabled':
 		case 'personalQLOrionEnabled':
 		case 'personalQLPegasusEnabled':
-		case 'onlinelistEnabled':
 			updateQLControlsDisable();
+			break;
+		case 'artemisOnlineListEnabled':
+		case 'orionOnlineListEnabled':
+		case 'pegasusOnlineListEnabled':
+			updateOnlineListControlsDisable();
 			break;
 		case 'miniMap':
 			updateMiniMapControlsDisable();
@@ -351,8 +364,15 @@ function updateQLControlsDisable() {
 		!controls.personalQLOrionEnabled.checked;
 	controls.personalQLPegasus.disabled =
 		!controls.personalQLPegasusEnabled.checked;
-	controls.onlinelist.disabled = 
-		!controls.onlinelistEnabled.checked;
+}
+
+function updateOnlineListControlsDisable() {
+	controls.artemisOnlineList.disabled =
+		!controls.artemisOnlineListEnabled.checked;
+	controls.orionOnlineList.disabled =
+		!controls.orionOnlineListEnabled.checked;
+	controls.pegasusOnlineList.disabled =
+		!controls.pegasusOnlineListEnabled.checked;
 }
 
 function updateMiniMapControlsDisable() {

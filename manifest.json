@@ -42,7 +42,7 @@
 		},
 		{
 			"matches": [ "*://*.pardus.at/statistics.php?display=onlinelist" ],
-			"js": [ "cfgset.js", "onlinelist.js" ],
+			"js": [ "cfgset.js", "universe.js", "onlinelist.js" ],
 			"all_frames": true
 		}
 	],
