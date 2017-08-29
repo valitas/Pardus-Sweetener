@@ -24,6 +24,8 @@ Features
  * Clocks for different game "ticks", a la Pardus Clock
  * Links to attack and trade with other ships in the nav screen
  * Links to bulletin board, black market, etc. in the nav screen
+ * Highlighting of the path that the ship will take to a tile
+ * Highlighting of names of interest on the online list
 
 Credits and legal notices
 -------------------------
@@ -52,15 +54,15 @@ http://creativecommons.org/licenses/sampling+/1.0/
 
 Individual credits:
 
- * The alarm clock sound (buzz.ogg) by user Timbre:  
+ * The alarm clock sound (buzz.ogg) by user Timbre:
    http://www.freesound.org/samplesViewSingle.php?id=72558
- * The submarine dive horn (dive.ogg) by user CGEffex:  
+ * The submarine dive horn (dive.ogg) by user CGEffex:
    http://www.freesound.org/samplesViewSingle.php?id=104882
  * The alarm sound commonly heard in movies when something goes wrong
    on some type of aircraft (missile.ogg) by user guitarguy1985 (Nick
-   Oakman):  
+   Oakman):
    http://www.freesound.org/samplesViewSingle.php?id=57806
- * The submarine power plant alarm (power.ogg) by user Rfriend:  
+ * The submarine power plant alarm (power.ogg) by user Rfriend:
    http://www.freesound.org/samplesViewSingle.php?id=26962
- * The wrist watch alarm (timex.ogg) by user Corsica_S (Tim Kahn):  
+ * The wrist watch alarm (timex.ogg) by user Corsica_S (Tim Kahn):
    http://www.freesound.org/samplesViewSingle.php?id=18632
