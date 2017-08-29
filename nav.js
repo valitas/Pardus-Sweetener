@@ -517,13 +517,13 @@ function highlightTileInPath( td ) {
 		// don't do this twice
 		if( !HIGHLIGHTED_RX.test(bimg) )
 			td.style.backgroundImage =
-				'linear-gradient(to bottom, rgba(205,205,50,0.1), rgba(205,205,50,0.1)), ' +
+				'linear-gradient(to bottom, rgba(255,105,180,0.15), rgba(255,105,180,0.15)), ' +
 				bimg;
 	}
 	else {
-		td.style.backgroundColor = 'rgba(205,205,50,1)';
+		td.style.backgroundColor = 'rgba(255,105,180,1)';
 		var img = td.firstElementChild;
-		img.style.opacity = 0.9;
+		img.style.opacity = 0.85;
 	}
 	highlightedTiles.push( td );
 }
