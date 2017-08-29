@@ -70,11 +70,24 @@ var LOCATION_LINKS = {
 		]
 	};
 
+var HIGHLIGHTED_RX = /^\s*linear-gradient/;
+var UNHIGHLIGHT_RX = /^\s*linear-gradient.*?, (url\(.*)$/;
+
 // These variables hold state for the different bits and bobs on this
 // page:
 var config, configured, userloc, ajax, shiplinks,
 	showingLoclinks, minimap, minimapSector, minimapContainer,
-	fieldsTotal, navSizeHor, navSizeVer, tileRes ;
+	fieldsTotal, navSizeHor, navSizeVer, tileRes;
+
+// Pathfinder stuff, these are updated by updatePathfinding().  `navtable` is a
+// reference to the table actually containing the visible map tiles, it can be
+// #navarea or #navareatransition.  `tileidx` is an index of the visible tiles
+// in the navtable, keyed by ID.  `highlightedTiles` is an array containing
+// references to the tiles that have been highlighted, so we can undo the
+// highlighting quickly.  navscanXEval is an XPathEvaluator for quickly finding
+// all TDs of a a table; it's precompiled because we do this many times, every
+// time we update tileidx.
+var navtable, navidx, highlightedTiles, navTilesXEval;
 
 function start() {
 	var cs = new ConfigurationSet();
@@ -92,9 +105,8 @@ function start() {
 	cs.addKey( 'navBulletinBoardLink' );
 	cs.addKey( 'navBountyBoardLink' );
 	cs.addKey( 'navFlyCloseLink' );
-	cs.addKey( 'pathfindingEnabled' ); 
-	cs.addKey( 'pathfindingPercentage' );
-	
+	cs.addKey( 'pathfindingEnabled' );
+
 	shiplinks = new ShipLinks.Controller
 		( 'table/tbody/tr/td[position() = 2]/a', matchShipId );
 	config = cs.makeTracker( applyConfiguration );
@@ -116,12 +128,17 @@ function applyConfiguration() {
 		// infrequent, though.
 		removeMinimap();
 		updateMinimap();
+
+		updatePathfinding();
 	}
 	else {
 		// Instead, we only want to do this the first time we run,
 		// because we only want to do it once.  We didn't do it in
 		// start() because we didn't want to receive messages from the
 		// game until we were properly configured.  But now we are.
+
+		navTilesXEval = doc.createExpression( 'tbody/tr/td', null );
+		highlightedTiles = [];
 
 		// Insert a bit of script to execute in the page's context
 		// and send us what we need. And add a listener to receive
@@ -133,7 +150,7 @@ function applyConfiguration() {
 		//script.textContent = "(function() {var fn=function(){window.postMessage({pardus_sweetener:1,loc:typeof(userloc)=='undefined'?null:userloc,ajax:typeof(ajax)=='undefined'?null:ajax},window.location.origin);};if(typeof(addUserFunction)=='function')addUserFunction(fn);fn();})();";
 		script.textContent = "(function() {var fn=function(){window.postMessage({pardus_sweetener:1,loc:typeof(userloc)=='undefined'?null:userloc,ajax:typeof(ajax)=='undefined'?null:ajax,navSizeVer:typeof(navSizeVer)=='undefined'?null:navSizeVer,navSizeHor:typeof(navSizeHor)=='undefined'?null:navSizeHor,fieldsTotal:typeof(fieldsTotal)=='undefined'?null:fieldsTotal,tileRes:typeof(tileRes)=='undefined'?null:tileRes},window.location.origin);};if(typeof(addUserFunction)=='function')addUserFunction(fn);fn();})();";
 		doc.body.appendChild( script );
-		
+
 		configured = true;
 	}
 }
@@ -146,7 +163,7 @@ function onGameMessage( event ) {
 	if ( !data || data.pardus_sweetener != 1 ) {
 		return;
 	}
-	
+
 	userloc = parseInt( data.loc );
 	fieldsTotal = parseInt( data.fieldsTotal );
 	navSizeHor = parseInt( data.navSizeHor );
@@ -263,7 +280,7 @@ function matchShipId( url ) {
 
 function updateMinimap() {
 	var sectorName;
-	
+
 	if ( !config.miniMap ) {
 		return;
 	}
@@ -326,7 +343,7 @@ function configureMinimap( sector ) {
 	// If we were showing a map, get shot of it, we're rebuilding it
 	// anyway.
 	removeMinimap();
-	
+
 	if ( sector.error ) {
 		return;
 	}
@@ -455,55 +472,127 @@ function getCurrentCoords( result ) {
 }
 
 function updatePathfinding() {
-	
-	if (!config.pathfindingEnabled) {
+	if( !config.pathfindingEnabled ) {
+		if( navtable ) {
+			navtable.removeEventListener( 'mouseover', showpath, false);
+			navtable.removeEventListener( 'mouseout', clearpath, false);
+		}
+		if( highlightedTiles )
+			clearpath();
+		navtable = null;
+		navidx = null;
 		return;
 	}
-	
-	for (var i = 0 ; i< fieldsTotal ; i++) {
-        var theCell = doc.getElementById('tdNavField'+String(i));
-        theCell.addEventListener('mouseover',function(){showpath(this);}, false);
-        theCell.addEventListener('mouseout',function(){clearpath();}, false);
-    }
+
+	// Yes, Pardus is a mess.
+	navtable = doc.getElementById( 'navareatransition' );
+	if ( !navtable )
+		navtable = doc.getElementById( 'navarea' );
+	if ( !navtable )
+		return;
+
+	navidx = new Object();
+	var xpr = navTilesXEval.evaluate(
+		navtable, XPathResult.UNORDERED_NODE_ITERATOR_TYPE, null ),
+	    td;
+	while(( td = xpr.iterateNext() ))
+		navidx[ td.id ] = td;
+
+	navtable.addEventListener( 'mouseover', showpath, false);
+	navtable.addEventListener( 'mouseout', clearpath, false);
 }
 
-function showpath(cell){
-	var brightness = config.pathfindingPercentage.toString();
-	cell.style.filter = "brightness("+ brightness + "%)";
+// Given the TD corresponding to a tile, update its style and that of the image
+// inside it for path highlighting.
+
+function highlightTileInPath( td ) {
+	// Pardus does things messy, as usual.  If a tile is empty, then pardus
+	// inserts the background image as a IMG child of the TD.  If the tile
+	// is not empty though (has a building or NPC), then the background
+	// image is set with CSS (as background-image) and the IMG child becomes
+	// the NPC.
+
+	var bimg = td.style.backgroundImage;
+	if( bimg ) {
+		// don't do this twice
+		if( !HIGHLIGHTED_RX.test(bimg) )
+			td.style.backgroundImage =
+				'linear-gradient(to bottom, rgba(255,105,180,0.15), rgba(255,105,180,0.15)), ' +
+				bimg;
+	}
+	else {
+		td.style.backgroundColor = 'rgba(255,105,180,1)';
+		var img = td.firstElementChild;
+		img.style.opacity = 0.85;
+	}
+	highlightedTiles.push( td );
+}
+
+// Revert the effect of the above
+function clearHighlightTileInPath( td ) {
+	var bimg = td.style.getPropertyValue( 'background-image' );
+	if( bimg ) {
+		var m = UNHIGHLIGHT_RX.exec( bimg );
+		if( m ) {
+			bimg = bimg.substring( 72 );
+			td.style.backgroundImage = m[1];
+		}
+	}
+	else {
+		td.style.backgroundColor = null;
+		var img = td.firstElementChild;
+		img.style.opacity = null;
+	}
+}
+
+function showpath( event ){
+	var cell = event.target;
+	while( cell && cell.nodeName != 'TD' )
+		cell = cell.parentElement;
+	if( !cell )
+		return;
+
+	if( cell.classList.contains('navImpassable') )
+		return;
+
+	highlightTileInPath( cell );
+
 	var increment,x = 0;
-    var selected = parseInt(cell.getAttribute('id').split('tdNavField')[1]);
-    var centerx = Math.floor(navSizeHor/2)+1;
-    var centery = Math.floor(navSizeVer/2)+1;
+	var selected = parseInt( cell.getAttribute('id').split('tdNavField')[1] );
+	var centerx = Math.floor( navSizeHor/2 ) + 1;
+	var centery = Math.floor( navSizeVer/2 ) + 1;
 	var selectedx = selected % navSizeHor - centerx + 1;
-    var selectedy = -(Math.floor(selected / navSizeHor) - centery + 1); // (0,0) is current position)
-    var n = (centery-1)*navSizeHor + centerx - 1;
+	var selectedy = -( Math.floor(selected / navSizeHor) - centery + 1 ); // (0,0) is current position)
+	var n = ( centery - 1 )*navSizeHor + centerx - 1;
 
-    document.getElementById('tdNavField' + String(n)).style.filter = "brightness("+ brightness + "%)";;
-	
-    for (var i = 0 ; i < Math.max(Math.abs(selectedx),Math.abs(selectedy)) ; i++) {
+	var td = navidx[ 'tdNavField' + n ];
 
-		if (i < Math.min(Math.abs(selectedx),Math.abs(selectedy))) {
+	highlightTileInPath( td );
+
+	for (var i = 0, end = Math.max( Math.abs(selectedx), Math.abs(selectedy) ); i < end ; i++) {
+		if( i < Math.min( Math.abs(selectedx), Math.abs(selectedy) ) )
 			n += -Math.sign(selectedy)*navSizeHor + Math.sign(selectedx);
-			}
-		else if (i > Math.abs(selectedy)) {
-            n += Math.sign(selectedx);
-        }
-        else if (i > Math.abs(selectedx)) {
-            n += -Math.sign(selectedy)*navSizeHor;
-        }
-        var cur_tile = document.getElementById('tdNavField' + String(n));
-    	cur_tile.style.filter = "brightness("+ brightness + "%)";
+		else if (i > Math.abs(selectedy))
+			n += Math.sign(selectedx);
+		else if (i > Math.abs(selectedx))
+			n += -Math.sign(selectedy)*navSizeHor;
 
-    }
+		var cur_tile = navidx[ 'tdNavField' + n ];
+		highlightTileInPath( cur_tile );
+	}
 }
 
 function clearpath() {
-    for (var i = 0 ; i< fieldsTotal ; i++) {
-        var theCell = document.getElementById('tdNavField'+String(i));
-    	theCell.style.filter = "brightness(100%)";
+	var i, end, td;
+
+	for( i = 0, end = highlightedTiles.length; i < end; i++ ) {
+		td = highlightedTiles[ i ];
+		clearHighlightTileInPath( td );
 	}
+
+	highlightedTiles.length = 0;
 }
-	
+
 start();
 
 })( top, document, ShipLinks, SectorMap );
