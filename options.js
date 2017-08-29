@@ -76,7 +76,7 @@ function onDOMContentLoaded() {
 	// 3. Numeric fields
 	setupControls ( 'input', onNumericControlInput,
 		'autobotsArtemisPoints', 'autobotsOrionPoints',
-		'autobotsPegasusPoints', 'pathfindingPercentage');
+		'autobotsPegasusPoints' );
 
 	// 4. Selects
 	setupControls ( 'change', onControlInput,
@@ -131,11 +131,7 @@ function onDOMContentLoaded() {
 						controls.autobotsOrionPoints );
 	wireAutobotsPreset( controls.autobotsPegasusPreset,
 						controls.autobotsPegasusPoints );
-	// We steal some functions from other controls to wire the pathfinding.
-	wireAutobotsPreset( controls.pathfindingEnabled,
-						controls.pathfindingPercentage );
-	wireQLControls ( controls.pathfindingEnabled,
-					 controls.pathfindingPercentage );
+
 	// And another shorthand
 	function wireQLControls( enabled, ql ) {
 		var listener = function() { onQLEnabledClick( enabled, ql ); };
