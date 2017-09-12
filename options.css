@@ -1,152 +1,47 @@
 /* Mimic the look and feel of Chrome settings page (ca. Chrome 29). */
 
-body {
-    cursor: default;
-    font-family: 'Lucida Grande', sans-serif;
-    font-size: 75%;
-    margin: 0;
+body > section {
+  min-width: 620px;
+  box-shadow: 0 2px 5px 0px rgba(0,0,0,0.2);
+  padding: 0 20px;
+  margin: 0;
 }
 
-a {
-    color: #15c;
-    text-decoration: underline;
+body > section > h3 {
+  cursor: pointer;
+  margin: 0;
+  padding: 1em 0;
 }
 
-h1, h2, h3 {
-    font-weight: normal;
-    line-height: 1;
+body > section > div {
+  display: none;
+  padding-bottom: 1em;
 }
 
-h1 {
-    font-size: 1.5em;
-    margin-top: 21px;
-    margin-left: 23px;
+body > section.active > div {
+  display: block;
 }
 
-h2 {
-    font-size: 1.3em;
-    margin-bottom: 0.4em;
+img.float-icon {
+  float: left;
+  margin: 1ex;
 }
 
-div#navigation {
-    height: 100%;
-    left: 0;
-    position: fixed;
-    width: 155px;
-    z-index: 3;
+p.artemis, p.orion, p.pegasus {
+  margin-left: 25px;
+  position: relative;
 }
 
-div#navigation h1 {
-    color: #5c6166;
+p.artemis::before { content: url('icons/artemis.png') }
+p.orion::before { content: url('icons/orion.png') }
+p.pegasus::before { content: url('icons/pegasus.png') }
+p.artemis::before, p.orion::before, p.pegasus::before {
+  position: absolute;
+  left: -25px;
+  top: 4px;
 }
 
-div#navigation ul {
-    list-style-type: none;
-    padding: 0;
+textarea {
+  width: 590px;
+  overflow-y: scroll;
 }
-
-div#navigation li {
-    border-left: 6px solid transparent;
-    padding-left: 18px;
-    cursor: pointer;
-}
-
-div#navigation li.selected {
-    border-left-color: rgb(78, 87, 100);
-}
-
-div#navigation li.selected button {
-    color: #464e5a;
-}
-
-div#navigation li.help {
-    margin-top: 27px;
-}
-
-div#navigation button {
-    background-color: #fff;
-    color: #999;
-    border: 0;
-    cursor: pointer;
-    font: inherit;
-    line-height: 17px;
-    margin: 6px 0;
-    padding: 0;
-}
-
-div.groupContainer {
-    margin-left: 155px;
-    color: #303942;
-    min-width: 600px;
-    max-width: 888px;
-    padding-bottom: 20px;
-    padding-top: 55px;
-    display: none;
-}
-
-div.groupContainer.selected {
-    display: block;
-}
-
-div.groupContainer header {
-    background-image: linear-gradient(#FFF, #FFF 40%, rgba(255, 255, 255, 0.92));
-    left: 155px;
-    margin-right: 24px;
-    max-width: 738px;
-    min-width: 600px;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 3;
-}
-
-div.groupContainer header h1 {
-    margin: 0;
-    padding: 21px 0 13px;
-}
-
-div.groupContainer header > h1::after {
-    margin-right: 20px;
-    background-color: #eee;
-    content: ' ';
-    display: block;
-    height: 1px;
-    position: relative;
-    top: 13px;
-}
-
-section {
-    max-width: 600px;
-    margin-top: 8px;
-    margin-bottom: 24px;
-    padding-left: 18px;
-}
-
-section > h3 {
-    color: #000;
-    margin-left: -18px;
-}
-
-div.setting {
-    padding-bottom: 7px;
-    padding-top: 7px;
-}
-
-div#helpGroup section.about {
-    margin-top: 10px;
-}
-
-div#helpGroup section.about > div {
-    vertical-align: top;
-    display: inline-block;
-}
-
-div#helpGroup section.version {
-    margin-top: 30px;
-}
-
-div#helpGroup section.product {
-    margin-top: 180px;
-}
-
-img.universe-icon { position: relative; top: 2px; }

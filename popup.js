@@ -108,19 +108,8 @@ function onPortMessage( message ) {
 }
 
 function onOpenOptions( event ) {
-	var optionsUrl = chrome.extension.getURL( 'options.html' ),
-		queryInfo = { url: optionsUrl },
-		callback = function( tabs ) {
-			if ( tabs.length ) {
-				chrome.tabs.update( tabs[0].id, { active: true } );
-			}
-			else {
-				chrome.tabs.create( queryInfo );
-			}
-		};
-
 	event.preventDefault();
-	chrome.tabs.query( queryInfo, callback );
+	chrome.runtime.openOptionsPage();
 }
 
 start();

@@ -55,9 +55,12 @@
 		"128": "icons/128.png"
 	},
 	"manifest_version": 2,
-	"minimum_chrome_version": "28",
+	"minimum_chrome_version": "42",
 	"name": "Pardus Sweetener",
-	"options_page": "options.html",
+	"options_ui": {
+		"page": "options.html",
+		"chrome_style": true
+	},
 	"page_action": {
 		"default_icon": "icons/19.png",
 		"default_title": "Change Pardus Sweetener settings",

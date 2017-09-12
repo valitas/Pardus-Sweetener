@@ -1,41 +1,110 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
  <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8">
   <title>Pardus Sweetener Options</title>
-  <link rel="stylesheet" type="text/css" href="options.css" />
+  <link rel="stylesheet" type="text/css" href="options.css">
   <script type="text/javascript" src="options.js"></script>
  </head>
  <body>
-  <div id="navigation">
-   <h1>Pardus Sweetener</h1>
-   <ul>
-    <li class="selected"><button id="showAlarmGroup">Alarm</button></li>
-    <li><button id="showCombatGroup">Combat</button></li>
-    <li><button id="showGeneralGroup">General</button></li>
-    <li class="help"><button id="showHelpGroup">Help</button></li>
-   </ul>
-  </div>
+  <section>
+   <h3>General settings</h3>
 
-  <div id="alarmGroup" class="groupContainer selected">
-   <header>
-    <h1>Alarm and notifications</h1>
-   </header>
-   <section>
-    <h3>Audible alarm</h3>
-
+   <div>
     <p>
-     The audible alarm can draw your attention back to your computer
-     when certain events occur.  It can also compel people in the
-     vicinity to appease your computer with a hammer, if you leave it
-     logged into Pardus while you are not around to snooze it.
+     <input type="checkbox" id="pathfindingEnabled">
+     <label for="pathfindingEnabled">
+      Enable highlighting of the ship path
+     </label>
+     <br>
+     <input type="checkbox" id="miniMap">
+     <label for="miniMap">
+      Show a small map of the current sector
+     </label>
+     <select id="miniMapPlacement">
+      <option value="topright">Above the Cargo box</option>
+      <option value="statusbox">Inside the Status box</option>
+     </select>
     </p>
 
-    <div class="setting">
-     <input type="checkbox" id="muteAlarm" />
-     <label for="muteAlarm">Mute alarm, regardless of settings below.</label>
-    </div>
+    <p>
+     <input type="checkbox" id="navShipLinks">
+     <label for="navShipLinks">
+      Add links to attack and trade with other ships on your tile
+     </label>
+     <br>
+     <input type="checkbox" id="navEquipmentLink">
+     <label for="navEquipmentLink">
+      Add link to ship and equipment at planets and starbases
+     </label>
+     <br>
+     <input type="checkbox" id="navTradeLink">
+     <label for="navTradeLink">
+      Add link to trade with planets, starbases, and buildings
+     </label>
+     <br>
+     <input type="checkbox" id="navBlackMarketLink">
+     <label for="navBlackMarketLink">
+      Add link to the black market at planets and starbases
+     </label>
+     <br>
+     <input type="checkbox" id="navHackLink">
+     <label for="navHackLink">
+      Add link to hack information at planets, starbases, and
+      buildings
+     </label>
+     <br>
+     <input type="checkbox" id="navBulletinBoardLink">
+     <label for="navBulletinBoardLink">
+      Add link to the bulletin board at planets and starbases
+     </label>
+     <br>
+     <input type="checkbox" id="navBountyBoardLink">
+     <label for="navBountyBoardLink">
+      Add link to the bounty board at planets and starbases
+     </label>
+     <br>
+     <input type="checkbox" id="navShipyardLink">
+     <label for="navShipyardLink">
+      Add link to the shipyard at planets and starbases
+     </label>
+     <br>
+     <input type="checkbox" id="navCrewQuartersLink">
+     <label for="navCrewQuartersLink">
+      Add link to the crew quarters at planets and starbases
+     </label>
+     <br>
+     <input type="checkbox" id="navFlyCloseLink">
+     <label for="navFlyCloseLink">
+      Add link to fly close to starbases
+     </label>
+    </p>
 
-    <div class="setting">
+    <p>
+     <input type="checkbox" id="sendmsgShowAlliance">
+     <label for="sendmsgShowAlliance">
+      Show the recipient's alliance name when composing a private message
+     </label>
+    </p>
+   </div>
+  </section>
+
+  <section>
+   <h3>Alarm and notifications</h3>
+
+   <div>
+    <p>
+     The audible alarm can draw your attention when certain events occur.  It
+     can also compel others to appease your computer with a hammer, if you leave
+     it logged into Pardus while you are not around to snooze it.
+    </p>
+
+    <p>
+     <input type="checkbox" id="muteAlarm">
+     <label for="muteAlarm">Mute alarm, regardless of settings below.</label>
+    </p>
+
+    <p>
      Alarm sound:
      <select id="alarmSound">
       <option value="buzz">Buzzer</option>
@@ -44,238 +113,141 @@
       <option value="power">Power plant</option>
       <option value="timex">Timex</option>
      </select>
-     <input id="testAlarm" type="button" value="Test" />
-    </div>
+     <input id="testAlarm" type="button" value="Test">
+    </p>
 
-    <div class="setting">
-     <input type="checkbox" id="alarmCombat" />
+    <p>
+     <input type="checkbox" id="alarmCombat">
      <label for="alarmCombat">Sound the alarm on combat</label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="alarmWarning" />
+     <br>
+     <input type="checkbox" id="alarmWarning">
      <label for="alarmWarning">
       Sound the alarm when warning messages are displayed (e.g. "new ACS
       entries")
      </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="alarmAlly" />
+     <br>
+     <input type="checkbox" id="alarmAlly">
      <label for="alarmAlly">
       Sound the alarm when alliance messages arrive
      </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="alarmPM" />
+     <br>
+     <input type="checkbox" id="alarmPM">
      <label for="alarmPM">
       Sound the alarm when private messages arrive
      </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="alarmMission" />
+     <br>
+     <input type="checkbox" id="alarmMission">
      <label for="alarmMission">Sound the alarm on mission events</label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="alarmTrade" />
+     <br>
+     <input type="checkbox" id="alarmTrade">
      <label for="alarmTrade">Sound the alarm on trade</label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="alarmPayment" />
+     <br>
+     <input type="checkbox" id="alarmPayment">
      <label for="alarmPayment">Sound the alarm on payments</label>
-    </div>
-   </section>
-
-   <section>
-    <h3>Desktop notifications</h3>
-
-    <p>
-     Desktop notifications are subtler than the alarm, and convenient
-     when you are at your computer but not watching the Pardus tab.
     </p>
 
-    <div class="setting">
-     <input id="testNotification" type="button"
-            value="See a sample desktop notification" />
-    </div>
+    <p>
+     Desktop notifications are subtler and convenient when you are at your
+     computer, just not watching the Pardus tab.
+    </p>
 
-    <div class="setting">
-     <input type="checkbox" id="desktopCombat" />
+    <p>
+     <input id="testNotification" type="button"
+            value="See a sample desktop notification">
+    </p>
+
+    <p>
+     <input type="checkbox" id="desktopCombat">
      <label for="desktopCombat">
       Show a desktop notification on combat
      </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="desktopWarning" />
+     <br>
+     <input type="checkbox" id="desktopWarning">
      <label for="desktopWarning">
       Show a desktop notification when warning messages are displayed
       (e.g. "new ACS entries")
      </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="desktopAlly" />
+     <br>
+     <input type="checkbox" id="desktopAlly">
      <label for="desktopAlly">
       Show a desktop notification when alliance messages arrive
      </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="desktopPM" />
+     <br>
+     <input type="checkbox" id="desktopPM">
      <label for="desktopPM">
       Show a desktop notification when private messages arrive
      </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="desktopMission" />
+     <br>
+     <input type="checkbox" id="desktopMission">
      <label for="desktopMission">
       Show a desktop notification on mission events
      </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="desktopTrade" />
+     <br>
+     <input type="checkbox" id="desktopTrade">
      <label for="desktopTrade">
       Show a desktop notification on trade
      </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="desktopPayment" />
+     <br>
+     <input type="checkbox" id="desktopPayment">
      <label for="desktopPayment">
       Show a desktop notification on payments
      </label>
-    </div>
-   </section>
-  </div>
+    </p>
+   </div>
+  </section>
 
-  <div id="combatGroup" class="groupContainer">
-   <header>
-    <h1>Ambush and combat</h1>
-   </header>
+  <section>
+   <h3>Combat settings</h3>
 
-   <section>
-    <h3>Quick lists</h3>
-
+   <div>
     <p>
-     Alliance QLs are obtained from your My Alliance page; see
-
-     <a target="_blank"
-        href="https://github.com/valitas/Pardus-Sweetener/wiki/Quick-lists">here</a>
-
-     for details.
+     <input type="checkbox" id="pvpMissileAutoAll">
+     <label for="pvpMissileAutoAll">
+      Fire all missiles by default in Player vs Player combat
+     </label>
+     <br>
+     <input type="checkbox" id="pvpHighestRounds">
+     <label for="pvpHighestRounds">
+      Preselect the highest number of rounds you can attack for in
+      Player vs Player combat
+     </label>
+     <br>
+     <input type="checkbox" id="pvmMissileAutoAll">
+     <label for="pvmMissileAutoAll">
+      Fire all missiles by default in Player vs NPC combat
+     </label>
+     <br>
+     <input type="checkbox" id="pvmHighestRounds">
+     <label for="pvmHighestRounds">
+      Preselect the highest number of rounds you can attack for in
+      Player vs NPC combat
+     </label>
+     <br>
+     <input type="checkbox" id="pvbMissileAutoAll">
+     <label for="pvbMissileAutoAll">
+      Fire all missiles by default in Player vs Building combat
+     </label>
+     <br>
+     <input type="checkbox" id="displayDamage">
+     <label for="displayDamage">
+      Display damage taken after combat
+     </label>
     </p>
 
-    <div class="setting">
-     <img src="icons/artemis.png" alt="Artemis" title="Artemis"
-          class="universe-icon" style="float: left" />
+    <p>
+     Robot autofill fills the "use robots" field with the amount needed to
+     repair your ship's armour.  For this, you need to configure your ship's
+     armour points and strength.
+    </p>
 
-     <div class="compact" style="margin-left: 25px;">
-      <div>
-       <input type="checkbox" id="allianceQLsArtemisEnabled" />
-       <label for="allianceQLsArtemisEnabled">
-        Use alliance QLs in Artemis
-       </label>
-      </div>
-      <div>
-       <input type="checkbox" id="personalQLArtemisEnabled" />
-       <label for="personalQLArtemisEnabled">
-        Use personal QL in Artemis
-       </label>
-      </div>
-      <div style="padding-left: 20px">
-       <textarea id="personalQLArtemis" cols="60" rows="4"
-                 disabled="disabled"></textarea>
-      </div>
-     </div>
-    </div>
-
-    <div class="setting">
-     <img src="icons/orion.png" alt="Orion" title="Orion"
-          class="universe-icon" style="float: left" />
-
-     <div class="compact" style="margin-left: 25px;">
-      <div>
-       <input type="checkbox" id="allianceQLsOrionEnabled" />
-       <label for="allianceQLsOrionEnabled">
-        Use alliance QLs in Orion
-       </label>
-      </div>
-      <div>
-       <input type="checkbox" id="personalQLOrionEnabled" />
-       <label for="personalQLOrionEnabled">
-        Use personal QL in Orion
-       </label>
-      </div>
-      <div style="padding-left: 20px">
-       <textarea id="personalQLOrion" cols="60" rows="4"
-                 disabled="disabled"></textarea>
-      </div>
-     </div>
-    </div>
-
-    <div class="setting">
-     <img src="icons/pegasus.png" alt="Pegasus" title="Pegasus"
-          class="universe-icon" style="float: left" />
-
-     <div class="compact" style="margin-left: 25px;">
-      <div>
-       <input type="checkbox" id="allianceQLsPegasusEnabled" />
-       <label for="allianceQLsPegasusEnabled">
-        Use alliance QLs in Pegasus
-       </label>
-      </div>
-      <div>
-       <input type="checkbox" id="personalQLPegasusEnabled" />
-       <label for="personalQLPegasusEnabled">
-        Use personal QL in Pegasus
-       </label>
-      </div>
-      <div style="padding-left: 20px">
-       <textarea id="personalQLPegasus" cols="60" rows="4"
-                 disabled="disabled"></textarea>
-      </div>
-     </div>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="fitAmbushRounds" />
-     <label for="fitAmbushRounds">
-	  Fix QLs that call for more rounds than you can set,
-	  so that you set for your maximum rounds.
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="overrideAmbushRounds" />
-     <label for="overrideAmbushRounds">
-      Always select the highest number of rounds that you can set.
-      <strong>This will override the rounds setting in any quicklist
-      you apply.</strong>
-     </label>
-    </div>
-
-   </section>
-
-   <section>
-    <h3>Robot autofill</h3>
-
-    <div class="setting">
-     <input type="checkbox" id="autobots" />
+    <p>
+     <input type="checkbox" id="autobots">
      <label for="autobots">
-      Fill the "use robots" field with the amount needed to repair
-      your armour as close as possible to the condition set below:
+      Enable robot autofill
      </label>
-    </div>
+    </p>
 
-    <div class="setting">
-     <img src="icons/artemis.png" alt="Artemis" title="Artemis" class="universe-icon" />
+    <p class="artemis">
      <label for="autobotsArtemisPreset">Preset:</label>
      <select id="autobotsArtemisPreset">
       <option value="0">Custom</option>
@@ -348,7 +320,7 @@
       </optgroup>
      </select>
      <label for="autobotsArtemisPoints">Armour points:</label>
-     <input id="autobotsArtemisPoints" type="text" size="3" />
+     <input id="autobotsArtemisPoints" type="text" size="3">
      <label for="autobotsArtemisStrength">Armour strength:</label>
      <select id="autobotsArtemisStrength">
       <option value="180">I</option>
@@ -357,12 +329,11 @@
       <option value="45">IV</option>
       <option value="36">V</option>
       <option value="30">VI</option>
-	  <option value="26">VII</option>
+      <option value="26">VII</option>
      </select>
-    </div>
+    </p>
 
-    <div class="setting">
-     <img src="icons/orion.png" alt="Orion" title="Orion" class="universe-icon" />
+    <p class="orion">
      <label for="autobotsOrionPreset">Preset:</label>
      <select id="autobotsOrionPreset">
       <option value="0">Custom</option>
@@ -435,7 +406,7 @@
       </optgroup>
      </select>
      <label for="autobotsOrionPoints">Armour points:</label>
-     <input id="autobotsOrionPoints" type="text" size="3" />
+     <input id="autobotsOrionPoints" type="text" size="3">
      <label for="autobotsOrionStrength">Armour strength:</label>
      <select id="autobotsOrionStrength">
       <option value="180">I</option>
@@ -444,12 +415,11 @@
       <option value="45">IV</option>
       <option value="36">V</option>
       <option value="30">VI</option>
-	  <option value="26">VII</option>
+      <option value="26">VII</option>
      </select>
-    </div>
+    </p>
 
-    <div class="setting">
-     <img src="icons/pegasus.png" alt="Pegasus" title="Pegasus" class="universe-icon" />
+    <p class="pegasus">
      <label for="autobotsPegasusPreset">Preset:</label>
      <select id="autobotsPegasusPreset">
       <option value="0">Custom</option>
@@ -522,7 +492,7 @@
       </optgroup>
      </select>
      <label for="autobotsPegasusPoints">Armour points:</label>
-     <input id="autobotsPegasusPoints" type="text" size="3" />
+     <input id="autobotsPegasusPoints" type="text" size="3">
      <label for="autobotsPegasusStrength">Armour strength:</label>
      <select id="autobotsPegasusStrength">
       <option value="180">I</option>
@@ -531,389 +501,255 @@
       <option value="45">IV</option>
       <option value="36">V</option>
       <option value="30">VI</option>
-	  <option value="26">VII</option>
+      <option value="26">VII</option>
      </select>
-    </div>
-   </section>
+    </p>
 
-   <section>
-    <h3>Combat defaults</h3>
+   </div>
+  </section>
 
-    <div class="setting">
-     <input type="checkbox" id="pvpMissileAutoAll" />
-     <label for="pvpMissileAutoAll">
-      Fire all missiles by default in Player vs Player combat
-     </label>
-    </div>
+  <section>
+   <h3>Ambush settings</h3>
 
-    <div class="setting">
-     <input type="checkbox" id="pvpHighestRounds" />
-     <label for="pvpHighestRounds">
-      Preselect the highest number of rounds you can attack for in
-      Player vs Player combat
-     </label>
-    </div>
+   <div>
+    <p>
+     <div>
+      <input type="checkbox" id="fitAmbushRounds">
+      <label for="fitAmbushRounds">
+       Fix QLs with more rounds than you can set, so you set for your maximum
+       rounds.
+      </label>
+     </div>
 
-    <div class="setting">
-     <input type="checkbox" id="pvmMissileAutoAll" />
-     <label for="pvmMissileAutoAll">
-      Fire all missiles by default in Player vs NPC combat
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="pvmHighestRounds" />
-     <label for="pvmHighestRounds">
-      Preselect the highest number of rounds you can attack for in
-      Player vs NPC combat
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="pvbMissileAutoAll" />
-     <label for="pvbMissileAutoAll">
-      Fire all missiles by default in Player vs Building combat
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="displayDamage" />
-     <label for="displayDamage">
-      Display damage taken after combat
-     </label>
-    </div>
-   </section>
-  </div>
-
-  <div id="generalGroup" class="groupContainer">
-   <header>
-    <h1>General user interface enhancements</h1>
-   </header>
-
-   <section>
-    <h3>Clocks</h3>
+     <div>
+      <input type="checkbox" id="overrideAmbushRounds">
+      <label for="overrideAmbushRounds">
+       Always select the maximum rounds that you can set.
+       <strong>This will override the rounds in any quicklist.</strong>
+      </label>
+     </div>
+    </p>
 
     <p>
-     Countdowns to recurring in-game events. For these to be accurate,
-     your computer's clock and time zone should be set correctly.
-     Modern operating systems can keep your clock on the correct time
-     automatically; see
-
+     Alliance quicklists are obtained from the in-game <em>My Alliance</em>
+     page; see
      <a target="_blank"
-        href="http://www.ehow.com/how_7550535_sync-clock-server.html">this
-     article</a>
+		href="https://github.com/valitas/Pardus-Sweetener/wiki/Quick-lists">here</a>
+     for details.
+    </p>
 
+    <p class="artemis">
+     <input type="checkbox" id="allianceQLsArtemisEnabled">
+     <label for="allianceQLsArtemisEnabled">
+      Use alliance QLs in Artemis
+     </label>
+     <br>
+     <input type="checkbox" id="personalQLArtemisEnabled">
+     <label for="personalQLArtemisEnabled">
+      Use personal QL in Artemis
+     </label>
+     <br>
+     <textarea id="personalQLArtemis" rows="3" disabled
+	       placeholder="Artemis quicklist"></textarea>
+    </p>
+
+    <p class="orion">
+     <input type="checkbox" id="allianceQLsOrionEnabled">
+     <label for="allianceQLsOrionEnabled">
+      Use alliance QLs in Orion
+     </label>
+     <br>
+     <input type="checkbox" id="personalQLOrionEnabled">
+     <label for="personalQLOrionEnabled">
+      Use personal QL in Orion
+     </label>
+     <br>
+     <textarea id="personalQLOrion" rows="3" disabled
+               placeholder="Orion quicklist" ></textarea>
+    </p>
+
+    <p class="pegasus">
+     <input type="checkbox" id="allianceQLsPegasusEnabled">
+     <label for="allianceQLsPegasusEnabled">
+      Use alliance QLs in Pegasus
+     </label>
+     <br>
+     <input type="checkbox" id="personalQLPegasusEnabled">
+     <label for="personalQLPegasusEnabled">
+      Use personal QL in Pegasus
+     </label>
+     <br>
+     <textarea id="personalQLPegasus" rows="3" disabled
+               placeholder="Pegasus quicklist"></textarea>
+    </p>
+
+   </div>
+  </section>
+
+  <section>
+   <h3>Online list highlighting</h3>
+
+   <div>
+    <p>
+     Highlight specific pilots in the online list. Write one name per line, or
+     separate names with commas.
+    </p>
+
+    <p class="artemis">
+     <input type="checkbox" id="artemisOnlineListEnabled">
+     <label for="artemisOnlineListEnabled">
+      Enable highlighting in Artemis
+     </label>
+     <br>
+     <textarea id="artemisOnlineList" rows="4" disabled></textarea>
+    </p>
+
+    <p class="orion">
+     <input type="checkbox" id="orionOnlineListEnabled">
+     <label for="orionOnlineListEnabled">
+      Enable highlighting in Orion
+     </label>
+     <br>
+     <textarea id="orionOnlineList" rows="4" disabled></textarea>
+    </p>
+
+    <p class="pegasus">
+     <input type="checkbox" id="pegasusOnlineListEnabled">
+     <label for="pegasusOnlineListEnabled">
+      Enable highlighting in Pegasus
+     </label>
+     <br>
+     <textarea id="pegasusOnlineList" rows="4" disabled></textarea>
+    </p>
+   </div>
+  </section>
+
+  <section>
+   <h3>Clocks</h3>
+
+   <div>
+    <p>
+     Countdowns to recurring in-game events. For these to be accurate, your
+     computer's clock and time zone should be set correctly.  Modern operating
+     systems can keep your clock on the correct time automatically; see
+     <a target="_blank"
+		href="http://www.ehow.com/how_7550535_sync-clock-server.html">this
+      article</a>
      for a quick rundown.
     </p>
 
-    <div class="setting">
-     <input type="checkbox" id="clockUTC" />
+    <p>
+     <input type="checkbox" id="clockUTC">
      <label for="clockUTC">
       Show the current Greenwich Mean Time
      </label>
-    </div>
-
-   <div class="setting">
-    <input type="checkbox" id="clockAP" />
-    <label for="clockAP">
-     Show the time remaining to next 24 AP
-    </label>
+     <br>
+     <input type="checkbox" id="clockAP">
+     <label for="clockAP">
+      Show the time remaining to next 24 AP
+     </label>
+     <br>
+     <input type="checkbox" id="clockB">
+     <label for="clockB">
+      Show the time remaining to the next building tick
+     </label>
+     <br>
+     <input type="checkbox" id="clockP">
+     <label for="clockP">
+      Show the time remaining to the next planet tick
+     </label>
+     <br>
+     <input type="checkbox" id="clockS">
+     <label for="clockS">
+      Show the time remaining to the next starbase tick
+     </label>
+     <br>
+     <input type="checkbox" id="clockL">
+     <label for="clockL">
+      Show the time remaining to the next armour repair by your space leech
+     </label>
+     <br>
+     <input type="checkbox" id="clockE">
+     <label for="clockE">
+      Show the time remaining to the next e-matter regeneration
+     </label>
+     <br>
+     <input type="checkbox" id="clockN">
+     <label for="clockN">
+      Show the time remaining to the next roaming NPC movement (not Z series, Lucidi)
+     </label>
+     <br>
+     <input type="checkbox" id="clockZ">
+     <label for="clockZ">
+      Show the time remaining to the next Z15 Scout, Z16 Fighter, Lucidi movement
+     </label>
+     <br>
+     <input type="checkbox" id="clockR">
+     <label for="clockR">
+      Show the time remaining to the next server reset
+     </label>
+    </p>
    </div>
+  </section>
 
-   <div class="setting">
-    <input type="checkbox" id="clockB" />
-    <label for="clockB">
-     Show the time remaining to the next building tick
-    </label>
-   </div>
+  <section>
+   <h3>About</h3>
 
-   <div class="setting">
-    <input type="checkbox" id="clockP" />
-    <label for="clockP">
-     Show the time remaining to the next planet tick
-    </label>
-   </div>
+   <div>
+    <div><img src="icons/64.png"></div>
 
-   <div class="setting">
-    <input type="checkbox" id="clockS" />
-    <label for="clockS">
-     Show the time remaining to the next starbase tick
-    </label>
-   </div>
+    <p>Version <span id="version"></span></p>
 
-   <div class="setting">
-    <input type="checkbox" id="clockL" />
-    <label for="clockL">
-     Show the time remaining to the next armour repair by your space leech
-    </label>
-   </div>
-
-   <div class="setting">
-    <input type="checkbox" id="clockE" />
-    <label for="clockE">
-     Show the time remaining to the next e-matter regeneration
-    </label>
-   </div>
-
-   <div class="setting">
-    <input type="checkbox" id="clockN" />
-    <label for="clockN">
-     Show the time remaining to the next roaming NPC movement (not Z series, Lucidi)
-    </label>
-   </div>
-
-   <div class="setting">
-    <input type="checkbox" id="clockZ" />
-    <label for="clockZ">
-     Show the time remaining to the next Z15 Scout, Z16 Fighter, Lucidi movement
-    </label>
-   </div>
-
-   <div class="setting">
-    <input type="checkbox" id="clockR" />
-    <label for="clockR">
-     Show the time remaining to the next server reset
-    </label>
-   </div>
-   </section>
-
-   <section>
-    <h3>Map</h3>
-
-    <div class="setting">
-     <input type="checkbox" id="miniMap" />
-     <label for="miniMap">
-      Show a small map of the current sector
-     </label>
-    </div>
-
-    <div class="setting">
-     Map placement in the Nav page:
-     <select id="miniMapPlacement">
-      <option value="topright">Above the Cargo box</option>
-      <option value="statusbox">Inside the Status box</option>
-     </select>
-    </div>
-   </section>
-
-   <section>
-    <h3>Quick links</h3>
-
-    <div class="setting">
-     <input type="checkbox" id="navShipLinks" />
-     <label for="navShipLinks">
-      Add links to attack and trade with other ships on your tile
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="navEquipmentLink" />
-     <label for="navEquipmentLink">
-      Add link to ship and equipment at planets and starbases
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="navTradeLink" />
-     <label for="navTradeLink">
-      Add link to trade with planets, starbases, and buildings
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="navBlackMarketLink" />
-     <label for="navBlackMarketLink">
-      Add link to the black market at planets and starbases
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="navHackLink" />
-     <label for="navHackLink">
-      Add link to hack information at planets, starbases, and
-      buildings
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="navBulletinBoardLink" />
-     <label for="navBulletinBoardLink">
-      Add link to the bulletin board at planets and starbases
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="navBountyBoardLink" />
-     <label for="navBountyBoardLink">
-      Add link to the bounty board at planets and starbases
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="navShipyardLink" />
-     <label for="navShipyardLink">
-      Add link to the shipyard at planets and starbases
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="navCrewQuartersLink" />
-     <label for="navCrewQuartersLink">
-      Add link to the crew quarters at planets and starbases
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="navFlyCloseLink" />
-     <label for="navFlyCloseLink">
-      Add link to fly close to starbases
-     </label>
-    </div>
-   </section>
-
-   <section>
-    <h3>Online list highlighting</h3>
-
-    <p>Highlight specific pilots in the online list. Write one name per line, or separate names with commas.</p>
-
-    <div class="setting">
-     <img src="icons/artemis.png" alt="Artemis" title="Artemis"
-          class="universe-icon" style="float: left" />
-
-     <div class="compact" style="margin-left: 25px;">
-      <div>
-       <input type="checkbox" id="artemisOnlineListEnabled" />
-       <label for="artemisOnlineListEnabled">
-        Enable highlighting in Artemis
-       </label>
-      </div>
-      <div style="padding-left: 20px">
-       <textarea id="artemisOnlineList" cols="60" rows="4"
-                 disabled="disabled"></textarea>
-      </div>
-     </div>
-    </div>
-
-    <div class="setting">
-     <img src="icons/orion.png" alt="Orion" title="Orion"
-          class="universe-icon" style="float: left" />
-
-     <div class="compact" style="margin-left: 25px;">
-      <div>
-       <input type="checkbox" id="orionOnlineListEnabled" />
-       <label for="orionOnlineListEnabled">
-        Enable highlighting in Orion
-       </label>
-      </div>
-      <div style="padding-left: 20px">
-       <textarea id="orionOnlineList" cols="60" rows="4"
-                 disabled="disabled"></textarea>
-      </div>
-     </div>
-    </div>
-
-    <div class="setting">
-     <img src="icons/pegasus.png" alt="Pegasus" title="Pegasus"
-          class="universe-icon" style="float: left" />
-
-     <div class="compact" style="margin-left: 25px;">
-      <div>
-       <input type="checkbox" id="pegasusOnlineListEnabled" />
-       <label for="pegasusOnlineListEnabled">
-        Enable highlighting in Pegasus
-       </label>
-      </div>
-      <div style="padding-left: 20px">
-       <textarea id="pegasusOnlineList" cols="60" rows="4"
-                 disabled="disabled"></textarea>
-      </div>
-     </div>
-    </div>
-   </section>
-
-   <section>
-    <h3>Other</h3>
-
-    <div class="setting">
-     <input type="checkbox" id="sendmsgShowAlliance" />
-     <label for="sendmsgShowAlliance">
-      Show the recipient's alliance name when composing a private message
-     </label>
-    </div>
-
-    <div class="setting">
-     <input type="checkbox" id="pathfindingEnabled" />
-     <label for="pathfindingEnabled">
-      Enable highlighting of the ship path
-     </label>
-    </div>
-   </section>
-
-  </div>
-
-  <div id="helpGroup" class="groupContainer">
-   <header>
-    <h1>About</h1>
-   </header>
-
-    <section class="about">
-     <img src="icons/64.png" />
-     <div>
-      <h2>Pardus Sweetener</h2>
-      <span>User interface enhancements for Pardus.</span>
-     </div>
-    </section>
-
-    <section class="version">
-     Version <span id="version"></span>
-    </section>
-
-    <section class="product">
-     <p>Pardus Sweetener<br />
-
-     Copyright © 2011-2016 Val.  This software is free to use and
-     modify: see legal notice in the file README.md included in the
-     software package, or read it
-     <a href="https://github.com/valitas/Pardus-Sweetener#credits-and-legal-notices"
-        target="_blank">online</a>.
-
+    <p>
      Please report bugs and request enhancements in the
      <a href="http://forum.pardus.at/index.php?showtopic=62190"
-        target="_blank">Pardus Forum</a> or the
+	target="_blank">Pardus Forum</a>
+     or the
      <a href="https://github.com/valitas/Pardus-Sweetener"
-        target="_blank">GitHub repository</a>.</p>
+	target="_blank">GitHub repository</a>.
+    </p>
 
-     <p>DISCLAIMER: This software is without warranty.</p>
+    <p>
+     Copyright © 2011-2017 Val and the Pardus Sweetener contributors.
+     This software is free to use and modify: see legal notice in the file
+     README.md included in the software package, or read it
+     <a href="https://github.com/valitas/Pardus-Sweetener#credits-and-legal-notices"
+        target="_blank">online</a>.
+    </p>
 
-     <p>The sound samples included with the software were obtained
+    <p>DISCLAIMER: This software is without warranty.</p>
+
+    <p>The sound samples included with the software were obtained
      from <a href="http://freesound.org/" target="_blank">freesound.org</a>
      and are licensed under the
      <a href="http://creativecommons.org/licenses/sampling+/1.0/"
         target="_blank">Creative Commons Sampling Plus 1.0 License</a>.
-     Individual credits:</p>
-     <ul>
-      <li>The alarm clock sound by user Timbre:
+     Individual credits:
+    </p>
+
+    <ul>
+     <li>The alarm clock sound by user Timbre:
       <a href="http://www.freesound.org/samplesViewSingle.php?id=72558"
          target="_blank">Buzzer</a></li>
-      <li>The submarine dive horn by user CGEffex:
+     <li>The submarine dive horn by user CGEffex:
       <a href="http://www.freesound.org/samplesViewSingle.php?id=104882"
          target="_blank">Dive horn</a></li>
-      <li>The alarm sound commonly heard in movies when something goes wrong on some type of aircraft, by user guitarguy1985 (Nick Oakman):
+     <li>The alarm sound commonly heard in movies when something goes wrong on some type of aircraft, by user guitarguy1985 (Nick Oakman):
       <a href="http://www.freesound.org/samplesViewSingle.php?id=57806"
          target="_blank">Missile alert</a></li>
-      <li>The submarine power plant alarm by user Rfriend:
+     <li>The submarine power plant alarm by user Rfriend:
       <a href="http://www.freesound.org/samplesViewSingle.php?id=26962"
          target="_blank">Power plant</a></li>
-      <li>The wrist watch alarm by user Corsica_S (Tim Kahn):
+     <li>The wrist watch alarm by user Corsica_S (Tim Kahn):
       <a href="http://www.freesound.org/samplesViewSingle.php?id=18632"
          target="_blank">Timex</a></li>
-     </ul>
+    </ul>
 
-     <p><a href="http://www.pardus.at/" target="_blank">Pardus</a> is
-     Copyright © 2003-2013 Bayer &amp; Szell OG. The author of this
-     software is not affiliated with Bayer &amp; Szell OG.</p>
-    </section>
-
-  </div>
+    <p>
+     Pardus is Copyright © 2003-2017 Bayer &amp; Szell OG. The author of this
+     software is not affiliated with Bayer &amp; Szell OG.
+    </p>
+   </div>
+  </section>
  </body>
 </html>
