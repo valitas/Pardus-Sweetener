@@ -110,7 +110,7 @@ function start() {
 	shiplinks = new ShipLinks.Controller
 		( 'table/tbody/tr/td[position() = 2]/a', matchShipId );
 	config = cs.makeTracker( applyConfiguration );
-
+	addDrugTimer(); 
 }
 
 function applyConfiguration() {
@@ -130,6 +130,7 @@ function applyConfiguration() {
 		updateMinimap();
 
 		updatePathfinding();
+		
 	}
 	else {
 		// Instead, we only want to do this the first time we run,
@@ -591,6 +592,100 @@ function clearpath() {
 	}
 
 	highlightedTiles.length = 0;
+}
+
+function addDrugTimer() {
+	var drugsUseLink = document.getElementById( 'aCargoUse51' );
+
+	if( drugsUseLink ) {
+		drugsUseLink.addEventListener('click', drugsLinkClicked);
+	}
+}
+
+function drugsLinkClicked() {
+	//We have to wait for use(51) function to chamge the DOM
+
+	window.setTimeout(part2,100);
+	function part2(){
+		var useBtn = document.getElementsByName( 'useres' )[0];
+		var ukey = Universe.getServer ( document ).substr( 0, 1 );
+		useBtn.addEventListener('click', usedDrugs.bind( null, ukey ) );
+		// useBtn.value = 'use1';
+		chrome.storage.sync.get ( [ukey + 'drugTimerLast', ukey + 'drugTimerClear'] , displayDrugTimer.bind( null, ukey ) );
+	}
+}
+
+function displayDrugTimer ( ukey, data ) {
+	var useBtn = document.getElementsByName( 'useres' )[0];
+	var timerDiv = document.createElement('div');
+	timerDiv.id = 'drugTimer';
+	useBtn.parentNode.appendChild( timerDiv ); 
+	timerDiv.appendChild ( document.createElement( 'br' ) );
+	
+	if (!data[ ukey + 'drugTimerClear'] ) {
+		// No data, so make some nice comments
+		timerDiv.appendChild ( document.createTextNode('No drugs used, yet...') );
+	}
+	else {
+		// We have data, display current addiction
+		timerDiv.appendChild ( document.createTextNode('Drugs used:') );
+		timerDiv.appendChild ( document.createElement( 'br' ) );
+
+		var diff = getTimeDiff ( Date.now() , data[ ukey + 'drugTimerLast']);
+		timerDiv.appendChild ( document.createTextNode( diff[ 'hr' ] + 'h' + diff[ 'min' ] + 'm' + diff[ 'sec' ] + 's ago' ) ) ;
+		timerDiv.appendChild ( document.createElement( 'br' ) );
+
+		if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
+			timerDiv.appendChild ( document.createTextNode( 'Drug free in:' ) );
+			timerDiv.appendChild ( document.createElement( 'br' ) );
+			var diff = getTimeDiff ( data[ ukey + 'drugTimerClear'], Date.now() );
+			timerDiv.appendChild ( document.createTextNode( diff[ 'hr' ] + 'h' + diff[ 'min' ] + 'm' + diff[ 'sec' ] + 's' ) ) ;
+		}
+		else {
+			timerDiv.appendChild ( document.createTextNode( 'You are undrugged.' ) );
+		}
+	}
+}
+
+function usedDrugs( ukey ) {
+	var amount = parseInt(document.getElementById( 'useform' ).elements.amount.value);
+
+	chrome.storage.sync.remove( ['drugTimerLast','drugTimerClear'] );
+	chrome.storage.sync.get( [ ukey + 'drugTimerLast', ukey + 'drugTimerClear'], usedDrugs2.bind(null, amount, ukey) );
+}
+
+function usedDrugs2( amount, ukey, data ) {
+	var ukey = Universe.getServer ( document ).substr( 0, 1 );
+	console.log( amount );
+
+	if (!data[ ukey + 'drugTimerClear'] ) {
+		console.log('no data');
+		data = new Object;
+		data[ ukey + 'drugTimerClear'] = 0;
+	}
+	
+	if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
+		data[ ukey + 'drugTimerClear'] += amount * 60 * 60 * 1000;
+	}
+	else {
+		data[ ukey + 'drugTimerClear' ] = Date.now() + amount * 60 * 60 * 1000;
+	}
+	
+	data[ ukey + 'drugTimerLast' ] = Date.now();
+	data[ ukey + 'drugAmount' ] = amount;
+	chrome.storage.sync.set ( data ); 
+}
+
+function getTimeDiff ( time1, time2 ) {
+	// Fucntion returns an object with keys 'day', 'hr', 'min', 'sec' which are the time differences between input 1 and 2.
+	var diff = new Object
+
+	diff [ 'sec' ] = (Math.floor( time1 / 1000 ) - Math.floor( time2 / 1000 ) ) % 60 ;
+	diff [ 'min' ] = Math.floor( ( ( Math.floor( time1 / 1000) - Math.floor( time2 / 1000 ) ) % ( 60 * 60 ) ) / 60 );
+	diff [ 'hr' ] = Math.floor( ( ( Math.floor( time1 / 1000) - Math.floor( time2 / 1000 ) ) % ( 60 * 60 * 24 ) ) / 3600 );
+	diff [ 'day' ] = Math.floor( ( ( Math.floor( time1 / 1000) - Math.floor( time2 / 1000 ) ) / ( 60 * 60 * 24 ) ) );
+		
+	return diff
 }
 
 start();
