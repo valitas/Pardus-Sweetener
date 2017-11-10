@@ -106,6 +106,7 @@ function start() {
 	cs.addKey( 'navBountyBoardLink' );
 	cs.addKey( 'navFlyCloseLink' );
 	cs.addKey( 'pathfindingEnabled' );
+	cs.addKey( 'clockD' );
 
 	shiplinks = new ShipLinks.Controller
 		( 'table/tbody/tr/td[position() = 2]/a', matchShipId );
@@ -610,39 +611,40 @@ function drugsLinkClicked() {
 		var useBtn = document.getElementsByName( 'useres' )[0];
 		var ukey = Universe.getServer ( document ).substr( 0, 1 );
 		useBtn.addEventListener('click', usedDrugs.bind( null, ukey ) );
-		// useBtn.value = 'use1';
 		chrome.storage.sync.get ( [ukey + 'drugTimerLast', ukey + 'drugTimerClear'] , displayDrugTimer.bind( null, ukey ) );
 	}
 }
 
 function displayDrugTimer ( ukey, data ) {
-	var useBtn = document.getElementsByName( 'useres' )[0];
-	var timerDiv = document.createElement('div');
-	timerDiv.id = 'drugTimer';
-	useBtn.parentNode.appendChild( timerDiv ); 
-	timerDiv.appendChild ( document.createElement( 'br' ) );
-	
-	if (!data[ ukey + 'drugTimerClear'] ) {
-		// No data, so make some nice comments
-		timerDiv.appendChild ( document.createTextNode('No drugs used, yet...') );
-	}
-	else {
-		// We have data, display current addiction
-		timerDiv.appendChild ( document.createTextNode('Drugs used:') );
+	if (config[ 'clockD' ]) {
+		var useBtn = document.getElementsByName( 'useres' )[0];
+		var timerDiv = document.createElement('div');
+		timerDiv.id = 'drugTimer';
+		useBtn.parentNode.appendChild( timerDiv ); 
 		timerDiv.appendChild ( document.createElement( 'br' ) );
-
-		var diff = getTimeDiff ( Date.now() , data[ ukey + 'drugTimerLast']);
-		timerDiv.appendChild ( document.createTextNode( diff[ 'hr' ] + 'h' + diff[ 'min' ] + 'm' + diff[ 'sec' ] + 's ago' ) ) ;
-		timerDiv.appendChild ( document.createElement( 'br' ) );
-
-		if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
-			timerDiv.appendChild ( document.createTextNode( 'Drug free in:' ) );
-			timerDiv.appendChild ( document.createElement( 'br' ) );
-			var diff = getTimeDiff ( data[ ukey + 'drugTimerClear'], Date.now() );
-			timerDiv.appendChild ( document.createTextNode( diff[ 'hr' ] + 'h' + diff[ 'min' ] + 'm' + diff[ 'sec' ] + 's' ) ) ;
+		
+		if (!data[ ukey + 'drugTimerClear'] ) {
+			// No data, so make some nice comments
+			timerDiv.appendChild ( document.createTextNode('No drugs used, yet...') );
 		}
 		else {
-			timerDiv.appendChild ( document.createTextNode( 'You are undrugged.' ) );
+			// We have data, display current addiction
+			timerDiv.appendChild ( document.createTextNode('Drugs used:') );
+			timerDiv.appendChild ( document.createElement( 'br' ) );
+
+			var diff = getTimeDiff ( Date.now() , data[ ukey + 'drugTimerLast']);
+			timerDiv.appendChild ( document.createTextNode( diff[ 'hr' ] + 'h' + diff[ 'min' ] + 'm' + diff[ 'sec' ] + 's ago' ) ) ;
+			timerDiv.appendChild ( document.createElement( 'br' ) );
+
+			if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
+				timerDiv.appendChild ( document.createTextNode( 'Drug free in:' ) );
+				timerDiv.appendChild ( document.createElement( 'br' ) );
+				var diff = getTimeDiff ( data[ ukey + 'drugTimerClear'], Date.now() );
+				timerDiv.appendChild ( document.createTextNode( diff[ 'hr' ] + 'h' + diff[ 'min' ] + 'm' + diff[ 'sec' ] + 's' ) ) ;
+			}
+			else {
+				timerDiv.appendChild ( document.createTextNode( 'You are undrugged.' ) );
+			}
 		}
 	}
 }

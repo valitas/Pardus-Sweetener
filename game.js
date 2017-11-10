@@ -164,7 +164,6 @@ var chrome, PSClock;
 
       // Clocks are named AP, P, S, etc. Keys are clockAP, clockP, clockS, etc.
       clock.setEnabled( key.substr(5), value );
-	  clock.setEnabled( 'D', true);
     }
   }
 
