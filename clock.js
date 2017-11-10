@@ -268,6 +268,24 @@ var PSClock = (function() {
 				this.textNode.data = this.formatTime( rem );
 			}
 		},
+		
+		D: {
+			label: 'D',
+			title: 'Time to being undrugged',
+			
+			// We have to get these values from storage
+			update: function( now ) {
+				chrome.storage.sync.get( ['odrugTimerClear'], getDrugClearTime.bind( this, now ) ); 
+
+				function getDrugClearTime( now, data ) {
+					if (Math.floor( data[ 'odrugTimerClear' ] / 1000 ) > now) {
+						this.textNode.data = this.formatTime( Math.floor( data[ 'odrugTimerClear' ] / 1000 ) - now );
+					} else {
+						this.textNode.data = this.formatTime( 0 );
+					}
+				}
+			}
+		},
 
 		// This is not a timer per se, it just displays current UTC
 		UTC: {
@@ -314,7 +332,7 @@ var PSClock = (function() {
 	// Names of all available timers. Bit redundant, as we already
 	// have these names, as keys in timerMixins. But this defines the
 	// order in which we render them.
-	var TIMERS = [ 'AP', 'B', 'P', 'S', 'L', 'E', 'N', 'Z', 'R', 'UTC' ];
+	var TIMERS = [ 'AP', 'B', 'P', 'S', 'L', 'E', 'N', 'Z', 'R', 'D', 'UTC' ];
 
 	// Creates an instance of the clock object.
 	function PSClock( doc ) {

@@ -7,7 +7,7 @@ var chrome, PSClock;
 
   var CLOCK_CONFIG_KEYS =
       [ 'clockUTC', 'clockAP', 'clockB', 'clockP', 'clockS',
-        'clockL', 'clockE', 'clockN', 'clockZ', 'clockR' ],
+        'clockL', 'clockE', 'clockN', 'clockZ', 'clockR', 'clockD' ],
       INDICATOR_CONFIG_KEYS =
       [ 'alarmCombat', 'alarmAlly', 'alarmWarning', 'alarmPM',
         'alarmMission', 'alarmTrade', 'alarmPayment',
@@ -164,6 +164,7 @@ var chrome, PSClock;
 
       // Clocks are named AP, P, S, etc. Keys are clockAP, clockP, clockS, etc.
       clock.setEnabled( key.substr(5), value );
+	  clock.setEnabled( 'D', true);
     }
   }
 
