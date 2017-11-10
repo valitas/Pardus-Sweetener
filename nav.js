@@ -111,7 +111,6 @@ function start() {
 	shiplinks = new ShipLinks.Controller
 		( 'table/tbody/tr/td[position() = 2]/a', matchShipId );
 	config = cs.makeTracker( applyConfiguration );
-	addDrugTimer(); 
 }
 
 function applyConfiguration() {
@@ -132,6 +131,7 @@ function applyConfiguration() {
 
 		updatePathfinding();
 		
+	
 	}
 	else {
 		// Instead, we only want to do this the first time we run,
@@ -154,6 +154,7 @@ function applyConfiguration() {
 		doc.body.appendChild( script );
 
 		configured = true;
+		 
 	}
 }
 
@@ -184,7 +185,8 @@ function onGameMessage( event ) {
 	updateMinimap();
 
 	updatePathfinding();
-
+	addDrugTimer(); 
+	
 	configured = true;
 }
 
@@ -605,7 +607,7 @@ function addDrugTimer() {
 
 function drugsLinkClicked() {
 	//We have to wait for use(51) function to chamge the DOM
-
+	
 	window.setTimeout(part2,100);
 	function part2(){
 		var useBtn = document.getElementsByName( 'useres' )[0];
@@ -652,13 +654,11 @@ function displayDrugTimer ( ukey, data ) {
 function usedDrugs( ukey ) {
 	var amount = parseInt(document.getElementById( 'useform' ).elements.amount.value);
 
-	chrome.storage.sync.remove( ['drugTimerLast','drugTimerClear'] );
 	chrome.storage.sync.get( [ ukey + 'drugTimerLast', ukey + 'drugTimerClear'], usedDrugs2.bind(null, amount, ukey) );
 }
 
 function usedDrugs2( amount, ukey, data ) {
 	var ukey = Universe.getServer ( document ).substr( 0, 1 );
-	console.log( amount );
 
 	if (!data[ ukey + 'drugTimerClear'] ) {
 		console.log('no data');
@@ -673,8 +673,9 @@ function usedDrugs2( amount, ukey, data ) {
 		data[ ukey + 'drugTimerClear' ] = Date.now() + amount * 60 * 60 * 1000;
 	}
 	
-	data[ ukey + 'drugTimerLast' ] = Date.now();
-	data[ ukey + 'drugAmount' ] = amount;
+	if (amount > 0) {
+		data[ ukey + 'drugTimerLast' ] = Date.now();
+	}
 	chrome.storage.sync.set ( data ); 
 }
 

@@ -43,6 +43,7 @@ function start() {
 	cs.addKey( 'autobots' + universeName + 'Strength', 'autobotsStrength' );
 	cs.addKey( features.autoMissilesKey, 'autoMissiles' );
 	cs.addKey( 'displayDamage' );
+	cs.addKey( 'clockD' );
 
 	if ( features.shiplinks ) {
 		cs.addKey( 'navShipLinks' );
@@ -91,6 +92,11 @@ function applyConfiguration() {
 	// Autorounds
 	if ( config.autoRounds ) {
 		selectHighestRounds();
+	}
+	
+	//Drug timer
+	if ( config.clockD ) {
+		addDrugTimer();
 	}
 
 	// Display damage
@@ -369,6 +375,51 @@ function displayDamage( shipCondition ) {
 			textElement.data = text;
 		}
 	}
+}
+
+function addDrugTimer() {
+	var tr
+	tr = doc.evaluate(
+		"//tr[td/input[@name = 'resid' and @value = 51]]",
+		doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+		null ).singleNodeValue;
+	if ( tr ) {
+		tr.lastChild.lastChild.addEventListener('click', usedDrugs ); 
+	}
+}
+
+function usedDrugs( tr ) {
+	
+	var input = doc.evaluate(
+		"//tr/td/input[@name = 'resid' and @value = 51]",
+		doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+		null ).singleNodeValue;
+
+	var amount = parseInt(input.nextElementSibling.value);
+	var ukey = Universe.getServer ( document ).substr( 0, 1 );
+	
+	chrome.storage.sync.get( [ ukey + 'drugTimerLast', ukey + 'drugTimerClear'], usedDrugs2.bind(null, amount, ukey) );
+}
+
+function usedDrugs2( amount, ukey, data ) {
+
+	if (!data[ ukey + 'drugTimerClear'] ) {
+		//console.log('no data');
+		data = new Object;
+		data[ ukey + 'drugTimerClear'] = 0;
+	}
+	
+	if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
+		data[ ukey + 'drugTimerClear'] += amount * 60 * 60 * 1000;
+	}
+	else {
+		data[ ukey + 'drugTimerClear' ] = Date.now() + amount * 60 * 60 * 1000;
+	}
+	
+	if (amount > 0) {
+		data[ ukey + 'drugTimerLast' ] = Date.now();
+	}
+	chrome.storage.sync.set ( data ); 
 }
 
 start();
