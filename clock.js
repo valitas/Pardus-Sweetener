@@ -276,7 +276,7 @@ var PSClock = (function() {
 			// We have to get these values from storage
 			update: function( now ) {
 				var ukey = Universe.getServer ( document ).substr( 0, 1 );
-				chrome.storage.sync.get( [ ukey + 'drugTimerClear' ], getDrugClearTime.bind( this, ukey, now ) ); 
+				chrome.storage.sync.get( [ ukey + 'drugTimerClear' ], getDrugClearTime.bind( this, now, ukey ) ); 
 
 				function getDrugClearTime( now, ukey, data ) {
 					if (Math.floor( data[ ukey + 'drugTimerClear' ] / 1000 ) > now) {
