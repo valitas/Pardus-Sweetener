@@ -37,7 +37,7 @@
 		},
 		{
 			"matches": [ "*://*.pardus.at/game.php*" ],
-			"js": [ "universe.js", "clock.js", "game.js" ],
+			"js": [ "universe.js", "clock.js", "sector.js", "game.js" ],
 			"all_frames": false
 		},
 		{

@@ -174,6 +174,11 @@ function onGameMessage( event ) {
 	tileRes = parseInt( data.tileRes );
 	ajax = data.ajax;
 
+	// sending userloc to storage
+	let saveData = {};
+	saveData[ Universe.getName( document )[0] + 'loc' ] = userloc;
+	chrome.storage.local.set( saveData );
+
 	// The shiplinks box is usually clobbered by partial refresh, so
 	// we need a new container. This is cheap anyway.
 	shiplinks.setContainer( doc.getElementById('otherships_content') );
