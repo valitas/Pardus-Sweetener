@@ -7,7 +7,7 @@ var chrome, PSClock;
 
   var CLOCK_CONFIG_KEYS =
       [ 'clockUTC', 'clockAP', 'clockB', 'clockP', 'clockS',
-        'clockL', 'clockE', 'clockN', 'clockZ', 'clockR' ],
+        'clockL', 'clockE', 'clockN', 'clockZ', 'clockR', 'clockD' ],
       INDICATOR_CONFIG_KEYS =
       [ 'alarmCombat', 'alarmAlly', 'alarmWarning', 'alarmPM',
         'alarmMission', 'alarmTrade', 'alarmPayment',
@@ -302,7 +302,7 @@ var chrome, PSClock;
 		}
 	  }
 	}
-
+	
 	// And get the character name while we're at it.
 
 	var u = doc.getElementById( 'universe' );
@@ -311,7 +311,41 @@ var chrome, PSClock;
 		if ( m ) {
 			characterName = m[ 1 ];
 		}
+		var Ukey = u.alt[0];
 	}
+
+	if ( indicators[ 'Warning' ] ) {
+		if ( doc.getElementsByTagName( 'font' )[0].textContent.indexOf( 'stun' ) > 0 ) {
+			chrome.storage.local.get( Ukey + 'loc', stunned.bind( doc ) );
+		}
+	}
+  }
+
+  function stunned( data ) { 
+		let td = this.createElement( 'td' );
+		let btn = this.createElement( 'button' );
+		this.getElementsByTagName( 'font' )[0].parentNode.parentNode.insertBefore( td, this.getElementsByTagName( 'font' )[0].parentNode.nextElementSibling );
+		td.appendChild( btn );
+		btn.textContent = 'Send AM';
+		btn.addEventListener( 'click', stunnedClick.bind( this, data ) );
+  }
+  
+  function stunnedClick( data ) {
+		for (var key in data) {	//will be only one, but now we don't have to get the specific universe first`
+			let sectorId = Sector.getIdFromLocation( data[ key ] );
+			let coords = Sector.getCoords( sectorId, data[ key ] );
+			let helpString = 'Help! I\'ve hit a stun TB at ' + Sector.getName( sectorId ) + ' [' + coords[ 'x' ] + ',' + coords[ 'y' ] + ']';
+		    let subjString = 'Stunned!'
+			var url = '/messages_alliance.php';
+            var params = new FormData();
+			params.append( 'sendto_type', 'all' );
+			params.append( 'textfield', subjString );
+			params.append( 'ally_msg', helpString );
+			params.append( 'Send', 'Send' );
+			let http = new XMLHttpRequest();
+		    http.open("POST", url, true);
+		    http.send(params);
+		}
   }
 
   // Sounding the alarm is a little less straightforward than just

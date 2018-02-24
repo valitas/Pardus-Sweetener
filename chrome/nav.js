@@ -106,11 +106,11 @@ function start() {
 	cs.addKey( 'navBountyBoardLink' );
 	cs.addKey( 'navFlyCloseLink' );
 	cs.addKey( 'pathfindingEnabled' );
+	cs.addKey( 'clockD' );
 
 	shiplinks = new ShipLinks.Controller
 		( 'table/tbody/tr/td[position() = 2]/a', matchShipId );
 	config = cs.makeTracker( applyConfiguration );
-
 }
 
 function applyConfiguration() {
@@ -130,6 +130,8 @@ function applyConfiguration() {
 		updateMinimap();
 
 		updatePathfinding();
+		
+	
 	}
 	else {
 		// Instead, we only want to do this the first time we run,
@@ -152,6 +154,7 @@ function applyConfiguration() {
 		doc.body.appendChild( script );
 
 		configured = true;
+		 
 	}
 }
 
@@ -171,6 +174,11 @@ function onGameMessage( event ) {
 	tileRes = parseInt( data.tileRes );
 	ajax = data.ajax;
 
+	// sending userloc to storage
+	let saveData = {};
+	saveData[ Universe.getName( document )[0] + 'loc' ] = userloc;
+	chrome.storage.local.set( saveData );
+
 	// The shiplinks box is usually clobbered by partial refresh, so
 	// we need a new container. This is cheap anyway.
 	shiplinks.setContainer( doc.getElementById('otherships_content') );
@@ -182,7 +190,8 @@ function onGameMessage( event ) {
 	updateMinimap();
 
 	updatePathfinding();
-
+	addDrugTimer(); 
+	
 	configured = true;
 }
 
@@ -591,6 +600,100 @@ function clearpath() {
 	}
 
 	highlightedTiles.length = 0;
+}
+
+function addDrugTimer() {
+	var drugsUseLink = document.getElementById( 'aCargoUse51' );
+
+	if( drugsUseLink ) {
+		drugsUseLink.addEventListener('click', drugsLinkClicked);
+	}
+}
+
+function drugsLinkClicked() {
+	//We have to wait for use(51) function to chamge the DOM
+	
+	window.setTimeout(part2,100);
+	function part2(){
+		var useBtn = document.getElementsByName( 'useres' )[0];
+		var ukey = Universe.getServer ( document ).substr( 0, 1 );
+		useBtn.addEventListener('click', usedDrugs.bind( null, ukey ) );
+		chrome.storage.sync.get ( [ukey + 'drugTimerLast', ukey + 'drugTimerClear'] , displayDrugTimer.bind( null, ukey ) );
+	}
+}
+
+function displayDrugTimer ( ukey, data ) {
+	if (config[ 'clockD' ]) {
+		var useBtn = document.getElementsByName( 'useres' )[0];
+		var timerDiv = document.createElement('div');
+		timerDiv.id = 'drugTimer';
+		useBtn.parentNode.appendChild( timerDiv ); 
+		timerDiv.appendChild ( document.createElement( 'br' ) );
+		
+		if (!data[ ukey + 'drugTimerClear'] ) {
+			// No data, so make some nice comments
+			timerDiv.appendChild ( document.createTextNode('No drugs used, yet...') );
+		}
+		else {
+			// We have data, display current addiction
+			timerDiv.appendChild ( document.createTextNode('Drugs used:') );
+			timerDiv.appendChild ( document.createElement( 'br' ) );
+
+			var diff = getTimeDiff ( Date.now() , data[ ukey + 'drugTimerLast']);
+			timerDiv.appendChild ( document.createTextNode( diff[ 'hr' ] + 'h' + diff[ 'min' ] + 'm' + diff[ 'sec' ] + 's ago' ) ) ;
+			timerDiv.appendChild ( document.createElement( 'br' ) );
+
+			if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
+				timerDiv.appendChild ( document.createTextNode( 'Drug free in:' ) );
+				timerDiv.appendChild ( document.createElement( 'br' ) );
+				var diff = getTimeDiff ( data[ ukey + 'drugTimerClear'], Date.now() );
+				timerDiv.appendChild ( document.createTextNode( diff[ 'hr' ] + 'h' + diff[ 'min' ] + 'm' + diff[ 'sec' ] + 's' ) ) ;
+			}
+			else {
+				timerDiv.appendChild ( document.createTextNode( 'You are undrugged.' ) );
+			}
+		}
+	}
+}
+
+function usedDrugs( ukey ) {
+	var amount = parseInt(document.getElementById( 'useform' ).elements.amount.value);
+
+	chrome.storage.sync.get( [ ukey + 'drugTimerLast', ukey + 'drugTimerClear'], usedDrugs2.bind(null, amount, ukey) );
+}
+
+function usedDrugs2( amount, ukey, data ) {
+	var ukey = Universe.getServer ( document ).substr( 0, 1 );
+
+	if (!data[ ukey + 'drugTimerClear'] ) {
+		console.log('no data');
+		data = new Object;
+		data[ ukey + 'drugTimerClear'] = 0;
+	}
+	
+	if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
+		data[ ukey + 'drugTimerClear'] += amount * 60 * 60 * 1000;
+	}
+	else {
+		data[ ukey + 'drugTimerClear' ] = Date.now() + amount * 60 * 60 * 1000;
+	}
+	
+	if (amount > 0) {
+		data[ ukey + 'drugTimerLast' ] = Date.now();
+	}
+	chrome.storage.sync.set ( data ); 
+}
+
+function getTimeDiff ( time1, time2 ) {
+	// Fucntion returns an object with keys 'day', 'hr', 'min', 'sec' which are the time differences between input 1 and 2.
+	var diff = new Object
+
+	diff [ 'sec' ] = (Math.floor( time1 / 1000 ) - Math.floor( time2 / 1000 ) ) % 60 ;
+	diff [ 'min' ] = Math.floor( ( ( Math.floor( time1 / 1000) - Math.floor( time2 / 1000 ) ) % ( 60 * 60 ) ) / 60 );
+	diff [ 'hr' ] = Math.floor( ( ( Math.floor( time1 / 1000) - Math.floor( time2 / 1000 ) ) % ( 60 * 60 * 24 ) ) / 3600 );
+	diff [ 'day' ] = Math.floor( ( ( Math.floor( time1 / 1000) - Math.floor( time2 / 1000 ) ) / ( 60 * 60 * 24 ) ) );
+		
+	return diff
 }
 
 start();
