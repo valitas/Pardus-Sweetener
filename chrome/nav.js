@@ -599,87 +599,84 @@ function clearpath() {
 	highlightedTiles.length = 0;
 }
 
+// This is called when the page loads, and again after any "AJAX" interaction,
+// including ship movement and all that.  Also when the "use resources" form
+// opens, and that's the case we detect.
+
 function addDrugTimer() {
-	var drugsUseLink = document.getElementById( 'aCargoUse51' );
+	let useform = doc.getElementById( 'useform' );
+	if ( !useform ||
+	     !useform.elements.resid ||
+	     useform.elements.resid.value != 51 )
+		return;
 
-	if( drugsUseLink ) {
-		drugsUseLink.addEventListener('click', drugsLinkClicked);
-	}
+	let usebtn = useform.elements.useres;
+	if ( !usebtn || usebtn.dataset.pardusSweetener )
+		return;
+
+	// Don't add the event handler twice
+	usebtn.dataset.pardusSweetener = true;
+
+	let ukey = Universe.getServer ( doc ).substr( 0, 1 );
+	usebtn.addEventListener( 'click', usedDrugs.bind(null, useform, ukey) );
+	chrome.storage.sync.get(
+		[ ukey + 'drugTimerLast', ukey + 'drugTimerClear' ],
+		displayDrugTimer.bind(null, ukey, usebtn) );
 }
 
-function drugsLinkClicked() {
-	// We have to wait for use(51) function to change the DOM.
+function displayDrugTimer ( ukey, usebtn, data ) {
+	if ( !config[ 'clockD' ] )
+		return;
 
-	window.setTimeout(part2,100);
-	function part2(){
-		var useBtn = document.getElementsByName( 'useres' )[0];
-		var ukey = Universe.getServer ( document ).substr( 0, 1 );
-		useBtn.addEventListener('click', usedDrugs.bind( null, ukey ) );
-		chrome.storage.sync.get(
-			[ukey + 'drugTimerLast', ukey + 'drugTimerClear'],
-			displayDrugTimer.bind( null, ukey ) );
+	var timerDiv = doc.createElement('div');
+	var diff;
+
+	timerDiv.id = 'drugTimer';
+	usebtn.parentNode.appendChild( timerDiv );
+	timerDiv.appendChild ( doc.createElement( 'br' ) );
+
+	if (!data[ ukey + 'drugTimerClear'] ) {
+		// No data, so make some nice comments
+		timerDiv.appendChild(
+			doc.createTextNode('No drugs used yet.') );
 	}
-}
+	else {
+		// We have data, display current addiction
+		timerDiv.appendChild( doc.createTextNode('Drugs used:') );
+		timerDiv.appendChild( doc.createElement('br') );
 
-function displayDrugTimer ( ukey, data ) {
-	if (config[ 'clockD' ]) {
-		var useBtn = document.getElementsByName( 'useres' )[0];
-		var timerDiv = document.createElement('div');
-		var diff;
+		diff = getTimeDiff(
+			Date.now(), data[ ukey + 'drugTimerLast'] );
+		timerDiv.appendChild(
+			doc.createTextNode(
+				diff[ 'hr' ] + 'h' +
+					diff[ 'min' ] + 'm' +
+					diff[ 'sec' ] + 's ago' ) );
+		timerDiv.appendChild( doc.createElement( 'br' ) );
 
-		timerDiv.id = 'drugTimer';
-		useBtn.parentNode.appendChild( timerDiv );
-		timerDiv.appendChild ( document.createElement( 'br' ) );
-
-		if (!data[ ukey + 'drugTimerClear'] ) {
-			// No data, so make some nice comments
+		if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
 			timerDiv.appendChild(
-				document.createTextNode(
-					'No drugs used, yet...') );
-		}
-		else {
-			// We have data, display current addiction
-			timerDiv.appendChild(
-				document.createTextNode('Drugs used:') );
-			timerDiv.appendChild(
-				document.createElement( 'br' ) );
-
+				doc.createTextNode('Drug free in:') );
+			timerDiv.appendChild( doc.createElement('br') );
 			diff = getTimeDiff(
-				Date.now() , data[ ukey + 'drugTimerLast']);
-			timerDiv.appendChild(
-				document.createTextNode(
+				data[ ukey + 'drugTimerClear'], Date.now() );
+			timerDiv.appendChild (
+				doc.createTextNode(
 					diff[ 'hr' ] + 'h' +
 						diff[ 'min' ] + 'm' +
-						diff[ 'sec' ] + 's ago' ) );
-			timerDiv.appendChild( document.createElement( 'br' ) );
-
-			if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
-				timerDiv.appendChild(
-					document.createTextNode(
-						'Drug free in:' ) );
-				timerDiv.appendChild(
-					document.createElement( 'br' ) );
-				diff = getTimeDiff(
-					data[ ukey + 'drugTimerClear'],
-					Date.now() );
-				timerDiv.appendChild (
-					document.createTextNode(
-						diff[ 'hr' ] + 'h' +
-							diff[ 'min' ] + 'm' +
-							diff[ 'sec' ] + 's' ) ) ;
-			}
-			else {
-				timerDiv.appendChild(
-					document.createTextNode(
-						'You are undrugged.' ) );
-			}
+						diff[ 'sec' ] + 's' ) ) ;
+		}
+		else {
+			timerDiv.appendChild(
+				document.createTextNode('You are undrugged.') );
 		}
 	}
 }
 
-function usedDrugs( ukey ) {
-	var amount = parseInt(
-		document.getElementById( 'useform' ).elements.amount.value);
+function usedDrugs( useform, ukey ) {
+	let amount = parseInt( useform.elements.amount.value );
+	if ( !(amount > 0) )
+		return;
 
 	chrome.storage.sync.get(
 		[ ukey + 'drugTimerLast', ukey + 'drugTimerClear'],
@@ -687,12 +684,9 @@ function usedDrugs( ukey ) {
 }
 
 function usedDrugs2( amount, ukey, data ) {
-	// XXX - review use of ukey here... doesn't it come from params? ~V
-	var ukey = Universe.getServer ( document ).substr( 0, 1 );
-
-	if (!data[ ukey + 'drugTimerClear'] ) {
+	if ( !data[ ukey + 'drugTimerClear' ] ) {
 		console.log('no data');
-		data = new Object;
+		data = new Object();
 		data[ ukey + 'drugTimerClear'] = 0;
 	}
 
@@ -700,12 +694,14 @@ function usedDrugs2( amount, ukey, data ) {
 		data[ ukey + 'drugTimerClear'] += amount * 60 * 60 * 1000;
 	}
 	else {
-		data[ ukey + 'drugTimerClear' ] = Date.now() + amount * 60 * 60 * 1000;
+		data[ ukey + 'drugTimerClear' ] =
+			Date.now() + amount * 60 * 60 * 1000;
 	}
 
 	if (amount > 0) {
 		data[ ukey + 'drugTimerLast' ] = Date.now();
 	}
+
 	chrome.storage.sync.set ( data );
 }
 
