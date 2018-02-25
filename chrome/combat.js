@@ -93,8 +93,8 @@ function applyConfiguration() {
 	if ( config.autoRounds ) {
 		selectHighestRounds();
 	}
-	
-	//Drug timer
+
+	// Drug timer
 	if ( config.clockD ) {
 		addDrugTimer();
 	}
@@ -378,18 +378,17 @@ function displayDamage( shipCondition ) {
 }
 
 function addDrugTimer() {
-	var tr
+	var tr;
 	tr = doc.evaluate(
 		"//tr[td/input[@name = 'resid' and @value = 51]]",
 		doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
 		null ).singleNodeValue;
 	if ( tr ) {
-		tr.lastChild.lastChild.addEventListener('click', usedDrugs ); 
+		tr.lastChild.lastChild.addEventListener( 'click', usedDrugs );
 	}
 }
 
 function usedDrugs( tr ) {
-	
 	var input = doc.evaluate(
 		"//tr/td/input[@name = 'resid' and @value = 51]",
 		doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
@@ -397,29 +396,31 @@ function usedDrugs( tr ) {
 
 	var amount = parseInt(input.nextElementSibling.value);
 	var ukey = Universe.getServer ( document ).substr( 0, 1 );
-	
-	chrome.storage.sync.get( [ ukey + 'drugTimerLast', ukey + 'drugTimerClear'], usedDrugs2.bind(null, amount, ukey) );
+
+	chrome.storage.sync.get(
+		[ ukey + 'drugTimerLast', ukey + 'drugTimerClear'],
+		usedDrugs2.bind(null, amount, ukey) );
 }
 
 function usedDrugs2( amount, ukey, data ) {
-
 	if (!data[ ukey + 'drugTimerClear'] ) {
 		//console.log('no data');
 		data = new Object;
 		data[ ukey + 'drugTimerClear'] = 0;
 	}
-	
+
 	if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
 		data[ ukey + 'drugTimerClear'] += amount * 60 * 60 * 1000;
 	}
 	else {
-		data[ ukey + 'drugTimerClear' ] = Date.now() + amount * 60 * 60 * 1000;
+		data[ ukey + 'drugTimerClear' ] =
+			Date.now() + amount * 60 * 60 * 1000;
 	}
-	
+
 	if (amount > 0) {
 		data[ ukey + 'drugTimerLast' ] = Date.now();
 	}
-	chrome.storage.sync.set ( data ); 
+	chrome.storage.sync.set ( data );
 }
 
 start();

@@ -1,16 +1,14 @@
+![Pardus Sweetener Logo](https://github.com/valitas/Pardus-Sweetener/blob/master/chrome/icons/128.png?raw=true)
 Pardus Sweetener
 ================
 
-About this software
--------------------
+Pardus Sweetener is a browser extension that enhances the user
+interface of the online space game [Pardus](https://www.pardus.at/).
 
-Pardus Sweetener is a Google Chrome extension that enhances the user
-interface of the online space game Pardus (www.pardus.at).
+Install
+-------
 
-Download and Install
---------------------
-
-Install it from the Chrome Web Store: [Pardus Sweetener](https://chrome.google.com/webstore/detail/pardus-sweetener/ejnppkfdhdnchkcdblfddedelmbpoklo)
+Install it from the Chrome Store: [Pardus Sweetener](https://chrome.google.com/webstore/detail/ejnppkfdhdnchkcdblfddedelmbpoklo)
 
 Features
 --------

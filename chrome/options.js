@@ -19,11 +19,7 @@ function onDOMContentLoaded() {
 
 	// Find all these elements in the document, save references to
 	// them in xControls.
-	keys = [
-		'showAlarmGroup', 'showCombatGroup', 'showGeneralGroup',
-		'showHelpGroup', 'alarmGroup', 'combatGroup', 'generalGroup',
-		'helpGroup', 'testAlarm', 'testNotification', 'version'
-	];
+	keys = [ 'testAlarm', 'testNotification', 'version' ];
 
 	for ( i = 0, end = keys.length; i < end; i++ ) {
 		var key = keys[ i ];
@@ -91,18 +87,6 @@ function onDOMContentLoaded() {
 	extraControls.version.textContent = chrome.runtime.getManifest().version;
 
 	// Install additional listeners
-	function wireGroupSwitch( button, group ) {
-		var listener = function() { onShowGroupClick( button, group ); };
-		button.addEventListener( 'click', listener );
-	}
-	wireGroupSwitch( extraControls.showAlarmGroup,
-					 extraControls.alarmGroup );
-	wireGroupSwitch( extraControls.showCombatGroup,
-					 extraControls.combatGroup );
-	wireGroupSwitch( extraControls.showGeneralGroup,
-					 extraControls.generalGroup );
-	wireGroupSwitch( extraControls.showHelpGroup,
-					 extraControls.helpGroup);
 
 	extraControls
 		.testAlarm.addEventListener( 'click', onTestAlarmClick );
@@ -153,6 +137,35 @@ function onDOMContentLoaded() {
 
 	// Request the configuration
 	chrome.storage.local.get( Object.keys( controls ), onConfigurationReady );
+
+	// Install a click handler that we'll use to show/collapse sections.
+	doc.body.addEventListener( 'click', onBodyClick, null );
+}
+
+function onBodyClick( event ) {
+	var h3, section, s, i, end, open;
+
+	h3 = event.target;
+	if( !h3 || h3.tagName != 'H3' )
+		return;
+	section = h3.parentElement;
+	if( !section ||
+	    section.tagName != 'SECTION' ||
+	    section.parentElement != doc.body )
+		return;
+
+	event.preventDefault();
+	open = section.classList.contains( 'active' );
+
+	var xpr = doc.evaluate('/html/body/section', doc, null,
+			       XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+	for( i = 0, end = xpr.snapshotLength; i < end; i++ )
+		xpr.snapshotItem( i ).classList.remove( 'active' );
+
+	if( !open ) {
+		section.classList.add( 'active' );
+		section.scrollIntoView( true );
+	}
 }
 
 function onConfigurationReady( items ) {
@@ -167,7 +180,7 @@ function onConfigurationReady( items ) {
 	chrome.storage.onChanged.addListener( onConfigurationChange );
 
 	// Connect to the extension and ask for updates on alarm state.
-	port = chrome.extension.connect();
+	port = chrome.runtime.connect();
 	port.onMessage.addListener( onPortMessage );
 	port.postMessage({ watchAlarm: true });
 }
@@ -187,25 +200,6 @@ function onPortMessage( msg ) {
 	if ( msg.hasOwnProperty( 'alarmState' ) ) {
 		extraControls.testAlarm.value = msg.alarmState ? 'Stop' : 'Test';
 	}
-}
-
-function onShowGroupClick( groupButton, group ) {
-	var i, end, keys;
-
-	keys = [ 'showAlarmGroup', 'showCombatGroup', 'showGeneralGroup',
-			 'showHelpGroup' ];
-	for ( i = 0, end = keys.length; i < end; i++ ) {
-		extraControls[ keys[i] ].parentNode.classList.remove( 'selected' );
-	}
-
-	keys = [ 'alarmGroup', 'combatGroup', 'generalGroup', 'helpGroup' ];
-	for ( i = 0, end = keys.length; i < end; i++ ) {
-		extraControls[ keys[i] ].classList.remove( 'selected' );
-	}
-
-	groupButton.parentNode.classList.add( 'selected' );
-	group.classList.add( 'selected' );
-	group.scrollIntoView( true );
 }
 
 function onTestAlarmClick() {

@@ -130,8 +130,6 @@ function applyConfiguration() {
 		updateMinimap();
 
 		updatePathfinding();
-		
-	
 	}
 	else {
 		// Instead, we only want to do this the first time we run,
@@ -154,7 +152,6 @@ function applyConfiguration() {
 		doc.body.appendChild( script );
 
 		configured = true;
-		 
 	}
 }
 
@@ -190,8 +187,8 @@ function onGameMessage( event ) {
 	updateMinimap();
 
 	updatePathfinding();
-	addDrugTimer(); 
-	
+	addDrugTimer();
+
 	configured = true;
 }
 
@@ -602,86 +599,110 @@ function clearpath() {
 	highlightedTiles.length = 0;
 }
 
+// This is called when the page loads, and again after any "AJAX" interaction,
+// including ship movement and all that.  Also when the "use resources" form
+// opens, and that's the case we detect.
+
 function addDrugTimer() {
-	var drugsUseLink = document.getElementById( 'aCargoUse51' );
+	let useform = doc.getElementById( 'useform' );
+	if ( !useform ||
+	     !useform.elements.resid ||
+	     useform.elements.resid.value != 51 )
+		return;
 
-	if( drugsUseLink ) {
-		drugsUseLink.addEventListener('click', drugsLinkClicked);
-	}
+	let usebtn = useform.elements.useres;
+	if ( !usebtn || usebtn.dataset.pardusSweetener )
+		return;
+
+	// Don't add the event handler twice
+	usebtn.dataset.pardusSweetener = true;
+
+	let ukey = Universe.getServer ( doc ).substr( 0, 1 );
+	usebtn.addEventListener( 'click', usedDrugs.bind(null, useform, ukey) );
+	chrome.storage.sync.get(
+		[ ukey + 'drugTimerLast', ukey + 'drugTimerClear' ],
+		displayDrugTimer.bind(null, ukey, usebtn) );
 }
 
-function drugsLinkClicked() {
-	//We have to wait for use(51) function to chamge the DOM
-	
-	window.setTimeout(part2,100);
-	function part2(){
-		var useBtn = document.getElementsByName( 'useres' )[0];
-		var ukey = Universe.getServer ( document ).substr( 0, 1 );
-		useBtn.addEventListener('click', usedDrugs.bind( null, ukey ) );
-		chrome.storage.sync.get ( [ukey + 'drugTimerLast', ukey + 'drugTimerClear'] , displayDrugTimer.bind( null, ukey ) );
-	}
-}
+function displayDrugTimer ( ukey, usebtn, data ) {
+	if ( !config[ 'clockD' ] )
+		return;
 
-function displayDrugTimer ( ukey, data ) {
-	if (config[ 'clockD' ]) {
-		var useBtn = document.getElementsByName( 'useres' )[0];
-		var timerDiv = document.createElement('div');
-		timerDiv.id = 'drugTimer';
-		useBtn.parentNode.appendChild( timerDiv ); 
-		timerDiv.appendChild ( document.createElement( 'br' ) );
-		
-		if (!data[ ukey + 'drugTimerClear'] ) {
-			// No data, so make some nice comments
-			timerDiv.appendChild ( document.createTextNode('No drugs used, yet...') );
+	var timerDiv = doc.createElement('div');
+	var diff;
+
+	timerDiv.id = 'drugTimer';
+	usebtn.parentNode.appendChild( timerDiv );
+	timerDiv.appendChild ( doc.createElement( 'br' ) );
+
+	if (!data[ ukey + 'drugTimerClear'] ) {
+		// No data, so make some nice comments
+		timerDiv.appendChild(
+			doc.createTextNode('No drugs used yet.') );
+	}
+	else {
+		// We have data, display current addiction
+		timerDiv.appendChild( doc.createTextNode('Drugs used:') );
+		timerDiv.appendChild( doc.createElement('br') );
+
+		diff = getTimeDiff(
+			Date.now(), data[ ukey + 'drugTimerLast'] );
+		timerDiv.appendChild(
+			doc.createTextNode(
+				diff[ 'hr' ] + 'h' +
+					diff[ 'min' ] + 'm' +
+					diff[ 'sec' ] + 's ago' ) );
+		timerDiv.appendChild( doc.createElement( 'br' ) );
+
+		if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
+			timerDiv.appendChild(
+				doc.createTextNode('Drug free in:') );
+			timerDiv.appendChild( doc.createElement('br') );
+			diff = getTimeDiff(
+				data[ ukey + 'drugTimerClear'], Date.now() );
+			timerDiv.appendChild (
+				doc.createTextNode(
+					diff[ 'hr' ] + 'h' +
+						diff[ 'min' ] + 'm' +
+						diff[ 'sec' ] + 's' ) ) ;
 		}
 		else {
-			// We have data, display current addiction
-			timerDiv.appendChild ( document.createTextNode('Drugs used:') );
-			timerDiv.appendChild ( document.createElement( 'br' ) );
-
-			var diff = getTimeDiff ( Date.now() , data[ ukey + 'drugTimerLast']);
-			timerDiv.appendChild ( document.createTextNode( diff[ 'hr' ] + 'h' + diff[ 'min' ] + 'm' + diff[ 'sec' ] + 's ago' ) ) ;
-			timerDiv.appendChild ( document.createElement( 'br' ) );
-
-			if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
-				timerDiv.appendChild ( document.createTextNode( 'Drug free in:' ) );
-				timerDiv.appendChild ( document.createElement( 'br' ) );
-				var diff = getTimeDiff ( data[ ukey + 'drugTimerClear'], Date.now() );
-				timerDiv.appendChild ( document.createTextNode( diff[ 'hr' ] + 'h' + diff[ 'min' ] + 'm' + diff[ 'sec' ] + 's' ) ) ;
-			}
-			else {
-				timerDiv.appendChild ( document.createTextNode( 'You are undrugged.' ) );
-			}
+			timerDiv.appendChild(
+				document.createTextNode('You are undrugged.') );
 		}
 	}
 }
 
-function usedDrugs( ukey ) {
-	var amount = parseInt(document.getElementById( 'useform' ).elements.amount.value);
+function usedDrugs( useform, ukey ) {
+	let amount = parseInt( useform.elements.amount.value );
+	if ( !(amount > 0) )
+		return;
 
-	chrome.storage.sync.get( [ ukey + 'drugTimerLast', ukey + 'drugTimerClear'], usedDrugs2.bind(null, amount, ukey) );
+	chrome.storage.sync.get(
+		[ ukey + 'drugTimerLast', ukey + 'drugTimerClear'],
+		usedDrugs2.bind(null, amount, ukey) );
 }
 
 function usedDrugs2( amount, ukey, data ) {
-	var ukey = Universe.getServer ( document ).substr( 0, 1 );
-
-	if (!data[ ukey + 'drugTimerClear'] ) {
+	if ( !data[ ukey + 'drugTimerClear' ] ) {
 		console.log('no data');
-		data = new Object;
+		data = new Object();
 		data[ ukey + 'drugTimerClear'] = 0;
 	}
-	
+
 	if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
 		data[ ukey + 'drugTimerClear'] += amount * 60 * 60 * 1000;
 	}
 	else {
-		data[ ukey + 'drugTimerClear' ] = Date.now() + amount * 60 * 60 * 1000;
+		data[ ukey + 'drugTimerClear' ] =
+			Date.now() + amount * 60 * 60 * 1000;
 	}
-	
+
 	if (amount > 0) {
 		data[ ukey + 'drugTimerLast' ] = Date.now();
 	}
-	chrome.storage.sync.set ( data ); 
+
+	chrome.storage.sync.set ( data );
 }
 
 function getTimeDiff ( time1, time2 ) {
@@ -692,7 +713,7 @@ function getTimeDiff ( time1, time2 ) {
 	diff [ 'min' ] = Math.floor( ( ( Math.floor( time1 / 1000) - Math.floor( time2 / 1000 ) ) % ( 60 * 60 ) ) / 60 );
 	diff [ 'hr' ] = Math.floor( ( ( Math.floor( time1 / 1000) - Math.floor( time2 / 1000 ) ) % ( 60 * 60 * 24 ) ) / 3600 );
 	diff [ 'day' ] = Math.floor( ( ( Math.floor( time1 / 1000) - Math.floor( time2 / 1000 ) ) / ( 60 * 60 * 24 ) ) );
-		
+
 	return diff
 }
 
