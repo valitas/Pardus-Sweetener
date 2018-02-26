@@ -2,11 +2,11 @@
   "cluster": "Union Keldon Core",
   "sector": "Turais",
   "width": 20,
-  "height": 22,
-  "tiles": "beeebbbbbbbeeeeeeeeeeefeeebbbbeeeefeeeeeeefffeebbbeeeefeeebbbeffffebbbbeeffeeeebbeefffeebbbbeeeeefeebbeefffebbbbbbefeefeeebeeeeeebbeeeefeefeeeeeebefebeeeeeeffeeeeffeeefeeefebeefeebbeffebefebeeeeeefebbbeefebefebbeeeeefeebbbefeeeeebbbbbbeffebeeeffffebbbbbbeeffebeffffffeebbbbeefeeebefeeefffeebbbeffeeeeeeebeeeefebbbefffeeebeeeeebefeeebeggfebbeefffebeeffeeeggfebbeeeefebbefffffffeebbbeeeeebbeefffeeeebbbbeeeebbbbeeeeebbbbbbbbeebbbbbbbbbbbbbbbb",
+  "height": 23,
+  "tiles": "bbbbbbbbbbbbbeebbbbbbeeebbbbbbbeeeeeeeeeeefeeebbbbeeeefeeeeeeefffeebbbeeeefeeebbbeffffebbbbeeffeeeebbeefffeebbbbeeeeefeebbeefffebbbbbbefeefeeebeeeeeebbeeeefeefeeeeeebefebeeeeeeffeeeeffeeefeeefebbefeebbeffebefebeeeeeefebbbeefebefebbeeeeefeebbbefeeeeebbbbbbeffebeeeffffebbbbbbeeffebeffffffeebbbbeefeeebefeeefffeebbbeffeeeeeeebeeeefebbbefffeeebeeeeebefeeebeggfebbeefffebeeffeeeggfebbeeeefebbefffffffeebbbeeeeebbeefffeeeebbbbeeeebbbbeeeeebbbbbbbbeebbbbbbbbbbbbbbbb",
   "beacons": {
-    "Wezen": { "type": "wh", "x": 19, "y": 0 },
-    "Nashira": { "type": "wh", "x": 1, "y": 1 },
-    "Bellatrix": { "type": "wh", "x": 3, "y": 20 }
+    "Wezen": { "type": "wh", "x": 19, "y": 1 },
+    "Nashira": { "type": "wh", "x": 1, "y": 2 },
+    "Bellatrix": { "type": "wh", "x": 3, "y": 21 }
   }
 }
