@@ -269,7 +269,7 @@ function matchShipId( url ) {
 	//   javascript:scanId(22324, "player")
 	// or
 	//   javascript:scanId(25113, "opponent")
-	rx = /^javascript:scanId\((\d+),\s*['"]([^'"]+)['"]\)|main\.php\?scan_details=(\d+)&scan_type=([A-Za-z]+).*$/;
+	rx = /^javascript:scanId\((\d+),(?: |%20)*['"]([^'"]+)['"]\)|main\.php\?scan_details=(\d+)&scan_type=([A-Za-z]+).*$/;
 	m = rx.exec( url );
 	if ( m ) {
 		var id = m[ 1 ];
