@@ -57,14 +57,16 @@ function applyColor () {
 		table, null, XPathResult.UNORDERED_NODE_ITERATOR_TYPE, null);
 	while(( a = xpr.iterateNext() )) {
 		name = a.textContent.toLowerCase();
-		if( names[name] ) {
-			a.style.color = '#f69';
+		if( names[name] )
 			links.push( a );
-		}
 	}
 
 	// Add the "people of interest" table if there are any.
 	if( links.length > 0 ) {
+		// Highlight the links
+		for ( i = 0, end = links.length; i < end; i++ )
+			links[i].style.color = '#f69';
+
 		var container = table.parentElement;
 		var poitable = createNamesTable( links );
 		container.insertBefore( poitable, table );
