@@ -607,7 +607,7 @@ function addDrugTimer() {
 	let useform = doc.getElementById( 'useform' );
 	if ( !useform ||
 	     !useform.elements.resid ||
-	     useform.elements.resid.value != 51 )
+	      ['29', '30', '31', '32', '51'].indexOf( useform.elements.resid.value ) === -1 )
 		return;
 
 	let usebtn = useform.elements.useres;
@@ -642,7 +642,7 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 	}
 	else {
 		// We have data, display current addiction
-		timerDiv.appendChild( doc.createTextNode('Drugs used:') );
+		timerDiv.appendChild( doc.createTextNode('Drugs/stims used:') );
 		timerDiv.appendChild( doc.createElement('br') );
 
 		diff = getTimeDiff(
@@ -656,7 +656,7 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 
 		if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
 			timerDiv.appendChild(
-				doc.createTextNode('Drug free in:') );
+				doc.createTextNode('Drug/stim free in:') );
 			timerDiv.appendChild( doc.createElement('br') );
 			diff = getTimeDiff(
 				data[ ukey + 'drugTimerClear'], Date.now() );
@@ -680,22 +680,27 @@ function usedDrugs( useform, ukey ) {
 
 	chrome.storage.sync.get(
 		[ ukey + 'drugTimerLast', ukey + 'drugTimerClear'],
-		usedDrugs2.bind(null, amount, ukey) );
+		usedDrugs2.bind(null, amount, useform.elements.resid.value, ukey, ) );
 }
 
-function usedDrugs2( amount, ukey, data ) {
+function usedDrugs2( amount, resid, ukey, data ) {
 	if ( !data[ ukey + 'drugTimerClear' ] ) {
 		console.log('no data');
 		data = new Object();
 		data[ ukey + 'drugTimerClear'] = 0;
 	}
+	var multiplier = 1;
 
+	if ( resid === '30' || resid === '31' || resid === '32' ) {
+		multiplier = 0.5;
+	} 
+	
 	if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
-		data[ ukey + 'drugTimerClear'] += amount * 60 * 60 * 1000;
+		data[ ukey + 'drugTimerClear'] += amount * 60 * 60 * 1000 * multiplier;
 	}
 	else {
 		data[ ukey + 'drugTimerClear' ] =
-			Date.now() + amount * 60 * 60 * 1000;
+			Date.now() + amount * 60 * 60 * 1000 * multiplier;
 	}
 
 	if (amount > 0) {
