@@ -8,7 +8,10 @@ interface of the online space game [Pardus](https://www.pardus.at/).
 Install
 -------
 
-Install it from the Chrome Store: [Pardus Sweetener](https://chrome.google.com/webstore/detail/ejnppkfdhdnchkcdblfddedelmbpoklo)
+Pick your poison:
+
+* [Pardus Sweetener Chrome Extension](https://chrome.google.com/webstore/detail/ejnppkfdhdnchkcdblfddedelmbpoklo)
+* [Pardus Sweetener Firefox Add-on](https://addons.mozilla.org/firefox/addon/pardus-sweetener/)
 
 Features
 --------

@@ -2,8 +2,8 @@
   "cluster": "Gap",
   "sector": "ZU 3-239",
   "width": 13,
-  "height": 24,
-  "tiles": "bbbbbeeebbbbbbbbbbeeebbbbbbbbbbbebbbbbbbbbeeeeeeeebbbeeeffffffeebbeffffffffeebbeofffffeeebbeefoffeeebbbbefoooeebbbeeeeeoofebbeeefebefofeeeefffeeefffebbefffeeffffeebeffeeefffffebeeeebefeeefebbeebbefebefeebbbbbeeebeffeebbbbeebeeeeeebbbbbbbefebeebbbbbbeefeeeeebbbbeefffeeeebbbbeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "height": 22,
+  "tiles": "bbbbbeeebbbbbbbbbbeeebbbbbbbbbbbebbbbbbbbbeeeeeeeebbbeeeffffffeebbeffffffffeebbeofffffeeebbeefoffeeebbbbefoooeebbbeeeeeoofebbeeefebefofeeeefffeeefffebbefffeeffffeebeffeeefffffebeeeebefeeefebbeebbefebefeebbbbbeeebeffeebbbbeebeeeeeebbbbbbbefebeebbbbbbeefeeeeebbbbeefffeeeebbbbeeeeeebbbbbb",
   "beacons": {
     "Silaad": { "type": "wh", "x": 0, "y": 17 },
     "Fadaphi": { "type": "wh", "x": 9, "y": 20 }

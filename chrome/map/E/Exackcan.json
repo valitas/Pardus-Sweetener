@@ -2,8 +2,8 @@
   "cluster": "Empire Keldon Core",
   "sector": "Exackcan",
   "width": 15,
-  "height": 10,
-  "tiles": "beebbbbbeebbbbbbeeebbbeeeebbbbbeeeebeefeebeebbbefeeeffebbeebbbeffffffeeeeeebbeeeeefooffffebbbebbeooooofeeeeeeebeffoofeebeeeeebeefeeeebbbeebbbbbbbbbbbb",
+  "height": 13,
+  "tiles": "beebbbbbeebbbbbbeeebbbeeeebbbbbeeeebeefeebeebbbefeeeffebbeebbbeffffffeeeeeebbeeeeefooffffebbbebbeooooofeeeeeeebeffoofeebeeeeebeefeeeebbbeebbbbeeebbbbbbbbbbbbbebbbbbbbbbbbbbeeebbbbbbbbbbbbeeebbbbb",
   "beacons": {
     "Ackandso": { "type": "wh", "x": 1, "y": 0 },
     "Vewaa": { "type": "wh", "x": 13, "y": 2 }

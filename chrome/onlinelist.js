@@ -16,20 +16,19 @@ function start() {
 	config = cs.makeTracker( applyColor );
 }
 
-// Parse the list as configured into a object array of lower-case names, and return
-// it.  Downcasing is so we can so we get fast case-insensitive lookups of
-// the names on the page.
+// Parse the list as typed by the user into a map of names, and return it.
+// Split on commas, tabs, or newlines; index by downcased name, so we get fast
+// case-insensitive lookups.
 function parseList( str ) {
 	var names, name, index;
 
-	// Parse the options valule to an array.  Downcase all names so we can
-	// so we get fast case-insensitive lookups of the names on the page.
-	names = str.split( SEPARATOR_RX );
+	names = str.split( /[,\t\n]+/ );
 	index = new Object();
 
 	for(var i = 0, end = names.length; i < end; i++ ) {
-		name = names[ i ];
-		index[ name.toLowerCase() ] = name;
+		name = names[ i ].trim();
+		if ( name !== '' )
+			index[ name.toLowerCase() ] = name;
 	}
 
 	return index;
@@ -60,14 +59,16 @@ function applyColor () {
 		table, null, XPathResult.UNORDERED_NODE_ITERATOR_TYPE, null);
 	while(( a = xpr.iterateNext() )) {
 		name = a.textContent.toLowerCase();
-		if( names[name] ) {
-			a.style.color = '#f69';
+		if( names[name] )
 			links.push( a );
-		}
 	}
 
 	// Add the "people of interest" table if there are any.
 	if( links.length > 0 ) {
+		// Highlight the links
+		for ( i = 0, end = links.length; i < end; i++ )
+			links[i].style.color = '#f69';
+
 		var container = table.parentElement;
 		var poitable = createNamesTable( links );
 		container.insertBefore( poitable, table );
@@ -87,9 +88,9 @@ function createNamesTable( links ) {
 	td.colSpan = 4;
 	var label;
 	if( links.length == 1 )
-		label = '1 Person Of Interest';
+		label = '1 Person of Interest';
 	else
-		label = '' + links.length + ' People Of Interest';
+		label = '' + links.length + ' People of Interest';
 	td.appendChild( doc.createTextNode(label) );
 	tr.appendChild( td );
 

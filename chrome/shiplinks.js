@@ -20,8 +20,9 @@ var module = {
 			doc = container;
 		}
 
-		xpr = doc.evaluate( xpath, container, null,
-							XPathResult.ORDERED_NODE_ITERATOR_TYPE, null );
+		xpr = doc.evaluate(
+			xpath, container, null,
+			XPathResult.ORDERED_NODE_ITERATOR_TYPE, null );
 		while (( a = xpr.iterateNext() )) {
 			var href = a.href, m = matchId( href );
 			if ( m ) {

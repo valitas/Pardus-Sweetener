@@ -2,14 +2,14 @@
   "cluster": "West Pardus Rim",
   "sector": "Retho",
   "width": 22,
-  "height": 21,
-  "tiles": "bbeeeebbbbbbbeeeeebbbbbeeffeebbbbbeefffebbbbbeffffebbeeeefeeeebbbbeeffffebbefffeebbbbbbbeffffeebeeeeeebbbbbeebeffffebbefebbbbeeeeeeeeffffebbeeebeeeeffffeeeefffeeeeebeefeeeeeeebbefffffffeeefeebbbbbbbeefffggggffffebbeebbbbeffffggggggffeeeeeeebbeeeffggggggggggffffeebbbeeeffggggggggfffffebbbbbeefggggggggffeeeebbbbbbeffggggggfffebbbbbbbbbefffgggfeeefebbbbbbbbbeeffooofebeeeeebbbbbbbbefoooooeebeefeebbbbbbbeeefooffebbeefebbbbbbbbbeeeffeebbbeeebbbbbbbbbbbeeeebbbbbbbb",
+  "height": 22,
+  "tiles": "bbbbbbbbbbbbbbbbbbbbbbbbeeeebbbbbbbeeeeebbbbbeeffeebbbbbeefffebbbbbeffffebbeeeefeeeebbbbeeffffebbefffeebbbbbbbeffffeebeeeeeebbbbbeebeffffebbefebbbbeeeeeeeeffffebbeeebeeeeffffeeeefffeeeeebeefeeeeeeebbefffffffeeefeebbbbbbbeefffggggffffebbeebbbbeffffggggggffeeeeeeebbeeeffggggggggggffffeebbbeeeffggggggggfffffebbbbbeefggggggggffeeeebbbbbbeffggggggfffebbbbbbbbbefffgggfeeefebbbbbbbbbeeffooofebeeeeebbbbbbbbefoooooeebeefeebbbbbbbeeefooffebbeefebbbbbbbbbeeeffeebbbeeebbbbbbbbbbbeeeebbbbbbbb",
   "beacons": {
-    "Anaam": { "type": "wh", "x": 16, "y": 1 },
-    "Meram": { "type": "wh", "x": 14, "y": 8 },
-    "Canexin": { "type": "wh", "x": 0, "y": 10 },
-    "QW 2-014": { "type": "wh", "x": 20, "y": 13 },
-    "Nex Kataam": { "type": "wh", "x": 20, "y": 19 },
-    "Retho": { "x": 3, "y": 4 }
+    "Anaam": { "type": "wh", "x": 16, "y": 2 },
+    "Meram": { "type": "wh", "x": 14, "y": 9 },
+    "Canexin": { "type": "wh", "x": 0, "y": 11 },
+    "QW 2-014": { "type": "wh", "x": 20, "y": 14 },
+    "Nex Kataam": { "type": "wh", "x": 20, "y": 20 },
+    "Retho": { "x": 3, "y": 5 }
   }
 }
