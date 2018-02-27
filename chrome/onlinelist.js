@@ -2,8 +2,6 @@
 
 (function( doc, ConfigurationSet, Universe ) {
 
-var SEPARATOR_RX = /[ \t]*[,\t\n][, \n\t]*/; // split on commas or new lines
-
 var config, configured;
 
 function start() {
