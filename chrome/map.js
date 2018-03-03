@@ -52,13 +52,43 @@ SectorMap.prototype = {
 			this.initCanvas();
 		}
 		
-		this.canvas.addEventListener('mousemove', logCoords.bind( this, this.canvas.getBoundingClientRect() ) );
-		function logCoords( boundingRect, event ) {
+		this.canvas.addEventListener('mousemove', displayPath.bind( this, this.canvas.getBoundingClientRect() ) );
+		this.canvas.addEventListener('mouseout', this.clear.bind ( this, this.get2DContext() ) );
+		
+		function displayPath( boundingRect, event ) {
 			let x = event.screenX - boundingRect.left, y = event.clientY - boundingRect.top ;
 			let row = Math.floor( y / ( this.tileSize + 1 ) ) ;
 			let col = Math.floor( x / ( this.tileSize + 1 ) );
+			let hoverCoords = { 'x': col, 'y': row }; //oddly xyToColRow only returns col?
 			this.clear( this.get2DContext() );
 			this.markTile( this.get2DContext(), col, row, '#ccc' );
+			let current = getCurrentCoords();
+			
+			this.markTile( this.get2DContext(), current.col, current.row, '#0f0' );
+
+			if ( this.sector.tiles[ hoverCoords.y * this.sector.width + hoverCoords.x ] !== 'b' ) { 
+				var path = this.calcPath( hoverCoords, {'x':current.col,'y':current.row}, this.sector, 6 ) ;
+
+				for (var i = 1; i < path.length ; i ++ ) { // skip 0 because that's our starting loc.
+					this.markTile( this.get2DContext(), path[ i ].x , path[ i ].y , '#ccc' );
+				}
+			}
+			function getCurrentCoords( result ) { //stolen from nav.js
+				var elt = document.getElementById( 'coords' );
+				if ( elt ) {
+					var m = /^\[(\d+),(\d+)\]$/.exec( elt.textContent );
+					if ( m ) {
+						if ( !result ) {
+							result = new Object();
+						}
+						result.col = parseInt( m[1] );
+						result.row = parseInt( m[2] );
+						return result;
+					}
+				}
+
+				return null;
+			}
 		}
 	},
 
@@ -207,7 +237,8 @@ SectorMap.prototype = {
 		}
 
 		// We don't need this any more, release the reference
-		delete this.sector;
+		// We do now with the pathFinder;
+		// delete this.sector;
 	},
 
 	// Compute the tile size and whether we'll draw grid lines.
@@ -252,5 +283,115 @@ SectorMap.prototype = {
 
 		this.tileSize = size;
 		this.grid = grid;
+	},
+	
+	calcPath: function calcPath( end, start, sector, speed, boost, stim ) {
+		var map = [];
+		// parsing from Sweetener to VMAP
+		sector.t = sector.tiles;
+		sector.w = sector.width;
+		sector.h = sector.height;
+		
+		if ( boost )
+			speed -= 2;
+		if ( stim )
+			speed += 1;
+		
+		for ( var i = 0; i < sector.h; i++ ) {
+			for ( var j = 0; j < sector.w; j++ ) {
+				map[ i * sector.w + j ] = {
+					'n': i * sector.w + j,
+					'x': j,
+					'y': i,
+					't': sector.t[ i * sector.w + j ],
+					'distance': Infinity,
+					'visited': false,
+					'path': -1,
+					'steps': Infinity
+				};
+			}
+		}
+		var endN = end.y * sector.w + end.x, 
+			startN = start.y * sector.w + start.x;
+		
+		if (map[startN].t === 'b' || map[endN] === 'b')
+			return;
+
+		map[ endN ].distance = 0;
+		map[ endN ].steps = 0;
+		var newList = [], curList = [], nnList = [];
+		curList[0] = endN;
+		
+		while ( !map[ startN ].visited ) {
+		// for (var p = 0; p<20 ; p++ ){
+			var newList = [];
+			for ( var i = 0; i < curList.length ; i++ ) {
+				nnList = nearestNeighbours( sector.w, curList[i] );
+				updateDistance( nnList, curList[i], speed, map );
+				newList = newList.concat( nnList );
+
+				//removing duplicates - greatly speeds up calculation
+				newList.sort(); 
+				for ( var l = 0; l < newList.length - 1; l++ ) { 
+					if ( newList[l] === newList[ l + 1 ] ) {
+						newList.splice( l, 1 );
+					}
+				}
+			}
+			// shortest distances go first next round
+			newList.sort( function compare(a ,b) {
+				return map[ a ].distance - map[ b ].distance;
+				});
+			curList = newList;
+		}
+		
+		var outputList = [];
+		var tileID = startN;
+
+		for ( var i = 0; i < map[ startN ].steps + 1 ; i++ ) {
+			outputList[ i ] = { 'x': map[ tileID ].x , 'y': map[ tileID ].y };
+			tileID = map[ tileID ].path;
+		}
+		
+		return outputList;
+		
+		function nearestNeighbours( sectorw, n ) {
+			var m, nnList = [];
+			for ( var i = 0; i < 9; i++ ) {
+				m = n + ( Math.floor( i / 3 ) - 1 ) * sectorw - 1 + i % 3;
+				if ( m >= 0 && m < map.length && m != n && map[ m ].t !== 'b' && !map[ m ].visited 
+					&& Math.abs( map[ n ].y - map[ m ].y ) < 3 && Math.abs( map[ n ].x - map[ m ].x ) < 3) {
+					// Add to the list if not out of bounds, not equal to start spot, not boundary, not visited already 
+					// and not going *through the wall* of the map, that's cheatin!
+					nnList.push( m );
+				}
+			}
+			return nnList;
+		}
+
+		function updateDistance( nnList, n, speed, map ) {
+			var VISC = { 
+				'f': 11, // fuel -> space
+				'g': 16, // nebula gas
+				'v': 18,
+				'e': 20,
+				'o': 25, // ore -> asteriods
+				'm': 36  // Exotic Matter
+			}
+
+			for ( var i = 0; i < nnList.length ; i++ ) {
+
+				if ( map[ nnList[i] ].distance > VISC[ map[ n ].t ] - speed + map[ n ].distance ) {
+					map[ nnList[i] ].distance = VISC[ map[ n ].t ] - speed + map[ n ].distance;
+					map[ nnList[i] ].path  = n;			
+					if ( !(map[ nnList[i] ].steps == map[ n ].steps + 1 ) ) { 
+						//normal movement, not a better tile to go through
+						map[ nnList[i] ].steps = map[ n ].steps + 1;
+					}
+				}
+			}
+			map[ n ].visited = true;
+			return map;
+		}
 	}
 };
