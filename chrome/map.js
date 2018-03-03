@@ -51,6 +51,15 @@ SectorMap.prototype = {
 		if ( this.canvas ) {
 			this.initCanvas();
 		}
+		
+		this.canvas.addEventListener('mousemove', logCoords.bind( this, this.canvas.getBoundingClientRect() ) );
+		function logCoords( boundingRect, event ) {
+			let x = event.screenX - boundingRect.left, y = event.clientY - boundingRect.top ;
+			let row = Math.floor( y / ( this.tileSize + 1 ) ) ;
+			let col = Math.floor( x / ( this.tileSize + 1 ) );
+			this.clear( this.get2DContext() );
+			this.markTile( this.get2DContext(), col, row, '#ccc' );
+		}
 	},
 
 	setCanvas: function( canvas ) {
