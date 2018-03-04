@@ -19,6 +19,7 @@ SectorMap.prototype = {
 
 	configure: function( sector, maxPixelSize ) {
 		this.sector = sector;
+		this.ukey = Universe.getServer ( document ).substr( 0, 1 );
 
 		var cols = sector.width, rows = sector.height, tiles = sector.tiles;
 
@@ -96,9 +97,9 @@ SectorMap.prototype = {
 		
 		function savePath() {
 			if ( this.path ) {
-				chrome.storage.local.set( { 'path': this.path } );
-											console.log( 'saved: ',this.path);
-
+				let saveData = {};
+				saveData[ this.ukey + 'path' ] = this.path;
+				chrome.storage.local.set( saveData );
 			}
 		}
 	},

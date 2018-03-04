@@ -130,7 +130,10 @@ function applyConfiguration() {
 		updateMinimap();
 
 		updatePathfinding();
-		chrome.storage.local.get( 'path', updateRoutePlanner );
+
+		let ukey = Universe.getServer ( doc ).substr( 0, 1 );
+		let name = ukey + 'path';
+		chrome.storage.local.get( name , updateRoutePlanner );
 	}
 	else {
 		// Instead, we only want to do this the first time we run,
@@ -190,7 +193,9 @@ function onGameMessage( event ) {
 	updatePathfinding();
 	addDrugTimer();
 
-	chrome.storage.local.get( 'path', updateRoutePlanner );
+	let ukey = Universe.getServer ( doc ).substr( 0, 1 );
+	let name = ukey + 'path';
+	chrome.storage.local.get( name , updateRoutePlanner );
 
 	configured = true;
 }
@@ -726,7 +731,8 @@ function getTimeDiff ( time1, time2 ) {
 }
 
 function updateRoutePlanner( data ) {
-	let path = data[ 'path' ];
+	let ukey = Universe.getServer ( doc ).substr( 0, 1 );
+	let path = data[ ukey + 'path' ];
 	let idList = [];
 	let sectorId = Sector.getIdFromLocation( userloc );
 
