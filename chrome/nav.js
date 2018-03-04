@@ -130,6 +130,7 @@ function applyConfiguration() {
 		updateMinimap();
 
 		updatePathfinding();
+		chrome.storage.local.get( 'path', updateRoutePlanner );
 	}
 	else {
 		// Instead, we only want to do this the first time we run,
@@ -188,6 +189,8 @@ function onGameMessage( event ) {
 
 	updatePathfinding();
 	addDrugTimer();
+
+	chrome.storage.local.get( 'path', updateRoutePlanner );
 
 	configured = true;
 }
@@ -720,6 +723,32 @@ function getTimeDiff ( time1, time2 ) {
 	diff [ 'day' ] = Math.floor( ( ( Math.floor( time1 / 1000) - Math.floor( time2 / 1000 ) ) / ( 60 * 60 * 24 ) ) );
 
 	return diff
+}
+
+function updateRoutePlanner( data ) {
+	let path = data[ 'path' ];
+	let idList = [];
+	let sectorId = Sector.getIdFromLocation( userloc );
+
+	navtable = doc.getElementById( 'navareatransition' );
+	if ( !navtable )
+		navtable = doc.getElementById( 'navarea' );
+	if ( !navtable )
+		return;
+	let a = navtable.getElementsByTagName( 'a' );
+	//console.log(a.getAttribute( 'onclick' ).split(/()/));
+	/*a.sort( function compare(a ,b) {
+	return parseInt( a.getAttribute( 'onclick' ).split(/()/) - map[ b ].distance;
+		});*/
+	
+	for ( var i = 0; i < path.length ; i++ ) {
+		idList[ i ] = Sector.getLocation( sectorId, path[ i ].x, path[ i ].y );	
+		for ( var j = 0; j < a.length; j++ ) {
+			if ( a[ j ].getAttribute( 'onclick' ) !== null && a[ j ].getAttribute( 'onclick' ).indexOf( idList[ i ] ) > 0 ) {
+				highlightTileInPath( a[ j ].parentNode );
+			}
+		}
+	}
 }
 
 start();

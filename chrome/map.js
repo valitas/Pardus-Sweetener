@@ -51,9 +51,10 @@ SectorMap.prototype = {
 		if ( this.canvas ) {
 			this.initCanvas();
 		}
-		
+
 		this.canvas.addEventListener('mousemove', displayPath.bind( this, this.canvas.getBoundingClientRect() ) );
-		this.canvas.addEventListener('mouseout', this.clear.bind ( this, this.get2DContext() ) );
+		this.canvas.addEventListener('mouseout', this.clear.bind ( this, this.get2DContext() ) ); //this does remove the own location dot.
+		this.canvas.addEventListener('click', savePath.bind ( this ) );
 		
 		function displayPath( boundingRect, event ) {
 			let x = event.screenX - boundingRect.left, y = event.clientY - boundingRect.top ;
@@ -68,11 +69,13 @@ SectorMap.prototype = {
 
 			if ( this.sector.tiles[ hoverCoords.y * this.sector.width + hoverCoords.x ] !== 'b' ) { 
 				var path = this.calcPath( hoverCoords, {'x':current.col,'y':current.row}, this.sector, 6 ) ;
+				this.path = path;
 
 				for (var i = 1; i < path.length ; i ++ ) { // skip 0 because that's our starting loc.
 					this.markTile( this.get2DContext(), path[ i ].x , path[ i ].y , '#ccc' );
 				}
 			}
+			
 			function getCurrentCoords( result ) { //stolen from nav.js
 				var elt = document.getElementById( 'coords' );
 				if ( elt ) {
@@ -88,6 +91,14 @@ SectorMap.prototype = {
 				}
 
 				return null;
+			}
+		}
+		
+		function savePath() {
+			if ( this.path ) {
+				chrome.storage.local.set( { 'path': this.path } );
+											console.log( 'saved: ',this.path);
+
 			}
 		}
 	},
