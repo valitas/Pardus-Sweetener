@@ -95,9 +95,10 @@ SectorMap.prototype = {
 			}
 		}
 		
-		function savePath() {
+		function savePath( e ) {
 			if ( this.path ) {
 				let saveData = {};
+				e.ctrlKey ? this.path = [] : null;
 				saveData[ this.ukey + 'path' ] = this.path;
 				chrome.storage.local.set( saveData );
 			}
