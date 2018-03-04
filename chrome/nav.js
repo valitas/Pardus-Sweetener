@@ -741,18 +741,23 @@ function updateRoutePlanner( data ) {
 		navtable = doc.getElementById( 'navarea' );
 	if ( !navtable )
 		return;
-	let a = navtable.getElementsByTagName( 'a' );
-	//console.log(a.getAttribute( 'onclick' ).split(/()/));
-	/*a.sort( function compare(a ,b) {
-	return parseInt( a.getAttribute( 'onclick' ).split(/()/) - map[ b ].distance;
-		});*/
-	
+
+	let a = Array.prototype.slice.call( navtable.getElementsByTagName( 'a' ) );
+
+	a.sort( function compare(a ,b) {
+		if ( a.getAttribute( 'onclick' ) === null )
+			return b
+		return parseInt( a.getAttribute( 'onclick' ).split(/[()]/g)[1] ) - parseInt( b.getAttribute( 'onclick' ).split(/[()]/g)[1] );
+		});
+
 	for ( var i = 0; i < path.length ; i++ ) {
-		idList[ i ] = Sector.getLocation( sectorId, path[ i ].x, path[ i ].y );	
-		for ( var j = 0; j < a.length; j++ ) {
-			if ( a[ j ].getAttribute( 'onclick' ) !== null && a[ j ].getAttribute( 'onclick' ).indexOf( idList[ i ] ) > 0 ) {
-				highlightTileInPath( a[ j ].parentNode );
-			}
+		idList[ i ] = Sector.getLocation( sectorId, path[ i ].x, path[ i ].y );
+	}
+
+	idList.sort();
+	for ( var j = 0; j < a.length; j++ ) {
+		if ( a[ j ].getAttribute( 'onclick' ) !== null && idList.includes( parseInt( a[ j ].getAttribute( 'onclick' ).split(/[()]/g)[1] ) ) ) {
+			highlightTileInPath( a[ j ].parentNode );
 		}
 	}
 }
