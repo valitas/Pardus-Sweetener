@@ -733,6 +733,8 @@ function getTimeDiff ( time1, time2 ) {
 function updateRoutePlanner( data ) {
 	let ukey = Universe.getServer ( doc ).substr( 0, 1 );
 	let path = data[ ukey + 'path' ];
+	if ( path.length === 0 )
+		return;
 	let idList = [];
 	let sectorId = Sector.getIdFromLocation( userloc );
 
