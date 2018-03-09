@@ -13,7 +13,6 @@
 // And so, since it's 2013 and that, we use the HTML5 Canvas.
 
 'use strict';
-
 function SectorMap() {}
 SectorMap.prototype = {
 
@@ -54,7 +53,7 @@ SectorMap.prototype = {
 		}
 
 		this.canvas.addEventListener('mousemove', displayPath.bind( this, this.canvas.getBoundingClientRect() ) );
-		this.canvas.addEventListener('mouseout', this.clear.bind ( this, this.get2DContext() ) ); //this does remove the own location dot.
+		this.canvas.addEventListener('mouseout', clearPath.bind( this ) ); 
 		this.canvas.addEventListener('click', savePath.bind ( this ) );
 		
 		function displayPath( boundingRect, event ) {
@@ -64,34 +63,18 @@ SectorMap.prototype = {
 			let hoverCoords = { 'x': col, 'y': row }; //oddly xyToColRow only returns col?
 			this.clear( this.get2DContext() );
 			this.markTile( this.get2DContext(), col, row, '#ccc' );
-			let current = getCurrentCoords();
-			
+			let current = this.getCurrentCoords();
+			let speed = getSpeed.call(this);
+
 			this.markTile( this.get2DContext(), current.col, current.row, '#0f0' );
 
 			if ( this.sector.tiles[ hoverCoords.y * this.sector.width + hoverCoords.x ] !== 'b' ) { 
-				var path = this.calcPath( hoverCoords, {'x':current.col,'y':current.row}, this.sector, 6 ) ;
+				var path = this.calcPath( hoverCoords, {'x':current.col,'y':current.row}, this.sector, speed ) ;
 				this.path = path;
 
 				for (var i = 1; i < path.length ; i ++ ) { // skip 0 because that's our starting loc.
 					this.markTile( this.get2DContext(), path[ i ].x , path[ i ].y , '#ccc' );
 				}
-			}
-			
-			function getCurrentCoords( result ) { //stolen from nav.js
-				var elt = document.getElementById( 'coords' );
-				if ( elt ) {
-					var m = /^\[(\d+),(\d+)\]$/.exec( elt.textContent );
-					if ( m ) {
-						if ( !result ) {
-							result = new Object();
-						}
-						result.col = parseInt( m[1] );
-						result.row = parseInt( m[2] );
-						return result;
-					}
-				}
-
-				return null;
 			}
 		}
 		
@@ -102,6 +85,26 @@ SectorMap.prototype = {
 				saveData[ this.ukey + 'path' ] = this.path;
 				chrome.storage.local.set( saveData );
 			}
+		}
+		
+		function clearPath() {
+			let current = this.getCurrentCoords();
+			this.clear( this.get2DContext() );
+			this.markTile( this.get2DContext(), current.col, current.row, '#0f0' );
+		}
+		
+		function getSpeed() {
+			let current = this.getCurrentCoords();
+			let currentTileType = this.sector.tiles[ current.col + this.sector.width * current.row ];
+			let moveField = document.getElementById('tdStatusMove').childNodes;
+			let speed = 0;
+			if ( moveField.length > 1 ) { //something modifies our speed 
+				speed -= parseInt( moveField[1].childNodes[0].textContent );
+			}
+			speed -= parseInt( moveField[0].textContent );
+			speed += this.VISC[ currentTileType ];
+
+			return speed;
 		}
 	},
 
@@ -171,6 +174,15 @@ SectorMap.prototype = {
 		m: '#0c0',    // exotic matter
 		o: '#666',    // ore
 		v: '#0f0'     // viral
+	},
+
+	VISC: { 
+		'f': 11, // fuel -> space
+		'g': 16, // nebula gas
+		'v': 18,
+		'e': 20,
+		'o': 25, // ore -> asteriods
+		'm': 36  // Exotic Matter
 	},
 
 	initCanvas: function() {
@@ -298,18 +310,29 @@ SectorMap.prototype = {
 		this.grid = grid;
 	},
 	
-	calcPath: function calcPath( end, start, sector, speed, boost, stim ) {
+	getCurrentCoords: function getCurrentCoords( result ) { //stolen from nav.js
+		var elt = document.getElementById( 'coords' );
+		if ( elt ) {
+			var m = /^\[(\d+),(\d+)\]$/.exec( elt.textContent );
+			if ( m ) {
+				if ( !result ) {
+					result = new Object();
+				}
+				result.col = parseInt( m[1] );
+				result.row = parseInt( m[2] );
+				return result;
+			}
+		}
+		return null;
+	},
+
+	calcPath: function calcPath( end, start, sector, speed ) {
 		var map = [];
 		// parsing from Sweetener to VMAP
 		sector.t = sector.tiles;
 		sector.w = sector.width;
 		sector.h = sector.height;
-		
-		if ( boost )
-			speed -= 2;
-		if ( stim )
-			speed += 1;
-		
+
 		for ( var i = 0; i < sector.h; i++ ) {
 			for ( var j = 0; j < sector.w; j++ ) {
 				map[ i * sector.w + j ] = {
@@ -340,7 +363,7 @@ SectorMap.prototype = {
 			var newList = [];
 			for ( var i = 0; i < curList.length ; i++ ) {
 				nnList = nearestNeighbours( sector.w, curList[i] );
-				updateDistance( nnList, curList[i], speed, map );
+				updateDistance( nnList, curList[i], speed, map, this.VISC );
 				newList = newList.concat( nnList );
 
 				//removing duplicates - greatly speeds up calculation
@@ -382,16 +405,8 @@ SectorMap.prototype = {
 			return nnList;
 		}
 
-		function updateDistance( nnList, n, speed, map ) {
-			var VISC = { 
-				'f': 11, // fuel -> space
-				'g': 16, // nebula gas
-				'v': 18,
-				'e': 20,
-				'o': 25, // ore -> asteriods
-				'm': 36  // Exotic Matter
-			}
-
+		function updateDistance( nnList, n, speed, map, VISC ) {
+		
 			for ( var i = 0; i < nnList.length ; i++ ) {
 
 				if ( map[ nnList[i] ].distance > VISC[ map[ n ].t ] - speed + map[ n ].distance ) {
