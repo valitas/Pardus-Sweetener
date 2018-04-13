@@ -55,7 +55,8 @@ SectorMap.prototype = {
 		this.canvas.addEventListener('mousemove', displayPath.bind( this, this.canvas.getBoundingClientRect() ) );
 		this.canvas.addEventListener('mouseout', clearPath.bind( this ) ); 
 		this.canvas.addEventListener('click', savePath.bind ( this ) );
-		
+		this.canvas.addEventListener('dblclick', savePath.bind ( this ) );
+	
 		function displayPath( boundingRect, event ) {
 			let x = event.clientX - boundingRect.x , y = event.clientY - boundingRect.y, tileSizeOffset;
 			
@@ -83,9 +84,9 @@ SectorMap.prototype = {
 		function savePath( e ) {
 			if ( this.path ) {
 				let saveData = {};
-				e.ctrlKey ? this.path = [] : null;
+				e.detail > 1 ? this.path = [] : null;
 				saveData[ this.ukey + 'path' ] = this.path;
-				//chrome.storage.local.set( saveData );
+				chrome.storage.local.set( saveData );
 			}
 		}
 		
