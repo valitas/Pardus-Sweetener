@@ -131,7 +131,7 @@ function applyConfiguration() {
 
 		updatePathfinding();
 
-		let ukey = Universe.getServer ( doc ).substr( 0, 1 );
+		let ukey = Universe.getServer( doc ).substr( 0, 1 );
 		let name = ukey + 'path';
 		chrome.storage.local.get( name , updateRoutePlanner );
 	}

@@ -57,9 +57,11 @@ SectorMap.prototype = {
 		this.canvas.addEventListener('click', savePath.bind ( this ) );
 		
 		function displayPath( boundingRect, event ) {
-			let x = event.screenX - boundingRect.left, y = event.clientY - boundingRect.top ;
-			let row = Math.floor( y / ( this.tileSize + 1 ) ) ;
-			let col = Math.floor( x / ( this.tileSize + 1 ) );
+			let x = event.clientX - boundingRect.x , y = event.clientY - boundingRect.y, tileSizeOffset;
+			
+			this.grid ? tileSizeOffset = 1: tileSizeOffset = 0;
+			let row = Math.floor( y / ( this.tileSize + tileSizeOffset ) ) ;
+			let col = Math.floor( x / ( this.tileSize + tileSizeOffset ) );
 			let hoverCoords = { 'x': col, 'y': row }; //oddly xyToColRow only returns col?
 			this.clear( this.get2DContext() );
 			this.markTile( this.get2DContext(), col, row, '#ccc' );
@@ -83,7 +85,7 @@ SectorMap.prototype = {
 				let saveData = {};
 				e.ctrlKey ? this.path = [] : null;
 				saveData[ this.ukey + 'path' ] = this.path;
-				chrome.storage.local.set( saveData );
+				//chrome.storage.local.set( saveData );
 			}
 		}
 		
