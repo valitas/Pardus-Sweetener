@@ -120,7 +120,6 @@ SectorMap.prototype = {
 		this.savedPath.forEach(function (e) {
 			this.markTile(ctx, e[0], e[1], "#080");
 		}.bind(this));
-		this.markShipTile(ctx);
 	},
 
 	// This sets the current ship coords, for navigation
@@ -357,7 +356,7 @@ SectorMap.prototype = {
 				
 				bfsState = nextBfsState;
 				
-				 //uncomment to debug
+				/* //uncomment to debug
 				var d = "";
 				for (i=0;i<this.sector.height;i++) {
 					for (j=0;j<this.sector.width;j++) {
@@ -399,6 +398,7 @@ SectorMap.prototype = {
 			this.savedPath = path;
 		}
 		this.drawSavedPath(this.get2DContext());
+		this.markShipTile(this.get2DContext());
 		this.distanceDiv.innerHTML = "Distance to " + this.sector.sector + " [" + loc.x + ", " + loc.y + "]: " + apsSpent + " APs"; //innerHTML to accomodate infinity symbol
 	},
 
