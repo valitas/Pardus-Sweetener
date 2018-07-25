@@ -298,7 +298,7 @@ SectorMap.prototype = {
             f: travelCosts["Space"], 
             g: travelCosts["Nebula"], 
             m: travelCosts["Exotic"], 
-            o: travelCosts["Ore"], 
+            o: travelCosts["Asteroid"], 
             v: travelCosts["Virus"]
         };
         
@@ -357,7 +357,7 @@ SectorMap.prototype = {
                 
                 bfsState = nextBfsState;
                 
-                /* //uncomment to debug
+                 //uncomment to debug
                 var d = "";
                 for (i=0;i<this.sector.height;i++) {
                     for (j=0;j<this.sector.width;j++) {
