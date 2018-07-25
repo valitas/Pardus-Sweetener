@@ -16,15 +16,6 @@
      <label for="pathfindingEnabled">
       Enable highlighting of the ship path
      </label>
-     <br>
-     <input type="checkbox" id="miniMap">
-     <label for="miniMap">
-      Show a small map of the current sector
-     </label>
-     <select id="miniMapPlacement">
-      <option value="topright">Above the Cargo box</option>
-      <option value="statusbox">Inside the Status box</option>
-     </select>
     </p>
 
     <p>
@@ -86,6 +77,31 @@
       Show the recipient's alliance name when composing a private message
      </label>
     </p>
+   </div>
+  </section>
+
+  <section>
+   <h3>Minimap settings</h3>
+   <div>
+     <input type="checkbox" id="miniMap">
+     <label for="miniMap">
+      Show a small map of the current sector
+     </label>
+     <select id="miniMapPlacement">
+      <option value="topright">Above the Cargo box</option>
+      <option value="statusbox">Inside the Status box</option>
+     </select>
+     <br>
+     <input type="checkbox" id="miniMapNavigation">
+     <label for="miniMapNavigation">
+      Calculate travel cost and optimal route when hovering over the minimap
+     </label>
+     <br><br>
+      Travel AP costs for each field on each uni: (Select drive to populate default values, or edit individually to take into account capacitors, amber stims, etc):
+      <div>
+       <table id="miniMapNavigationCosts">
+       </table>
+      </div>
    </div>
   </section>
 
