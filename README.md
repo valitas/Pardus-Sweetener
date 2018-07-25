@@ -5,10 +5,19 @@ Pardus Sweetener
 Pardus Sweetener is a browser extension that enhances the user
 interface of the online space game [Pardus](https://www.pardus.at/).
 
+This is Kui's fork of the project, which adds these features: 
+
+ * Changed the color of viral clouds on the minimap to distinguish against ship
+ * Added minimal-cost pathfinder and AP calculator to the minimap
+ * Added displaying waypoint information to minimap
+
 Install
 -------
 
-Pick your poison:
+To install this fork, please download the files and Google the instructions for
+installing an unpacked extension. 
+
+If you don't care about the fork, the original extension can be found here:
 
 * [Pardus Sweetener Chrome Extension](https://chrome.google.com/webstore/detail/ejnppkfdhdnchkcdblfddedelmbpoklo)
 * [Pardus Sweetener Firefox Add-on](https://addons.mozilla.org/firefox/addon/pardus-sweetener/)
@@ -18,7 +27,7 @@ Features
 
  * Audible alarm on combat and user-configurable game events
  * Desktop notifications on combat and user-configurable game events
- * Minimap of current sector in the nav screen.
+ * Minimap of current sector in the nav screen, with minimal-cost pathfinder and AP calculator built in
  * Robot autofill in NPC combat screen
  * Missile and rounds autoselect in combat screens
  * Stored personal and alliance quicklists
@@ -30,6 +39,10 @@ Features
 
 Credits and legal notices
 -------------------------
+
+Kui's modifications to the original code are licensed CC BY-NC. 
+
+The original code is in the public domain, and its license is below:
 
 The author of this software wishes to remain somewhat anonymous, but
 you can contact her as val@dssrzs.org.
