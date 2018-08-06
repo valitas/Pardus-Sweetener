@@ -680,7 +680,7 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 					diff[ 'hr' ] + 'h' +
 					diff[ 'min' ] + 'm' +
 					diff[ 'sec' ] + 's' ) ) ;
-			
+
 			timerDiv.appendChild( doc.createElement('br') );
 			} 
 		}
@@ -811,8 +811,7 @@ function usedDrugs( useform, ukey ) {
 
 function usedDrugs2( amount, ukey, data ) {
 	if (!data[ ukey + 'drugTimerClear'] ) {
-		//console.log('no data');
-		data = new Object;
+		data = new Object();
 		data[ ukey + 'drugTimerClear'] = 0;
 	}
 	if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
@@ -832,7 +831,6 @@ function usedDrugs2( amount, ukey, data ) {
 		data[ ukey + 'drugTimerClear' ] = timerClear.getTime();
 			
 	}
-	console.log('using drugs: ' + amount);
 	if (amount > 0) {
 		data[ ukey + 'drugTimerLast' ] = Date.now();
 	}
@@ -854,8 +852,7 @@ function usedStims( useform, ukey ) {
 
 function usedStims2( amount, ukey, data ) {
 	if (!data[ ukey + 'stimTimerClear'] ) {
-		//console.log('no data');
-		data = new Object;
+		data = new Object();
 		data[ ukey + 'stimTimerClear'] = 0;
 	}
 	if (data[ ukey + 'stimTimerClear'] > Date.now() ) {
@@ -884,14 +881,13 @@ function usedStims2( amount, ukey, data ) {
 	if (amount > 0) {
 		data[ ukey + 'stimTimerLast' ] = Date.now();
 	}
-			console.log('using stims in combat: ' + amount);
 
 	chrome.storage.sync.set ( data );
 }
 
 function getTimeDiff ( time1, time2 ) {
 	// Fucntion returns an object with keys 'day', 'hr', 'min', 'sec' which are the time differences between input 1 and 2.
-	var diff = new Object
+	var diff = new Object()
 
 	diff [ 'sec' ] = (Math.floor( time1 / 1000 ) - Math.floor( time2 / 1000 ) ) % 60 ;
 	diff [ 'min' ] = Math.floor( ( ( Math.floor( time1 / 1000) - Math.floor( time2 / 1000 ) ) % ( 60 * 60 ) ) / 60 );
