@@ -107,6 +107,7 @@ function start() {
 	cs.addKey( 'navFlyCloseLink' );
 	cs.addKey( 'pathfindingEnabled' );
 	cs.addKey( 'clockD' );
+	cs.addKey( 'clockStim' );
 
 	shiplinks = new ShipLinks.Controller
 		( 'table/tbody/tr/td[position() = 2]/a', matchShipId );
@@ -188,6 +189,7 @@ function onGameMessage( event ) {
 
 	updatePathfinding();
 	addDrugTimer();
+	addStimTimer();
 
 	configured = true;
 }
@@ -624,6 +626,27 @@ function addDrugTimer() {
 		displayDrugTimer.bind(null, ukey, usebtn) );
 }
 
+function addStimTimer() {
+	let useform = doc.getElementById( 'useform' );
+	if ( !useform ||
+	     !useform.elements.resid ||
+	     useform.elements.resid.value != 31 )
+		return;
+
+	let usebtn = useform.elements.useres;
+	if ( !usebtn || usebtn.dataset.pardusSweetener )
+		return;
+
+	// Don't add the event handler twice
+	usebtn.dataset.pardusSweetener = true;
+
+	let ukey = Universe.getServer ( doc ).substr( 0, 1 );
+	usebtn.addEventListener( 'click', usedStims.bind(null, useform, ukey) );
+	chrome.storage.sync.get(
+		[ ukey + 'stimTimerLast', ukey + 'stimTimerClear' ],
+		displayStimTimer.bind(null, ukey, usebtn) );
+}
+
 function displayDrugTimer ( ukey, usebtn, data ) {
 	if ( !config[ 'clockD' ] )
 		return;
@@ -634,6 +657,33 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 	timerDiv.id = 'drugTimer';
 	usebtn.parentNode.appendChild( timerDiv );
 	timerDiv.appendChild ( doc.createElement( 'br' ) );
+
+
+	var now = Math.floor( Date.now() / 1000 );
+	var stimTime = chrome.storage.sync.get(
+				[ ukey + 'stimTimerClear' ],
+				getStimClearTime.bind( this, now, ukey )
+			);
+	function getStimClearTime( now, ukey, data ) {
+			var t = Math.floor(
+				data[ ukey + 'stimTimerClear' ]
+					/ 1000 );
+			if ( t > now ) {
+			timerDiv.appendChild ( doc.createElement( 'br' ) );
+				timerDiv.appendChild(
+					doc.createTextNode('Stim free in:') );
+			timerDiv.appendChild( doc.createElement('br') );
+			diff = getTimeDiff(
+				data[ ukey + 'stimTimerClear'], Date.now() );
+			timerDiv.appendChild (
+				doc.createTextNode(
+					diff[ 'hr' ] + 'h' +
+					diff[ 'min' ] + 'm' +
+					diff[ 'sec' ] + 's' ) ) ;
+			
+			timerDiv.appendChild( doc.createElement('br') );
+			} 
+		}
 
 	if (!data[ ukey + 'drugTimerClear'] ) {
 		// No data, so make some nice comments
@@ -665,12 +715,88 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 					diff[ 'hr' ] + 'h' +
 						diff[ 'min' ] + 'm' +
 						diff[ 'sec' ] + 's' ) ) ;
+			timerDiv.appendChild( doc.createElement('br') );
 		}
 		else {
 			timerDiv.appendChild(
 				document.createTextNode('You are undrugged.') );
 		}
 	}
+}
+
+function displayStimTimer ( ukey, usebtn, data ) {
+	if ( !config[ 'clockStim' ] )
+		return;
+
+	var timerDiv = doc.createElement('div');
+	var diff;
+
+	timerDiv.id = 'stimTimer';
+	usebtn.parentNode.appendChild( timerDiv );
+	timerDiv.appendChild ( doc.createElement( 'br' ) );
+
+
+	var now = Math.floor( Date.now() / 1000 );
+	var drugTime = chrome.storage.sync.get(
+				[ ukey + 'drugTimerClear' ],
+				getDrugClearTime.bind( this, now, ukey )
+			);
+	function getDrugClearTime( now, ukey, data ) {
+			var t = Math.floor(
+				data[ ukey + 'drugTimerClear' ]
+					/ 1000 );
+			if ( t > now ) {
+			timerDiv.appendChild ( doc.createElement( 'br' ) );
+				timerDiv.appendChild(
+					doc.createTextNode('Drug free in:') );
+			timerDiv.appendChild( doc.createElement('br') );
+			diff = getTimeDiff(
+				data[ ukey + 'drugTimerClear'], Date.now() );
+			timerDiv.appendChild (
+				doc.createTextNode(
+					diff[ 'hr' ] + 'h' +
+					diff[ 'min' ] + 'm' +
+					diff[ 'sec' ] + 's' ) ) ;
+			} 
+			
+		}
+	if (!data[ ukey + 'stimTimerClear'] ) {
+		// No data, so make some nice comments
+		timerDiv.appendChild(
+			doc.createTextNode('No stims used yet.') );
+	}
+	else {
+		// We have data, display current addiction
+		timerDiv.appendChild( doc.createTextNode('Stims used:') );
+		timerDiv.appendChild( doc.createElement('br') );
+
+		diff = getTimeDiff(
+			Date.now(), data[ ukey + 'stimTimerLast'] );
+		timerDiv.appendChild(
+			doc.createTextNode(
+				diff[ 'hr' ] + 'h' +
+					diff[ 'min' ] + 'm' +
+					diff[ 'sec' ] + 's ago' ) );
+		timerDiv.appendChild( doc.createElement( 'br' ) );
+
+		if (data[ ukey + 'stimTimerClear'] > Date.now() ) {
+			timerDiv.appendChild(
+				doc.createTextNode('Stim free in:') );
+			timerDiv.appendChild( doc.createElement('br') );
+			diff = getTimeDiff(
+				data[ ukey + 'stimTimerClear'], Date.now() );
+			timerDiv.appendChild (
+				doc.createTextNode(
+					diff[ 'hr' ] + 'h' +
+						diff[ 'min' ] + 'm' +
+						diff[ 'sec' ] + 's' ) ) ;
+		}
+		else {
+			timerDiv.appendChild(
+				document.createTextNode('You are unstimed.') );
+		}
+	}
+
 }
 
 function usedDrugs( useform, ukey ) {
@@ -684,23 +810,81 @@ function usedDrugs( useform, ukey ) {
 }
 
 function usedDrugs2( amount, ukey, data ) {
-	if ( !data[ ukey + 'drugTimerClear' ] ) {
-		console.log('no data');
-		data = new Object();
+	if (!data[ ukey + 'drugTimerClear'] ) {
+		//console.log('no data');
+		data = new Object;
 		data[ ukey + 'drugTimerClear'] = 0;
 	}
-
 	if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
 		data[ ukey + 'drugTimerClear'] += amount * 60 * 60 * 1000;
 	}
 	else {
-		data[ ukey + 'drugTimerClear' ] =
-			Date.now() + amount * 60 * 60 * 1000;
+		var timerClear = new Date(Date.now());
+		if (timerClear.getMinutes() == 59) {
+			timerClear.setHours(timerClear.getHours()+1);
+		}
+		timerClear.setMinutes(59);
+		timerClear.setSeconds(0);
+		timerClear.setMilliseconds(0);
+		if (amount > 1) {
+			timerClear.setHours(timerClear.getHours()+amount-1);
+		}
+		data[ ukey + 'drugTimerClear' ] = timerClear.getTime();
+			
 	}
-
+	console.log('using drugs: ' + amount);
 	if (amount > 0) {
 		data[ ukey + 'drugTimerLast' ] = Date.now();
 	}
+	chrome.storage.sync.set ( data );
+}
+
+
+
+function usedStims( useform, ukey ) {
+	let amount = parseInt( useform.elements.amount.value );
+	if ( !(amount > 0) )
+		return;
+
+	chrome.storage.sync.get(
+		[ ukey + 'stimTimerLast', ukey + 'stimTimerClear'],
+		usedStims2.bind(null, amount, ukey) );
+}
+
+
+function usedStims2( amount, ukey, data ) {
+	if (!data[ ukey + 'stimTimerClear'] ) {
+		//console.log('no data');
+		data = new Object;
+		data[ ukey + 'stimTimerClear'] = 0;
+	}
+	if (data[ ukey + 'stimTimerClear'] > Date.now() ) {
+		data[ ukey + 'stimTimerClear'] += amount * 60 * 60 * 1000;
+	}
+	else {
+		var timerClear = new Date(Date.now());
+		if (timerClear.getMinutes() == 59) {
+			timerClear.setHours(timerClear.getHours()+1);
+			timerClear.setMinutes(29);
+		} 
+		else if (timerClear.getMinutes() < 29) {
+			timerClear.setMinutes(29);
+		}
+		else {
+			timerClear.setMinutes(59);	
+		}
+		timerClear.setSeconds(0);
+		timerClear.setMilliseconds(0);
+		if (amount > 1) {
+			timerClear.setHours(timerClear.getHours()+amount-1);
+		}
+		data[ ukey + 'stimTimerClear' ] = timerClear.getTime();
+	}
+
+	if (amount > 0) {
+		data[ ukey + 'stimTimerLast' ] = Date.now();
+	}
+			console.log('using stims in combat: ' + amount);
 
 	chrome.storage.sync.set ( data );
 }
