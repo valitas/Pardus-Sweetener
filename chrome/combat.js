@@ -99,6 +99,10 @@ function applyConfiguration() {
 		addDrugTimer();
 	}
 
+
+	if ( config.clockStim) {
+		addStimTimer();
+	}
 	// Display damage
 	if ( config.displayDamage && !damageDisplayed ) {
 		if ( ! shipCondition ) {
@@ -388,6 +392,18 @@ function addDrugTimer() {
 	}
 }
 
+
+function addStimTimer() {
+	var tr;
+	tr = doc.evaluate(
+		"//tr[td/input[@name = 'resid' and @value = 31]]",
+		doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+		null ).singleNodeValue;
+	if ( tr ) {
+		tr.lastChild.lastChild.addEventListener( 'click', usedStims );
+	}
+}
+
 function usedDrugs( tr ) {
 	var input = doc.evaluate(
 		"//tr/td/input[@name = 'resid' and @value = 51]",
@@ -408,21 +424,81 @@ function usedDrugs2( amount, ukey, data ) {
 		data = new Object;
 		data[ ukey + 'drugTimerClear'] = 0;
 	}
-
 	if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
 		data[ ukey + 'drugTimerClear'] += amount * 60 * 60 * 1000;
 	}
 	else {
-		data[ ukey + 'drugTimerClear' ] =
-			Date.now() + amount * 60 * 60 * 1000;
+		var timerClear = new Date(Date.now());
+		if (timerClear.getMinutes() == 59) {
+			timerClear.setHours(timerClear.getHours()+1);
+		}
+		timerClear.setMinutes(59);
+		timerClear.setSeconds(0);
+		timerClear.setMilliseconds(0);
+		if (amount > 1) {
+			timerClear.setHours(timerClear.getHours()+amount-1);
+		}
+		data[ ukey + 'drugTimerClear' ] = timerClear.getTime();
 	}
 
 	if (amount > 0) {
 		data[ ukey + 'drugTimerLast' ] = Date.now();
 	}
+			console.log('using drugs in combat: ' + amount);
+
 	chrome.storage.sync.set ( data );
 }
 
+function usedStims( tr ) {
+	var input = doc.evaluate(
+		"//tr/td/input[@name = 'resid' and @value = 31]",
+		doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+		null ).singleNodeValue;
+
+	var amount = parseInt(input.nextElementSibling.value);
+	var ukey = Universe.getServer ( document ).substr( 0, 1 );
+
+	chrome.storage.sync.get(
+		[ ukey + 'stimTimerLast', ukey + 'stimTimerClear'],
+		usedStims2.bind(null, amount, ukey) );
+}
+
+function usedStims2( amount, ukey, data ) {
+	if (!data[ ukey + 'stimTimerClear'] ) {
+		//console.log('no data');
+		data = new Object;
+		data[ ukey + 'stimTimerClear'] = 0;
+	}
+	if (data[ ukey + 'stimTimerClear'] > Date.now() ) {
+		data[ ukey + 'stimTimerClear'] += amount * 60 * 60 * 1000;
+	}
+	else {
+		var timerClear = new Date(Date.now());
+		if (timerClear.getMinutes() >= 59) {
+			timerClear.setHours(timerClear.getHours()+1);
+			timerClear.setMinutes(29);
+		} 
+		else if (timerClear.getMinutes() < 29) {
+			timerClear.setMinutes(29);
+		}
+		else {
+			timerClear.setMinutes(59);	
+		}
+		timerClear.setSeconds(0);
+		timerClear.setMilliseconds(0);
+		if (amount > 1) {
+			timerClear.setHours(timerClear.getHours()+amount-1);
+		}
+		data[ ukey + 'stimTimerClear' ] = timerClear.getTime();
+	}
+
+	if (amount > 0) {
+		data[ ukey + 'stimTimerLast' ] = Date.now();
+	}
+			console.log('using stims in combat: ' + amount);
+
+	chrome.storage.sync.set ( data );
+}
 start();
 
 })( document, ConfigurationSet, ShipLinks, Universe );
