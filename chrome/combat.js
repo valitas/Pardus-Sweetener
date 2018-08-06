@@ -420,7 +420,6 @@ function usedDrugs( tr ) {
 
 function usedDrugs2( amount, ukey, data ) {
 	if (!data[ ukey + 'drugTimerClear'] ) {
-		//console.log('no data');
 		data = new Object;
 		data[ ukey + 'drugTimerClear'] = 0;
 	}
@@ -444,7 +443,6 @@ function usedDrugs2( amount, ukey, data ) {
 	if (amount > 0) {
 		data[ ukey + 'drugTimerLast' ] = Date.now();
 	}
-			console.log('using drugs in combat: ' + amount);
 
 	chrome.storage.sync.set ( data );
 }
@@ -465,7 +463,6 @@ function usedStims( tr ) {
 
 function usedStims2( amount, ukey, data ) {
 	if (!data[ ukey + 'stimTimerClear'] ) {
-		//console.log('no data');
 		data = new Object;
 		data[ ukey + 'stimTimerClear'] = 0;
 	}
@@ -495,7 +492,6 @@ function usedStims2( amount, ukey, data ) {
 	if (amount > 0) {
 		data[ ukey + 'stimTimerLast' ] = Date.now();
 	}
-			console.log('using stims in combat: ' + amount);
 
 	chrome.storage.sync.set ( data );
 }
