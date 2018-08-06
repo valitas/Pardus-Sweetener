@@ -379,42 +379,47 @@ function displayDamage( shipCondition ) {
 
 function addDrugTimer() {
 	var tr;
-	tr = doc.evaluate(
-		"//tr[td/input[@name = 'resid' and @value = 51]]",
-		doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
-		null ).singleNodeValue;
-	if ( tr ) {
-		tr.lastChild.lastChild.addEventListener( 'click', usedDrugs );
+	var comms = ['51','29','30','31','32'];
+	for ( var i = 0; i < comms.length ; i++ ) {
+		tr = doc.evaluate(
+			"//tr[td/input[@name = 'resid' and @value = " + comms[i] + "]]",
+			doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+			null ).singleNodeValue;
+		if ( tr ) {
+			tr.lastChild.lastChild.addEventListener( 'click', usedDrugs.bind( tr ) );
+		}
 	}
 }
 
-function usedDrugs( tr ) {
-	var input = doc.evaluate(
-		"//tr/td/input[@name = 'resid' and @value = 51]",
-		doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
-		null ).singleNodeValue;
+function usedDrugs( ) {
+	var input = this.lastChild.firstElementChild;
 
 	var amount = parseInt(input.nextElementSibling.value);
 	var ukey = Universe.getServer ( document ).substr( 0, 1 );
 
 	chrome.storage.sync.get(
 		[ ukey + 'drugTimerLast', ukey + 'drugTimerClear'],
-		usedDrugs2.bind(null, amount, ukey) );
+		usedDrugs2.bind(null, amount, input.value, ukey) );
 }
 
-function usedDrugs2( amount, ukey, data ) {
+function usedDrugs2( amount, resid, ukey, data ) {
 	if (!data[ ukey + 'drugTimerClear'] ) {
 		//console.log('no data');
 		data = new Object;
 		data[ ukey + 'drugTimerClear'] = 0;
 	}
+	var multiplier = 1;
 
+	if ( resid === '30' || resid === '31' || resid === '32' ) {
+		multiplier = 0.5;
+	} 
+	
 	if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
-		data[ ukey + 'drugTimerClear'] += amount * 60 * 60 * 1000;
+		data[ ukey + 'drugTimerClear'] += amount * 60 * 60 * 1000 * multiplier;
 	}
 	else {
 		data[ ukey + 'drugTimerClear' ] =
-			Date.now() + amount * 60 * 60 * 1000;
+			Date.now() + amount * 60 * 60 * 1000 * multiplier;
 	}
 
 	if (amount > 0) {
