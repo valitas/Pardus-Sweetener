@@ -630,7 +630,13 @@ function addStimTimer() {
 	let useform = doc.getElementById( 'useform' );
 	if ( !useform ||
 	     !useform.elements.resid ||
-	     useform.elements.resid.value != 31 )
+	     !(useform.elements.resid.value == 29 ||
+	       useform.elements.resid.value == 30 ||
+	       useform.elements.resid.value == 31 ||
+	       useform.elements.resid.value == 32 
+	      )
+	     )
+
 		return;
 
 	let usebtn = useform.elements.useres;
@@ -814,6 +820,7 @@ function usedDrugs2( amount, ukey, data ) {
 		data = new Object();
 		data[ ukey + 'drugTimerClear'] = 0;
 	}
+
 	if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
 		data[ ukey + 'drugTimerClear'] += amount * 60 * 60 * 1000;
 	}
@@ -846,23 +853,26 @@ function usedStims( useform, ukey ) {
 
 	chrome.storage.sync.get(
 		[ ukey + 'stimTimerLast', ukey + 'stimTimerClear'],
-		usedStims2.bind(null, amount, ukey) );
+		usedStims2.bind(null, amount, ukey, useform.elements.resid.value) );
 }
 
 
-function usedStims2( amount, ukey, data ) {
+function usedStims2( amount, ukey, data,resid ) {
 	if (!data[ ukey + 'stimTimerClear'] ) {
 		data = new Object();
 		data[ ukey + 'stimTimerClear'] = 0;
 	}
+
+	if (resid == 29 ){
+		amount *= 2;
+	}
 	if (data[ ukey + 'stimTimerClear'] > Date.now() ) {
-		data[ ukey + 'stimTimerClear'] += amount * 60 * 60 * 1000;
+		data[ ukey + 'stimTimerClear'] += amount * 30 * 60 * 1000;
 	}
 	else {
 		var timerClear = new Date(Date.now());
 		if (timerClear.getMinutes() == 59) {
-			timerClear.setHours(timerClear.getHours()+1);
-			timerClear.setMinutes(29);
+			timerClear.setMinutes(timerClear.getMinutes()+30);
 		} 
 		else if (timerClear.getMinutes() < 29) {
 			timerClear.setMinutes(29);
@@ -873,7 +883,7 @@ function usedStims2( amount, ukey, data ) {
 		timerClear.setSeconds(0);
 		timerClear.setMilliseconds(0);
 		if (amount > 1) {
-			timerClear.setHours(timerClear.getHours()+amount-1);
+			timerClear.setMinutes(timerClear.getMinutes()+30*(amount-1));
 		}
 		data[ ukey + 'stimTimerClear' ] = timerClear.getTime();
 	}
