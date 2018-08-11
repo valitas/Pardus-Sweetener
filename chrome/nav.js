@@ -89,6 +89,10 @@ var config, configured, userloc, ajax, shiplinks,
 // time we update tileidx.
 var navtable, navidx, highlightedTiles, navTilesXEval;
 
+//milliseconds
+var oneHour = 3600000;
+var halfHour = 1800000;
+
 function start() {
 	var cs = new ConfigurationSet();
 
@@ -820,27 +824,17 @@ function usedDrugs2( amount, ukey, data ) {
 		data = new Object();
 		data[ ukey + 'drugTimerClear'] = 0;
 	}
+	var now = new Date();
 
 	if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
-		data[ ukey + 'drugTimerClear'] += amount * 60 * 60 * 1000;
+		data[ ukey + 'drugTimerClear'] += amount * oneHour;
 	}
 	else {
-		var timerClear = new Date(Date.now());
-		if (timerClear.getMinutes() == 59) {
-			timerClear.setHours(timerClear.getHours()+1);
-		}
-		timerClear.setMinutes(59);
-		timerClear.setSeconds(0);
-		timerClear.setMilliseconds(0);
-		if (amount > 1) {
-			timerClear.setHours(timerClear.getHours()+amount-1);
-		}
-		data[ ukey + 'drugTimerClear' ] = timerClear.getTime();
-			
+		var timerClear = new Date(now).setUTCHours(0,59,0,0);
+		timerClear += oneHour * (amount + Math.floor((now - timerClear) / oneHour));
+		data[ ukey + 'drugTimerClear' ] = timerClear;
 	}
-	if (amount > 0) {
-		data[ ukey + 'drugTimerLast' ] = Date.now();
-	}
+	data[ ukey + 'drugTimerLast' ] = now;
 	chrome.storage.sync.set ( data );
 }
 
@@ -851,47 +845,33 @@ function usedStims( useform, ukey ) {
 	if ( !(amount > 0) )
 		return;
 
+
+	//29 is the resid of green stims.
+	if (useform.elements.resid.value == 29 )
+		amount *= 2;
+
 	chrome.storage.sync.get(
 		[ ukey + 'stimTimerLast', ukey + 'stimTimerClear'],
-		usedStims2.bind(null, amount, ukey, useform.elements.resid.value) );
+		usedStims2.bind(null, amount, ukey ) );
 }
 
 
-function usedStims2( amount, ukey, data,resid ) {
+function usedStims2( amount, ukey, data ) {
 	if (!data[ ukey + 'stimTimerClear'] ) {
 		data = new Object();
 		data[ ukey + 'stimTimerClear'] = 0;
 	}
 
-	if (resid == 29 ){
-		amount *= 2;
-	}
-	if (data[ ukey + 'stimTimerClear'] > Date.now() ) {
-		data[ ukey + 'stimTimerClear'] += amount * 30 * 60 * 1000;
+	var now = new Date();
+	if (data[ ukey + 'stimTimerClear'] > Date.now()) {
+		data[ ukey + 'stimTimerClear'] += amount * halfHour;
 	}
 	else {
-		var timerClear = new Date(Date.now());
-		if (timerClear.getMinutes() == 59) {
-			timerClear.setMinutes(timerClear.getMinutes()+30);
-		} 
-		else if (timerClear.getMinutes() < 29) {
-			timerClear.setMinutes(29);
-		}
-		else {
-			timerClear.setMinutes(59);	
-		}
-		timerClear.setSeconds(0);
-		timerClear.setMilliseconds(0);
-		if (amount > 1) {
-			timerClear.setMinutes(timerClear.getMinutes()+30*(amount-1));
-		}
-		data[ ukey + 'stimTimerClear' ] = timerClear.getTime();
+		var timerClear = new Date(now).setUTCHours(0,29,0,0);
+		timerClear += halfHour * (amount + Math.floor((now - timerClear) / halfHour));
+		data[ ukey + 'stimTimerClear' ] = timerClear;
 	}
-
-	if (amount > 0) {
-		data[ ukey + 'stimTimerLast' ] = Date.now();
-	}
-
+	data[ ukey + 'stimTimerLast' ] = now;
 	chrome.storage.sync.set ( data );
 }
 
