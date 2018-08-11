@@ -7,6 +7,10 @@
 
 var config, shipLinksAdded, botsAvailable, shipCondition, damageDisplayed;
 
+//milliseconds
+var oneHour = 3600000;
+var halfHour = 1800000;
+
 function start() {
 	var match, pageShipLinks, autoRoundsKey, autoMissilesKey,
 		cs, universeName, features;
@@ -44,6 +48,7 @@ function start() {
 	cs.addKey( features.autoMissilesKey, 'autoMissiles' );
 	cs.addKey( 'displayDamage' );
 	cs.addKey( 'clockD' );
+	cs.addKey( 'clockStim' );
 
 	if ( features.shiplinks ) {
 		cs.addKey( 'navShipLinks' );
@@ -394,13 +399,15 @@ function addDrugTimer() {
 
 
 function addStimTimer() {
-	var tr;
-	tr = doc.evaluate(
-		"//tr[td/input[@name = 'resid' and @value = 31]]",
-		doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
-		null ).singleNodeValue;
-	if ( tr ) {
-		tr.lastChild.lastChild.addEventListener( 'click', usedStims );
+	for (var resid = 29;resid<=32;resid++){
+		var tr;
+		tr = doc.evaluate(
+			"//tr[td/input[@name = 'resid' and @value = " + resid + "]]",
+			doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+			null ).singleNodeValue;
+		if ( tr ) {
+			tr.lastChild.lastChild.addEventListener( 'click', usedStims );
+		}
 	}
 }
 
@@ -418,81 +425,66 @@ function usedDrugs( tr ) {
 		usedDrugs2.bind(null, amount, ukey) );
 }
 
+
 function usedDrugs2( amount, ukey, data ) {
 	if (!data[ ukey + 'drugTimerClear'] ) {
-		data = new Object;
+		data = new Object();
 		data[ ukey + 'drugTimerClear'] = 0;
 	}
+	var now = new Date();
+
 	if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
-		data[ ukey + 'drugTimerClear'] += amount * 60 * 60 * 1000;
+		data[ ukey + 'drugTimerClear'] += amount * oneHour;
 	}
 	else {
-		var timerClear = new Date(Date.now());
-		if (timerClear.getMinutes() == 59) {
-			timerClear.setHours(timerClear.getHours()+1);
-		}
-		timerClear.setMinutes(59);
-		timerClear.setSeconds(0);
-		timerClear.setMilliseconds(0);
-		if (amount > 1) {
-			timerClear.setHours(timerClear.getHours()+amount-1);
-		}
-		data[ ukey + 'drugTimerClear' ] = timerClear.getTime();
+		var timerClear = new Date(now).setUTCHours(0,59,0,0);
+		timerClear += oneHour * (amount + Math.floor((now - timerClear) / oneHour));
+		data[ ukey + 'drugTimerClear' ] = timerClear;
 	}
-
-	if (amount > 0) {
-		data[ ukey + 'drugTimerLast' ] = Date.now();
-	}
-
+	data[ ukey + 'drugTimerLast' ] = now;
 	chrome.storage.sync.set ( data );
 }
 
 function usedStims( tr ) {
-	var input = doc.evaluate(
-		"//tr/td/input[@name = 'resid' and @value = 31]",
-		doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
-		null ).singleNodeValue;
+	for (var resid = 29 ; resid <= 32; resid++) {
+		var input = doc.evaluate(
+			"//tr/td/input[@name = 'resid' and @value = " + resid + "]",
+			doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+			null ).singleNodeValue;
+		if (input)  {
+			var amount = parseInt(input.nextElementSibling.value);
+			if (!(amount > 0))
+				 return;
+			var ukey = Universe.getServer ( document ).substr( 0, 1 );
 
-	var amount = parseInt(input.nextElementSibling.value);
-	var ukey = Universe.getServer ( document ).substr( 0, 1 );
+			//29 is the resid of green stims.
+			if (resid == 29)
+				amount *= 2;
 
-	chrome.storage.sync.get(
-		[ ukey + 'stimTimerLast', ukey + 'stimTimerClear'],
-		usedStims2.bind(null, amount, ukey) );
+			chrome.storage.sync.get(
+				[ ukey + 'stimTimerLast', ukey + 'stimTimerClear'],
+				usedStims2.bind(null, amount, ukey) );
+		}
+	}
 }
 
-function usedStims2( amount, ukey, data ) {
+
+function usedStims2( amount,ukey, data ) {
+	var now = new Date();
 	if (!data[ ukey + 'stimTimerClear'] ) {
-		data = new Object;
+		data = new Object();
 		data[ ukey + 'stimTimerClear'] = 0;
 	}
-	if (data[ ukey + 'stimTimerClear'] > Date.now() ) {
-		data[ ukey + 'stimTimerClear'] += amount * 60 * 60 * 1000;
+
+	if (data[ ukey + 'stimTimerClear'] > Date.now()) {
+		data[ ukey + 'stimTimerClear'] += amount * halfHour;
 	}
 	else {
-		var timerClear = new Date(Date.now());
-		if (timerClear.getMinutes() >= 59) {
-			timerClear.setHours(timerClear.getHours()+1);
-			timerClear.setMinutes(29);
-		} 
-		else if (timerClear.getMinutes() < 29) {
-			timerClear.setMinutes(29);
-		}
-		else {
-			timerClear.setMinutes(59);	
-		}
-		timerClear.setSeconds(0);
-		timerClear.setMilliseconds(0);
-		if (amount > 1) {
-			timerClear.setHours(timerClear.getHours()+amount-1);
-		}
-		data[ ukey + 'stimTimerClear' ] = timerClear.getTime();
+		var timerClear = new Date(now).setUTCHours(0,29,0,0);
+		timerClear += halfHour * (amount + Math.floor((now - timerClear) / halfHour));
+		data[ ukey + 'stimTimerClear' ] = timerClear;
 	}
-
-	if (amount > 0) {
-		data[ ukey + 'stimTimerLast' ] = Date.now();
-	}
-
+	data[ ukey + 'stimTimerLast' ] = now;
 	chrome.storage.sync.set ( data );
 }
 start();
