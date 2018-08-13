@@ -828,9 +828,9 @@ function usedDrugs2( amount, ukey, data ) {
 	if (data[ ukey + 'drugTimerClear'] > now )
 		data[ ukey + 'drugTimerClear'] += amount * oneHour;
 	else {
-		//timerclear is first tick of day, the rounding of now to timerclear gets the next drug tick.
-		var timerClear = new Date(now).setUTCHours(0,59,0,0); 
-		data[ ukey + 'drugTimerClear' ] = timerClear + oneHour * (amount + Math.floor((now - timerClear) / oneHour));
+		var lastTick = new Date().setUTCHours(0,59,0,0); 
+		lastTick += oneHour * Math.floor((now - lastTick) / oneHour);
+		data[ ukey + 'drugTimerClear' ] = amount * oneHour + lastTick;
 	}
 	data[ ukey + 'drugTimerLast' ] = now;
 	chrome.storage.sync.set ( data );
@@ -863,10 +863,11 @@ function usedStims2( amount, ukey, data ) {
 	if (data[ ukey + 'stimTimerClear'] > now)
 		data[ ukey + 'stimTimerClear'] += amount * halfHour;
 	else {
-		//timerclear is first tick of day, the rounding of now to timerclear gets the next stim tick.
-		var timerClear = new Date(now).setUTCHours(0,29,0,0);
-		data[ ukey + 'stimTimerClear' ] = timerClear + halfHour * (amount + Math.floor((now - timerClear) / halfHour));
-	}
+		//getting the next 
+		var lastTick = new Date().setUTCHours(0,59,0,0); 
+		lastTick += halfHour * Math.floor((now - lastTick) / halfHour);
+		data[ ukey + 'stimTimerClear'] = amount * halfHour + lastTick;
+		}
 	data[ ukey + 'stimTimerLast' ] = now;
 	chrome.storage.sync.set ( data );
 }
