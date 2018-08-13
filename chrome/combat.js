@@ -437,9 +437,9 @@ function usedDrugs2( amount, ukey, data ) {
 		data[ ukey + 'drugTimerClear'] += amount * oneHour;
 	}
 	else {
-		var timerClear = new Date(now).setUTCHours(0,59,0,0);
-		timerClear += oneHour * (amount + Math.floor((now - timerClear) / oneHour));
-		data[ ukey + 'drugTimerClear' ] = timerClear;
+		var lastTick = new Date().setUTCHours(0,59,0,0); 
+		lastTick += oneHour * Math.floor((now - lastTick) / oneHour);
+		data[ ukey + 'drugTimerClear' ] = amount * oneHour + lastTick;
 	}
 	data[ ukey + 'drugTimerLast' ] = now;
 	chrome.storage.sync.set ( data );
@@ -480,9 +480,9 @@ function usedStims2( amount,ukey, data ) {
 		data[ ukey + 'stimTimerClear'] += amount * halfHour;
 	}
 	else {
-		var timerClear = new Date(now).setUTCHours(0,29,0,0);
-		timerClear += halfHour * (amount + Math.floor((now - timerClear) / halfHour));
-		data[ ukey + 'stimTimerClear' ] = timerClear;
+		var lastTick = new Date().setUTCHours(0,59,0,0); 
+		lastTick += halfHour * Math.floor((now - lastTick) / halfHour);
+		data[ ukey + 'stimTimerClear'] = amount * halfHour + lastTick;
 	}
 	data[ ukey + 'stimTimerLast' ] = now;
 	chrome.storage.sync.set ( data );
