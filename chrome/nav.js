@@ -824,15 +824,13 @@ function usedDrugs2( amount, ukey, data ) {
 		data = new Object();
 		data[ ukey + 'drugTimerClear'] = 0;
 	}
-	var now = new Date();
-
-	if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
+	var now = Date.now();
+	if (data[ ukey + 'drugTimerClear'] > now )
 		data[ ukey + 'drugTimerClear'] += amount * oneHour;
-	}
 	else {
-		var timerClear = new Date(now).setUTCHours(0,59,0,0);
-		timerClear += oneHour * (amount + Math.floor((now - timerClear) / oneHour));
-		data[ ukey + 'drugTimerClear' ] = timerClear;
+		//timerclear is first tick of day, the rounding of now to timerclear gets the next drug tick.
+		var timerClear = new Date(now).setUTCHours(0,59,0,0); 
+		data[ ukey + 'drugTimerClear' ] = timerClear + oneHour * (amount + Math.floor((now - timerClear) / oneHour));
 	}
 	data[ ukey + 'drugTimerLast' ] = now;
 	chrome.storage.sync.set ( data );
@@ -842,9 +840,8 @@ function usedDrugs2( amount, ukey, data ) {
 
 function usedStims( useform, ukey ) {
 	let amount = parseInt( useform.elements.amount.value );
-	if ( !(amount > 0) )
-		return;
-
+	if ( !(amount > 0))
+			return;
 
 	//29 is the resid of green stims.
 	if (useform.elements.resid.value == 29 )
@@ -862,14 +859,13 @@ function usedStims2( amount, ukey, data ) {
 		data[ ukey + 'stimTimerClear'] = 0;
 	}
 
-	var now = new Date();
-	if (data[ ukey + 'stimTimerClear'] > Date.now()) {
+	var now = Date.now();
+	if (data[ ukey + 'stimTimerClear'] > now)
 		data[ ukey + 'stimTimerClear'] += amount * halfHour;
-	}
 	else {
+		//timerclear is first tick of day, the rounding of now to timerclear gets the next stim tick.
 		var timerClear = new Date(now).setUTCHours(0,29,0,0);
-		timerClear += halfHour * (amount + Math.floor((now - timerClear) / halfHour));
-		data[ ukey + 'stimTimerClear' ] = timerClear;
+		data[ ukey + 'stimTimerClear' ] = timerClear + halfHour * (amount + Math.floor((now - timerClear) / halfHour));
 	}
 	data[ ukey + 'stimTimerLast' ] = now;
 	chrome.storage.sync.set ( data );
