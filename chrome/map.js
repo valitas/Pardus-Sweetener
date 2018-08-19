@@ -340,7 +340,8 @@ SectorMap.prototype = {
 						
 						if (nextBfsState[nextX][nextY][0] == -1 || nextBfsState[nextX][nextY][0] > cost || (nextBfsState[nextX][nextY][0] == cost && !isDiagonal)) {
 							nextBfsState[nextX][nextY] = [cost, curX, curY];
-							unreachableCounter = 0;
+							if (nextBfsState[nextX][nextY].join(",") != bfsState[nextX][nextY].join(","))
+								unreachableCounter = 0;
 						}
 					}.bind(this);
 					
