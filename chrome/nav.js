@@ -803,7 +803,7 @@ function displayStimTimer ( ukey, usebtn, data ) {
 		}
 		else {
 			timerDiv.appendChild(
-				document.createTextNode('You are unstimed.') );
+				document.createTextNode('You are unstimmed.') );
 		}
 	}
 
@@ -828,7 +828,7 @@ function usedDrugs2( amount, ukey, data ) {
 	if (data[ ukey + 'drugTimerClear'] > now )
 		data[ ukey + 'drugTimerClear'] += amount * oneHour;
 	else {
-		var lastTick = new Date().setUTCHours(0,59,0,0); 
+		var lastTick = new Date().setUTCHours(0,59,3,0); 
 		lastTick += oneHour * Math.floor((now - lastTick) / oneHour);
 		data[ ukey + 'drugTimerClear' ] = amount * oneHour + lastTick;
 	}
@@ -863,8 +863,7 @@ function usedStims2( amount, ukey, data ) {
 	if (data[ ukey + 'stimTimerClear'] > now)
 		data[ ukey + 'stimTimerClear'] += amount * halfHour;
 	else {
-		//getting the next 
-		var lastTick = new Date().setUTCHours(0,59,0,0); 
+		var lastTick = new Date().setUTCHours(0,29,3,0); 
 		lastTick += halfHour * Math.floor((now - lastTick) / halfHour);
 		data[ ukey + 'stimTimerClear'] = amount * halfHour + lastTick;
 		}

@@ -53,6 +53,6 @@
       "default_title": "Change Pardus Sweetener settings"
    },
    "permissions": [ "notifications", "storage", "*://*.pardus.at/*" ],
-   "version": "9.1.20180812",
+   "version": "9.1.20180831",
    "web_accessible_resources": [ "icons/16.png", "icons/48.png", "icons/down.png" ]
 }

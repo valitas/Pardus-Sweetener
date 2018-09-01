@@ -470,17 +470,17 @@ function usedStims( tr ) {
 
 
 function usedStims2( amount,ukey, data ) {
-	var now = new Date();
+	var now = Date.now();
 	if (!data[ ukey + 'stimTimerClear'] ) {
 		data = new Object();
 		data[ ukey + 'stimTimerClear'] = 0;
 	}
 
-	if (data[ ukey + 'stimTimerClear'] > Date.now()) {
+	if (data[ ukey + 'stimTimerClear'] > now) {
 		data[ ukey + 'stimTimerClear'] += amount * halfHour;
 	}
 	else {
-		var lastTick = new Date().setUTCHours(0,59,0,0); 
+		var lastTick = new Date().setUTCHours(0,29,3,0); 
 		lastTick += halfHour * Math.floor((now - lastTick) / halfHour);
 		data[ ukey + 'stimTimerClear'] = amount * halfHour + lastTick;
 	}
