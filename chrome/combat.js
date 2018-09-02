@@ -431,9 +431,9 @@ function usedDrugs2( amount, ukey, data ) {
 		data = new Object();
 		data[ ukey + 'drugTimerClear'] = 0;
 	}
-	var now = new Date();
+	var now = Date.now();
 
-	if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
+	if (data[ ukey + 'drugTimerClear'] > now ) {
 		data[ ukey + 'drugTimerClear'] += amount * oneHour;
 	}
 	else {
