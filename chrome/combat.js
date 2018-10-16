@@ -388,12 +388,15 @@ function displayDamage( shipCondition ) {
 
 function addDrugTimer() {
 	var tr;
-	tr = doc.evaluate(
-		"//tr[td/input[@name = 'resid' and @value = 51]]",
-		doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
-		null ).singleNodeValue;
-	if ( tr ) {
-		tr.lastChild.lastChild.addEventListener( 'click', usedDrugs );
+	var comms = ['51','29','30','31','32'];
+	for ( var i = 0; i < comms.length ; i++ ) {
+		tr = doc.evaluate(
+			"//tr[td/input[@name = 'resid' and @value = " + comms[i] + "]]",
+			doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+			null ).singleNodeValue;
+		if ( tr ) {
+			tr.lastChild.lastChild.addEventListener( 'click', usedDrugs.bind( tr ) );
+		}
 	}
 }
 
@@ -422,9 +425,8 @@ function usedDrugs( tr ) {
 
 	chrome.storage.sync.get(
 		[ ukey + 'drugTimerLast', ukey + 'drugTimerClear'],
-		usedDrugs2.bind(null, amount, ukey) );
+		usedDrugs2.bind(null, amount, input.value, ukey) );
 }
-
 
 function usedDrugs2( amount, ukey, data ) {
 	if (!data[ ukey + 'drugTimerClear'] ) {
