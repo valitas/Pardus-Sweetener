@@ -48,7 +48,7 @@ function onDOMContentLoaded() {
 		'alarmMission', 'alarmTrade', 'alarmPayment', 'desktopCombat',
 		'desktopAlly', 'desktopWarning', 'desktopPM', 'desktopMission',
 		'desktopTrade', 'desktopPayment', 'clockUTC', 'clockAP', 'clockB',
-		'clockP', 'clockS', 'clockL', 'clockE', 'clockN', 'clockZ', 'clockR', 'clockD',
+		'clockP', 'clockS', 'clockL', 'clockE', 'clockN', 'clockZ', 'clockR', 'clockD', 'clockStim',
 		'pvpMissileAutoAll', 'pvpHighestRounds', 'pvmMissileAutoAll',
 		'pvmHighestRounds', 'pvbMissileAutoAll', 'displayDamage', 'autobots',
 		'navShipLinks', 'navEquipmentLink', 'navTradeLink',
