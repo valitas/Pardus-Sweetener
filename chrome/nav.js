@@ -651,7 +651,7 @@ function addDrugTimer() {
 	let useform = doc.getElementById( 'useform' );
 	if ( !useform ||
 	     !useform.elements.resid ||
-	      ['29', '30', '31', '32', '51'].indexOf( useform.elements.resid.value ) === -1 )
+	     useform.elements.resid.value != 51 )
 		return;
 
 	let usebtn = useform.elements.useres;
@@ -854,7 +854,7 @@ function usedDrugs( useform, ukey ) {
 
 	chrome.storage.sync.get(
 		[ ukey + 'drugTimerLast', ukey + 'drugTimerClear'],
-		usedDrugs2.bind(null, amount, useform.elements.resid.value, ukey, ) );
+		usedDrugs2.bind(null, amount, ukey) );
 }
 
 function usedDrugs2( amount, ukey, data ) {
