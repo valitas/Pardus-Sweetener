@@ -3,7 +3,7 @@
 
 'use strict';
 
-(function( top, doc, ShipLinks, SectorMap ){
+(function( top, doc, ShipLinks, SectorMap, Sector ){
 
 var LOCATION_LINKS = {
 		planet: [
@@ -149,7 +149,7 @@ function applyConfiguration() {
 
 		let ukey = Universe.getServer( doc ).substr( 0, 1 );
 		let name = ukey + 'path';
-		chrome.storage.local.get( name , updateRoutePlanner );
+		//chrome.storage.local.get( name , updateRoutePlanner );
 	}
 	else {
 		// Instead, we only want to do this the first time we run,
@@ -212,7 +212,7 @@ function onGameMessage( event ) {
 
 	let ukey = Universe.getServer ( doc ).substr( 0, 1 );
 	let name = ukey + 'path';
-	chrome.storage.local.get( name , updateRoutePlanner );
+	//chrome.storage.local.get( name , updateRoutePlanner );
 
 	configured = true;
 }

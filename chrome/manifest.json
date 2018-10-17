@@ -5,7 +5,7 @@
    },
    "content_scripts": [ {
       "all_frames": true,
-      "js": [ "cfgset.js", "shiplinks.js", "map.js", "universe.js", "nav.js" ],
+      "js": [ "cfgset.js", "shiplinks.js", "map.js", "universe.js", "nav.js", "sector.js" ],
       "matches": [ "*://*.pardus.at/main.php*" ]
    }, {
       "all_frames": true,
@@ -33,7 +33,7 @@
       "matches": [ "*://*.pardus.at/statistics.php?display=onlinelist" ]
    } ],
    "content_security_policy": "script-src 'self'; object-src 'self'",
-   "description": "User interface enhancements for the online game Pardus.",
+   "description": "User interface enhancements for the online game Pardus. Combines likuilin's, BartKieviet's, and Tsunder's forks.",
    "icons": {
       "128": "icons/128.png",
       "16": "icons/16.png",
@@ -53,6 +53,6 @@
       "default_title": "Change Pardus Sweetener settings"
    },
    "permissions": [ "notifications", "storage", "*://*.pardus.at/*" ],
-   "version": "9.1.20181016",
+   "version": "9.1.20181017",
    "web_accessible_resources": [ "icons/16.png", "icons/48.png", "icons/down.png" ]
 }
