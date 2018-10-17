@@ -40,6 +40,8 @@ Features
 Credits and legal notices
 -------------------------
 
+Tsunder's modifications are WTFPL version 2
+
 Kui's modifications to the original code are licensed CC BY-NC. 
 
 The original code is in the public domain, and its license is below:
