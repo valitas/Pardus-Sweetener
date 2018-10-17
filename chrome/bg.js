@@ -372,6 +372,8 @@ function onInstalled( details ) {
 			clockS: true,
 			clockUTC: false,
 			clockZ: false,
+			clockD: true,
+			clockStim: true,
 			desktopAlly: true,
 			desktopCombat: true,
 			desktopInfo: false,
@@ -446,8 +448,8 @@ function onInstalled( details ) {
 			'alarmInfo', 'desktopWarning', 'desktopMission',
 			'desktopTrade', 'desktopPayment', 'desktopInfo',
 			'clockUTC', 'clockL', 'clockE', 'clockN', 'clockZ', 'clockR',
-			'pvmMissileAutoAll', 'pvmHighestRounds', 'autobots',
-			'personalQLArtemisEnabled', 'personalQLOrionEnabled',
+			'clockD', 'ClockStim', 'pvmMissileAutoAll', 'pvmHighestRounds',
+			'autobots', 'personalQLArtemisEnabled', 'personalQLOrionEnabled',
 			'personalQLPegasusEnabled'
 		];
 		for ( i = 0, end = keys.length; i < end; i++ ) {
