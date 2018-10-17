@@ -7,7 +7,7 @@ var chrome, PSClock;
 
   var CLOCK_CONFIG_KEYS =
       [ 'clockUTC', 'clockAP', 'clockB', 'clockP', 'clockS',
-	'clockL', 'clockE', 'clockN', 'clockZ', 'clockR', 'clockD' ],
+	'clockL', 'clockE', 'clockN', 'clockZ', 'clockR', 'clockD', 'clockStim' ],
       INDICATOR_CONFIG_KEYS =
       [ 'alarmCombat', 'alarmAlly', 'alarmWarning', 'alarmPM',
         'alarmMission', 'alarmTrade', 'alarmPayment',

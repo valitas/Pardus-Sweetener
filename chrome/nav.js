@@ -92,6 +92,10 @@ var navtable, navidx, highlightedTiles, navTilesXEval;
 //these fields must match those in options.js and map.js
 var fields = ["Space", "Nebula", "Virus", "Energy", "Asteroid", "Exotic"];
 var travelCosts;
+  
+//milliseconds
+var oneHour = 3600000;
+var halfHour = 1800000;
 
 function start() {
 	var cs = new ConfigurationSet();
@@ -118,6 +122,7 @@ function start() {
 		cs.addKey( 'travelCost' + uni + f);
 	});
 	cs.addKey( 'miniMapNavigation' );
+	cs.addKey( 'clockStim' );
 
 	shiplinks = new ShipLinks.Controller
 		( 'table/tbody/tr/td[position() = 2]/a', matchShipId );
@@ -141,6 +146,10 @@ function applyConfiguration() {
 		updateMinimap();
 
 		updatePathfinding();
+
+		let ukey = Universe.getServer( doc ).substr( 0, 1 );
+		let name = ukey + 'path';
+		chrome.storage.local.get( name , updateRoutePlanner );
 	}
 	else {
 		// Instead, we only want to do this the first time we run,
@@ -199,6 +208,11 @@ function onGameMessage( event ) {
 
 	updatePathfinding();
 	addDrugTimer();
+	addStimTimer();
+
+	let ukey = Universe.getServer ( doc ).substr( 0, 1 );
+	let name = ukey + 'path';
+	chrome.storage.local.get( name , updateRoutePlanner );
 
 	configured = true;
 }
@@ -636,8 +650,8 @@ function clearpath() {
 function addDrugTimer() {
 	let useform = doc.getElementById( 'useform' );
 	if ( !useform ||
-		 !useform.elements.resid ||
-		 useform.elements.resid.value != 51 )
+	     !useform.elements.resid ||
+	      ['29', '30', '31', '32', '51'].indexOf( useform.elements.resid.value ) === -1 )
 		return;
 
 	let usebtn = useform.elements.useres;
@@ -654,6 +668,33 @@ function addDrugTimer() {
 		displayDrugTimer.bind(null, ukey, usebtn) );
 }
 
+function addStimTimer() {
+	let useform = doc.getElementById( 'useform' );
+	if ( !useform ||
+	     !useform.elements.resid ||
+	     !(useform.elements.resid.value == 29 ||
+	       useform.elements.resid.value == 30 ||
+	       useform.elements.resid.value == 31 ||
+	       useform.elements.resid.value == 32 
+	      )
+	     )
+
+		return;
+
+	let usebtn = useform.elements.useres;
+	if ( !usebtn || usebtn.dataset.pardusSweetener )
+		return;
+
+	// Don't add the event handler twice
+	usebtn.dataset.pardusSweetener = true;
+
+	let ukey = Universe.getServer ( doc ).substr( 0, 1 );
+	usebtn.addEventListener( 'click', usedStims.bind(null, useform, ukey) );
+	chrome.storage.sync.get(
+		[ ukey + 'stimTimerLast', ukey + 'stimTimerClear' ],
+		displayStimTimer.bind(null, ukey, usebtn) );
+}
+
 function displayDrugTimer ( ukey, usebtn, data ) {
 	if ( !config[ 'clockD' ] )
 		return;
@@ -665,6 +706,33 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 	usebtn.parentNode.appendChild( timerDiv );
 	timerDiv.appendChild ( doc.createElement( 'br' ) );
 
+
+	var now = Math.floor( Date.now() / 1000 );
+	var stimTime = chrome.storage.sync.get(
+				[ ukey + 'stimTimerClear' ],
+				getStimClearTime.bind( this, now, ukey )
+			);
+	function getStimClearTime( now, ukey, data ) {
+			var t = Math.floor(
+				data[ ukey + 'stimTimerClear' ]
+					/ 1000 );
+			if ( t > now ) {
+			timerDiv.appendChild ( doc.createElement( 'br' ) );
+				timerDiv.appendChild(
+					doc.createTextNode('Stim free in:') );
+			timerDiv.appendChild( doc.createElement('br') );
+			diff = getTimeDiff(
+				data[ ukey + 'stimTimerClear'], Date.now() );
+			timerDiv.appendChild (
+				doc.createTextNode(
+					diff[ 'hr' ] + 'h' +
+					diff[ 'min' ] + 'm' +
+					diff[ 'sec' ] + 's' ) ) ;
+
+			timerDiv.appendChild( doc.createElement('br') );
+			} 
+		}
+
 	if (!data[ ukey + 'drugTimerClear'] ) {
 		// No data, so make some nice comments
 		timerDiv.appendChild(
@@ -672,7 +740,7 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 	}
 	else {
 		// We have data, display current addiction
-		timerDiv.appendChild( doc.createTextNode('Drugs used:') );
+		timerDiv.appendChild( doc.createTextNode('Drugs/stims used:') );
 		timerDiv.appendChild( doc.createElement('br') );
 
 		diff = getTimeDiff(
@@ -686,7 +754,7 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 
 		if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
 			timerDiv.appendChild(
-				doc.createTextNode('Drug free in:') );
+				doc.createTextNode('Drug/stim free in:') );
 			timerDiv.appendChild( doc.createElement('br') );
 			diff = getTimeDiff(
 				data[ ukey + 'drugTimerClear'], Date.now() );
@@ -695,12 +763,88 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 					diff[ 'hr' ] + 'h' +
 						diff[ 'min' ] + 'm' +
 						diff[ 'sec' ] + 's' ) ) ;
+			timerDiv.appendChild( doc.createElement('br') );
 		}
 		else {
 			timerDiv.appendChild(
 				document.createTextNode('You are undrugged.') );
 		}
 	}
+}
+
+function displayStimTimer ( ukey, usebtn, data ) {
+	if ( !config[ 'clockStim' ] )
+		return;
+
+	var timerDiv = doc.createElement('div');
+	var diff;
+
+	timerDiv.id = 'stimTimer';
+	usebtn.parentNode.appendChild( timerDiv );
+	timerDiv.appendChild ( doc.createElement( 'br' ) );
+
+
+	var now = Math.floor( Date.now() / 1000 );
+	var drugTime = chrome.storage.sync.get(
+				[ ukey + 'drugTimerClear' ],
+				getDrugClearTime.bind( this, now, ukey )
+			);
+	function getDrugClearTime( now, ukey, data ) {
+			var t = Math.floor(
+				data[ ukey + 'drugTimerClear' ]
+					/ 1000 );
+			if ( t > now ) {
+			timerDiv.appendChild ( doc.createElement( 'br' ) );
+				timerDiv.appendChild(
+					doc.createTextNode('Drug free in:') );
+			timerDiv.appendChild( doc.createElement('br') );
+			diff = getTimeDiff(
+				data[ ukey + 'drugTimerClear'], Date.now() );
+			timerDiv.appendChild (
+				doc.createTextNode(
+					diff[ 'hr' ] + 'h' +
+					diff[ 'min' ] + 'm' +
+					diff[ 'sec' ] + 's' ) ) ;
+			} 
+			
+		}
+	if (!data[ ukey + 'stimTimerClear'] ) {
+		// No data, so make some nice comments
+		timerDiv.appendChild(
+			doc.createTextNode('No stims used yet.') );
+	}
+	else {
+		// We have data, display current addiction
+		timerDiv.appendChild( doc.createTextNode('Stims used:') );
+		timerDiv.appendChild( doc.createElement('br') );
+
+		diff = getTimeDiff(
+			Date.now(), data[ ukey + 'stimTimerLast'] );
+		timerDiv.appendChild(
+			doc.createTextNode(
+				diff[ 'hr' ] + 'h' +
+					diff[ 'min' ] + 'm' +
+					diff[ 'sec' ] + 's ago' ) );
+		timerDiv.appendChild( doc.createElement( 'br' ) );
+
+		if (data[ ukey + 'stimTimerClear'] > Date.now() ) {
+			timerDiv.appendChild(
+				doc.createTextNode('Stim free in:') );
+			timerDiv.appendChild( doc.createElement('br') );
+			diff = getTimeDiff(
+				data[ ukey + 'stimTimerClear'], Date.now() );
+			timerDiv.appendChild (
+				doc.createTextNode(
+					diff[ 'hr' ] + 'h' +
+						diff[ 'min' ] + 'm' +
+						diff[ 'sec' ] + 's' ) ) ;
+		}
+		else {
+			timerDiv.appendChild(
+				document.createTextNode('You are unstimmed.') );
+		}
+	}
+
 }
 
 function usedDrugs( useform, ukey ) {
@@ -710,34 +854,64 @@ function usedDrugs( useform, ukey ) {
 
 	chrome.storage.sync.get(
 		[ ukey + 'drugTimerLast', ukey + 'drugTimerClear'],
-		usedDrugs2.bind(null, amount, ukey) );
+		usedDrugs2.bind(null, amount, useform.elements.resid.value, ukey, ) );
 }
 
 function usedDrugs2( amount, ukey, data ) {
-	if ( !data[ ukey + 'drugTimerClear' ] ) {
-		console.log('no data');
+	if (!data[ ukey + 'drugTimerClear'] ) {
 		data = new Object();
 		data[ ukey + 'drugTimerClear'] = 0;
 	}
-
-	if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
-		data[ ukey + 'drugTimerClear'] += amount * 60 * 60 * 1000;
-	}
+	var now = Date.now();
+	if (data[ ukey + 'drugTimerClear'] > now )
+		data[ ukey + 'drugTimerClear'] += amount * oneHour;
 	else {
-		data[ ukey + 'drugTimerClear' ] =
-			Date.now() + amount * 60 * 60 * 1000;
+		var lastTick = new Date().setUTCHours(0,59,3,0); 
+		lastTick += oneHour * Math.floor((now - lastTick) / oneHour);
+		data[ ukey + 'drugTimerClear' ] = amount * oneHour + lastTick;
+	}
+	data[ ukey + 'drugTimerLast' ] = now;
+	chrome.storage.sync.set ( data );
+}
+
+
+
+function usedStims( useform, ukey ) {
+	let amount = parseInt( useform.elements.amount.value );
+	if ( !(amount > 0))
+			return;
+
+	//29 is the resid of green stims.
+	if (useform.elements.resid.value == 29 )
+		amount *= 2;
+
+	chrome.storage.sync.get(
+		[ ukey + 'stimTimerLast', ukey + 'stimTimerClear'],
+		usedStims2.bind(null, amount, ukey ) );
+}
+
+
+function usedStims2( amount, ukey, data ) {
+	if (!data[ ukey + 'stimTimerClear'] ) {
+		data = new Object();
+		data[ ukey + 'stimTimerClear'] = 0;
 	}
 
-	if (amount > 0) {
-		data[ ukey + 'drugTimerLast' ] = Date.now();
-	}
-
+	var now = Date.now();
+	if (data[ ukey + 'stimTimerClear'] > now)
+		data[ ukey + 'stimTimerClear'] += amount * halfHour;
+	else {
+		var lastTick = new Date().setUTCHours(0,29,3,0); 
+		lastTick += halfHour * Math.floor((now - lastTick) / halfHour);
+		data[ ukey + 'stimTimerClear'] = amount * halfHour + lastTick;
+		}
+	data[ ukey + 'stimTimerLast' ] = now;
 	chrome.storage.sync.set ( data );
 }
 
 function getTimeDiff ( time1, time2 ) {
 	// Fucntion returns an object with keys 'day', 'hr', 'min', 'sec' which are the time differences between input 1 and 2.
-	var diff = new Object
+	var diff = new Object()
 
 	diff [ 'sec' ] = (Math.floor( time1 / 1000 ) - Math.floor( time2 / 1000 ) ) % 60 ;
 	diff [ 'min' ] = Math.floor( ( ( Math.floor( time1 / 1000) - Math.floor( time2 / 1000 ) ) % ( 60 * 60 ) ) / 60 );
@@ -745,6 +919,40 @@ function getTimeDiff ( time1, time2 ) {
 	diff [ 'day' ] = Math.floor( ( ( Math.floor( time1 / 1000) - Math.floor( time2 / 1000 ) ) / ( 60 * 60 * 24 ) ) );
 
 	return diff
+}
+
+function updateRoutePlanner( data ) {
+	let ukey = Universe.getServer ( doc ).substr( 0, 1 );
+	let path = data[ ukey + 'path' ];
+	if ( !path || path.length === 0 )
+		return;
+	let idList = [];
+	let sectorId = Sector.getIdFromLocation( userloc );
+
+	navtable = doc.getElementById( 'navareatransition' );
+	if ( !navtable )
+		navtable = doc.getElementById( 'navarea' );
+	if ( !navtable )
+		return;
+
+	let a = Array.prototype.slice.call( navtable.getElementsByTagName( 'a' ) );
+
+	a.sort( function compare(a ,b) {
+		if ( a.getAttribute( 'onclick' ) === null )
+			return b
+		return parseInt( a.getAttribute( 'onclick' ).split(/[()]/g)[1] ) - parseInt( b.getAttribute( 'onclick' ).split(/[()]/g)[1] );
+		});
+
+	for ( var i = 0; i < path.length ; i++ ) {
+		idList[ i ] = Sector.getLocation( sectorId, path[ i ].x, path[ i ].y );
+	}
+
+	idList.sort();
+	for ( var j = 0; j < a.length; j++ ) {
+		if ( a[ j ].getAttribute( 'onclick' ) !== null && idList.includes( parseInt( a[ j ].getAttribute( 'onclick' ).split(/[()]/g)[1] ) ) ) {
+			highlightTileInPath( a[ j ].parentNode );
+		}
+	}
 }
 
 start();

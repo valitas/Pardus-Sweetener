@@ -7,6 +7,10 @@
 
 var config, shipLinksAdded, botsAvailable, shipCondition, damageDisplayed;
 
+//milliseconds
+var oneHour = 3600000;
+var halfHour = 1800000;
+
 function start() {
 	var match, pageShipLinks, autoRoundsKey, autoMissilesKey,
 		cs, universeName, features;
@@ -44,6 +48,7 @@ function start() {
 	cs.addKey( features.autoMissilesKey, 'autoMissiles' );
 	cs.addKey( 'displayDamage' );
 	cs.addKey( 'clockD' );
+	cs.addKey( 'clockStim' );
 
 	if ( features.shiplinks ) {
 		cs.addKey( 'navShipLinks' );
@@ -99,6 +104,10 @@ function applyConfiguration() {
 		addDrugTimer();
 	}
 
+
+	if ( config.clockStim) {
+		addStimTimer();
+	}
 	// Display damage
 	if ( config.displayDamage && !damageDisplayed ) {
 		if ( ! shipCondition ) {
@@ -379,12 +388,29 @@ function displayDamage( shipCondition ) {
 
 function addDrugTimer() {
 	var tr;
-	tr = doc.evaluate(
-		"//tr[td/input[@name = 'resid' and @value = 51]]",
-		doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
-		null ).singleNodeValue;
-	if ( tr ) {
-		tr.lastChild.lastChild.addEventListener( 'click', usedDrugs );
+	var comms = ['51','29','30','31','32'];
+	for ( var i = 0; i < comms.length ; i++ ) {
+		tr = doc.evaluate(
+			"//tr[td/input[@name = 'resid' and @value = " + comms[i] + "]]",
+			doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+			null ).singleNodeValue;
+		if ( tr ) {
+			tr.lastChild.lastChild.addEventListener( 'click', usedDrugs.bind( tr ) );
+		}
+	}
+}
+
+
+function addStimTimer() {
+	for (var resid = 29;resid<=32;resid++){
+		var tr;
+		tr = doc.evaluate(
+			"//tr[td/input[@name = 'resid' and @value = " + resid + "]]",
+			doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+			null ).singleNodeValue;
+		if ( tr ) {
+			tr.lastChild.lastChild.addEventListener( 'click', usedStims );
+		}
 	}
 }
 
@@ -399,30 +425,70 @@ function usedDrugs( tr ) {
 
 	chrome.storage.sync.get(
 		[ ukey + 'drugTimerLast', ukey + 'drugTimerClear'],
-		usedDrugs2.bind(null, amount, ukey) );
+		usedDrugs2.bind(null, amount, input.value, ukey) );
 }
 
 function usedDrugs2( amount, ukey, data ) {
 	if (!data[ ukey + 'drugTimerClear'] ) {
-		//console.log('no data');
-		data = new Object;
+		data = new Object();
 		data[ ukey + 'drugTimerClear'] = 0;
 	}
+	var now = Date.now();
 
-	if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
-		data[ ukey + 'drugTimerClear'] += amount * 60 * 60 * 1000;
+	if (data[ ukey + 'drugTimerClear'] > now ) {
+		data[ ukey + 'drugTimerClear'] += amount * oneHour;
 	}
 	else {
-		data[ ukey + 'drugTimerClear' ] =
-			Date.now() + amount * 60 * 60 * 1000;
+		var lastTick = new Date().setUTCHours(0,59,0,0); 
+		lastTick += oneHour * Math.floor((now - lastTick) / oneHour);
+		data[ ukey + 'drugTimerClear' ] = amount * oneHour + lastTick;
 	}
-
-	if (amount > 0) {
-		data[ ukey + 'drugTimerLast' ] = Date.now();
-	}
+	data[ ukey + 'drugTimerLast' ] = now;
 	chrome.storage.sync.set ( data );
 }
 
+function usedStims( tr ) {
+	for (var resid = 29 ; resid <= 32; resid++) {
+		var input = doc.evaluate(
+			"//tr/td/input[@name = 'resid' and @value = " + resid + "]",
+			doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+			null ).singleNodeValue;
+		if (input)  {
+			var amount = parseInt(input.nextElementSibling.value);
+			if (!(amount > 0))
+				 return;
+			var ukey = Universe.getServer ( document ).substr( 0, 1 );
+
+			//29 is the resid of green stims.
+			if (resid == 29)
+				amount *= 2;
+
+			chrome.storage.sync.get(
+				[ ukey + 'stimTimerLast', ukey + 'stimTimerClear'],
+				usedStims2.bind(null, amount, ukey) );
+		}
+	}
+}
+
+
+function usedStims2( amount,ukey, data ) {
+	var now = Date.now();
+	if (!data[ ukey + 'stimTimerClear'] ) {
+		data = new Object();
+		data[ ukey + 'stimTimerClear'] = 0;
+	}
+
+	if (data[ ukey + 'stimTimerClear'] > now) {
+		data[ ukey + 'stimTimerClear'] += amount * halfHour;
+	}
+	else {
+		var lastTick = new Date().setUTCHours(0,29,3,0); 
+		lastTick += halfHour * Math.floor((now - lastTick) / halfHour);
+		data[ ukey + 'stimTimerClear'] = amount * halfHour + lastTick;
+	}
+	data[ ukey + 'stimTimerLast' ] = now;
+	chrome.storage.sync.set ( data );
+}
 start();
 
 })( document, ConfigurationSet, ShipLinks, Universe );

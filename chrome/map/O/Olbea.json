@@ -3,7 +3,7 @@
   "sector": "Olbea",
   "width": 21,
   "height": 22,
-  "tiles": "bbbbbbbbbbbeeeebbbbbbbbbeebbbeeeefoeeebbbbbbbeeebbefffooofebbbbbbbeeeeeefgggoffeebbbbbbbbeffffggggggfebbbbbeeeefffggggggggeebbbeefffffgggggggggfeebbefffffggggggggggffebeefffffggggggggggffebeffgggfggggggggggggeeefggggfggggggggggggfeefggggffffffffgggggeeefgggffffffffffgggfebefffffeeeffffffffffebeefffeeeeffffffeeeeebbeffeebefffffffebeebbbeffebbefffffffeebbbbbeefebeeffffffffebbbbbbefebeeffffffffeeebbbbeeebeefffffeeeeeeeebbeebbbeeefeeebbbeeeebbeebbbbeeeebbbbbbbee",
+  "tiles": "bbbbbbbbbbbeeeebbbbbbbbbeebbbeeeefoeeebbbbbbbeeebbefffooofebbbbbbbeeeeeefgggoffeebbbbbbbbeffffggggggfebbbbbeeeefffggggggggeebbbeefffffgggggggggfeebbefffffggggggggggffebeefffffggggggggggffebeffgggfggggggggggggeeefggggfggggggggggggfeefggggffffffffgggggeeefgggffffffffffgggfebefffffeeeffffffffffebeefffeebeffffffeeeeebbeffeebefffffffebeebbbeffebbefffffffebbbbbbeefebbefffffffeebbbbbbefebeeffffffffeeebbbbeeebeefffffeeeeeeeebbeebbbeeefeeebbbeeeebbeebbbbeeeebbbbbbbee",
   "beacons": {
     "IP 3-251": { "type": "wh", "x": 3, "y": 1 },
     "RV 2-578": { "type": "wh", "x": 20, "y": 20 },
