@@ -149,7 +149,7 @@ function applyConfiguration() {
 
 		let ukey = Universe.getServer( doc ).substr( 0, 1 );
 		let name = ukey + 'path';
-		//chrome.storage.local.get( name , updateRoutePlanner );
+		chrome.storage.local.get( name , updateRoutePlanner );
 	}
 	else {
 		// Instead, we only want to do this the first time we run,
@@ -212,7 +212,7 @@ function onGameMessage( event ) {
 
 	let ukey = Universe.getServer ( doc ).substr( 0, 1 );
 	let name = ukey + 'path';
-	//chrome.storage.local.get( name , updateRoutePlanner );
+	chrome.storage.local.get( name , updateRoutePlanner );
 
 	configured = true;
 }
@@ -927,7 +927,7 @@ function updateRoutePlanner( data ) {
 	if ( !path || path.length === 0 )
 		return;
 	let idList = [];
-	let sectorId = Sector.getIdFromLocation( userloc );
+	//let sectorId = Sector.getIdFromLocation( userloc );
 
 	navtable = doc.getElementById( 'navareatransition' );
 	if ( !navtable )
@@ -943,16 +943,16 @@ function updateRoutePlanner( data ) {
 		return parseInt( a.getAttribute( 'onclick' ).split(/[()]/g)[1] ) - parseInt( b.getAttribute( 'onclick' ).split(/[()]/g)[1] );
 		});
 
-	for ( var i = 0; i < path.length ; i++ ) {
-		idList[ i ] = Sector.getLocation( sectorId, path[ i ].x, path[ i ].y );
-	}
-
-	idList.sort();
-	for ( var j = 0; j < a.length; j++ ) {
-		if ( a[ j ].getAttribute( 'onclick' ) !== null && idList.includes( parseInt( a[ j ].getAttribute( 'onclick' ).split(/[()]/g)[1] ) ) ) {
-			highlightTileInPath( a[ j ].parentNode );
-		}
-	}
+	//for ( var i = 0; i < path.length ; i++ ) {
+		//idList[ i ] = Sector.getLocation( sectorId, path[ i ].x, path[ i ].y );
+	//}
+//
+	//idList.sort();
+	//for ( var j = 0; j < a.length; j++ ) {
+		//if ( a[ j ].getAttribute( 'onclick' ) !== null && idList.includes( parseInt( a[ j ].getAttribute( 'onclick' ).split(/[()]/g)[1] ) ) ) {
+			//highlightTileInPath( a[ j ].parentNode );
+		//}
+	//}
 }
 
 start();
