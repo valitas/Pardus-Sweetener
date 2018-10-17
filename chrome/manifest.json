@@ -33,7 +33,7 @@
       "matches": [ "*://*.pardus.at/statistics.php?display=onlinelist" ]
    } ],
    "content_security_policy": "script-src 'self'; object-src 'self'",
-   "description": "User interface enhancements for the online game Pardus. Tweaks: drug and stim timers.",
+   "description": "User interface enhancements for the online game Pardus.",
    "icons": {
       "128": "icons/128.png",
       "16": "icons/16.png",
@@ -42,7 +42,7 @@
    },
    "manifest_version": 3,
    "minimum_chrome_version": "42",
-   "name": "Pardus Sweetener test",
+   "name": "Pardus Sweetener",
    "options_ui": {
       "chrome_style": true,
       "page": "options.html"
@@ -53,6 +53,6 @@
       "default_title": "Change Pardus Sweetener settings"
    },
    "permissions": [ "notifications", "storage", "*://*.pardus.at/*" ],
-   "version": "9.1.20180902",
+   "version": "9.1.20181016",
    "web_accessible_resources": [ "icons/16.png", "icons/48.png", "icons/down.png" ]
 }
