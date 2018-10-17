@@ -89,6 +89,10 @@ var config, configured, userloc, ajax, shiplinks,
 // time we update tileidx.
 var navtable, navidx, highlightedTiles, navTilesXEval;
 
+//these fields must match those in options.js and map.js
+var fields = ["Space", "Nebula", "Virus", "Energy", "Asteroid", "Exotic"];
+var travelCosts;
+  
 //milliseconds
 var oneHour = 3600000;
 var halfHour = 1800000;
@@ -111,6 +115,13 @@ function start() {
 	cs.addKey( 'navFlyCloseLink' );
 	cs.addKey( 'pathfindingEnabled' );
 	cs.addKey( 'clockD' );
+	
+	//for minimap navigation
+	var uni = ({a:"Artemis", o:"Orion", p:"Pegasus"})[Universe.getServer(doc).substr(0, 1)];
+	fields.forEach(function (f) {
+		cs.addKey( 'travelCost' + uni + f);
+	});
+	cs.addKey( 'miniMapNavigation' );
 	cs.addKey( 'clockStim' );
 
 	shiplinks = new ShipLinks.Controller
@@ -145,7 +156,7 @@ function applyConfiguration() {
 		// because we only want to do it once.  We didn't do it in
 		// start() because we didn't want to receive messages from the
 		// game until we were properly configured.  But now we are.
-
+		
 		navTilesXEval = doc.createExpression( 'tbody/tr/td', null );
 		highlightedTiles = [];
 
@@ -343,7 +354,8 @@ function refreshMinimap() {
 	minimap.clear( ctx );
 
 	if ( coords ) {
-		minimap.markTile( ctx, coords.col, coords.row, '#0f0' );
+		minimap.setShipCoords( coords.col, coords.row );
+		minimap.markShipTile( ctx );
 	}
 }
 
@@ -358,7 +370,7 @@ function removeMinimap() {
 
 // This is called when we receive the sector data from the extension.
 function configureMinimap( sector ) {
-	var canvas, container, size;
+	var canvas, div, container, size;
 
 	// If we were showing a map, get shot of it, we're rebuilding it
 	// anyway.
@@ -374,7 +386,13 @@ function configureMinimap( sector ) {
 	}
 	top.psMapData[ sector.sector ] = sector;
 
+	// Create the map canvas
 	canvas = doc.createElement( 'canvas' );
+	
+	// Create the div that will hold distance calculations
+	div = doc.createElement( 'div' );
+	div.style.paddingTop = '10px';
+	div.style.display = 'none';
 
 	// Figure out where to place the map and what size it should be.
 
@@ -432,6 +450,7 @@ function configureMinimap( sector ) {
 
 		// Finally, add the canvas and assemble the table row.
 		newtd.appendChild( canvas );
+		newtd.appendChild( div );
 		container.appendChild( newtd );
 		tbody.insertBefore( container, tr.nextSibling );
 		size = 180;
@@ -453,6 +472,7 @@ function configureMinimap( sector ) {
 		container.style.margin = '0 2px 24px auto';
 		canvas.style.border = '1px outset #a0b1c9';
 		container.appendChild( canvas );
+		container.appendChild( div );
 		td.insertBefore( container, td.firstChild );
 		size = 200;
 	}
@@ -460,7 +480,17 @@ function configureMinimap( sector ) {
 	// At this point we already have the canvas in the document. So
 	// just configure it, and remember the pertinent variables.
 	minimap = new SectorMap();
-	minimap.setCanvas( canvas );
+	minimap.setCanvas( canvas, div );
+	if (config.miniMapNavigation) {
+		//setup travel costs to pass to minimap
+		var travelCosts = {};
+		var uni = ({a:"Artemis", o:"Orion", p:"Pegasus"})[Universe.getServer(doc).substr(0, 1)];
+		fields.forEach(function (f) {
+			travelCosts[f] = config["travelCost" + uni + f];
+		});
+
+		minimap.enablePathfinding(travelCosts);
+	}
 	minimap.configure( sector, size );
 	minimapContainer = container;
 	minimapSector = sector;
@@ -514,7 +544,7 @@ function updatePathfinding() {
 	navidx = new Object();
 	var xpr = navTilesXEval.evaluate(
 		navtable, XPathResult.UNORDERED_NODE_ITERATOR_TYPE, null ),
-	    td;
+		td;
 	while(( td = xpr.iterateNext() ))
 		navidx[ td.id ] = td;
 
