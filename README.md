@@ -5,22 +5,16 @@ Pardus Sweetener
 Pardus Sweetener is a browser extension that enhances the user
 interface of the online space game [Pardus](https://www.pardus.at/).
 
-This is Kui's fork of the project, which adds these features: 
-
- * Changed the color of viral clouds on the minimap to distinguish against ship
- * Added minimal-cost pathfinder and AP calculator to the minimap
- * Added displaying waypoint information to minimap
+Notable Features from the original:
+ * Added tick based drug and stim timers ([Tsunder's fork](https://github.com/Tsunder/Pardus-Sweetener))
+ * Added minimal-cost pathfinder and AP calculator to the minimap ([Kui's fork](https://github.com/likuilin/Pardus-Sweetener))
+ * Added displaying waypoint information to minimap (Kui's fork)
 
 Install
 -------
 
-To install this fork, please download the files and Google the instructions for
-installing an unpacked extension. 
-
-If you don't care about the fork, the original extension can be found here:
-
-* [Pardus Sweetener Chrome Extension](https://chrome.google.com/webstore/detail/ejnppkfdhdnchkcdblfddedelmbpoklo)
-* [Pardus Sweetener Firefox Add-on](https://addons.mozilla.org/firefox/addon/pardus-sweetener/)
+* [Pardus Sweetener Chrome Extension](https://github.com/Tsunder/Pardus-Sweetener/releases)
+* [Pardus Sweetener Firefox Add-on]() Sorry! none currently available.
 
 Features
 --------
