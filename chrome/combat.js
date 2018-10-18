@@ -388,15 +388,12 @@ function displayDamage( shipCondition ) {
 
 function addDrugTimer() {
 	var tr;
-	var comms = ['51','29','30','31','32'];
-	for ( var i = 0; i < comms.length ; i++ ) {
-		tr = doc.evaluate(
-			"//tr[td/input[@name = 'resid' and @value = " + comms[i] + "]]",
-			doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
-			null ).singleNodeValue;
-		if ( tr ) {
-			tr.lastChild.lastChild.addEventListener( 'click', usedDrugs.bind( tr ) );
-		}
+	tr = doc.evaluate(
+		"//tr[td/input[@name = 'resid' and @value = 51 ]]",
+		doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+		null ).singleNodeValue;
+	if ( tr ) {
+		tr.lastChild.lastChild.addEventListener( 'click', usedDrugs.bind( tr ) );
 	}
 }
 
@@ -421,11 +418,14 @@ function usedDrugs( tr ) {
 		null ).singleNodeValue;
 
 	var amount = parseInt(input.nextElementSibling.value);
+	if (!(amount > 0 )) {
+		return;
+	}
 	var ukey = Universe.getServer ( document ).substr( 0, 1 );
 
 	chrome.storage.sync.get(
 		[ ukey + 'drugTimerLast', ukey + 'drugTimerClear'],
-		usedDrugs2.bind(null, amount, input.value, ukey) );
+		usedDrugs2.bind(null, amount, ukey) );
 }
 
 function usedDrugs2( amount, ukey, data ) {
