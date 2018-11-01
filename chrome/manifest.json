@@ -40,7 +40,7 @@
       "48": "icons/48.png",
       "64": "icons/64.png"
    },
-   "manifest_version": 3,
+   "manifest_version": 2,
    "minimum_chrome_version": "42",
    "name": "Pardus Sweetener T",
    "options_ui": {
@@ -50,7 +50,7 @@
    "page_action": {
       "default_icon": "icons/19.png",
       "default_popup": "popup.html",
-      "default_title": "Change Pardus Sweetener settings"
+      "default_title": "Change Pardus Sweetener T settings"
    },
    "permissions": [ "notifications", "storage", "*://*.pardus.at/*" ],
    "version": "9.2",
