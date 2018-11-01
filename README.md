@@ -13,7 +13,7 @@ Notable Features from the original:
 Install
 -------
 
-* [Pardus Sweetener Chrome Extension](https://github.com/Tsunder/Pardus-Sweetener/releases)
+* [Pardus Sweetener Chrome Extension](https://chrome.google.com/webstore/detail/oljkdelpabjlpofhomedemighchghfik)
 * [Pardus Sweetener Firefox Add-on]() Sorry! none currently available.
 
 Features
