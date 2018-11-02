@@ -439,7 +439,7 @@ function usedDrugs2( amount, ukey, data ) {
 		data[ ukey + 'drugTimerClear'] += amount * oneHour;
 	}
 	else {
-		var lastTick = new Date().setUTCHours(0,59,0,0); 
+		var lastTick = new Date().setUTCHours(0,59,3,0); 
 		lastTick += oneHour * Math.floor((now - lastTick) / oneHour);
 		data[ ukey + 'drugTimerClear' ] = amount * oneHour + lastTick;
 	}
