@@ -23,7 +23,7 @@ function onDOMContentLoaded() {
 
 	// Find all these elements in the document, save references to
 	// them in xControls.
-	keys = [ 'testAlarm', 'testNotification', 'version' ];
+	keys = [ 'testAlarm', 'testNotification', 'version', 'aresetDrugAndStim', 'oresetDrugAndStim', 'presetDrugAndStim' ];
 
 	for ( i = 0, end = keys.length; i < end; i++ ) {
 		var key = keys[ i ];
@@ -89,7 +89,7 @@ function onDOMContentLoaded() {
 	// 4. Selects
 	setupControls ( 'change', onControlInput,
 		'alarmSound', 'autobotsArtemisPreset', 'autobotsOrionPreset',
-		'autobotsPegasusPreset', 'miniMapPlacement' );
+		'autobotsPegasusPreset', 'miniMapPlacement', 'adoctor', 'odoctor', 'pdoctor' ); 
 	unis.forEach(function (e) {
 		setupControls('input', onNumericControlInput, 'miniMapNavigationPreset' + e);
 	});
@@ -115,6 +115,17 @@ function onDOMContentLoaded() {
 		.addEventListener( 'click', updateMiniMapControlsDisable );
 	controls.miniMapNavigation
 		.addEventListener( 'click', updateMiniMapNavigationDisable );
+	extraControls
+		.aresetDrugAndStim.addEventListener( 'click', onResetDrugAndStimClick );
+	extraControls
+		.oresetDrugAndStim.addEventListener( 'click', onResetDrugAndStimClick );
+	extraControls
+		.presetDrugAndStim.addEventListener( 'click', onResetDrugAndStimClick );
+
+		//pretty sure these doctor listeners won't do anything, remove.
+	controls.adoctor.addEventListener('change', doctorListener);
+	controls.odoctor.addEventListener('change', doctorListener);
+	controls.pdoctor.addEventListener('change', doctorListener);
 
 	unis.forEach(function (uni) {
 		var e = controls["miniMapNavigationPreset" + uni];
@@ -317,6 +328,29 @@ function onControlInput( event ) {
 
 	items[ target.id ] = target.value;
 	chrome.storage.local.set( items );
+}
+
+//resets the drug and stim timers to 0 for the universe.
+function onResetDrugAndStimClick(inputElement) {
+	var u = inputElement.target.alt;
+	console.log("reseting for universe " + u)
+	var data = new Object();
+	data[ u + 'stimTimerLast' ] = 0;
+	data[ u + 'stimTimerClear' ] = 0;
+	data[ u + 'drugTimerLast' ] = 0;
+	data[ u + 'drugTimerClear' ] = 0;
+	data[ u + 'extraStim' ] = 0;
+	data[ u + 'extraDrug' ] = 0;
+	chrome.storage.sync.set ( data );
+	console.log("reset")
+}
+
+//sets the doctor legendary for the universe
+function  doctorListener (inputElement) {
+	var data = new Object();
+	var target = inputElement.target
+	data[target.id] =target.value
+	chrome.storage.sync.set(data);
 }
 
 // This is like the above, but only allows numeric values greater than
