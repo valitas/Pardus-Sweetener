@@ -411,6 +411,24 @@ function addStimTimer() {
 	}
 }
 
+//returns the amount of drugs effectively taken, reduces drug intake in ratio, which is the conservative method.
+function compensateDoctor( amount, ukey, doctorType, extraConsumable) {
+	var doctorFactor = 0;
+	if (doctorType == "Primary") {
+		doctorFactor = 2;
+	} else if (doctorType == "Secondary") {
+		doctorFactor = 4;
+	}
+
+	if (doctorFactor > 1) {
+		var leftOverConsumables = (amount + extraConsumable) % doctorFactor; // the leftover amount of consumables to be stored for next time.
+		amount -=  Math.floor( (amount + extraConsumable) * (1/doctorFactor) ) // negate this amount of consumables, the amount that is the "effective" amount taken and the reduction factor
+		return [amount, leftOverConsumables];
+	} else {
+		return [amount, extraConsumable];
+	}
+}
+
 function usedDrugs( tr ) {
 	var input = doc.evaluate(
 		"//tr/td/input[@name = 'resid' and @value = 51]",
@@ -418,23 +436,25 @@ function usedDrugs( tr ) {
 		null ).singleNodeValue;
 
 	var amount = parseInt(input.nextElementSibling.value);
-	if (!(amount > 0 )) {
-		return;
-	}
-	var ukey = Universe.getServer ( document ).substr( 0, 1 );
+	if (amount > 1) {
+		var ukey = Universe.getServer ( document ).substr( 0, 1 );
 
-	chrome.storage.sync.get(
-		[ ukey + 'drugTimerLast', ukey + 'drugTimerClear'],
-		usedDrugs2.bind(null, amount, ukey) );
+		chrome.storage.sync.get(
+			[ukey + 'drugTimerLast', ukey + 'drugTimerClear', ukey + 'doctor', ukey + 'extraDrug'],
+			usedDrugs2.bind(null, amount, ukey) );
+	}
 }
 
 function usedDrugs2( amount, ukey, data ) {
 	if (!data[ ukey + 'drugTimerClear'] ) {
 		data = new Object();
 		data[ ukey + 'drugTimerClear'] = 0;
+		data[ ukey + 'extraDrug'] = 0;
 	}
+	var doctorCompensation = compensateDoctor(amount, ukey, data[ukey + 'doctor'], data[ukey + 'extraDrug']);
+	amount = doctorCompensation[0];
+	data[ ukey + 'extraDrug'] = doctorCompensation[1];
 	var now = Date.now();
-
 	if (data[ ukey + 'drugTimerClear'] > now ) {
 		data[ ukey + 'drugTimerClear'] += amount * oneHour;
 	}
@@ -455,17 +475,17 @@ function usedStims( tr ) {
 			null ).singleNodeValue;
 		if (input)  {
 			var amount = parseInt(input.nextElementSibling.value);
-			if (!(amount > 0))
-				 return;
-			var ukey = Universe.getServer ( document ).substr( 0, 1 );
+			if (amount > 1) {
+				var ukey = Universe.getServer ( document ).substr( 0, 1 );
 
-			//29 is the resid of green stims.
-			if (resid == 29)
-				amount *= 2;
+				//29 is the resid of green stims.
+				if (resid == 29)
+					amount *= 2;
 
-			chrome.storage.sync.get(
-				[ ukey + 'stimTimerLast', ukey + 'stimTimerClear'],
-				usedStims2.bind(null, amount, ukey) );
+				chrome.storage.sync.get(
+					[ ukey + 'stimTimerLast', ukey + 'stimTimerClear'],
+					usedStims2.bind(null, amount, ukey) );
+			}
 		}
 	}
 }
@@ -476,7 +496,12 @@ function usedStims2( amount,ukey, data ) {
 	if (!data[ ukey + 'stimTimerClear'] ) {
 		data = new Object();
 		data[ ukey + 'stimTimerClear'] = 0;
+		data[ ukey + 'extraStim'] = 0;
 	}
+
+	var doctorCompensation = compensateDoctor(amount, ukey, data[ukey + 'doctor'], data[ukey + 'extraStim']);
+	amount = doctorCompensation[0];
+	data[ ukey + 'extraStim'] = doctorCompensation[1];
 
 	if (data[ ukey + 'stimTimerClear'] > now) {
 		data[ ukey + 'stimTimerClear'] += amount * halfHour;
