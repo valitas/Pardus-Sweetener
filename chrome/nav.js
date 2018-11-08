@@ -867,8 +867,7 @@ function compensateDoctor( amount, ukey, doctorType, extraConsumable) {
 
 function usedDrugs( useform, ukey ) {
 	let amount = parseInt( useform.elements.amount.value );
-	if (amount >= 0) {
-		amount = 4
+	if (amount > 0) {
 		chrome.storage.sync.get(
 			[ukey + 'drugTimerLast', ukey + 'drugTimerClear', ukey + 'doctor', ukey + 'extraDrug'],
 			usedDrugs2.bind(null, amount, ukey) );
