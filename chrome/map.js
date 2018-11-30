@@ -13,12 +13,12 @@
 // And so, since it's 2013 and that, we use the HTML5 Canvas.
 
 'use strict';
+
 function SectorMap() {}
 SectorMap.prototype = {
 
 	configure: function( sector, maxPixelSize ) {
 		this.sector = sector;
-		this.ukey = Universe.getServer ( document ).substr( 0, 1 );
 
 		var cols = sector.width, rows = sector.height, tiles = sector.tiles;
 
@@ -47,75 +47,34 @@ SectorMap.prototype = {
 		this.cols = cols;
 		this.rows = rows;
 		this.configured = true;
+		
+		//mouseover support
+		this.mouseX = -1;
+		this.mouseY = -1;
+		this.shipX = -1;
+		this.shipY = -1;
+		this.mouselock = false;
 
 		if ( this.canvas ) {
 			this.initCanvas();
 		}
-
-		this.canvas.addEventListener('mousemove', displayPath.bind( this, this.canvas.getBoundingClientRect() ) );
-		this.canvas.addEventListener('mouseout', clearPath.bind( this ) ); 
-		this.canvas.addEventListener('click', savePath.bind ( this ) );
-		this.canvas.addEventListener('dblclick', savePath.bind ( this ) );
-	
-		function displayPath( boundingRect, event ) {
-			let x = event.clientX - boundingRect.x , y = event.clientY - boundingRect.y, tileSizeOffset;
-			
-			this.grid ? tileSizeOffset = 1: tileSizeOffset = 0;
-			let row = Math.floor( y / ( this.tileSize + tileSizeOffset ) ) ;
-			let col = Math.floor( x / ( this.tileSize + tileSizeOffset ) );
-			let hoverCoords = { 'x': col, 'y': row }; //oddly xyToColRow only returns col?
-			this.clear( this.get2DContext() );
-			this.markTile( this.get2DContext(), col, row, '#ccc' );
-			let current = this.getCurrentCoords();
-			let speed = getSpeed.call(this);
-
-			this.markTile( this.get2DContext(), current.col, current.row, '#0f0' );
-
-			if ( this.sector.tiles[ hoverCoords.y * this.sector.width + hoverCoords.x ] !== 'b' ) { 
-				var path = this.calcPath( hoverCoords, {'x':current.col,'y':current.row}, this.sector, speed ) ;
-				this.path = path;
-
-				for (var i = 1; i < path.length ; i ++ ) { // skip 0 because that's our starting loc.
-					this.markTile( this.get2DContext(), path[ i ].x , path[ i ].y , '#ccc' );
-				}
-			}
-		}
-		
-		function savePath( e ) {
-			if ( this.path ) {
-				let saveData = {};
-				e.detail > 1 ? this.path = [] : null;
-				saveData[ this.ukey + 'path' ] = this.path;
-				chrome.storage.local.set( saveData );
-			}
-		}
-		
-		function clearPath() {
-			let current = this.getCurrentCoords();
-			this.clear( this.get2DContext() );
-			this.markTile( this.get2DContext(), current.col, current.row, '#0f0' );
-		}
-		
-		function getSpeed() {
-			let current = this.getCurrentCoords();
-			let currentTileType = this.sector.tiles[ current.col + this.sector.width * current.row ];
-			let moveField = document.getElementById('tdStatusMove').childNodes;
-			let speed = 0;
-			if ( moveField.length > 1 ) { //something modifies our speed 
-				speed -= parseInt( moveField[1].childNodes[0].textContent );
-			}
-			speed -= parseInt( moveField[0].textContent );
-			speed += this.VISC[ currentTileType ];
-
-			return speed;
-		}
 	},
 
-	setCanvas: function( canvas ) {
+	setCanvas: function( canvas, div ) {
 		this.canvas = canvas;
+		this.distanceDiv = div;
+		
 		if ( this.configured ) {
 			this.initCanvas();
 		}
+	},
+	
+	//attach events for mouseover path calculation
+	enablePathfinding: function(travelCosts) {
+		this.travelCosts = travelCosts;
+		this.attachMouseEvents(this.canvas);
+		this.distanceDiv.style.display = "block";
+		this.savedPath = [];
 	},
 
 	// Just gets the 2D context of the canvas. You'll want this to
@@ -129,6 +88,8 @@ SectorMap.prototype = {
 	// to clear, then overlay dynamic stuff on the "background" map.
 	clear: function( ctx ) {
 		ctx.drawImage( this.bgCanvas, 0, 0 );
+		this.distanceDiv.innerText = "";
+		if (this.mouselock) this.drawSavedPath(ctx);
 	},
 
 	// This draws a marker on a tile.
@@ -153,16 +114,36 @@ SectorMap.prototype = {
 		ctx.fillStyle = style;
 		ctx.fillRect( x, y, size, size );
 	},
+	
+	// This draws the saved path, for if we navigate with the minimap locked
+	drawSavedPath: function ( ctx ) {
+		this.savedPath.forEach(function (e) {
+			this.markTile(ctx, e[0], e[1], "#080");
+		}.bind(this));
+	},
+
+	// This sets the current ship coords, for navigation
+	setShipCoords: function( col, row ) {
+		this.shipX = col;
+		this.shipY = row;
+	},
+	
+	// This marks the current ship tile
+	markShipTile: function( ctx ) {
+		this.markTile( ctx, this.shipX, this.shipY, '#0f0' );
+	},
 
 	// Convert pixel x,y coordinates on the canvas to map row,col.
 	// For this purpose, if the map has a grid, points on the grid are
-	// assumed to belong on the tile to the right/bottom. If result is
-	// ommitted, a new object is created to return the result.
-	xyToColRow: function( x, y, result ) {
-		if ( !result ) {
-			result = {};
-		}
-		result.col = Math.floor( x / this.size );
+	// assumed to belong on the tile to the right/bottom. 
+	xyToColRow: function( x, y ) {
+		var gstep = this.grid ? this.tileSize+1 : this.tileSize;
+		
+		x = Math.floor( x / gstep );
+		y = Math.floor( y / gstep );
+		
+		if (y < 0 || y >= this.sector.height || x < 0 || x >= this.sector.width) return null;
+		return { x: x, y: y };
 	},
 
 
@@ -170,15 +151,15 @@ SectorMap.prototype = {
 	// outside this object.
 
 	COLOUR: {
-		b: '#158',    // hard energy
+		b: '#158',	// hard energy
 		e: '#0e2944', // energy
-		f: '#000',    // fuel
-		g: '#a00',    // gas
-		m: '#0c0',    // exotic matter
-		o: '#666',    // ore
-		v: '#0f0'     // viral
+		f: '#000',	// fuel
+		g: '#a00',	// gas
+		m: '#0c0',	// exotic matter
+		o: '#666',	// ore
+		v: '#ee0'	 // viral
 	},
-
+	
 	VISC: { 
 		'f': 11, // fuel -> space
 		'g': 16, // nebula gas
@@ -187,6 +168,7 @@ SectorMap.prototype = {
 		'o': 25, // ore -> asteriods
 		'm': 36  // Exotic Matter
 	},
+
 
 	initCanvas: function() {
 		this.canvas.width = this.width;
@@ -263,10 +245,198 @@ SectorMap.prototype = {
 			}
 			this.markTile( ctx, beacon.x, beacon.y, style );
 		}
+	},
+	
+	//attach the mouse events for path calculation
+	attachMouseEvents: function (canvas) {
+		canvas.addEventListener('click', function (e) {
+			//lock if unlocked, unlock and clear if locked
+			if (this.mouselock) {
+				this.clear(this.get2DContext());
+				this.markShipTile(this.get2DContext());
+			}
+			this.mouselock = !this.mouselock;
+		}.bind(this));
+		
+		['mousemove', 'click'].forEach(function (evt) {
+			canvas.addEventListener(evt, function (e) {
+				//determine client location, and calculate path to it if needed
+				if (this.mouselock) return;
+				
+				var rect = canvas.getBoundingClientRect(), 
+					scaleX = canvas.width / rect.width, 
+					scaleY = canvas.height / rect.height;
+				var loc = this.xyToColRow((e.clientX - rect.left) * scaleX, (e.clientY - rect.top) * scaleY);
+				if (!loc) return;
+				
+				if (loc.x != this.mouseX || loc.y != this.mouseY) {
+					this.drawPath(loc);
+					//if there's a waypoint, why not draw it
+					for (var n in this.sector.beacons) {
+						var e = this.sector.beacons[n];
+						if (e.x == loc.x && e.y == loc.y)
+							this.distanceDiv.innerHTML += "<br>" + (e.type == "wh" ? "Wormhole to " : "") + n;
+					}
+				}
+			}.bind(this));
+		}.bind(this));
+		
+		canvas.addEventListener('mouseout', function (e) {
+			//clear the map when mouse leaves it
+			if (this.mouselock) return;
+			
+			this.clear(this.get2DContext());
+			this.markShipTile(this.get2DContext());
+			this.mouseX = -1;
+			this.mouseY = -1;
+		}.bind(this));
+	},
+	
+	//draw the path from the current ship location to the mouse location, and
+	//calculate AP costs for it
+	drawPath: function (loc) {
+		this.clear(this.get2DContext());
+		this.markShipTile(this.get2DContext());
+		
+		//these fields must match those in options.js and map.js
+		var fields = ["Space", "Nebula", "Virus", "Energy", "Asteroid", "Exotic"];
+		var travelCosts = this.travelCosts;
 
-		// We don't need this any more, release the reference
-		// We do now with the pathFinder;
-		// delete this.sector;
+		var speed = getSpeed.call( this );
+
+		var tc = {
+			b: -1,
+	/*		e: travelCosts["Energy"], 
+			f: travelCosts["Space"], 
+			g: travelCosts["Nebula"], 
+			m: travelCosts["Exotic"], 
+			o: travelCosts["Asteroid"], 
+			v: travelCosts["Virus"]*/
+			'f': this.VISC[ 'f' ] - speed, // fuel -> space
+			'g': this.VISC[ 'g' ] - speed, // nebula gas
+			'v': this.VISC[ 'v' ] - speed,
+			'e': this.VISC[ 'e' ] - speed,
+			'o': this.VISC[ 'o' ] - speed, // ore -> asteriods
+			'm': this.VISC[ 'm' ] - speed  // Exotic Matter
+		};
+		
+		//here, we do a BFS across the entire sector with respect to the cost, stopping when either the state is the same for 100 AP's (unreachable) or we've reached the location
+		var i,j;
+		var bfsState = [];
+		var costFromTile = []; //quickly lookup the cost of travelling from any tile, without string fluffery
+		
+		for (i=0;i<this.sector.height;i++) {
+			bfsState.push([]);
+			costFromTile.push([]);
+			for (j=0;j<this.sector.width;j++) {
+				bfsState[i].push([-1, -1, -1]); //[previous X, previous Y, distance]
+				costFromTile[i].push(~~tc[this.sector.tiles.charAt(i * this.sector.width + j)]);
+			}
+		}
+		bfsState[this.shipY][this.shipX] = [0, this.shipY, this.shipX]; //mark current location as zero distance
+		
+		var apsSpent = 0;
+		//if current tile is unreachable, then lol
+		if (costFromTile[loc.y][loc.x] != -1) {
+			var unreachableCounter = 0; //reset on map state change, incremented on 1AP spent, marked unreachable when it reaches 100
+			while (unreachableCounter < 100) {
+				//copy bfsState
+				var nextBfsState = [];
+				for (i=0;i<this.sector.height;i++) {
+					nextBfsState.push([]);
+					for (j=0;j<this.sector.width;j++) nextBfsState[i].push(bfsState[i][j].slice());
+				}
+				
+				for (i=0;i<this.sector.height;i++) for (j=0;j<this.sector.width;j++) {
+					if (bfsState[i][j][0] == -1) continue; //not visited yet
+					
+					var processPath = function (curX, curY, nextX, nextY, isDiagonal) { //isDiagonal is used to favor non-diagonal movement when costs are equal, because humans click those easier
+						if (nextX < 0 || nextX >= this.sector.height || nextY < 0 || nextY >= this.sector.width) return;
+						
+						var cost = bfsState[curX][curY][0] + costFromTile[curX][curY];
+						if (costFromTile[nextX][nextY] == -1) return; //the way is blocked, cannot go
+						if (cost > apsSpent) return; //too much cost currently
+						
+						if (nextBfsState[nextX][nextY][0] == -1 || nextBfsState[nextX][nextY][0] > cost || (nextBfsState[nextX][nextY][0] == cost && !isDiagonal)) {
+							nextBfsState[nextX][nextY] = [cost, curX, curY];
+							if (nextBfsState[nextX][nextY].join(",") != bfsState[nextX][nextY].join(","))
+								unreachableCounter = 0;
+						}
+					}.bind(this);
+					
+					processPath(i, j, i-1, j-1, true);
+					processPath(i, j, i-1, j  , false);
+					processPath(i, j, i-1, j+1, true);
+					processPath(i, j, i  , j-1, false);
+					processPath(i, j, i  , j+1, false);
+					processPath(i, j, i+1, j-1, true);
+					processPath(i, j, i+1, j  , false);
+					processPath(i, j, i+1, j+1, true);
+				}
+				
+				bfsState = nextBfsState;
+				
+				/* //uncomment to debug
+				var d = "";
+				for (i=0;i<this.sector.height;i++) {
+					for (j=0;j<this.sector.width;j++) {
+						d += bfsState[i][j][0] + "\t";
+					}
+					d += "\n"
+				}
+				console.log(d);
+				//*/
+				
+				//break if we've found a path
+				if (bfsState[loc.y][loc.x][0] != -1) break;
+				
+				unreachableCounter++;
+				apsSpent++;
+				
+				if (apsSpent >= 10000) break; //sanity check
+			}
+		}
+		
+		var endState = bfsState[loc.y][loc.x];
+		if (endState[0] == -1) {
+			apsSpent = "&infin;";
+			this.savedPath = [[loc.x, loc.y]];
+		} else {
+			//if we have found a path, we know it's min length because all the previous iterations did not end here.
+			//now we iterate backwards until we get to the ship
+			i = loc.y;
+			j = loc.x;
+			var path = [];
+			var sanityCheck = 0;
+			while (!(i == this.shipY && j == this.shipX) && sanityCheck++ < 10000) {
+				path.push([j, i]);
+				var state = bfsState[i][j];
+				i = state[1];
+				j = state[2];
+			}
+			path.push([this.shipX, this.shipY]);
+			this.savedPath = path;
+		}
+		this.drawSavedPath(this.get2DContext());
+		this.markShipTile(this.get2DContext());
+		this.distanceDiv.innerHTML = "Distance to " + this.sector.sector + " [" + loc.x + ", " + loc.y + "]: " + apsSpent + " APs"; //innerHTML to accomodate infinity symbol
+		
+		// I put the function at the end to keep clutter down. Currently only used in drawpath.
+		function getSpeed() {
+			// function calculates speed (as in the Pardus Manual), allowing for boost, stims, etc. XXX still needs to be tested with legendary.
+			
+			let currentTileType = this.sector.tiles[ this.shipX + this.sector.width * this.shipY ];
+			let moveField = document.getElementById('tdStatusMove').childNodes;
+			let speed = 0;
+			if ( moveField.length > 1 ) { //something modifies our speed 
+				speed -= parseInt( moveField[1].childNodes[0].textContent );
+			}
+			speed -= parseInt( moveField[0].textContent );
+			speed += this.VISC[ currentTileType ];
+
+			return speed;
+		}
+		
 	},
 
 	// Compute the tile size and whether we'll draw grid lines.
@@ -311,118 +481,5 @@ SectorMap.prototype = {
 
 		this.tileSize = size;
 		this.grid = grid;
-	},
-	
-	getCurrentCoords: function getCurrentCoords( result ) { //stolen from nav.js
-		var elt = document.getElementById( 'coords' );
-		if ( elt ) {
-			var m = /^\[(\d+),(\d+)\]$/.exec( elt.textContent );
-			if ( m ) {
-				if ( !result ) {
-					result = new Object();
-				}
-				result.col = parseInt( m[1] );
-				result.row = parseInt( m[2] );
-				return result;
-			}
-		}
-		return null;
-	},
-
-	calcPath: function calcPath( end, start, sector, speed ) {
-		var map = [];
-		// parsing from Sweetener to VMAP
-		sector.t = sector.tiles;
-		sector.w = sector.width;
-		sector.h = sector.height;
-
-		for ( var i = 0; i < sector.h; i++ ) {
-			for ( var j = 0; j < sector.w; j++ ) {
-				map[ i * sector.w + j ] = {
-					'n': i * sector.w + j,
-					'x': j,
-					'y': i,
-					't': sector.t[ i * sector.w + j ],
-					'distance': Infinity,
-					'visited': false,
-					'path': -1,
-					'steps': Infinity
-				};
-			}
-		}
-		var endN = end.y * sector.w + end.x, 
-			startN = start.y * sector.w + start.x;
-		
-		if (map[startN].t === 'b' || map[endN] === 'b')
-			return;
-
-		map[ endN ].distance = 0;
-		map[ endN ].steps = 0;
-		var newList = [], curList = [], nnList = [];
-		curList[0] = endN;
-		
-		while ( !map[ startN ].visited ) {
-		// for (var p = 0; p<20 ; p++ ){
-			var newList = [];
-			for ( var i = 0; i < curList.length ; i++ ) {
-				nnList = nearestNeighbours( sector.w, curList[i] );
-				updateDistance( nnList, curList[i], speed, map, this.VISC );
-				newList = newList.concat( nnList );
-
-				//removing duplicates - greatly speeds up calculation
-				newList.sort(); 
-				for ( var l = 0; l < newList.length - 1; l++ ) { 
-					if ( newList[l] === newList[ l + 1 ] ) {
-						newList.splice( l, 1 );
-					}
-				}
-			}
-			// shortest distances go first next round
-			newList.sort( function compare(a ,b) {
-				return map[ a ].distance - map[ b ].distance;
-				});
-			curList = newList;
-		}
-		
-		var outputList = [];
-		var tileID = startN;
-
-		for ( var i = 0; i < map[ startN ].steps + 1 ; i++ ) {
-			outputList[ i ] = { 'x': map[ tileID ].x , 'y': map[ tileID ].y };
-			tileID = map[ tileID ].path;
-		}
-		
-		return outputList;
-		
-		function nearestNeighbours( sectorw, n ) {
-			var m, nnList = [];
-			for ( var i = 0; i < 9; i++ ) {
-				m = n + ( Math.floor( i / 3 ) - 1 ) * sectorw - 1 + i % 3;
-				if ( m >= 0 && m < map.length && m != n && map[ m ].t !== 'b' && !map[ m ].visited 
-					&& Math.abs( map[ n ].y - map[ m ].y ) < 3 && Math.abs( map[ n ].x - map[ m ].x ) < 3) {
-					// Add to the list if not out of bounds, not equal to start spot, not boundary, not visited already 
-					// and not going *through the wall* of the map, that's cheatin!
-					nnList.push( m );
-				}
-			}
-			return nnList;
-		}
-
-		function updateDistance( nnList, n, speed, map, VISC ) {
-		
-			for ( var i = 0; i < nnList.length ; i++ ) {
-
-				if ( map[ nnList[i] ].distance > VISC[ map[ n ].t ] - speed + map[ n ].distance ) {
-					map[ nnList[i] ].distance = VISC[ map[ n ].t ] - speed + map[ n ].distance;
-					map[ nnList[i] ].path  = n;			
-					if ( !(map[ nnList[i] ].steps == map[ n ].steps + 1 ) ) { 
-						//normal movement, not a better tile to go through
-						map[ nnList[i] ].steps = map[ n ].steps + 1;
-					}
-				}
-			}
-			map[ n ].visited = true;
-			return map;
-		}
 	}
 };

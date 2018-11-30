@@ -16,15 +16,6 @@
      <label for="pathfindingEnabled">
       Enable highlighting of the ship path
      </label>
-     <br>
-     <input type="checkbox" id="miniMap">
-     <label for="miniMap">
-      Show a small map of the current sector
-     </label>
-     <select id="miniMapPlacement">
-      <option value="topright">Above the Cargo box</option>
-      <option value="statusbox">Inside the Status box</option>
-     </select>
     </p>
 
     <p>
@@ -86,6 +77,31 @@
       Show the recipient's alliance name when composing a private message
      </label>
     </p>
+   </div>
+  </section>
+
+  <section>
+   <h3>Minimap settings</h3>
+   <div>
+     <input type="checkbox" id="miniMap">
+     <label for="miniMap">
+      Show a small map of the current sector
+     </label>
+     <select id="miniMapPlacement">
+      <option value="topright">Above the Cargo box</option>
+      <option value="statusbox">Inside the Status box</option>
+     </select>
+     <br>
+     <input type="checkbox" id="miniMapNavigation">
+     <label for="miniMapNavigation">
+      Calculate travel cost and optimal route when hovering over the minimap
+     </label>
+     <br><br>
+      Travel AP costs for each field on each uni: (Select drive to populate default values, or edit individually to take into account capacitors, amber stims, etc):
+      <div>
+       <table id="miniMapNavigationCosts">
+       </table>
+      </div>
    </div>
   </section>
 
@@ -534,7 +550,7 @@
      Alliance quicklists are obtained from the in-game <em>My Alliance</em>
      page; see
      <a target="_blank"
-		href="https://github.com/valitas/Pardus-Sweetener/wiki/Quick-lists">here</a>
+    href="https://github.com/valitas/Pardus-Sweetener/wiki/Quick-lists">here</a>
      for details.
     </p>
 
@@ -550,7 +566,7 @@
      </label>
      <br>
      <textarea id="personalQLArtemis" rows="3" disabled
-	       placeholder="Artemis quicklist"></textarea>
+         placeholder="Artemis quicklist"></textarea>
     </p>
 
     <p class="orion">
@@ -633,7 +649,7 @@
      computer's clock and time zone should be set correctly.  Modern operating
      systems can keep your clock on the correct time automatically; see
      <a target="_blank"
-		href="http://www.ehow.com/how_7550535_sync-clock-server.html">this
+    href="http://www.ehow.com/how_7550535_sync-clock-server.html">this
       article</a>
      for a quick rundown.
     </p>
@@ -691,14 +707,52 @@
     </p>
    </div>
 
-   <div class="setting">
+
+  </section>
+  <section>
+    <h3>Drugs and Stims </h3>
+    <div>Controls for drugs and stim clocks</div>
+    <div class="setting">
+    <p>
     <input type="checkbox" id="clockD" />
     <label for="clockD">
      Show the time remaining to being undrugged
     </label>
+     <br>
+     <input type="checkbox" id="clockStim">
+     <label for="clockStim">
+      Show the time remaining to being unstimmed
+     </label>
+     <br>
+     Doctors:
+     <p class="artemis">
+       <select id="adoctor">
+        <option value="NoDoc">None</option>
+        <option value="Primary">Primary</option>
+        <option value="Secondary">Secondary</option>
+       </select>
+      <input id="aresetDrugAndStim" alt="a" type="button" value="Reset clocks">
+     </p>
+     <p class="orion">
+       <select id="odoctor">
+        <option value="NoDoc">None</option>
+        <option value="Primary">Primary</option>
+        <option value="Secondary">Secondary</option>
+        </select>
+      <input id="oresetDrugAndStim" alt="o" type="button" value="Reset clocks">
+      </p>
+      <p class="pegasus">
+       <select id="pdoctor">
+        <option value="NoDoc">None</option>
+        <option value="Primary">Primary</option>
+        <option value="Secondary">Secondary</option>
+       </select>
+       <input id="presetDrugAndStim" alt="p" universe="test" type="button" value="Reset clocks">
+      </p>
+     <br>
+   </p>
    </div>
   </section>
-
   <section>
    <h3>About</h3>
 
@@ -710,10 +764,10 @@
     <p>
      Please report bugs and request enhancements in the
      <a href="http://forum.pardus.at/index.php?showtopic=62190"
-	target="_blank">Pardus Forum</a>
+  target="_blank">Pardus Forum</a>
      or the
      <a href="https://github.com/valitas/Pardus-Sweetener"
-	target="_blank">GitHub repository</a>.
+  target="_blank">GitHub repository</a>.
     </p>
 
     <p>

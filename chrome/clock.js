@@ -270,7 +270,7 @@ var PSClock = (function() {
 		},
 
 		D: {
-			label: 'D',
+			label: 'Drug',
 			title: 'Time to being undrugged',
 
 			// We have to get these values from storage
@@ -337,14 +337,42 @@ var PSClock = (function() {
 
 				return s;
 			}
-		}
+		},
+		Stim: {
+			label: 'Stim',
+			title: 'Time to being unstimmed',
+
+			// We have to get these values from storage
+			update: function( now ) {
+				var ukey = Universe.getServer( document )
+				    .substr( 0, 1 );
+				chrome.storage.sync.get(
+					[ ukey + 'stimTimerClear' ],
+					getStimClearTime.bind( this, now, ukey )
+				);
+
+				function getStimClearTime( now, ukey, data ) {
+					var t = Math.floor(
+						data[ ukey + 'stimTimerClear' ]
+							/ 1000 );
+					if ( t > now ) {
+						this.textNode.data =
+							this.formatTime(
+								t - now );
+					} else {
+						this.textNode.data =
+							this.formatTime( 0 );
+					}
+				}
+			}
+		},
 	};
 
 	// Names of all available timers. Bit redundant, as we already
 	// have these names, as keys in timerMixins. But this defines the
 	// order in which we render them.
 	var TIMERS =
-	    [ 'AP', 'B', 'P', 'S', 'L', 'E', 'N', 'Z', 'R', 'D', 'UTC' ];
+	    [ 'AP', 'B', 'P', 'S', 'L', 'E', 'N', 'Z', 'R', 'D', 'UTC', 'Stim'];
 
 	// Creates an instance of the clock object.
 	function PSClock( doc ) {
