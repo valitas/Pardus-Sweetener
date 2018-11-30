@@ -333,7 +333,6 @@ function onControlInput( event ) {
 //resets the drug and stim timers to 0 for the universe.
 function onResetDrugAndStimClick(inputElement) {
 	var u = inputElement.target.alt;
-	console.log("reseting for universe " + u)
 	var data = new Object();
 	data[ u + 'stimTimerLast' ] = 0;
 	data[ u + 'stimTimerClear' ] = 0;
@@ -342,7 +341,6 @@ function onResetDrugAndStimClick(inputElement) {
 	data[ u + 'extraStim' ] = 0;
 	data[ u + 'extraDrug' ] = 0;
 	chrome.storage.sync.set ( data );
-	console.log("reset")
 }
 
 //sets the doctor legendary for the universe
