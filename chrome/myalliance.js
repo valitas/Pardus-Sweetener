@@ -203,7 +203,8 @@ function processTabstyleTable( table, qls ) {
 			// n is the ordinal of the QL as it appears on the page.
 			// This means there may be, e.g., an "Op QL" and a
 			// "QL #2".  This is what we want.
-			name = match[ 3 ] || ( 'QL #' + (qls.length + 1) );
+			//name = match[ 3 ] || ( 'QL #' + (qls.length + 1) );
+			name = ( 'QL #' + (qls.length + 1) );
 		}
 
 		qltext = match[ 4 ];
