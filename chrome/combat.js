@@ -7,6 +7,10 @@
 
 var config, shipLinksAdded, botsAvailable, shipCondition, damageDisplayed;
 
+//milliseconds
+var oneHour = 3600000;
+var halfHour = 1800000;
+
 function start() {
 	var match, pageShipLinks, autoRoundsKey, autoMissilesKey,
 		cs, universeName, features;
@@ -44,6 +48,7 @@ function start() {
 	cs.addKey( features.autoMissilesKey, 'autoMissiles' );
 	cs.addKey( 'displayDamage' );
 	cs.addKey( 'clockD' );
+	cs.addKey( 'clockStim' );
 
 	if ( features.shiplinks ) {
 		cs.addKey( 'navShipLinks' );
@@ -99,6 +104,10 @@ function applyConfiguration() {
 		addDrugTimer();
 	}
 
+
+	if ( config.clockStim) {
+		addStimTimer();
+	}
 	// Display damage
 	if ( config.displayDamage && !damageDisplayed ) {
 		if ( ! shipCondition ) {
@@ -380,11 +389,43 @@ function displayDamage( shipCondition ) {
 function addDrugTimer() {
 	var tr;
 	tr = doc.evaluate(
-		"//tr[td/input[@name = 'resid' and @value = 51]]",
+		"//tr[td/input[@name = 'resid' and @value = 51 ]]",
 		doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
 		null ).singleNodeValue;
 	if ( tr ) {
-		tr.lastChild.lastChild.addEventListener( 'click', usedDrugs );
+		tr.lastChild.lastChild.addEventListener( 'click', usedDrugs.bind( tr ) );
+	}
+}
+
+
+function addStimTimer() {
+	for (var resid = 29;resid<=32;resid++){
+		var tr;
+		tr = doc.evaluate(
+			"//tr[td/input[@name = 'resid' and @value = " + resid + "]]",
+			doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+			null ).singleNodeValue;
+		if ( tr ) {
+			tr.lastChild.lastChild.addEventListener( 'click', usedStims );
+		}
+	}
+}
+
+//returns the amount of drugs effectively taken, reduces drug intake in ratio, which is the conservative method.
+function compensateDoctor( amount, ukey, doctorType, extraConsumable) {
+	var doctorFactor = 0;
+	if (doctorType == "Primary") {
+		doctorFactor = 2;
+	} else if (doctorType == "Secondary") {
+		doctorFactor = 4;
+	}
+
+	if (doctorFactor > 1) {
+		var leftOverConsumables = (amount + extraConsumable) % doctorFactor; // the leftover amount of consumables to be stored for next time.
+		amount -=  Math.floor( (amount + extraConsumable) * (1/doctorFactor) ) // negate this amount of consumables, the amount that is the "effective" amount taken and the reduction factor
+		return [amount, leftOverConsumables];
+	} else {
+		return [amount, extraConsumable];
 	}
 }
 
@@ -395,34 +436,84 @@ function usedDrugs( tr ) {
 		null ).singleNodeValue;
 
 	var amount = parseInt(input.nextElementSibling.value);
-	var ukey = Universe.getServer ( document ).substr( 0, 1 );
+	if (amount > 1) {
+		var ukey = Universe.getServer ( document ).substr( 0, 1 );
 
-	chrome.storage.sync.get(
-		[ ukey + 'drugTimerLast', ukey + 'drugTimerClear'],
-		usedDrugs2.bind(null, amount, ukey) );
+		chrome.storage.sync.get(
+			[ukey + 'drugTimerLast', ukey + 'drugTimerClear', ukey + 'doctor', ukey + 'extraDrug'],
+			usedDrugs2.bind(null, amount, ukey) );
+	}
 }
 
 function usedDrugs2( amount, ukey, data ) {
 	if (!data[ ukey + 'drugTimerClear'] ) {
-		//console.log('no data');
-		data = new Object;
+		data = new Object();
 		data[ ukey + 'drugTimerClear'] = 0;
+		data[ ukey + 'extraDrug'] = 0;
 	}
-
-	if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
-		data[ ukey + 'drugTimerClear'] += amount * 60 * 60 * 1000;
+	var doctorCompensation = compensateDoctor(amount, ukey, data[ukey + 'doctor'], data[ukey + 'extraDrug']);
+	amount = doctorCompensation[0];
+	data[ ukey + 'extraDrug'] = doctorCompensation[1];
+	var now = Date.now();
+	if (data[ ukey + 'drugTimerClear'] > now ) {
+		data[ ukey + 'drugTimerClear'] += amount * oneHour;
 	}
 	else {
-		data[ ukey + 'drugTimerClear' ] =
-			Date.now() + amount * 60 * 60 * 1000;
+		var lastTick = new Date().setUTCHours(0,59,3,0); 
+		lastTick += oneHour * Math.floor((now - lastTick) / oneHour);
+		data[ ukey + 'drugTimerClear' ] = amount * oneHour + lastTick;
 	}
-
-	if (amount > 0) {
-		data[ ukey + 'drugTimerLast' ] = Date.now();
-	}
+	data[ ukey + 'drugTimerLast' ] = now;
 	chrome.storage.sync.set ( data );
 }
 
+function usedStims( tr ) {
+	for (var resid = 29 ; resid <= 32; resid++) {
+		var input = doc.evaluate(
+			"//tr/td/input[@name = 'resid' and @value = " + resid + "]",
+			doc, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+			null ).singleNodeValue;
+		if (input)  {
+			var amount = parseInt(input.nextElementSibling.value);
+			if (amount > 1) {
+				var ukey = Universe.getServer ( document ).substr( 0, 1 );
+
+				//29 is the resid of green stims.
+				if (resid == 29)
+					amount *= 2;
+
+				chrome.storage.sync.get(
+					[ ukey + 'stimTimerLast', ukey + 'stimTimerClear'],
+					usedStims2.bind(null, amount, ukey) );
+			}
+		}
+	}
+}
+
+
+function usedStims2( amount,ukey, data ) {
+	var now = Date.now();
+	if (!data[ ukey + 'stimTimerClear'] ) {
+		data = new Object();
+		data[ ukey + 'stimTimerClear'] = 0;
+		data[ ukey + 'extraStim'] = 0;
+	}
+
+	var doctorCompensation = compensateDoctor(amount, ukey, data[ukey + 'doctor'], data[ukey + 'extraStim']);
+	amount = doctorCompensation[0];
+	data[ ukey + 'extraStim'] = doctorCompensation[1];
+
+	if (data[ ukey + 'stimTimerClear'] > now) {
+		data[ ukey + 'stimTimerClear'] += amount * halfHour;
+	}
+	else {
+		var lastTick = new Date().setUTCHours(0,29,3,0); 
+		lastTick += halfHour * Math.floor((now - lastTick) / halfHour);
+		data[ ukey + 'stimTimerClear'] = amount * halfHour + lastTick;
+	}
+	data[ ukey + 'stimTimerLast' ] = now;
+	chrome.storage.sync.set ( data );
+}
 start();
 
 })( document, ConfigurationSet, ShipLinks, Universe );
