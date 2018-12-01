@@ -53,6 +53,6 @@
       "default_title": "Change Pardus Sweetener T settings"
    },
    "permissions": [ "notifications", "storage", "*://*.pardus.at/*" ],
-   "version": "9.3.1",
+   "version": "9.3.3",
    "web_accessible_resources": [ "icons/16.png", "icons/48.png", "icons/down.png" ]
 }

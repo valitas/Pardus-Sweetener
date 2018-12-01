@@ -159,6 +159,16 @@ SectorMap.prototype = {
 		o: '#666',	// ore
 		v: '#ee0'	 // viral
 	},
+	
+	VISC: { 
+		'f': 11, // fuel -> space
+		'g': 16, // nebula gas
+		'v': 18,
+		'e': 20,
+		'o': 25, // ore -> asteriods
+		'm': 36  // Exotic Matter
+	},
+
 
 	initCanvas: function() {
 		this.canvas.width = this.width;
@@ -291,14 +301,24 @@ SectorMap.prototype = {
 		//these fields must match those in options.js and map.js
 		var fields = ["Space", "Nebula", "Virus", "Energy", "Asteroid", "Exotic"];
 		var travelCosts = this.travelCosts;
+
+
+		var speed = getSpeed.call( this );
+
 		var tc = {
 			b: -1,
-			e: travelCosts["Energy"], 
+	/*		e: travelCosts["Energy"], 
 			f: travelCosts["Space"], 
 			g: travelCosts["Nebula"], 
 			m: travelCosts["Exotic"], 
 			o: travelCosts["Asteroid"], 
-			v: travelCosts["Virus"]
+			v: travelCosts["Virus"]*/
+			'f': this.VISC[ 'f' ] - speed, // fuel -> space
+			'g': this.VISC[ 'g' ] - speed, // nebula gas
+			'v': this.VISC[ 'v' ] - speed,
+			'e': this.VISC[ 'e' ] - speed,
+			'o': this.VISC[ 'o' ] - speed, // ore -> asteriods
+			'm': this.VISC[ 'm' ] - speed  // Exotic Matter
 		};
 		
 		//here, we do a BFS across the entire sector with respect to the cost, stopping when either the state is the same for 100 AP's (unreachable) or we've reached the location
@@ -401,6 +421,22 @@ SectorMap.prototype = {
 		this.drawSavedPath(this.get2DContext());
 		this.markShipTile(this.get2DContext());
 		this.distanceDiv.innerHTML = "Distance to " + this.sector.sector + " [" + loc.x + ", " + loc.y + "]: " + apsSpent + " APs"; //innerHTML to accomodate infinity symbol
+		
+		// I put the function at the end to keep clutter down. Currently only used in drawpath.
+		function getSpeed() {
+			// function calculates speed (as in the Pardus Manual), allowing for boost, stims, etc. XXX still needs to be tested with legendary.
+			
+			let currentTileType = this.sector.tiles[ this.shipX + this.sector.width * this.shipY ];
+			let moveField = document.getElementById('tdStatusMove').childNodes;
+			let speed = 0;
+			if ( moveField.length > 1 ) { //something modifies our speed 
+				speed -= parseInt( moveField[1].childNodes[0].textContent );
+			}
+			speed -= parseInt( moveField[0].textContent );
+			speed += this.VISC[ currentTileType ];
+
+			return speed;
+		}
 	},
 
 	// Compute the tile size and whether we'll draw grid lines.
