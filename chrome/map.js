@@ -58,6 +58,37 @@ SectorMap.prototype = {
 		if ( this.canvas ) {
 			this.initCanvas();
 		}
+		
+		var universe = Universe.getServer( document );
+		chrome.storage.local.get( [ universe + 'advSkills' ], setVisc.bind( this, universe ) );
+		function setVisc( universe, data ) {
+			var VISC = { 
+				'f': 11, // fuel -> space
+				'g': 16, // nebula gas
+				'v': 18,
+				'e': 20,
+				'o': 25, // ore -> asteriods
+				'm': 36  // Exotic Matter
+			};
+			
+			// Parsing Navigation adv. skill.
+			if ( data[ universe + 'advSkills' ] ) { // checking if it's set first 
+				if ( data[ universe + 'advSkills' ][41] > 0 ) {
+					VISC[ 'o' ] -= 1;
+				}
+				if ( data[ universe + 'advSkills' ][41] > 1 ) {
+					VISC[ 'g' ] -= 1;
+				}
+				if ( data[ universe + 'advSkills' ][41] > 2 ) {
+					VISC[ 'e' ] -= 1;
+				}
+				this.Navigation = data[ universe + 'advSkills' ][41]; // saving the number for our speed calculation later
+			} else {
+				this.Navigation = 0;
+			}
+			this.VISC = VISC;
+		}
+		
 	},
 
 	setCanvas: function( canvas, div ) {
@@ -89,7 +120,9 @@ SectorMap.prototype = {
 	clear: function( ctx ) {
 		ctx.drawImage( this.bgCanvas, 0, 0 );
 		this.distanceDiv.innerText = "";
-		if (this.mouselock) this.drawSavedPath(ctx);
+		if (this.mouselock) {
+			this.drawSavedPath(ctx);
+		}
 	},
 
 	// This draws a marker on a tile.
@@ -160,16 +193,6 @@ SectorMap.prototype = {
 		v: '#ee0'	 // viral
 	},
 	
-	VISC: { 
-		'f': 11, // fuel -> space
-		'g': 16, // nebula gas
-		'v': 18,
-		'e': 20,
-		'o': 25, // ore -> asteriods
-		'm': 36  // Exotic Matter
-	},
-
-
 	initCanvas: function() {
 		this.canvas.width = this.width;
 		this.canvas.height = this.height;
@@ -251,9 +274,15 @@ SectorMap.prototype = {
 	attachMouseEvents: function (canvas) {
 		canvas.addEventListener('click', function (e) {
 			//lock if unlocked, unlock and clear if locked
+			var ukey = Universe.getServer ( document ).substr( 0, 1 );
 			if (this.mouselock) {
 				this.clear(this.get2DContext());
 				this.markShipTile(this.get2DContext());
+				chrome.storage.local.remove( [ ukey + 'savedPath' ] );
+			} else {
+				let save = {};
+				save[ ukey + 'savedPath' ] = this.savedPath;
+				chrome.storage.local.set( save );
 			}
 			this.mouselock = !this.mouselock;
 		}.bind(this));
@@ -271,6 +300,7 @@ SectorMap.prototype = {
 				
 				if (loc.x != this.mouseX || loc.y != this.mouseY) {
 					this.drawPath(loc);
+	
 					//if there's a waypoint, why not draw it
 					for (var n in this.sector.beacons) {
 						var e = this.sector.beacons[n];
@@ -302,17 +332,10 @@ SectorMap.prototype = {
 		var fields = ["Space", "Nebula", "Virus", "Energy", "Asteroid", "Exotic"];
 		var travelCosts = this.travelCosts;
 
-
 		var speed = getSpeed.call( this );
 
 		var tc = {
 			b: -1,
-	/*		e: travelCosts["Energy"], 
-			f: travelCosts["Space"], 
-			g: travelCosts["Nebula"], 
-			m: travelCosts["Exotic"], 
-			o: travelCosts["Asteroid"], 
-			v: travelCosts["Virus"]*/
 			'f': this.VISC[ 'f' ] - speed, // fuel -> space
 			'g': this.VISC[ 'g' ] - speed, // nebula gas
 			'v': this.VISC[ 'v' ] - speed,
@@ -434,7 +457,12 @@ SectorMap.prototype = {
 			}
 			speed -= parseInt( moveField[0].textContent );
 			speed += this.VISC[ currentTileType ];
-
+			
+			if ( ( this.Navigation == 1 && currentTileType == 'o' )
+				|| ( this.Navigation == 2 && currentTileType == 'g' )
+			    || ( this.Navigation == 3 && currentTileType == 'e' ) ) {
+					speed += 1;
+				}
 			return speed;
 		}
 	},

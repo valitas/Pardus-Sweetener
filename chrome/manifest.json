@@ -5,7 +5,7 @@
    },
    "content_scripts": [ {
       "all_frames": true,
-      "js": [ "cfgset.js", "shiplinks.js", "map.js", "universe.js", "nav.js", "sector.js" ],
+      "js": [ "cfgset.js", "shiplinks.js", "map.js", "universe.js", "sector.js", "nav.js" ],
       "matches": [ "*://*.pardus.at/main.php*" ]
    }, {
       "all_frames": true,
@@ -31,7 +31,16 @@
       "all_frames": true,
       "js": [ "cfgset.js", "universe.js", "onlinelist.js" ],
       "matches": [ "*://*.pardus.at/statistics.php?display=onlinelist" ]
-   } ],
+   }, {
+      "all_frames": true,
+      "js" : [ "universe.js", "advskills.js" ],
+      "matches" : [ "*://*.pardus.at/overview_advanced_skills.php"]
+   }, {
+      "all_frames": true,
+	  "js" : [ "cfgset.js", "universe.js", "sector.js", "bulletinboard.js" ],
+	  "matches" : [ "*://*.pardus.at/bulletin_board.php*" ]
+   }   
+   ],
    "content_security_policy": "script-src 'self'; object-src 'self'",
    "description": "User interface enhancements for the online game Pardus. Combines likuilin's, BartKieviet's, and Tsunder's forks. T for Tsunder",
    "icons": {
