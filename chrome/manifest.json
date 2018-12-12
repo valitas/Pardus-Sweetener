@@ -42,7 +42,7 @@
    }   
    ],
    "content_security_policy": "script-src 'self'; object-src 'self'",
-   "description": "User interface enhancements for the online game Pardus. Combines likuilin's, BartKieviet's, and Tsunder's forks. T for Tsunder",
+   "description": "User interface enhancements for the online game Pardus. Combines multiple forks.",
    "icons": {
       "128": "icons/128.png",
       "16": "icons/16.png",
@@ -59,9 +59,9 @@
    "page_action": {
       "default_icon": "icons/19.png",
       "default_popup": "popup.html",
-      "default_title": "Change Pardus Sweetener T settings"
+      "default_title": "Change Pardus Sweetener settings"
    },
    "permissions": [ "notifications", "storage", "*://*.pardus.at/*" ],
-   "version": "9.3.3",
+   "version": "9.3.4",
    "web_accessible_resources": [ "icons/16.png", "icons/48.png", "icons/down.png" ]
 }
