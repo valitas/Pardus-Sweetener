@@ -436,7 +436,7 @@ function usedDrugs( tr ) {
 		null ).singleNodeValue;
 
 	var amount = parseInt(input.nextElementSibling.value);
-	if (amount > 1) {
+	if (amount > 0) {
 		var ukey = Universe.getServer ( document ).substr( 0, 1 );
 
 		chrome.storage.sync.get(
@@ -475,7 +475,7 @@ function usedStims( tr ) {
 			null ).singleNodeValue;
 		if (input)  {
 			var amount = parseInt(input.nextElementSibling.value);
-			if (amount > 1) {
+			if (amount > 0) {
 				var ukey = Universe.getServer ( document ).substr( 0, 1 );
 
 				//29 is the resid of green stims.
