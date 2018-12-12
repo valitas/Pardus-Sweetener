@@ -115,6 +115,7 @@ function start() {
 	cs.addKey( 'navFlyCloseLink' );
 	cs.addKey( 'pathfindingEnabled' );
 	cs.addKey( 'clockD' );
+	cs.addKey( 'displayNavigationEnabled' );
 	
 	//for minimap navigation
 	var uni = ({a:"Artemis", o:"Orion", p:"Pegasus"})[Universe.getServer(doc).substr(0, 1)];
@@ -148,8 +149,10 @@ function applyConfiguration() {
 		updatePathfinding();
 
 		let ukey = Universe.getServer( doc ).substr( 0, 1 );
-		let name = ukey + 'savedPath';
-		chrome.storage.local.get( name , updateRoutePlanner );
+		if ( config.displayNavigationEnabled ) {
+			let name = ukey + 'savedPath';
+			chrome.storage.local.get( name , updateRoutePlanner );
+		}
 		chrome.storage.local.get( [ ukey + 'mlist' ], showMissions );
 	}
 	else {
@@ -212,8 +215,10 @@ function onGameMessage( event ) {
 	addStimTimer();
 
 	let ukey = Universe.getServer ( doc ).substr( 0, 1 );
-	let name = ukey + 'savedPath';
-	chrome.storage.local.get( name , updateRoutePlanner );
+	if ( config.displayNavigationEnabled ) {
+		let name = ukey + 'savedPath';
+		chrome.storage.local.get( name , updateRoutePlanner );
+	}
 	chrome.storage.local.get( [ ukey + 'mlist' ], showMissions );
 
 	configured = true;
@@ -557,7 +562,7 @@ function updatePathfinding() {
 // Given the TD corresponding to a tile, update its style and that of the image
 // inside it for path highlighting.
 
-function highlightTileInPath( td ) {
+function highlightTileInPath( td, type ) {
 	// Pardus does things messy, as usual.  If a tile is empty, then pardus
 	// inserts the background image as a IMG child of the TD.  If the tile
 	// is not empty though (has a building or NPC), then the background
@@ -568,32 +573,45 @@ function highlightTileInPath( td ) {
 	if( bimg ) {
 		// don't do this twice
 		if( !HIGHLIGHTED_RX.test(bimg) )
-			td.style.backgroundImage =
-				'linear-gradient(to bottom, rgba(255,105,180,0.15), rgba(255,105,180,0.15)), ' +
+			if (!type) {
+				td.style.backgroundImage =
+				'linear-gradient(to bottom, rgba(255,105,180,0.15), rgba(255,105,180,0.15)),' +
 				bimg;
+			} else {
+				td.style.backgroundImage =
+				'radial-gradient(rgba(255,105,180,0.15),rgba(255,125,180,0.15)), ' +
+				bimg;
+			}
 	}
 	else {
-		td.style.backgroundColor = 'rgba(255,105,180,1)';
-		var img = td.firstElementChild;
-		img.style.opacity = 0.85;
+			if ( !type ) {
+				if ( !td.style.backgroundColor ) 
+					td.style.backgroundColor = 'rgba(255,105,180,1)';
+			} else {
+				td.style.backgroundColor = 'rgba(255,125,180,1)';
+			}
+			var img = td.firstElementChild;
+			img.style.opacity = 0.85;
 	}
-	highlightedTiles.push( td );
+	// if (!type) 
+			highlightedTiles.push( td );
 }
 
-// Revert the effect of the above
+// Revert the effect of the above only in case of ship path highlighting
 function clearHighlightTileInPath( td ) {
 	var bimg = td.style.getPropertyValue( 'background-image' );
 	if( bimg ) {
 		var m = UNHIGHLIGHT_RX.exec( bimg );
 		if( m ) {
-			bimg = bimg.substring( 72 );
-			td.style.backgroundImage = m[1];
+			td.style.backgroundImage = m[0].replace( 'linear-gradient(rgba(255, 105, 180, 0.15), rgba(255, 105, 180, 0.15)),', '');
 		}
 	}
 	else {
-		td.style.backgroundColor = null;
-		var img = td.firstElementChild;
-		img.style.opacity = null;
+		if ( td.style.backgroundColor === 'rgb(255, 105, 180)' ) {
+			td.style.backgroundColor = null;
+			var img = td.firstElementChild;
+			img.style.opacity = null;
+		}
 	}
 }
 
@@ -969,6 +987,8 @@ function updateRoutePlanner( data ) {
 	a.sort( function compare(a ,b) {
 		if ( a.getAttribute( 'onclick' ) === null )
 			return b
+		if ( b.getAttribute( 'onclick' ) === null )
+			return a
 		return parseInt( a.getAttribute( 'onclick' ).split(/[()]/g)[1] ) - parseInt( b.getAttribute( 'onclick' ).split(/[()]/g)[1] );
 		});
 
@@ -978,7 +998,7 @@ function updateRoutePlanner( data ) {
 	idList.sort();
 	for ( var j = 0; j < a.length; j++ ) {
 		if ( a[ j ].getAttribute( 'onclick' ) !== null && idList.includes( parseInt( a[ j ].getAttribute( 'onclick' ).split(/[()]/g)[1] ) ) ) {
-			highlightTileInPath( a[ j ].parentNode );
+			highlightTileInPath( a[ j ].parentNode, 'route' );
 		}
 	}
 }

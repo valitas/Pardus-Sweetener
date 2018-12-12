@@ -67,7 +67,7 @@ function onDOMContentLoaded() {
 		'personalQLPegasusEnabled', 'overrideAmbushRounds',
 		'fitAmbushRounds', 'miniMap', 'miniMapNavigation', 'sendmsgShowAlliance',
 		'artemisOnlineListEnabled', 'orionOnlineListEnabled',
-		'pegasusOnlineListEnabled', 'pathfindingEnabled'
+		'pegasusOnlineListEnabled', 'pathfindingEnabled','displayNavigationEnabled'
 	);
 
 	// 2. Free-form strings
