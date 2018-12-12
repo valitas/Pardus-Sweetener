@@ -35,10 +35,6 @@
       "all_frames": true,
       "js" : [ "universe.js", "advskills.js" ],
       "matches" : [ "*://*.pardus.at/overview_advanced_skills.php"]
-   }, {
-      "all_frames": true,
-	  "js" : [ "cfgset.js", "universe.js", "sector.js", "bulletinboard.js" ],
-	  "matches" : [ "*://*.pardus.at/bulletin_board.php*" ]
    }   
    ],
    "content_security_policy": "script-src 'self'; object-src 'self'",

@@ -153,7 +153,6 @@ function applyConfiguration() {
 			let name = ukey + 'savedPath';
 			chrome.storage.local.get( name , updateRoutePlanner );
 		}
-		chrome.storage.local.get( [ ukey + 'mlist' ], showMissions );
 	}
 	else {
 		// Instead, we only want to do this the first time we run,
@@ -219,7 +218,6 @@ function onGameMessage( event ) {
 		let name = ukey + 'savedPath';
 		chrome.storage.local.get( name , updateRoutePlanner );
 	}
-	chrome.storage.local.get( [ ukey + 'mlist' ], showMissions );
 
 	configured = true;
 }
@@ -999,88 +997,6 @@ function updateRoutePlanner( data ) {
 	for ( var j = 0; j < a.length; j++ ) {
 		if ( a[ j ].getAttribute( 'onclick' ) !== null && idList.includes( parseInt( a[ j ].getAttribute( 'onclick' ).split(/[()]/g)[1] ) ) ) {
 			highlightTileInPath( a[ j ].parentNode, 'route' );
-		}
-	}
-}
-
-function showMissions( data ) {
-	let ukey = Universe.getServer ( doc ).substr( 0, 1 );
-	
-	if ( !data[ ukey + 'mlist' ] ) {
-		// we got nothing.
-		return;
-	}
-	var list = data[ ukey + 'mlist' ];
-	var getList = [];
-	for( var i = 0; i < list.length; i++ ) {
-		getList.push( ukey + 'm' + list[ i ] )
-	}
-	
-	chrome.storage.local.get( getList, displayMissions.bind( null, list ) );
-	
-	function displayMissions( list, data ) {
-	
-		// DOM stuff below.
-		
-		var t = document.createElement( 'table' );
-		t.width = 210;
-		t.setAttribute( 'cellpadding', 0 );
-		t.setAttribute( 'cellspacing', 0 );
-		t.border = 0;
-		t.id = 'missionDisplayTable';
-		
-		var tr = t.appendChild( document.getElementById( 'cargo' ).firstChild.lastChild.cloneNode( true ) );
-		tr.firstChild.firstChild.setAttribute( 'style', 'transform: rotateX(0.5turn);' );
-		
-		tr = t.appendChild( document.createElement( 'tr' ) );
-		var td = tr.appendChild( document.createElement( 'td' ) );
-		td.style = "background-image:url('//static.pardus.at/img/stdhq/panel.png');background-repeat:repeat-y;text-align:left;";
-		var div = td.appendChild( document.createElement( 'div' ) );
-		div.style = "margin:0 18px;";
-		t.appendChild( document.getElementById( 'cargo' ).firstChild.lastChild.cloneNode( true ) );
-		
-		var tInside = div.appendChild( document.createElement( 'table' ) );
-		tInside.width = '100%';
-		for( var i = 0; i < list.length; i++ ) {
-			var mission = data[ ukey + 'm' + list[ i ] ];
-			console.log(mission);
-			tr = tInside.appendChild ( document.createElement( 'tr' ) );
-						
-			td = tr.appendChild( document.createElement( 'td' ) );
-			var img = td.appendChild( document.createElement( 'img' ) );
-			img.src = mission.image;
-			img.height = 16;
-			td = tr.appendChild( document.createElement( 'td' ) );
-			if ( mission.locId > 0 ) {
-				td.textContent = mission.sector + " [" + mission.coords.x + ',' + mission.coords.y + ']' ;
-			} else {
-				td.textContent = mission.amount;
-			}
-			td = tr.appendChild( document.createElement( 'td' ) );
-			td.textContent = mission.reward;
-			td = tr.appendChild( document.createElement( 'td' ) );
-			td.textContent = mission.total;
-			/*td = tr.appendChild( document.createElement( 'td' ) );
-			td.textContent = mission.acceptTime + mission.;*/
-			
-		}
-		tr = tInside.appendChild( document.createElement( 'tr' ) );
-		td = tr.appendChild(  document.createElement( 'td' ) );
-		td.setAttribute( 'colspan', 4 );
-		td.align = 'center';
-		var btn = td.appendChild( document.createElement( 'button' ) );
-		btn.textContent = 'clear';
-		btn.addEventListener( 'click', clearMissionStorage.bind( null, list, data ) );
-		
-		if ( !document.getElementById( 'missionDisplayTable' ) ) {
-			document.getElementById( 'cargo' ).parentNode.insertBefore( t, document.getElementById( 'cargo' ) );
-		}
-		function clearMissionStorage( list, data ) {
-			for( var i = 0; i < list.length; i++ ) {
-				chrome.storage.local.remove( ukey + 'm' + list[ i ] );
-			}
-			chrome.storage.local.remove( ukey + 'mlist' );
-			document.getElementById( 'missionDisplayTable' ).remove();
 		}
 	}
 }
