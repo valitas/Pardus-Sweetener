@@ -150,8 +150,7 @@ function applyConfiguration() {
 		let ukey = Universe.getServer( doc ).substr( 0, 1 );
 		let name = ukey + 'savedPath';
 		chrome.storage.local.get( name , updateRoutePlanner );
-		let missionSet = [ ukey + 'm' + mission.locId, ukey + 'mlist' ];
-		chrome.storage.local.get( missionSet, showMissions );
+		chrome.storage.local.get( [ ukey + 'mlist' ], showMissions );
 	}
 	else {
 		// Instead, we only want to do this the first time we run,
@@ -215,8 +214,7 @@ function onGameMessage( event ) {
 	let ukey = Universe.getServer ( doc ).substr( 0, 1 );
 	let name = ukey + 'savedPath';
 	chrome.storage.local.get( name , updateRoutePlanner );
-	let missionSet = [ ukey + 'mlist' ];
-	chrome.storage.local.get( missionSet, showMissions );
+	chrome.storage.local.get( [ ukey + 'mlist' ], showMissions );
 
 	configured = true;
 }
