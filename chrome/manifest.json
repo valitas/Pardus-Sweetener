@@ -5,7 +5,7 @@
    },
    "content_scripts": [ {
       "all_frames": true,
-      "js": [ "cfgset.js", "shiplinks.js", "map.js", "universe.js", "sector.js", "nav.js" ],
+      "js": [ "cfgset.js", "shiplinks.js", "map.js", "universe.js", "sector.js", "missions.js", "nav.js" ],
       "matches": [ "*://*.pardus.at/main.php*" ]
    }, {
       "all_frames": true,

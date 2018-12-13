@@ -95,6 +95,11 @@ var ukey = Universe.getServer ( document ).substr( 0, 1 );
 var Mission = {}
 
 Mission.parseMission = function( mission, premium, bbpage ) {
+	// This function parses the mission data. This looks different when coming 
+	// from a premium table, or from a non premium, hence the /premium/ boolean. It also looks
+	// different, but less so, from the jobs page instead of the bulletin board page, hence 
+	// the /bbpage/ boolean.
+	
 	var output = new Object();
 	if ( premium ) {
 		var data = mission.getElementsByTagName( 'td' );
@@ -114,8 +119,8 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 			output[ 'locId' ] = CATALOGUE[ output.image.split(/\//g)[ 6 ] ];
 			if ( bbpage ) {
 				output[ 'amount' ] = parseInt( data[2].textContent );
-				output[ 'amountDone' ] = output.amount;
-			} else {			
+				output[ 'amountDone' ] = 0;
+			} else {
 				output[ 'amountDone' ] = parseInt( data[ 2 ].textContent.split( /\//g )[ 0 ] );
 				output[ 'amount' ] = parseInt( data[ 2 ].textContent.split( /\//g )[ 1 ] );
 			}	
@@ -167,12 +172,43 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 	return output
 }
 
-Mission.clearMissionStorage = function( list ) {
+Mission.clearMissionStorage = function( callback, list ) {
 	for( var i = 0; i < list.length; i++ ) {
 		chrome.storage.local.remove( ukey + 'm' + list[ i ] );
 	}
-	chrome.storage.local.remove( ukey + 'mlist' );
+	chrome.storage.local.remove( ukey + 'mlist' , callback );
 }
+
+Mission.updateMission = function ( mission, data ) {
+	// We get the mission data from the earlier derived variables.
+
+	if ( !data[ ukey + 'mlist' ] ) {
+		// first time, let's be gentle.
+		data[ ukey + 'mlist' ] = [];
+	}
+	
+	if (!data[ ukey + 'm' + mission.locId ]) {
+		// New mission to this location!
+		mission.total = 1;
+		data[ ukey + 'm' + mission.locId ] = mission;
+		data[ ukey + 'mlist' ].push( mission.locId );
+	} else if ( mission.locId !== -1 ) {
+		// yay stacking targetted missions!
+		data[ ukey + 'm' + mission.locId ].reward += mission.reward;
+		data[ ukey + 'm' + mission.locId ].deposit += mission.deposit;
+		data[ ukey + 'm' + mission.locId ].total += 1;
+	} else {
+		if ( data[ ukey + 'm' + mission.locId ].amount < mission.amount ) {
+			data[ ukey + 'm' + mission.locId ].amount = mission.amount;
+		}
+		data[ ukey + 'm' + mission.locId ].amountDone = 0;
+		data[ ukey + 'm' + mission.locId ].reward += mission.reward;
+		data[ ukey + 'm' + mission.locId ].deposit += mission.deposit;
+	}
+	return data
+}
+	
+
 
 return Mission;
 

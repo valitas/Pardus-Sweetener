@@ -1005,7 +1005,7 @@ function updateRoutePlanner( data ) {
 
 function showMissions( data ) {
 	let ukey = Universe.getServer ( doc ).substr( 0, 1 );
-	
+
 	if ( !data[ ukey + 'mlist' ] ) {
 		// we got nothing.
 		return;
@@ -1019,7 +1019,6 @@ function showMissions( data ) {
 	chrome.storage.local.get( getList, displayMissions.bind( null, list ) );
 	
 	function displayMissions( list, data ) {
-	
 		// DOM stuff below.
 		
 		var t = document.createElement( 'table' );
@@ -1043,7 +1042,6 @@ function showMissions( data ) {
 		tInside.width = '100%';
 		for( var i = 0; i < list.length; i++ ) {
 			var mission = data[ ukey + 'm' + list[ i ] ];
-			console.log(mission);
 			tr = tInside.appendChild ( document.createElement( 'tr' ) );
 						
 			td = tr.appendChild( document.createElement( 'td' ) );
@@ -1054,7 +1052,7 @@ function showMissions( data ) {
 			if ( mission.locId > 0 ) {
 				td.textContent = mission.sector + " [" + mission.coords.x + ',' + mission.coords.y + ']' ;
 			} else {
-				td.textContent = mission.amount;
+				td.textContent = mission.amountDone + '/' + mission.amount;
 			}
 			td = tr.appendChild( document.createElement( 'td' ) );
 			td.textContent = mission.reward;
@@ -1070,7 +1068,11 @@ function showMissions( data ) {
 		td.align = 'center';
 		var btn = td.appendChild( document.createElement( 'button' ) );
 		btn.textContent = 'clear';
-		btn.addEventListener( 'click', clearMissionStorage.bind( null, list, data ) );
+		btn.addEventListener( 'click', Mission.clearMissionStorage.bind( 
+			null, function() { 
+				document.getElementById( 'missionDisplayTable' ).remove(); 
+				} ,
+				list ) );
 		
 		if ( !document.getElementById( 'missionDisplayTable' ) ) {
 			document.getElementById( 'cargo' ).parentNode.insertBefore( t, document.getElementById( 'cargo' ) );
@@ -1080,7 +1082,6 @@ function showMissions( data ) {
 				chrome.storage.local.remove( ukey + 'm' + list[ i ] );
 			}
 			chrome.storage.local.remove( ukey + 'mlist' );
-			document.getElementById( 'missionDisplayTable' ).remove();
 		}
 	}
 }
