@@ -180,7 +180,6 @@ Mission.clearMissionStorage = function( callback, list ) {
 }
 
 Mission.updateMission = function ( mission, data ) {
-	// We get the mission data from the earlier derived variables.
 
 	if ( !data[ ukey + 'mlist' ] ) {
 		// first time, let's be gentle.
@@ -208,7 +207,18 @@ Mission.updateMission = function ( mission, data ) {
 	return data
 }
 	
-
+Mission.removeMission = function( data ) {
+	var loc = data[ Universe.getName( document )[0] + 'loc' ];
+	console.log( data );
+	if ( !data[ ukey + 'mlist' ] )
+		return;
+	if ( data[ ukey + 'mlist' ].indexOf( loc ) === -1 )
+		return;
+	
+	data[ ukey + 'mlist' ].splice( data[ ukey + 'mlist' ].indexOf( loc ), 1 );
+	chrome.storage.local.remove( ukey + 'm' + loc );
+	chrome.storage.local.set( data )
+}
 
 return Mission;
 

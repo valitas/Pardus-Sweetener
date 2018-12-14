@@ -1010,6 +1010,11 @@ function showMissions( data ) {
 		// we got nothing.
 		return;
 	}
+	if ( !( data[ ukey + 'mlist' ].length > 0 ) ) {
+		// we got no missions.
+		return;
+	}
+	
 	var list = data[ ukey + 'mlist' ];
 	var getList = [];
 	for( var i = 0; i < list.length; i++ ) {
