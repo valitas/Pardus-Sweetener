@@ -116,6 +116,11 @@ function applyConfiguration() {
 		displayDamage( shipCondition );
 		damageDisplayed = true;
 	}
+	
+	// Mission tracking
+	if ( true ) {
+		chrome.storage.local.get( [ Universe.getName( document )[ 0 ] + 'loc', Universe.getServer ( document )[ 0 ] + 'mlist' ], missionUpdate );
+	}
 }
 
 function matchShipId( url ) {
@@ -513,6 +518,38 @@ function usedStims2( amount,ukey, data ) {
 	}
 	data[ ukey + 'stimTimerLast' ] = now;
 	chrome.storage.sync.set ( data );
+}
+
+function missionUpdate( data ) {
+	var loc = data [ Universe.getName( document )[ 0 ] + 'loc' ];
+	var ukey = Universe.getServer ( document )[ 0 ];
+	var mlist = data [ ukey + 'mlist' ];
+	var b = document.evaluate( 
+			"//b[contains(@style,'color:#FF0000')]",
+			document, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+			null ).singleNodeValue; //the DEAD message.
+	if ( !mlist || !loc || !b )  //if b, the critter is dead and we move on.
+	{}//return;
+	
+	var image = b.parentNode.getElementsByTagName( 'img' )[ 0 ].src;
+	var locId = Mission.getLocIdFromImage( image );
+	if ( !( locId < 0 ) ) {
+		// critter is unknown, could be you are dead, or a pilot, let's leave you 
+		// noob/murderer* 
+		// (* cross out what is not applicable)
+		return;
+	}
+	
+	if ( mlist.indexOf ( loc ) !== -1 ) {
+		// we have a mission to this location, must be a targetted npc kill,
+		// because we are in the combat screen. If /b/, the mission is a success. 
+		// We wouldn't have gotten here if otherwise.
+		Mission.removeMission( data );
+	} else if ( mlist.indexOf( locId ) !== -1 ) {
+		// Ok, it's a targetted mission. Let's add one to the counter.
+		chrome.storage.local.get( [ ukey + 'm' + locId ], Mission.gotOne.bind( null, locId ) );
+	}
+	// yeah, no located mission and no untargeted, so we're done. Adding functions we use above.
 }
 start();
 

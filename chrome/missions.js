@@ -180,6 +180,7 @@ Mission.clearMissionStorage = function( callback, list ) {
 }
 
 Mission.updateMission = function ( mission, data ) {
+	// if new mission is taken this function is called.
 
 	if ( !data[ ukey + 'mlist' ] ) {
 		// first time, let's be gentle.
@@ -208,6 +209,7 @@ Mission.updateMission = function ( mission, data ) {
 }
 	
 Mission.removeMission = function( data ) {
+	// removes the id from the list, removes the mission from storage and saves the updated mission list. Accpets a object data, which contains the mlist.
 	var loc = data[ Universe.getName( document )[0] + 'loc' ];
 	console.log( data );
 	if ( !data[ ukey + 'mlist' ] )
@@ -217,7 +219,27 @@ Mission.removeMission = function( data ) {
 	
 	data[ ukey + 'mlist' ].splice( data[ ukey + 'mlist' ].indexOf( loc ), 1 );
 	chrome.storage.local.remove( ukey + 'm' + loc );
-	chrome.storage.local.set( data )
+	// remove the non-mlis data from the data.
+	let save = {};
+	save[ ukey + 'mlist'] = data[ ukey + 'mlist'];
+	chrome.storage.local.set( save );
+}
+
+// function retuns the locid of untargetted missions by inserting the FULL image url.
+Mission.getLocIdFromImage = function ( img ) {
+	return CATALOGUE[ img.split(/\//g)[ 6 ] ] || 0;
+}
+
+Mission.getOne = function ( locId, missiondata ) {
+	var mission = missiondata[ ukey + 'm' + locId ];
+	mission.amountDone += 1;
+	if ( mission.amountDone >= mission.amount ) {
+		//Mission.removeMission(
+	} else {
+		let save = {}
+		save[ ukey + 'm' + locId ] = mission;
+		chrome.storage.local.set( save );
+	}
 }
 
 return Mission;

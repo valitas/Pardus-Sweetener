@@ -9,7 +9,7 @@
       "matches": [ "*://*.pardus.at/main.php*" ]
    }, {
       "all_frames": true,
-      "js": [ "cfgset.js", "universe.js", "shiplinks.js", "combat.js" ],
+      "js": [ "cfgset.js", "universe.js", "shiplinks.js", "missions.js", "combat.js" ],
       "matches": [ "*://*.pardus.at/ship2ship_combat.php*", "*://*.pardus.at/ship2opponent_combat.php*", "*://*.pardus.at/building.php*" ]
    }, {
       "all_frames": true,
