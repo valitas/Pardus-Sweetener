@@ -545,11 +545,12 @@ function missionUpdate( data ) {
 		// because we are in the combat screen. If /b/, the mission is a success. 
 		// We wouldn't have gotten here if otherwise.
 		Mission.removeMission( data );
-	} else if ( mlist.indexOf( locId ) !== -1 ) {
-		// Ok, it's a targetted mission. Let's add one to the counter.
+	} 
+	if ( mlist.indexOf( locId ) !== -1 ) {
+		// Ok, it's (also) an untargetted mission. Let's add one to the counter.
 		chrome.storage.local.get( [ ukey + 'm' + locId ], Mission.gotOne.bind( null, locId ) );
 	}
-	// yeah, no located mission and no untargeted, so we're done. Adding functions we use above.
+	// yeah, no located mission and no untargeted, so we're done. 
 }
 start();
 
