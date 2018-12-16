@@ -31,7 +31,6 @@
 		saveData = Mission.updateMission( mission, saveData );
 
 		}
-//	console.log( saveData );
 	chrome.storage.local.set( saveData );
 	}
 }());

@@ -130,7 +130,8 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 		output[ 'id' ] = data[9].firstChild.id;
 	} else if ( bbpage ) {
 		//Non-premmy not working fully yet.
-		/*console.log(mission);
+		/*
+		.log(mission);
 		var j, th = mission.getElementsByTagName( 'th' )[0];
 		var td = mission.getElementsByTagName( 'td' );
 		output[ 'faction' ] = th.firstChild.src;
@@ -208,10 +209,12 @@ Mission.updateMission = function ( mission, data ) {
 	return data
 }
 	
-Mission.removeMission = function( data ) {
-	// removes the id from the list, removes the mission from storage and saves the updated mission list. Accpets a object data, which contains the mlist.
-	var loc = data[ Universe.getName( document )[0] + 'loc' ];
-	console.log( data );
+Mission.removeMission = function( data, loc ) {
+	// removes the id from the list, removes the mission from storage and saves the updated mission list. Accepts a object data, which contains the mlist.
+	if ( !loc ) { //so we can call it in one chrome.get call from the planetsb.js, which just gives a single parameter, and loc is included in the data. 
+		loc = data[ Universe.getName( document )[0] + 'loc' ];
+	}
+
 	if ( !data[ ukey + 'mlist' ] )
 		return;
 	if ( data[ ukey + 'mlist' ].indexOf( loc ) === -1 )
@@ -219,7 +222,8 @@ Mission.removeMission = function( data ) {
 	
 	data[ ukey + 'mlist' ].splice( data[ ukey + 'mlist' ].indexOf( loc ), 1 );
 	chrome.storage.local.remove( ukey + 'm' + loc );
-	// remove the non-mlis data from the data.
+	
+	// remove the non-mlist data from the data, if any. This way we don't store clutter.
 	let save = {};
 	save[ ukey + 'mlist'] = data[ ukey + 'mlist'];
 	chrome.storage.local.set( save );
@@ -230,11 +234,13 @@ Mission.getLocIdFromImage = function ( img ) {
 	return CATALOGUE[ img.split(/\//g)[ 6 ] ] || 0;
 }
 
-Mission.gotOne = function ( locId, missiondata ) {
+Mission.gotOne = function ( locId, list, missiondata ) {
 	var mission = missiondata[ ukey + 'm' + locId ];
 	mission.amountDone += 1;
 	if ( mission.amountDone >= mission.amount ) {
-		//Mission.removeMission(
+		let remove = {}
+		removelist[ ukey + 'mlist' ] = list;
+		Mission.removeMission( removelist, locId )
 	} else {
 		let save = {}
 		save[ ukey + 'm' + locId ] = mission;
