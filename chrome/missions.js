@@ -1,4 +1,20 @@
 var Mission = (function() {
+// This is the main driver behind the mission storage. The idea is as follows. Missions are stored 
+// either per targed location, or in case of kill X mission types, according to a negative number as 
+// in CATALOGUE, below.
+//     There is one main list: ukey + mlist ( e.g. amlist ), which is an array of mission locations,
+// (e.g. [ 162342, -5, 234233 ] ). The individual missions are not stored, instead each location is saved 
+// with its own stack of missions, for which the amounts are all summed up. This is done with 
+// ukey + 'm' + location, e.g. am162342, or am-5, for the above example. The former is one or more missions 
+// to a specific location, the latter a kill X blood amoeba mission (one or more).
+//
+//     All locations are shown on the nav screen in their own little table. Missions are updated when:
+// * You accept a new mission (in bulletinboard.js)
+// * You kill a NPC (in combat.js)
+// * You land on a planet or sb (in planetsb.js)
+// * You click the clean WH link (in nav.js)
+// * You visit the jobs page (in jobs.js).
+//   Note: in the jobs page the whole mission list is wiped, all missions too, and all remade with the info there.
 
 var CATALOGUE = { 
 	'ancient_crystal.png': -1,
@@ -174,6 +190,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 }
 
 Mission.clearMissionStorage = function( callback, list ) {
+	// Clears whole storage given the mission list, then calls /callback/
 	for( var i = 0; i < list.length; i++ ) {
 		chrome.storage.local.remove( ukey + 'm' + list[ i ] );
 	}
@@ -181,7 +198,10 @@ Mission.clearMissionStorage = function( callback, list ) {
 }
 
 Mission.updateMission = function ( mission, data ) {
-	// if new mission is taken this function is called.
+	// If new mission is taken this function is called. Futhermore, it is run multiple times
+	// when accessing the jobs page. 
+	// Call function with the a mission from Mission.parseMission, and the object containing the 
+	// current data on the location and the mission list.
 
 	if ( !data[ ukey + 'mlist' ] ) {
 		// first time, let's be gentle.
@@ -212,7 +232,8 @@ Mission.updateMission = function ( mission, data ) {
 }
 	
 Mission.removeMission = function( data, loc ) {
-	// removes the id from the list, removes the mission from storage and saves the updated mission list. Accepts a object data, which contains the mlist.
+	// Removes the id from the mission list, removes the mission from storage and saves the updated mission list. 
+	// Call with an object /data/, which contains the mlist. Add the location if it is not in the object /data/.
 	if ( !loc ) { //so we can call it in one chrome.get call from the planetsb.js, which just gives a single parameter, and loc is included in the data. 
 		loc = data[ Universe.getName( document )[0] + 'loc' ];
 	}
@@ -231,12 +252,14 @@ Mission.removeMission = function( data, loc ) {
 	chrome.storage.local.set( save );
 }
 
-// function retuns the locid of untargetted missions by inserting the FULL image url.
 Mission.getLocIdFromImage = function ( img ) {
+	// Retuns the location ID of untargetted missions. Call by inserting the FULL image url.
 	return CATALOGUE[ img.split(/\//g)[ 6 ] ] || 0;
 }
 
 Mission.gotOne = function ( locId, list, missiondata ) {
+	// Is called when an npc is killed, from a chrome.storage function with location and mlist bound to it.
+	// Function either updates the NPC amount shot, or removes the mission to this NPC because it is completed.
 	var mission = missiondata[ ukey + 'm' + locId ];
 	mission.amountDone += 1;
 	if ( mission.amountDone >= mission.amount ) {
