@@ -1022,6 +1022,11 @@ function showMissions( data ) {
 	}
 	
 	chrome.storage.local.get( getList, displayMissions.bind( null, list ) );
+
+	// clean wh mission 
+	if( document.getElementById( 'aCmdCleanWh' ) ) {
+		document.getElementById( 'aCmdCleanWh' ).addEventListener( 'click' , Mission.removeMission.bind( null, data, userloc ) );
+	}
 	
 	function displayMissions( list, data ) {
 		// DOM stuff below.
