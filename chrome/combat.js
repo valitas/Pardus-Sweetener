@@ -529,7 +529,7 @@ function missionUpdate( data ) {
 			document, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
 			null ).singleNodeValue; //the DEAD message.
 	if ( !mlist || !loc || !b )  //if b, the critter is dead and we move on.
-	{}//return;
+		return;
 	
 	var image = b.parentNode.getElementsByTagName( 'img' )[ 0 ].src;
 	var locId = Mission.getLocIdFromImage( image );
@@ -546,6 +546,7 @@ function missionUpdate( data ) {
 		// We wouldn't have gotten here if otherwise.
 		Mission.removeMission( data );
 	} 
+	console.log( locId )
 	if ( mlist.indexOf( locId ) !== -1 ) {
 		// Ok, it's (also) an untargetted mission. Let's add one to the counter.
 		chrome.storage.local.get( [ ukey + 'm' + locId ], Mission.gotOne.bind( null, locId ) );

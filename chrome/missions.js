@@ -230,7 +230,7 @@ Mission.getLocIdFromImage = function ( img ) {
 	return CATALOGUE[ img.split(/\//g)[ 6 ] ] || 0;
 }
 
-Mission.getOne = function ( locId, missiondata ) {
+Mission.gotOne = function ( locId, missiondata ) {
 	var mission = missiondata[ ukey + 'm' + locId ];
 	mission.amountDone += 1;
 	if ( mission.amountDone >= mission.amount ) {
