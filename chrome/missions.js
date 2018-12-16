@@ -202,7 +202,9 @@ Mission.updateMission = function ( mission, data ) {
 		if ( data[ ukey + 'm' + mission.locId ].amount < mission.amount ) {
 			data[ ukey + 'm' + mission.locId ].amount = mission.amount;
 		}
-		data[ ukey + 'm' + mission.locId ].amountDone = 0;
+		if ( ( data[ ukey + 'm' + mission.locId ].amount - data[ ukey + 'm' + mission.locId ].amountDone ) < mission.amount ) {
+			data[ ukey + 'm' + mission.locId ].amountDone = 0;
+		}
 		data[ ukey + 'm' + mission.locId ].reward += mission.reward;
 		data[ ukey + 'm' + mission.locId ].deposit += mission.deposit;
 	}
@@ -238,7 +240,7 @@ Mission.gotOne = function ( locId, list, missiondata ) {
 	var mission = missiondata[ ukey + 'm' + locId ];
 	mission.amountDone += 1;
 	if ( mission.amountDone >= mission.amount ) {
-		let remove = {}
+		let removelist = {}
 		removelist[ ukey + 'mlist' ] = list;
 		Mission.removeMission( removelist, locId )
 	} else {
