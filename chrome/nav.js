@@ -968,13 +968,10 @@ function getTimeDiff ( time1, time2 ) {
 //planned route highlighter
 function updateRoutePlanner( data ) {
 	let ukey = Universe.getServer ( doc ).substr( 0, 1 );
-	let path = data[ ukey + 'savedPath' ];
+	let idList = data[ ukey + 'savedPath' ];
 
-	if ( !path || path.length === 0 )
+	if ( !idList || idList.length === 0 )
 		return;
-	let idList = [];
-
-	let sectorId = Sector.getIdFromLocation( userloc );
 
 	navtable = doc.getElementById( 'navareatransition' );
 	if ( !navtable )
@@ -992,9 +989,6 @@ function updateRoutePlanner( data ) {
 		return parseInt( a.getAttribute( 'onclick' ).split(/[()]/g)[1] ) - parseInt( b.getAttribute( 'onclick' ).split(/[()]/g)[1] );
 		});
 
-	for ( var i = 0; i < path.length ; i++ ) {
-		idList[ i ] = Sector.getLocation( sectorId, path[ i ][ 0 ], path[ i ][ 1 ] );
-	}
 	idList.sort();
 	for ( var j = 0; j < a.length; j++ ) {
 		if ( a[ j ].getAttribute( 'onclick' ) !== null && idList.includes( parseInt( a[ j ].getAttribute( 'onclick' ).split(/[()]/g)[1] ) ) ) {
@@ -1070,7 +1064,11 @@ function showMissions( data ) {
 			td.textContent = mission.total;
 			/*td = tr.appendChild( document.createElement( 'td' ) );
 			td.textContent = mission.acceptTime + mission.;*/
-			
+
+			if ( Sector.getIdFromLocation( userloc ) === Sector.getIdFromLocation( mission.locId ) ) { 
+				let coords = Sector.getCoords( Sector.getIdFromLocation( mission.locId ), mission.locId );
+				minimap.markTile( minimap.get2DContext(), coords.x, coords.y ,'"#fff"');
+				}
 		}
 		tr = tInside.appendChild( document.createElement( 'tr' ) );
 		td = tr.appendChild(  document.createElement( 'td' ) );

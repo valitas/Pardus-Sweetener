@@ -279,9 +279,17 @@ SectorMap.prototype = {
 				this.clear(this.get2DContext());
 				this.markShipTile(this.get2DContext());
 				chrome.storage.local.remove( [ ukey + 'savedPath' ] );
-			} else {
+			} else {		
 				let save = {};
-				save[ ukey + 'savedPath' ] = this.savedPath;
+				save[ ukey + 'savedPath' ] = [];
+				for ( var i = 0; i < this.savedPath.length; i++ ) {
+					save[ ukey + 'savedPath' ].push (
+						Sector.getLocation( 
+							Sector.getId( this.sector.sector ) ,
+							this.savedPath[ i ][ 0 ],
+							this.savedPath[ i ][ 1 ] )
+							);
+				}
 				chrome.storage.local.set( save );
 			}
 			this.mouselock = !this.mouselock;
