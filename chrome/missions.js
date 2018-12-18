@@ -254,7 +254,7 @@ Mission.removeMission = function( data, loc ) {
 
 Mission.getLocIdFromImage = function ( img ) {
 	// Retuns the location ID of untargetted missions. Call by inserting the FULL image url.
-	return CATALOGUE[ img.split(/\//g)[ 6 ] ] || 0;
+	return CATALOGUE[ img.split(/opponents\//g)[ 1 ] ] || 0;
 }
 
 Mission.gotOne = function ( locId, list, missiondata ) {
