@@ -120,7 +120,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 	if ( premium ) {
 		var data = mission.getElementsByTagName( 'td' );
 		output[ 'faction' ] = data[0].firstChild.src;
-		output[ 'faction' ] === undefined ? output[ 'faction' ] = 'n' : output[ 'faction' ] = output[ 'faction' ].split( /\//g )[ 6 ][ 5 ];//check for neutral vs faction.
+		output[ 'faction' ] === undefined ? output[ 'faction' ] = 'n' : output[ 'faction' ] = output[ 'faction' ].split( /factions/g )[ 1 ][ 6 ];//check for neutral vs faction.
 		output[ 'type' ] = data[1].firstChild.title[ 0 ];
 		
 		bbpage ? output[ 'timeLimit'] = parseInt( data[3].textContent ) : null;
