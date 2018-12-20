@@ -12,11 +12,11 @@
         missions = missionDiv.getElementsByTagName( 'tbody' )[0].childNodes;
     } else {
         missions = document.getElementById( 'div_missions' ).getElementsByTagName( 'table' );
-
-		if ( document.getElementById('div_missions').style.display == 'none' )
-			return
-			// We're in tasks. Abort! 
-    }
+	}
+	if ( document.getElementById('div_missions').style.display == 'none' )
+		return
+		// We're in tasks. Abort! 
+    
 
 	chrome.storage.local.get( [ ukey + 'mlist' ], Mission.clearMissionStorage.bind( null, onStorageClear ) );
 
