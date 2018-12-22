@@ -131,8 +131,9 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 			output[ 'coords'] = data[6].textContent.split( /[\[,\]]/g );
 			output[ 'coords'] = { 'x': parseInt( output[ 'coords'][1] ), 'y': parseInt( output[ 'coords'][2] ) }; //split coords in x and y.
 			output[ 'locId' ] = Sector.getLocation( Sector.getId( output.sector ), output.coords.x, output.coords.y );
+
 		} else {
-			output[ 'locId' ] = CATALOGUE[ output.image.split(/\//g)[ 6 ] ];
+			output[ 'locId' ] = Mission.getLocIdFromImage( output.image );
 			if ( bbpage ) {
 				output[ 'amount' ] = parseInt( data[2].textContent );
 				output[ 'amountDone' ] = 0;
@@ -140,6 +141,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 				output[ 'amountDone' ] = parseInt( data[ 2 ].textContent.split( /\//g )[ 0 ] );
 				output[ 'amount' ] = parseInt( data[ 2 ].textContent.split( /\//g )[ 1 ] );
 			}	
+
 		}
 		output[ 'reward'] = parseInt( data[7].textContent.replace(/,/g,'') );
 		output[ 'deposit'] = parseInt( data[8].textContent.replace(/,/g,'') );
