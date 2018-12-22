@@ -134,6 +134,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 
 		} else {
 			output[ 'locId' ] = Mission.getLocIdFromImage( output.image );
+			console.log(output.locId);
 			if ( bbpage ) {
 				output[ 'amount' ] = parseInt( data[2].textContent );
 				output[ 'amountDone' ] = 0;

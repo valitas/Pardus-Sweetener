@@ -1,0 +1,20 @@
+td.navNpc { position: relative; }
+
+/* Text in a circle.  Or oval, sausage-like thingie, if it's a long text. */
+div.sweetener-mission {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+	min-width: 10px;
+	height: 10px;
+	line-height: 10px;
+	background: #f00;
+	border-radius: 9px; /* 10px/2 + 2px padding + 2px border */
+	border: 2px solid #a1a1af;
+	color: #fff;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 2px;
+	text-align: center;
+	cursor: default;
+}

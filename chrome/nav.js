@@ -1066,8 +1066,21 @@ function showMissions( data ) {
 			td.textContent = mission.acceptTime + mission.;*/
 
 			if ( Sector.getIdFromLocation( userloc ) === Sector.getIdFromLocation( mission.locId ) ) { 
-				let coords = Sector.getCoords( Sector.getIdFromLocation( mission.locId ), mission.locId );
-				minimap.markTile( minimap.get2DContext(), coords.x, coords.y ,'"#fff"');
+				// let coords = Sector.getCoords( Sector.getIdFromLocation( mission.locId ), mission.locId );
+				// minimap.markTile( minimap.get2DContext(), coords.x, coords.y ,'"#fff"');
+				
+				var navTable = document.getElementById( 'navareatransition' );
+				if ( !navTable ) {
+					navTable = document.getElementById( 'navarea' );
+				}
+
+				var a = document.evaluate( "../table[contains(@id, " + navTable.id + ")]//tr/td//a[contains(@onclick, '" + mission.locId + "')]" ,
+						   navTable, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+						   null ).singleNodeValue;
+				var reddiv = document.createElement( 'div' );
+				reddiv.className = 'sweetener-mission';
+				if ( a )
+					a.parentNode.appendChild( reddiv );
 				}
 		}
 		tr = tInside.appendChild( document.createElement( 'tr' ) );
