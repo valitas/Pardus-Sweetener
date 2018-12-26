@@ -1044,6 +1044,11 @@ function showMissions( data ) {
 		
 		var tInside = div.appendChild( document.createElement( 'table' ) );
 		tInside.width = '100%';
+		
+		while ( document.getElementById( 'sweetener-mission' ) ) {
+			document.removeChild( document.getElementById( 'sweetener-mission' ) ); 
+		}
+		
 		for( var i = 0; i < list.length; i++ ) {
 			var mission = data[ ukey + 'm' + list[ i ] ];
 			tr = tInside.appendChild ( document.createElement( 'tr' ) );
