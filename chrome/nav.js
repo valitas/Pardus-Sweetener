@@ -124,6 +124,7 @@ function start() {
 	});
 	cs.addKey( 'miniMapNavigation' );
 	cs.addKey( 'clockStim' );
+	cs.addKey( 'missionDisplay' );
 
 	shiplinks = new ShipLinks.Controller
 		( 'table/tbody/tr/td[position() = 2]/a', matchShipId );
@@ -153,7 +154,9 @@ function applyConfiguration() {
 			let name = ukey + 'savedPath';
 			chrome.storage.local.get( name , updateRoutePlanner );
 		}
-		chrome.storage.local.get( [ ukey + 'mlist' ], showMissions );
+		if ( config.missionDisplay ) {
+			chrome.storage.local.get( [ ukey + 'mlist' ], showMissions );
+		}
 	}
 	else {
 		// Instead, we only want to do this the first time we run,
@@ -219,7 +222,9 @@ function onGameMessage( event ) {
 		let name = ukey + 'savedPath';
 		chrome.storage.local.get( name , updateRoutePlanner );
 	}
-	chrome.storage.local.get( [ ukey + 'mlist' ], showMissions );
+	if ( config.missionDisplay ) {
+		chrome.storage.local.get( [ ukey + 'mlist' ], showMissions );
+	}
 
 	configured = true;
 }

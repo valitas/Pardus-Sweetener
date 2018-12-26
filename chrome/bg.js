@@ -414,7 +414,8 @@ function onInstalled( details ) {
 			pvmMissileAutoAll: false,
 			pvpHighestRounds: true,
 			pvpMissileAutoAll: true,
-			sendmsgShowAlliance: true
+			sendmsgShowAlliance: true,
+			missionDisplay: true
 		};
 
 		chrome.storage.local.clear();
