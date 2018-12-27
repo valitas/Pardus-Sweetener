@@ -4,7 +4,7 @@
 	// check if mission save feature is enabled by user.
 	var config, cs = new ConfigurationSet();
 	cs.addKey( 'missionDisplay' );
-	config = cs.makeTracker( applyMissionStorage );
+	config = cs.makeTracker( parseJobs );
 		
 	function parseJobs() {
 		if( !config.missionDisplay )
