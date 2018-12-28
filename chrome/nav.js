@@ -885,6 +885,8 @@ function compensateDoctor( amount, ukey, doctorType, extraConsumable) {
 
 function usedDrugs( useform, ukey ) {
 	let amount = parseInt( useform.elements.amount.value );
+	if ( amount > useform.childNodes[3].textContent.substring(1) )
+		return;
 	if (amount > 0) {
 		chrome.storage.sync.get(
 			[ukey + 'drugTimerLast', ukey + 'drugTimerClear', ukey + 'doctor', ukey + 'extraDrug'],
@@ -916,6 +918,8 @@ function usedDrugs2( amount, ukey, data ) {
 
 function usedStims( useform, ukey ) {
 	let amount = parseInt( useform.elements.amount.value );
+	if ( amount > useform.childNodes[3].textContent.substring(1) )
+		return;
 	if ( amount > 0 ) {
 
 		//29 is the resid of green stims.
