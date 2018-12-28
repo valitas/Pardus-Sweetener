@@ -1,4 +1,5 @@
 td.navNpc { position: relative; }
+td.navClear { position: relative; }
 
 /* Text in a circle.  Or oval, sausage-like thingie, if it's a long text. */
 div.sweetener-mission {
