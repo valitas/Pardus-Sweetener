@@ -21,7 +21,9 @@ var chrome, PSClock;
         'icon_pay.png':     'Payment',
         'icon_trade.png':   'Trade',
         'gnome-error.png':  'Warning',
-        'gnome-info.png':   'Info' };
+        'gnome-info.png':   'Info' },
+      IGNORE_WORDS = 
+      [ 'Sorry', 'Maintenance' ];
 
   var configured = false,
       msgframeLoaded = false,
@@ -315,12 +317,21 @@ var chrome, PSClock;
 	}
 
 	if ( indicators[ 'Warning' ] ) {
-		if ( doc.getElementsByTagName('font')[0].textContent
-		     .indexOf('stun') > 0 ) {
+    var indicatorText = doc.getElementsByTagName('font')[0].textContent.toLocaleLowerCase();
+		if ( indicatorText.includes('stun') ) {
 			chrome.storage.local.get(
 				Ukey + 'loc', stunned.bind( doc ) );
 		}
+    else {
+      for ( var word in IGNORE_WORDS ) {
+        if ( indicatorText.includes( IGNORE_WORDS[ word ].toLocaleLowerCase() ) ) {
+         delete indicators[ 'Warning' ];
+         indicatorsFound = indicators.length > 0;
+        }
+      }
+    }
 	}
+  
   }
 
   function stunned( data ) {
