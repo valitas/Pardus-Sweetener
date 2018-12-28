@@ -1075,10 +1075,10 @@ function showMissions( data ) {
 			/*td = tr.appendChild( document.createElement( 'td' ) );
 			td.textContent = mission.acceptTime + mission.;*/
 
-			if ( Sector.getIdFromLocation( userloc ) === Sector.getIdFromLocation( mission.locId ) ) { 
+			if ( Sector.getIdFromLocation( userloc ) === Sector.getIdFromLocation( mission.locId ) && mission.type === 'A' ) {
 				// let coords = Sector.getCoords( Sector.getIdFromLocation( mission.locId ), mission.locId );
 				// minimap.markTile( minimap.get2DContext(), coords.x, coords.y ,'"#fff"');
-				
+
 				var navTable = document.getElementById( 'navareatransition' );
 				if ( !navTable ) {
 					navTable = document.getElementById( 'navarea' );
@@ -1087,10 +1087,11 @@ function showMissions( data ) {
 				var a = document.evaluate( "../table[contains(@id, " + navTable.id + ")]//tr/td//a[contains(@onclick, '" + mission.locId + "')]" ,
 						   navTable, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
 						   null ).singleNodeValue;
-				var reddiv = document.createElement( 'div' );
-				reddiv.className = 'sweetener-mission';
-				if ( a )
+				if ( a ) {
+					var reddiv = document.createElement( 'div' );
+					reddiv.className = 'sweetener-mission';
 					a.parentNode.appendChild( reddiv );
+					}
 				}
 		}
 		tr = tInside.appendChild( document.createElement( 'tr' ) );
