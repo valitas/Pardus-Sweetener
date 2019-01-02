@@ -318,6 +318,13 @@ var chrome, PSClock;
 
 	if ( indicators[ 'Warning' ] ) {
     var indicatorText = doc.getElementsByTagName('font')[0].textContent.toLocaleLowerCase();
+    if ( indicatorText.includes ('alliance command station log') ) {
+      var _link = document.createElement("a");
+      _link.href = "/acs_log.php";
+      _link.target = "blank";
+      _link.innerText = "→ Open ACS Log";
+      doc.getElementsByTagName('font')[0].appendChild(_link)
+    }
 		if ( indicatorText.includes('stun') ) {
 			chrome.storage.local.get(
 				Ukey + 'loc', stunned.bind( doc ) );
