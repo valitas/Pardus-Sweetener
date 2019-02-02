@@ -478,9 +478,6 @@ function configureMinimap( sector ) {
 		else {
 			size = td.offsetWidth;
 		}
-		//td.style.width = size;
-		//container.style.width = td.offsetWidth + 'px';
-		//container.style.width = '208px';
 		
 		//put the distance text on top
 		container.style.margin = '0 2px 24px auto';
@@ -488,7 +485,6 @@ function configureMinimap( sector ) {
 		container.appendChild( div );
 		container.appendChild( canvas );
 		td.appendChild( container );
-		//size = 400;
 	}
 	else {
 		// Add the map at the top of the right-side bar.  This is
