@@ -396,7 +396,7 @@ function configureMinimap( sector ) {
 	
 	// Create the div that will hold distance calculations
 	div = doc.createElement( 'div' );
-	div.style.paddingTop = '10px';
+	div.style.paddingTop = '4px';
 	div.style.display = 'none';
 
 	// Figure out where to place the map and what size it should be.
@@ -459,6 +459,36 @@ function configureMinimap( sector ) {
 		container.appendChild( newtd );
 		tbody.insertBefore( container, tr.nextSibling );
 		size = 180;
+	}
+	else if ( config.miniMapPlacement == 'navbox' || config.miniMapPlacement == 'navboxXL') {
+		// Add the map at the under the navigation box.
+		// This allows for the biggest navigation area.
+
+		var td = doc.getElementById( 'tdSpaceChart' );
+
+		if ( !td ) {
+			return;
+		}
+
+		container = doc.createElement( 'div' );
+		container.style.textAlign = 'center';
+		if ( config.miniMapPlacement == 'navbox' ) {
+			size = doc.getElementById("navarea").offsetWidth;
+		}
+		else {
+			size = td.offsetWidth;
+		}
+		//td.style.width = size;
+		//container.style.width = td.offsetWidth + 'px';
+		//container.style.width = '208px';
+		
+		//put the distance text on top
+		container.style.margin = '0 2px 24px auto';
+		canvas.style.border = '1px outset #a0b1c9';
+		container.appendChild( div );
+		container.appendChild( canvas );
+		td.appendChild( container );
+		//size = 400;
 	}
 	else {
 		// Add the map at the top of the right-side bar.  This is
