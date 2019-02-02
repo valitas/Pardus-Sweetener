@@ -23,7 +23,7 @@ var chrome, PSClock;
         'gnome-error.png':  'Warning',
         'gnome-info.png':   'Info' },
       IGNORE_WORDS = 
-      [ 'Sorry', 'Maintenance' ];
+      [ 'Sorry', 'Maintenance', 'once per second', 'failed', 'unsuccessful', 'that quickly' ];
 
   var configured = false,
       msgframeLoaded = false,
