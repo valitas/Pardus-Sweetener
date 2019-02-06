@@ -14,7 +14,7 @@ Install
 -------
 
 * [Pardus Sweetener Chrome Extension](https://chrome.google.com/webstore/detail/oljkdelpabjlpofhomedemighchghfik)
-* [Pardus Sweetener Firefox Add-on]() Sorry! none currently available.
+* [Pardus Sweetener Firefox Add-on](https://addons.mozilla.org/en-GB/firefox/addon/pardus-sweetener-t/)
 
 Features
 --------

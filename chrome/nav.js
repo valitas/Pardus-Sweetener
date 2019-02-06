@@ -403,7 +403,7 @@ function configureMinimap( sector ) {
 	
 	// Create the div that will hold distance calculations
 	div = doc.createElement( 'div' );
-	div.style.paddingTop = '10px';
+	div.style.paddingTop = '4px';
 	div.style.display = 'none';
 
 	// Figure out where to place the map and what size it should be.
@@ -466,6 +466,32 @@ function configureMinimap( sector ) {
 		container.appendChild( newtd );
 		tbody.insertBefore( container, tr.nextSibling );
 		size = 180;
+	}
+	else if ( config.miniMapPlacement == 'navbox' || config.miniMapPlacement == 'navboxXL') {
+		// Add the map at the under the navigation box.
+		// This allows for the biggest navigation area.
+
+		var td = doc.getElementById( 'tdSpaceChart' );
+
+		if ( !td ) {
+			return;
+		}
+
+		container = doc.createElement( 'div' );
+		container.style.textAlign = 'center';
+		if ( config.miniMapPlacement == 'navbox' ) {
+			size = doc.getElementById("navarea").offsetWidth;
+		}
+		else {
+			size = td.offsetWidth;
+		}
+		
+		//put the distance text on top
+		container.style.margin = '0 2px 24px auto';
+		canvas.style.border = '1px outset #a0b1c9';
+		container.appendChild( div );
+		container.appendChild( canvas );
+		td.appendChild( container );
 	}
 	else {
 		// Add the map at the top of the right-side bar.  This is
@@ -892,6 +918,8 @@ function compensateDoctor( amount, ukey, doctorType, extraConsumable) {
 
 function usedDrugs( useform, ukey ) {
 	let amount = parseInt( useform.elements.amount.value );
+	if ( amount > useform.childNodes[3].textContent.substring(1) )
+		return;
 	if (amount > 0) {
 		chrome.storage.sync.get(
 			[ukey + 'drugTimerLast', ukey + 'drugTimerClear', ukey + 'doctor', ukey + 'extraDrug'],
@@ -923,6 +951,8 @@ function usedDrugs2( amount, ukey, data ) {
 
 function usedStims( useform, ukey ) {
 	let amount = parseInt( useform.elements.amount.value );
+	if ( amount > useform.childNodes[3].textContent.substring(1) )
+		return;
 	if ( amount > 0 ) {
 
 		//29 is the resid of green stims.

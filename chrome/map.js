@@ -119,7 +119,7 @@ SectorMap.prototype = {
 	// to clear, then overlay dynamic stuff on the "background" map.
 	clear: function( ctx ) {
 		ctx.drawImage( this.bgCanvas, 0, 0 );
-		this.distanceDiv.innerText = "";
+		this.distanceDiv.innerHTML = "&nbsp;<br>&nbsp;";
 		if (this.mouselock) {
 			this.drawSavedPath(ctx);
 		}
@@ -313,7 +313,7 @@ SectorMap.prototype = {
 					for (var n in this.sector.beacons) {
 						var e = this.sector.beacons[n];
 						if (e.x == loc.x && e.y == loc.y)
-							this.distanceDiv.innerHTML += "<br>" + (e.type == "wh" ? "Wormhole to " : "") + n;
+							this.distanceDiv.innerHTML += (e.type == "wh" ? "Wormhole to " : "") + n;
 					}
 				}
 			}.bind(this));
@@ -451,7 +451,7 @@ SectorMap.prototype = {
 		}
 		this.drawSavedPath(this.get2DContext());
 		this.markShipTile(this.get2DContext());
-		this.distanceDiv.innerHTML = "Distance to " + this.sector.sector + " [" + loc.x + ", " + loc.y + "]: " + apsSpent + " APs"; //innerHTML to accomodate infinity symbol
+		this.distanceDiv.innerHTML = "Distance to " + this.sector.sector + " [" + loc.x + ", " + loc.y + "]: " + apsSpent + " APs<br>&nbsp;"; //innerHTML to accomodate infinity symbol
 		
 		// I put the function at the end to keep clutter down. Currently only used in drawpath.
 		function getSpeed() {
