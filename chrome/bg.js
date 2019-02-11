@@ -465,7 +465,7 @@ function onInstalled( details ) {
 			'pvpMissileAutoAll', 'pvpHighestRounds', 'pvbMissileAutoAll',
 			'displayDamage', 'navEquipmentLink', 'navHackLink', 'navShipLinks',
 			'allianceQLsArtemisEnabled', 'allianceQLsOrionEnabled',
-			'allianceQLsPegasusEnabled', 'miniMap', 'sendmsgShowAlliance'
+			'allianceQLsPegasusEnabled', 'miniMap', 'sendmsgShowAlliance', 'missionDisplay'
 		];
 		for ( i = 0, end = keys.length; i < end; i++ ) {
 			key = keys[ i ];
