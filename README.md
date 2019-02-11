@@ -1,14 +1,14 @@
 ![Pardus Sweetener Logo](https://github.com/valitas/Pardus-Sweetener/blob/master/chrome/icons/128.png?raw=true)
-Pardus Sweetener
+Pardus Sweetener T
 ================
 
-Pardus Sweetener is a browser extension that enhances the user
+Pardus Sweetener T is a continuation publication of the browser extension Pardus Sweetener that enhances the user
 interface of the online space game [Pardus](https://www.pardus.at/).
 
-Notable Features from the original:
- * Added tick based drug and stim timers ([Tsunder's fork](https://github.com/Tsunder/Pardus-Sweetener))
- * Added minimal-cost pathfinder and AP calculator to the minimap ([Kui's fork](https://github.com/likuilin/Pardus-Sweetener))
- * Added displaying waypoint information to minimap (Kui's fork)
+List of new features:
+ * Tick based drug and stim clocks ([Tsunder](https://github.com/Tsunder/Pardus-Sweetener))
+ * Minimal-cost pathfinder and AP calculator to the minimap ([Kui](https://github.com/likuilin/Pardus-Sweetener))
+ * Missions tracker ([BartKieviet](https://github.com/BartKieviet))
 
 Install
 -------
