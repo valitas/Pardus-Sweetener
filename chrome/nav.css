@@ -1,6 +1,8 @@
 td.navNpc { position: relative; }
 td.navClear { position: relative; }
 td.navBuilding { position: relative; }
+td.navPlanet {position: relative;}
+td.navStarbase {position: relative;}
 
 /* Text in a circle.  Or oval, sausage-like thingie, if it's a long text. */
 div.sweetener-mission {

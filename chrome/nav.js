@@ -1105,24 +1105,34 @@ function showMissions( data ) {
 			/*td = tr.appendChild( document.createElement( 'td' ) );
 			td.textContent = mission.acceptTime + mission.;*/
 
-			if ( Sector.getIdFromLocation( userloc ) === Sector.getIdFromLocation( mission.locId ) && mission.type === 'A' ) {
-				// let coords = Sector.getCoords( Sector.getIdFromLocation( mission.locId ), mission.locId );
-				// minimap.markTile( minimap.get2DContext(), coords.x, coords.y ,'"#fff"');
+			//adds a little red dot to all tiles that have a mission going to them
+			//might be a bit slow for people who have lots of missions?
+			if (mission.locId) {
+				if ( Sector.getIdFromLocation( userloc ) === Sector.getIdFromLocation( mission.locId ) ) {
+					// let coords = Sector.getCoords( Sector.getIdFromLocation( mission.locId ), mission.locId );
+					// minimap.markTile( minimap.get2DContext(), coords.x, coords.y ,'"#fff"');
+					var navTable = document.getElementById( 'navareatransition' );
+					if ( !navTable ) {
+						navTable = document.getElementById( 'navarea' );
+					}
 
-				var navTable = document.getElementById( 'navareatransition' );
-				if ( !navTable ) {
-					navTable = document.getElementById( 'navarea' );
-				}
+					var a;
+					if (userloc == mission.locId) {
+						a = document.getElementById("stdCommand");
+					} 
+					else {
+						a = document.evaluate( "../table[contains(@id, " + navTable.id + ")]//tr/td//a[contains(@onclick, '" + mission.locId + "')]" ,
+								   navTable, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+								   null ).singleNodeValue;	
+					}
+					if ( a ) {
+						var reddiv = document.createElement( 'div' );
+						reddiv.className = 'sweetener-mission';
+						a.appendChild( reddiv );
 
-				var a = document.evaluate( "../table[contains(@id, " + navTable.id + ")]//tr/td//a[contains(@onclick, '" + mission.locId + "')]" ,
-						   navTable, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
-						   null ).singleNodeValue;
-				if ( a ) {
-					var reddiv = document.createElement( 'div' );
-					reddiv.className = 'sweetener-mission';
-					a.parentNode.appendChild( reddiv );
 					}
 				}
+			}
 		}
 		tr = tInside.appendChild( document.createElement( 'tr' ) );
 		td = tr.appendChild(  document.createElement( 'td' ) );
