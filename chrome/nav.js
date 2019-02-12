@@ -1083,7 +1083,10 @@ function showMissions( data ) {
 		while ( document.getElementById( 'sweetener-mission' ) ) {
 			document.removeChild( document.getElementById( 'sweetener-mission' ) ); 
 		}
-		
+
+		var navTable;
+		var stdCommandElement;
+
 		for( var i = 0; i < list.length; i++ ) {
 			var mission = data[ ukey + 'm' + list[ i ] ];
 			tr = tInside.appendChild ( document.createElement( 'tr' ) );
@@ -1111,14 +1114,19 @@ function showMissions( data ) {
 				if ( Sector.getIdFromLocation( userloc ) === Sector.getIdFromLocation( mission.locId ) ) {
 					// let coords = Sector.getCoords( Sector.getIdFromLocation( mission.locId ), mission.locId );
 					// minimap.markTile( minimap.get2DContext(), coords.x, coords.y ,'"#fff"');
-					var navTable = document.getElementById( 'navareatransition' );
 					if ( !navTable ) {
-						navTable = document.getElementById( 'navarea' );
+						navtable = document.getElementById( 'navareatransition' );
+						if (!navTable) {
+							navTable = document.getElementById( 'navarea' );
+						}
 					}
-
+					
 					var a;
 					if (userloc == mission.locId) {
-						a = document.getElementById("stdCommand");
+						if (!stdCommandElement) {
+							stdCommandElement = document.getElementById("stdCommand");
+						}
+						a = stdCommandElement;
 					} 
 					else {
 						a = document.evaluate( "../table[contains(@id, " + navTable.id + ")]//tr/td//a[contains(@onclick, '" + mission.locId + "')]" ,
@@ -1129,7 +1137,6 @@ function showMissions( data ) {
 						var reddiv = document.createElement( 'div' );
 						reddiv.className = 'sweetener-mission';
 						a.appendChild( reddiv );
-
 					}
 				}
 			}
