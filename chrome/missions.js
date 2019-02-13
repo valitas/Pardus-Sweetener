@@ -148,10 +148,6 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 		output[ 'id' ] = data[9].firstChild.id;
 	} else if ( bbpage ) {
 		//Non-premmy not working fully yet.
-		// output[ 'image' ]  = document.evaluate( 
-            // './/img[contains(@src, "opponents")]', 
-            // mission, null, XPathResult.FIRST_ORDERED_NODE_TYPE, 
-            // null).singleNodeValue.src;
         
         let th = mission.getElementsByTagName( 'th' )[0];
         output[ 'faction' ] = th.firstChild.src;
@@ -165,12 +161,12 @@ Mission.parseMission = function( mission, premium, bbpage ) {
         output[ 'image' ]  = td[0].firstChild.src;
         output[ 'locId' ] = Mission.getLocIdFromImage( output[ 'image' ] );
         var data = td[2]; //all the text is in this one. It differs per mission.
+        var bf = data.getElementsByTagName( 'b' );
 
         if ( output[ 'locId' ] === 0 ) {
             // if LocId = 0, we have a (expl)transport or vip mission
-            let bf = data.getElementsByTagName( 'b' );
             let c = 0; // counter
-            if ( isNaN( parseInt( td[3].textContent ) ) ) {
+            if ( isNaN( parseInt( td[3].textContent.replace('Exp: ','') ) ) ) {
                // No number in td[3], so VIP transport and 
                // one bf tag less and no amount.
                c = c-1; 
@@ -188,17 +184,35 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                 output.coords.y );
             output[ 'timeLimit' ] = parseInt( bf[ c+4 ].textContent );
       		output[ 'reward'] = parseInt( bf[ c+5 ].textContent.replace(/,/g,'') );
-            output[ 'id' ] = mission.getElementsByTagName( 'div' )[0].id;
-            //output[ 'deposit' ];
         } else {
             // LocId !== 0, so a critter, is it targetted or not?
             if( isNaN( parseInt( td[3].textContent ) ) ) {
                 // no number in td[3], so targetted
+                output[ 'sector' ] = bf[ 1 ].textContent;
+                output[ 'coords'] = bf[ 2 ].textContent.split( /[\[,\]]/g );
+                output[ 'coords'] = { 
+                    'x': parseInt( output[ 'coords'][0] ), 
+                    'y': parseInt( output[ 'coords'][1] ) 
+                    }; //split coords in x and y.
+                output[ 'locId' ] = Sector.getLocation( 
+                    Sector.getId( output.sector ), output.coords.x, 
+                    output.coords.y );
+                output[ 'timeLimit' ] = parseInt( bf[ 3 ].textContent );
+                output[ 'reward'] = parseInt( bf[ 4 ].textContent.replace(/,/g,'') );
             } else {
                 // number in td[3], so not targetted.
+                output[ 'amount' ] = parseInt( td[3].textContent );
+                output[ 'amountDone'] = 0;
+                output[ 'timeLimit'] = parseInt( bf[2] );
+                output[ 'reward' ] = parseInt( bf[1].replace(/,/,'') );
             }
         }
-        
+
+        output[ 'deposit' ] = parseInt( data
+                .getElementsByTagName( 'font' )[0].textContent.split(/:/g)[1]
+                .split(/ /g)[1].replace(/,/g,'') );
+        output[ 'id' ] = mission.getElementsByTagName( 'div' )[0].id;
+       
         
         
         /*
@@ -238,7 +252,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 		output[ 'deposit' ] = f.textContent.split( / /g )[12].replace( /,/g, '' );
 		output[ 'id' ] = mission.getElementsByTagName( 'a' )[0].parentNode.id;
 	*/
-        console.log(output);
+     //   console.log(output);
     }
 
 	output[ 'acceptTime' ] = Math.floor( Date.now() / 1000 );
@@ -258,12 +272,11 @@ Mission.updateMission = function ( mission, data ) {
     // Futhermore, it is ran multiple times when accessing the jobs page. 
 	// Call function with the a mission from Mission.parseMission, and the 
     // object containing the current data on the location, and the mission list.
-
 	if ( !data[ ukey + 'mlist' ] ) {
 		// first time, let's be gentle.
 		data[ ukey + 'mlist' ] = [];
 	}
-	
+
 	if (!data[ ukey + 'm' + mission.locId ]) {
 		// New mission to this location!
 		mission.total = 1;
@@ -284,6 +297,7 @@ Mission.updateMission = function ( mission, data ) {
 		data[ ukey + 'm' + mission.locId ].reward += mission.reward;
 		data[ ukey + 'm' + mission.locId ].deposit += mission.deposit;
 	}
+
 	return data
 }
 	
