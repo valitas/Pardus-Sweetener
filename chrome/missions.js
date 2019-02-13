@@ -148,8 +148,60 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 		output[ 'id' ] = data[9].firstChild.id;
 	} else if ( bbpage ) {
 		//Non-premmy not working fully yet.
-		/*
-		.log(mission);
+		// output[ 'image' ]  = document.evaluate( 
+            // './/img[contains(@src, "opponents")]', 
+            // mission, null, XPathResult.FIRST_ORDERED_NODE_TYPE, 
+            // null).singleNodeValue.src;
+        
+        let th = mission.getElementsByTagName( 'th' )[0];
+        output[ 'faction' ] = th.firstChild.src;
+		output[ 'faction' ] === undefined ? 
+            output[ 'faction' ] = 'n' : 
+            output[ 'faction' ] = output[ 'faction' ]
+                .split( /\//g )[ 6 ][ 5 ];//check for neutral vs faction.
+		output[ 'type' ] = th.textContent[ 1 ];
+        
+        let td = mission.getElementsByTagName( 'td' );
+        output[ 'image' ]  = td[0].firstChild.src;
+        output[ 'locId' ] = Mission.getLocIdFromImage( output[ 'image' ] );
+        var data = td[2]; //all the text is in this one. It differs per mission.
+
+        if ( output[ 'locId' ] === 0 ) {
+            // if LocId = 0, we have a (expl)transport or vip mission
+            let bf = data.getElementsByTagName( 'b' );
+            let c = 0; // counter
+            if ( isNaN( parseInt( td[3].textContent ) ) ) {
+               // No number in td[3], so VIP transport and 
+               // one bf tag less and no amount.
+               c = c-1; 
+            } else {
+                output[ 'amount' ] = parseInt( bf[0].textContent );
+            }
+            output[ 'sector' ] = bf[ c+2 ].textContent;
+            output[ 'coords'] = bf[ c+3 ].textContent.split( /[\[,\]]/g );
+			output[ 'coords'] = { 
+                'x': parseInt( output[ 'coords'][0] ), 
+                'y': parseInt( output[ 'coords'][1] ) 
+                }; //split coords in x and y.
+			output[ 'locId' ] = Sector.getLocation( 
+                Sector.getId( output.sector ), output.coords.x, 
+                output.coords.y );
+            output[ 'timeLimit' ] = parseInt( bf[ c+4 ].textContent );
+      		output[ 'reward'] = parseInt( bf[ c+5 ].textContent.replace(/,/g,'') );
+            output[ 'id' ] = mission.getElementsByTagName( 'div' )[0].id;
+            //output[ 'deposit' ];
+        } else {
+            // LocId !== 0, so a critter, is it targetted or not?
+            if( isNaN( parseInt( td[3].textContent ) ) ) {
+                // no number in td[3], so targetted
+            } else {
+                // number in td[3], so not targetted.
+            }
+        }
+        
+        
+        
+        /*
 		var j, th = mission.getElementsByTagName( 'th' )[0];
 		var td = mission.getElementsByTagName( 'td' );
 		output[ 'faction' ] = th.firstChild.src;
@@ -179,13 +231,15 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 			output[ 'reward' ] = bold2[ 1 ].textContent.replace( /,/g, '' );
 			output[ 'timeLimit' ] = parseInt( bold2[ 2 ].textContent );
 		}
-		var f = document.evaluate( "//td//font[starts-with(.,'Deposit')]",
+		var f = document.evaluate( ".//td//font[starts-with(.,'Deposit')]",
 					   mission, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
 					   null ).singleNodeValue;
 		console.log(f);
 		output[ 'deposit' ] = f.textContent.split( / /g )[12].replace( /,/g, '' );
 		output[ 'id' ] = mission.getElementsByTagName( 'a' )[0].parentNode.id;
-	*/}
+	*/
+        console.log(output);
+    }
 
 	output[ 'acceptTime' ] = Math.floor( Date.now() / 1000 );
 	return output
@@ -200,10 +254,10 @@ Mission.clearMissionStorage = function( callback, list ) {
 }
 
 Mission.updateMission = function ( mission, data ) {
-	// If new mission is taken this function is called. Futhermore, it is run multiple times
-	// when accessing the jobs page. 
-	// Call function with the a mission from Mission.parseMission, and the object containing the 
-	// current data on the location and the mission list.
+	// If new mission is taken this function is called. 
+    // Futhermore, it is ran multiple times when accessing the jobs page. 
+	// Call function with the a mission from Mission.parseMission, and the 
+    // object containing the current data on the location, and the mission list.
 
 	if ( !data[ ukey + 'mlist' ] ) {
 		// first time, let's be gentle.

@@ -29,17 +29,17 @@
 		chrome.storage.local.get( [ ukey + 'mlist' ], Mission.clearMissionStorage.bind( null, onStorageClear ) );
 
 		function onStorageClear() {
-		var saveData = {}
-		
-		for( var i = 0; i < missions.length; i++ ) {
-			if ( !premium && i % 2 === 1 ) { continue; }
-			if ( premium && i === 0 ) { continue; }
-			
-			var mission = Mission.parseMission( missions[ i ], premium, false );
-			saveData = Mission.updateMission( mission, saveData );
+            var saveData = {}
+            
+            for( var i = 0; i < missions.length; i++ ) {
+                //if ( !premium && i % 2 === 1 ) { continue; }
+                if ( premium && i === 0 ) { continue; }
+                
+                var mission = Mission.parseMission( missions[ i ], premium, false );
+                saveData = Mission.updateMission( mission, saveData );
 
-			}
-		chrome.storage.local.set( saveData );
+                }
+            chrome.storage.local.set( saveData );
 		}
 	}
 }());
