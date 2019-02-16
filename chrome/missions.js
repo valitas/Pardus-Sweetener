@@ -207,14 +207,14 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                 output[ 'reward' ] = parseInt( bf[1].replace(/,/,'') );
             }
         }
-
-        output[ 'deposit' ] = parseInt( data
-                .getElementsByTagName( 'font' )[0].textContent.split(/:/g)[1]
-                .split(/ /g)[1].replace(/,/g,'') );
+        let smallText = data.getElementsByTagName( 'font' )
+        output[ 'deposit' ] = parseInt( 
+            smallText[ smallText.length - 1 ].textContent
+            .split(/:/g)[1]
+            .split(/ /g)[1].replace(/,/g,'') 
+            );
         output[ 'id' ] = mission.getElementsByTagName( 'div' )[0].id;
        
-        
-        
         /*
 		var j, th = mission.getElementsByTagName( 'th' )[0];
 		var td = mission.getElementsByTagName( 'td' );
