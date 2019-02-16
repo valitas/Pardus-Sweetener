@@ -282,7 +282,7 @@ Mission.updateMission = function ( mission, data ) {
 		mission.total = 1;
 		data[ ukey + 'm' + mission.locId ] = mission;
 		data[ ukey + 'mlist' ].push( mission.locId );
-	} else if ( mission.locId !== -1 ) {
+	} else if ( mission.locId > -1 ) {
 		// yay stacking targetted missions!
 		data[ ukey + 'm' + mission.locId ].reward += mission.reward;
 		data[ ukey + 'm' + mission.locId ].deposit += mission.deposit;
