@@ -1084,7 +1084,7 @@ function showMissions( data ) {
 			document.removeChild( document.getElementById( 'sweetener-mission' ) ); 
 		}
 
-		var navTable;
+		var _navTable;
 		var stdCommandElement;
 
 		for( var i = 0; i < list.length; i++ ) {
@@ -1114,10 +1114,10 @@ function showMissions( data ) {
 				if ( Sector.getIdFromLocation( userloc ) === Sector.getIdFromLocation( mission.locId ) ) {
 					// let coords = Sector.getCoords( Sector.getIdFromLocation( mission.locId ), mission.locId );
 					// minimap.markTile( minimap.get2DContext(), coords.x, coords.y ,'"#fff"');
-					if ( !navTable ) {
-						navtable = document.getElementById( 'navareatransition' );
-						if (!navTable) {
-							navTable = document.getElementById( 'navarea' );
+					if ( !_navTable ) {
+						_navTable = document.getElementById( 'navareatransition' );
+						if (!_navTable) {
+							_navTable = document.getElementById( 'navarea' );
 						}
 					}
 					
@@ -1129,8 +1129,8 @@ function showMissions( data ) {
 						a = stdCommandElement;
 					} 
 					else {
-						a = document.evaluate( "../table[contains(@id, " + navTable.id + ")]//tr/td//a[contains(@onclick, '" + mission.locId + "')]" ,
-								   navTable, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+						a = document.evaluate( "../table[contains(@id, " + _navTable.id + ")]//tr/td//a[contains(@onclick, '" + mission.locId + "')]" ,
+								   _navTable, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
 								   null ).singleNodeValue;	
 					}
 					if ( a ) {
