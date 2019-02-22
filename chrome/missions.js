@@ -206,8 +206,8 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                 // number in td[3], so not targetted.
                 output[ 'amount' ] = parseInt( td[3].textContent );
                 output[ 'amountDone'] = 0;
-                output[ 'timeLimit'] = parseInt( bf[2] );
-                output[ 'reward' ] = parseInt( bf[1].replace(/,/,'') );
+                output[ 'timeLimit'] = parseInt( bf[2].textContent );
+                output[ 'reward' ] = parseInt( bf[1].textContent.replace(/,/,'') );
             }
             output[ 'deposit' ] = parseInt( 
                 data.getElementsByTagName( 'font' )[0].textContent
@@ -223,7 +223,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
             output [ 'faction' ] = th[0].textContent[0].toLowerCase(); 
         let td = mission.getElementsByTagName( 'td' );
         let bf = mission.getElementsByTagName( 'b' );
-        console.log( bf.length );
+     //   console.log( bf.length );
         output[ 'image' ] = td[0].firstChild.src;
         output[ 'locId' ] = Mission.getLocIdFromImage( output[ 'image' ] );
         
@@ -235,6 +235,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                 output[ 'timeLimit' ] = parseInt( bf[2].textContent );
                 let temp = bf[3].textContent.split(/\//g);
                 output[ 'amountDone' ] = parseInt( temp[0] );
+               // console.log(temp,output);
                 output[ 'amount' ] = parseInt( temp[1] );
                 output[ 'reward' ] = parseInt( bf[1].textContent.replace(/,/g,'') );
                 output[ 'deposit' ] = parseInt( 
@@ -242,6 +243,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                         .split(/:/g)[1]
                         .split(/ /g)[1].replace(/,/g,'') 
                         );
+                
             } 
             if( bf.length === 8 ) {
                 // bf size 8 means a targetted critter 
@@ -289,7 +291,6 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 	if ( bbpage ) {
         output[ 'acceptTime' ] = Math.floor( Date.now() / 1000 );
     }
-    console.log(output);
 	return output
 }
 
@@ -327,12 +328,11 @@ Mission.updateMission = function ( mission, data ) {
 			data[ ukey + 'm' + mission.locId ].amount = mission.amount;
 		}
 		if ( ( data[ ukey + 'm' + mission.locId ].amount - data[ ukey + 'm' + mission.locId ].amountDone ) < mission.amount ) {
-			data[ ukey + 'm' + mission.locId ].amountDone = 0;
+			data[ ukey + 'm' + mission.locId ].amountDone = mission.amountDone;
 		}
 		data[ ukey + 'm' + mission.locId ].reward += mission.reward;
 		data[ ukey + 'm' + mission.locId ].deposit += mission.deposit;
 	}
-
 	return data
 }
 	
