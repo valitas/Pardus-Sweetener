@@ -225,20 +225,43 @@ Mission.parseMission = function( mission, premium, bbpage ) {
         let bf = mission.getElementsByTagName( 'b' );
         console.log( bf.length );
         output[ 'image' ] = td[0].firstChild.src;
-
-        if( bf.length === 6 ) {
-            // bf size 6 means a untargetted critter [and maybe more]
-            output[ 'locId' ] = Mission.getLocIdFromImage( output.image );
-            output[ 'timeLimit' ] = parseInt( bf[2].textContent );
-            let temp = bf[3].textContent.split(/\//g);
-            output[ 'amountDone' ] = parseInt( temp[0] );
-            output[ 'amount' ] = parseInt( temp[1] );
-            output[ 'reward' ] = parseInt( bf[1].textContent.replace(/,/g,'') );
-            output[ 'deposit' ] = parseInt( 
-                    mission.getElementsByTagName( 'font' )[0].textContent
-                    .split(/:/g)[1]
-                    .split(/ /g)[1].replace(/,/g,'') 
-                    );
+        output[ 'locId' ] = Mission.getLocIdFromImage( output[ 'image' ] );
+        
+        if( output.locId < 0 ) {
+            // critter
+            if( bf.length === 6 ) {
+                // bf size 6 means a untargetted critter 
+                output[ 'locId' ] = Mission.getLocIdFromImage( output.image );
+                output[ 'timeLimit' ] = parseInt( bf[2].textContent );
+                let temp = bf[3].textContent.split(/\//g);
+                output[ 'amountDone' ] = parseInt( temp[0] );
+                output[ 'amount' ] = parseInt( temp[1] );
+                output[ 'reward' ] = parseInt( bf[1].textContent.replace(/,/g,'') );
+                output[ 'deposit' ] = parseInt( 
+                        mission.getElementsByTagName( 'font' )[0].textContent
+                        .split(/:/g)[1]
+                        .split(/ /g)[1].replace(/,/g,'') 
+                        );
+            } 
+            if( bf.length === 8 ) {
+                // bf size 8 means a targetted critter 
+                output[ 'sector' ] = bf[2].textContent;
+                output[ 'coords' ] = bf[3].textContent.split( /[\[,\]]/g );
+                output[ 'coords' ] = { 
+                    'x': parseInt( output[ 'coords'][0] ), 
+                    'y': parseInt( output[ 'coords'][1] ) 
+                    }; //split coords in x and y.
+                output[ 'locId' ] = Sector.getLocation( 
+                    Sector.getId( output.sector ), output.coords.x, 
+                    output.coords.y );
+                output[ 'timeLimit' ] = parseInt( bf[4].textContent );
+                output[ 'reward' ] = parseInt( bf[5].textContent.replace(/,/g,'') );
+                output[ 'deposit' ] = parseInt( 
+                        mission.getElementsByTagName( 'font' )[0].textContent
+                        .split(/:/g)[1]
+                        .split(/ /g)[1].replace(/,/g,'') 
+                        );
+            } 
         } else {
             // bf size 9 means a package transport.
             output[ 'amount' ] = parseInt( bf[1].textContent );
@@ -259,6 +282,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                     .split(/ /g)[1].replace(/,/g,'') 
                     );
         }
+        
         // output[ 'acceptTime' ] = bf[8];
     }    
 
