@@ -118,6 +118,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 	
 	var output = new Object();
 	if ( premium ) {
+        // premium bb or jobs page.
 		var data = mission.getElementsByTagName( 'td' );
 		output[ 'faction' ] = data[0].firstChild.src;
 		output[ 'faction' ] === undefined ? output[ 'faction' ] = 'n' : output[ 'faction' ] = output[ 'faction' ].split( /factions/g )[ 1 ][ 6 ];//check for neutral vs faction.
@@ -147,47 +148,195 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 		output[ 'deposit'] = parseInt( data[8].textContent.replace(/,/g,'') );
 		output[ 'id' ] = data[9].firstChild.id;
 	} else if ( bbpage ) {
-		//Non-premmy not working fully yet.
-		/*
-		.log(mission);
-		var j, th = mission.getElementsByTagName( 'th' )[0];
-		var td = mission.getElementsByTagName( 'td' );
-		output[ 'faction' ] = th.firstChild.src;
-		output[ 'faction' ] === undefined ? output[ 'faction' ] = 'n' : output[ 'faction' ] = output[ 'faction' ].split( /\//g )[ 6 ][ 5 ];//check for neutral vs faction.
+		//Non-premium bb page.
+        
+        let th = mission.getElementsByTagName( 'th' )[0];
+        output[ 'faction' ] = th.firstChild.src;
+		output[ 'faction' ] === undefined ? 
+            output[ 'faction' ] = 'n' : 
+            output[ 'faction' ] = output[ 'faction' ]
+                .split( /\//g )[ 6 ][ 5 ];//check for neutral vs faction.
 		output[ 'type' ] = th.textContent[ 1 ];
-		
-		var bold0 = td[ 3 ].getElementsByTagName( 'b' );
-		var bold2 = td[ 2 ].getElementsByTagName( 'b' );
-		if( bold2.length === 7 ) {
-			//transport or untargeted mission
-			j = 2;
-		} else {
-			j = 1;
-		}
-			
-		output[ 'sector' ] = bold2[ j ].textContent;
-		output[ 'image' ] = td[ 0 ].firstChild.src;
-		if ( isNaN( parseInt( bold0[ 0 ].textContent ) ) || output.type === 'T' ) {	
-			output[ 'coords' ] = bold2[ j + 1 ].textContent.split( /,/g );
-			output[ 'coords'] = { 'x': parseInt( output[ 'coords'][0] ), 'y': parseInt( output[ 'coords'][1] ) }; //split coords in x and y.
-			output[ 'locId' ] = Sector.getLocation( Sector.getId( output.sector ), output.coords.x, output.coords.y );
-			output[ 'reward' ] = bold2[ j + 3 ].textContent.replace( /,/g, '' );
-			output[ 'timeLimit' ] = parseInt( bold2[ j + 2 ].textContent );
-		} else {
-			output[ 'amount' ] = parseInt( bold0[0].textContent );
-			output[ 'locId' ] = CATALOGUE[ output.image.split(/\//g)[ 6 ] ];
-			output[ 'reward' ] = bold2[ 1 ].textContent.replace( /,/g, '' );
-			output[ 'timeLimit' ] = parseInt( bold2[ 2 ].textContent );
-		}
-		var f = document.evaluate( "//td//font[starts-with(.,'Deposit')]",
-					   mission, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
-					   null ).singleNodeValue;
-		console.log(f);
-		output[ 'deposit' ] = f.textContent.split( / /g )[12].replace( /,/g, '' );
-		output[ 'id' ] = mission.getElementsByTagName( 'a' )[0].parentNode.id;
-	*/}
+        
+        let td = mission.getElementsByTagName( 'td' );
+        output[ 'image' ]  = td[0].firstChild.src;
+        output[ 'locId' ] = Mission.getLocIdFromImage( output[ 'image' ] );
+        var data = td[2]; //all the text is in this one. It differs per mission.
+        var bf = data.getElementsByTagName( 'b' );
 
-	output[ 'acceptTime' ] = Math.floor( Date.now() / 1000 );
+        if ( output[ 'locId' ] === 0 ) {
+            // if LocId = 0, we have a (expl)transport or vip mission
+            let c = 0; // counter
+            if ( isNaN( parseInt( td[3].textContent.replace('Exp: ','') ) ) ) {
+               // No number in td[3], so VIP transport and 
+               // one bf tag less and no amount.
+               c = c - 1; 
+            } else {
+                output[ 'amount' ] = parseInt( bf[0].textContent );
+            }
+            output[ 'sector' ] = bf[ c+2 ].textContent;
+            output[ 'coords' ] = bf[ c+3 ].textContent.split( /[\[,\]]/g );
+			output[ 'coords' ] = { 
+                'x': parseInt( output[ 'coords' ][0] ), 
+                'y': parseInt( output[ 'coords' ][1] ) 
+                }; //split coords in x and y.
+			output[ 'locId' ] = Sector.getLocation( 
+                Sector.getId( output.sector ), output.coords.x, 
+                output.coords.y );
+            output[ 'timeLimit' ] = parseInt( bf[ c+4 ].textContent );
+      		output[ 'reward' ] = parseInt( bf[ c+5 ].textContent.replace(/,/g,'') );
+            output[ 'deposit' ] = 0;//argh VIP transport and action trip 
+                //have different HTML
+        } else {
+            // LocId !== 0, so a critter, is it targetted or not?
+            if( isNaN( parseInt( td[3].textContent ) ) ) {
+                // no number in td[3], so targetted
+                output[ 'sector' ] = bf[ 1 ].textContent;
+                output[ 'coords' ] = bf[ 2 ].textContent.split( /[\[,\]]/g );
+                output[ 'coords' ] = { 
+                    'x': parseInt( output[ 'coords'][0] ), 
+                    'y': parseInt( output[ 'coords'][1] ) 
+                    }; //split coords in x and y.
+                output[ 'locId' ] = Sector.getLocation( 
+                    Sector.getId( output.sector ), output.coords.x, 
+                    output.coords.y );
+                output[ 'timeLimit' ] = parseInt( bf[ 3 ].textContent );
+                output[ 'reward'] = parseInt( bf[ 4 ].textContent.replace(/,/g,'') );
+            } else {
+                // number in td[3], so not targetted.
+                output[ 'amount' ] = parseInt( td[3].textContent );
+                output[ 'amountDone'] = 0;
+                output[ 'timeLimit'] = parseInt( bf[2].textContent );
+                output[ 'reward' ] = parseInt( bf[1].textContent.replace(/,/,'') );
+            }
+            output[ 'deposit' ] = parseInt( 
+                data.getElementsByTagName( 'font' )[0].textContent
+                .split(/:/g)[1]
+                .split(/ /g)[1].replace(/,/g,'') 
+                );        
+        }
+        output[ 'id' ] = mission.getElementsByTagName( 'div' )[0].id;
+    } else {
+        // Non-premium jobs page.
+        let th = mission.getElementsByTagName( 'th' );
+        if ( ['F','E','U' ].indexOf( th[0].textContent[1] ) !== -1 ) {
+            output[ 'faction' ] = th[0].textContent[1].toLowerCase();
+            output[ 'type' ] = th[0].textContent.split(/:/g)[1][2];
+        } else {
+            output[ 'faction' ] = 'n';
+            output[ 'type' ] = th[0].textContent[1];
+        }            
+        let td = mission.getElementsByTagName( 'td' );
+        let bf = mission.getElementsByTagName( 'b' );
+        // console.log( bf.length );
+        output[ 'image' ] = td[0].firstChild.src;
+        output[ 'locId' ] = Mission.getLocIdFromImage( output[ 'image' ] );
+        
+        if( output.locId < 0 ) {
+            // critter
+            if( bf.length === 6 ) {
+                // bf size 6 means a untargetted critter 
+                output[ 'locId' ] = Mission.getLocIdFromImage( output.image );
+                output[ 'timeLimit' ] = parseInt( bf[2].textContent );
+                let temp = bf[3].textContent.split(/\//g);
+                output[ 'amountDone' ] = parseInt( temp[0] );
+                output[ 'amount' ] = parseInt( temp[1] );
+                output[ 'reward' ] = parseInt( bf[1].textContent.replace(/,/g,'') );
+                output[ 'deposit' ] = parseInt( 
+                        mission.getElementsByTagName( 'font' )[0].textContent
+                        .split(/:/g)[1]
+                        .split(/ /g)[1].replace(/,/g,'') 
+                        );
+                
+            } 
+            if( bf.length === 8 ) {
+                // bf size 8 means a targetted critter 
+                output[ 'sector' ] = bf[2].textContent;
+                output[ 'coords' ] = bf[3].textContent.split( /[\[,\]]/g );
+                output[ 'coords' ] = { 
+                    'x': parseInt( output[ 'coords'][0] ), 
+                    'y': parseInt( output[ 'coords'][1] ) 
+                    }; //split coords in x and y.
+                output[ 'locId' ] = Sector.getLocation( 
+                    Sector.getId( output.sector ), output.coords.x, 
+                    output.coords.y );
+                output[ 'timeLimit' ] = parseInt( bf[4].textContent );
+                output[ 'reward' ] = parseInt( bf[5].textContent.replace(/,/g,'') );
+                output[ 'deposit' ] = parseInt( 
+                        mission.getElementsByTagName( 'font' )[0].textContent
+                        .split(/:/g)[1]
+                        .split(/ /g)[1].replace(/,/g,'') 
+                        );
+            } 
+        } else {
+            // no critter
+            if ( bf.length === 9 && output.image.indexOf( 'vip' ) === -1 ) {
+                // bf size 9 means a package/expl transport
+                output[ 'amount' ] = parseInt( bf[1].textContent );
+                output[ 'sector' ] = bf[3].textContent;
+                output[ 'coords' ] = bf[4].textContent.split( /[\[,\]]/g );
+                output[ 'coords' ] = { 
+                    'x': parseInt( output[ 'coords'][0] ), 
+                    'y': parseInt( output[ 'coords'][1] ) 
+                    }; //split coords in x and y.
+                output[ 'locId' ] = Sector.getLocation( 
+                    Sector.getId( output.sector ), output.coords.x, 
+                    output.coords.y );
+                output[ 'timeLimit' ] = parseInt( bf[5].textContent );
+                output[ 'reward' ] = parseInt( bf[6].textContent.replace(/,/g,'') );
+                output[ 'deposit' ] = parseInt( 
+                        mission.getElementsByTagName( 'font' )[0].textContent
+                        .split(/:/g)[1]
+                        .split(/ /g)[1].replace(/,/g,'') 
+                        );
+            } else if ( bf.length === 9 ) {
+                // bf size 9 and vip in the image means VIP action trip.
+                output[ 'amount' ] = parseInt( bf[1].textContent );
+                output[ 'sector' ] = bf[3].textContent;
+                output[ 'coords' ] = bf[4].textContent.split( /[\[,\]]/g );
+                output[ 'coords' ] = { 
+                    'x': parseInt( output[ 'coords'][0] ), 
+                    'y': parseInt( output[ 'coords'][1] ) 
+                    }; //split coords in x and y.
+                output[ 'locId' ] = Sector.getLocation( 
+                    Sector.getId( output.sector ), output.coords.x, 
+                    output.coords.y );
+                output[ 'timeLimit' ] = parseInt( bf[5].textContent );
+                output[ 'reward' ] = parseInt( bf[6].textContent.replace(/,/g,'') );
+                output[ 'deposit' ] = parseInt( 
+                        mission.getElementsByTagName( 'font' )[1].textContent
+                        .split(/:/g)[1]
+                        .split(/ /g)[1].replace(/,/g,'') 
+                        );
+            }
+            if ( bf.length === 8 ) {
+                // bf size 8 means a VIP transport.
+                output[ 'sector' ] = bf[2].textContent;
+                output[ 'coords' ] = bf[3].textContent.split( /[\[,\]]/g );
+                output[ 'coords' ] = { 
+                    'x': parseInt( output[ 'coords'][0] ), 
+                    'y': parseInt( output[ 'coords'][1] ) 
+                    }; //split coords in x and y.
+                output[ 'locId' ] = Sector.getLocation( 
+                    Sector.getId( output.sector ), output.coords.x, 
+                    output.coords.y );
+                output[ 'timeLimit' ] = parseInt( bf[4].textContent );
+                output[ 'reward' ] = parseInt( bf[5].textContent.replace(/,/g,'') );
+                output[ 'deposit' ] = parseInt( 
+                        mission.getElementsByTagName( 'font' )[1].textContent
+                        .split(/:/g)[1]
+                        .split(/ /g)[1].replace(/,/g,'') 
+                        );
+            }
+        }
+        
+        // output[ 'acceptTime' ] = bf[8];
+    }    
+
+	if ( bbpage ) {
+        output[ 'acceptTime' ] = Math.floor( Date.now() / 1000 );
+    }
+    // console.log(output);
 	return output
 }
 
@@ -200,16 +349,16 @@ Mission.clearMissionStorage = function( callback, list ) {
 }
 
 Mission.updateMission = function ( mission, data ) {
-	// If new mission is taken this function is called. Futhermore, it is run multiple times
-	// when accessing the jobs page. 
-	// Call function with the a mission from Mission.parseMission, and the object containing the 
-	// current data on the location and the mission list.
-
+	// If new mission is taken this function is called. 
+    // Futhermore, it is ran multiple times when accessing the jobs page. 
+	// Call function with the a mission from Mission.parseMission, and the 
+    // object containing the current data on the location, and the mission list.
 	if ( !data[ ukey + 'mlist' ] ) {
 		// first time, let's be gentle.
 		data[ ukey + 'mlist' ] = [];
 	}
-	
+    // data[ ukey + 'mlist' ] = []; //dev mode
+    
 	if (!data[ ukey + 'm' + mission.locId ]) {
 		// New mission to this location!
 		mission.total = 1;
@@ -225,18 +374,23 @@ Mission.updateMission = function ( mission, data ) {
 			data[ ukey + 'm' + mission.locId ].amount = mission.amount;
 		}
 		if ( ( data[ ukey + 'm' + mission.locId ].amount - data[ ukey + 'm' + mission.locId ].amountDone ) < mission.amount ) {
-			data[ ukey + 'm' + mission.locId ].amountDone = 0;
+			data[ ukey + 'm' + mission.locId ].amountDone = mission.amountDone;
 		}
 		data[ ukey + 'm' + mission.locId ].reward += mission.reward;
 		data[ ukey + 'm' + mission.locId ].deposit += mission.deposit;
+   		data[ ukey + 'm' + mission.locId ].total += 1;
 	}
 	return data
 }
 	
 Mission.removeMission = function( data, loc ) {
-	// Removes the id from the mission list, removes the mission from storage and saves the updated mission list. 
-	// Call with an object /data/, which contains the mlist. Add the location if it is not in the object /data/.
-	if ( !loc ) { //so we can call it in one chrome.get call from the planetsb.js, which just gives a single parameter, and loc is included in the data. 
+	// Removes the id from the mission list, removes the mission from storage 
+    // and saves the updated mission list. 
+	// Call with an object /data/, which contains the mlist. 
+    // Add the location if it is not in the object /data/.
+	if ( !loc ) { 
+    // so we can call it in one chrome.get call from the planetsb.js, 
+    // which just gives a single parameter, and loc is included in the data. 
 		loc = data[ Universe.getName( document )[0] + 'loc' ];
 	}
 
@@ -260,8 +414,10 @@ Mission.getLocIdFromImage = function ( img ) {
 }
 
 Mission.gotOne = function ( locId, list, missiondata ) {
-	// Is called when an npc is killed, from a chrome.storage function with location and mlist bound to it.
-	// Function either updates the NPC amount shot, or removes the mission to this NPC because it is completed.
+	// Is called when an npc is killed, from a chrome.storage function with 
+    // location and mlist bound to it.
+	// Function either updates the NPC amount shot, or removes the mission to 
+    // this NPC because it is completed.
 	var mission = missiondata[ ukey + 'm' + locId ];
 	mission.amountDone += 1;
 	if ( mission.amountDone >= mission.amount ) {

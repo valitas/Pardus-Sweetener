@@ -538,8 +538,8 @@ function missionUpdate( data ) {
 	var image = b.parentNode.getElementsByTagName( 'img' )[ 0 ].src;
 	var locId = Mission.getLocIdFromImage( image );
 	if ( !( locId < 0 ) ) {
-		// critter is unknown, could be you are dead, or a pilot, let's leave you 
-		// noob/murderer* 
+		// critter is unknown, could be you are dead, or a pilot, let's leave,  
+		// you noob/murderer* 
 		// (* cross out what is not applicable)
 		return;
 	}
