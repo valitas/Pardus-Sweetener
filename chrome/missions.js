@@ -219,7 +219,6 @@ Mission.parseMission = function( mission, premium, bbpage ) {
     } else {
         // Non-premium jobs page.
         let th = mission.getElementsByTagName( 'th' );
-        th[0].textContent[0] === ' ' ? output[ 'faction' ] = 'n' :
         if ( ['F','E','U' ].indexOf( th[0].textContent[1] ) !== -1 ) {
             output[ 'faction' ] = th[0].textContent[1].toLowerCase();
         } else {
