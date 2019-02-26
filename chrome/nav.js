@@ -114,6 +114,7 @@ function start() {
 	cs.addKey( 'navBountyBoardLink' );
 	cs.addKey( 'navFlyCloseLink' );
 	cs.addKey( 'pathfindingEnabled' );
+	cs.addKey( 'navigationCoordinates' );
 	cs.addKey( 'clockD' );
 	cs.addKey( 'displayNavigationEnabled' );
 	
@@ -148,6 +149,7 @@ function applyConfiguration() {
 		updateMinimap();
 
 		updatePathfinding();
+		updateNavigationGrid();
 
 		let ukey = Universe.getServer( doc ).substr( 0, 1 );
 		if ( config.displayNavigationEnabled ) {
@@ -212,7 +214,7 @@ function onGameMessage( event ) {
 	updateLocationLinks();
 
 	updateMinimap();
-
+	updateNavigationGrid();
 	updatePathfinding();
 	addDrugTimer();
 	addStimTimer();
@@ -590,6 +592,16 @@ function updatePathfinding() {
 	navtable.addEventListener( 'mouseout', clearpath, false);
 }
 
+//manages the navigation co-ords grid.
+function updateNavigationGrid() {
+	if( !config.navigationCoordinates) {
+		//remove the navgiation grid, reset the nav area
+		return;
+	}
+	//asserts if there is already a grid, and reapplies
+	//grid is made by adding table 
+}
+
 // Given the TD corresponding to a tile, update its style and that of the image
 // inside it for path highlighting.
 
@@ -653,6 +665,11 @@ function showpath( event ){
 	if( !cell )
 		return;
 
+	//checks if the cell's stringified ID contains nav field. 
+	//captures null IDs for compatibility with navigation coords, hopefully.
+	if( !(cell.getAttribute('id') + "").includes('tdNavField') ) {
+		return;
+	}
 	if( cell.classList.contains('navImpassable') )
 		return;
 

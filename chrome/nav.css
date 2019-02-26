@@ -22,3 +22,26 @@ div.sweetener-mission {
 	text-align: center;
 	cursor: default;
 }
+
+div.coordGridTop {
+	padding-right: 1px;
+	position: relative;
+	left: 15px;
+	width: 64px;
+	height: 0;
+	display: inline-block;
+	text-align: center;
+	margin-top: -8px;
+}
+
+div.coordGridLeft {
+	position: relative;
+	top: 8px;
+	left: 12px;
+}
+
+div.coordGridRight {
+	position: relative;
+	top: 8px;
+	left: -12px;
+}

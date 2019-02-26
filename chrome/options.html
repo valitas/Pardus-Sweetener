@@ -12,13 +12,6 @@
 
    <div>
     <p>
-     <input type="checkbox" id="pathfindingEnabled">
-     <label for="pathfindingEnabled">
-      Enable highlighting of the ship path
-     </label>
-    </p>
-
-    <p>
      <input type="checkbox" id="navShipLinks">
      <label for="navShipLinks">
       Add links to attack and trade with other ships on your tile
@@ -86,8 +79,20 @@
   </section>
 
   <section>
-   <h3>Minimap settings</h3>
+   <h3>Nav & Minimap settings</h3>
    <div>
+
+    <p>
+     <input type="checkbox" id="pathfindingEnabled">
+     <label for="pathfindingEnabled">
+      Enable highlighting of the ship path in nav area.
+     </label>
+     <input type="checkbox" id="navigationCoordinates">
+     <label for="navigationCoordinates">
+      Add a coordinates grid to nav area.
+     </label>
+    </p>
+
      <input type="checkbox" id="miniMap">
      <label for="miniMap">
       Show a small map of the current sector
@@ -101,7 +106,7 @@
      <br>
      <input type="checkbox" id="miniMapNavigation">
      <label for="miniMapNavigation">
-      Calculate travel cost and optimal route when hovering over the minimap
+      Calculate travel cost and route when hovering over the minimap
      </label>
 	 <br/>
 	 <input type="checkbox" id="displayNavigationEnabled">
