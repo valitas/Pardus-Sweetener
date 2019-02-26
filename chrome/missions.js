@@ -170,7 +170,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
             if ( isNaN( parseInt( td[3].textContent.replace('Exp: ','') ) ) ) {
                // No number in td[3], so VIP transport and 
                // one bf tag less and no amount.
-               c = c-1; 
+               c = c - 1; 
             } else {
                 output[ 'amount' ] = parseInt( bf[0].textContent );
             }
@@ -221,8 +221,10 @@ Mission.parseMission = function( mission, premium, bbpage ) {
         let th = mission.getElementsByTagName( 'th' );
         if ( ['F','E','U' ].indexOf( th[0].textContent[1] ) !== -1 ) {
             output[ 'faction' ] = th[0].textContent[1].toLowerCase();
+            output[ 'type' ] = th[0].textContent.split(/:/g)[1][2];
         } else {
-            output [ 'faction' ] = 'n';
+            output[ 'faction' ] = 'n';
+            output[ 'type' ] = th[0].textContent[1];
         }            
         let td = mission.getElementsByTagName( 'td' );
         let bf = mission.getElementsByTagName( 'b' );
@@ -238,7 +240,6 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                 output[ 'timeLimit' ] = parseInt( bf[2].textContent );
                 let temp = bf[3].textContent.split(/\//g);
                 output[ 'amountDone' ] = parseInt( temp[0] );
-               // console.log(temp,output);
                 output[ 'amount' ] = parseInt( temp[1] );
                 output[ 'reward' ] = parseInt( bf[1].textContent.replace(/,/g,'') );
                 output[ 'deposit' ] = parseInt( 
