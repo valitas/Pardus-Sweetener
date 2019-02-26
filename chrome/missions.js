@@ -220,10 +220,14 @@ Mission.parseMission = function( mission, premium, bbpage ) {
         // Non-premium jobs page.
         let th = mission.getElementsByTagName( 'th' );
         th[0].textContent[0] === ' ' ? output[ 'faction' ] = 'n' :
-            output [ 'faction' ] = th[0].textContent[0].toLowerCase(); 
+        if ( ['F','E','U' ].indexOf( th[0].textContent[1] ) !== -1 ) {
+            output[ 'faction' ] = th[0].textContent[1].toLowerCase();
+        } else {
+            output [ 'faction' ] = 'n';
+        }            
         let td = mission.getElementsByTagName( 'td' );
         let bf = mission.getElementsByTagName( 'b' );
-     //   console.log( bf.length );
+        console.log( bf.length );
         output[ 'image' ] = td[0].firstChild.src;
         output[ 'locId' ] = Mission.getLocIdFromImage( output[ 'image' ] );
         
@@ -265,24 +269,66 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                         );
             } 
         } else {
-            // bf size 9 means a package transport.
-            output[ 'amount' ] = parseInt( bf[1].textContent );
-            output[ 'sector' ] = bf[3].textContent;
-            output[ 'coords' ] = bf[4].textContent.split( /[\[,\]]/g );
-            output[ 'coords' ] = { 
-                'x': parseInt( output[ 'coords'][0] ), 
-                'y': parseInt( output[ 'coords'][1] ) 
-                }; //split coords in x and y.
-            output[ 'locId' ] = Sector.getLocation( 
-                Sector.getId( output.sector ), output.coords.x, 
-                output.coords.y );
-            output[ 'timeLimit' ] = parseInt( bf[5].textContent );
-            output[ 'reward' ] = parseInt( bf[6].textContent.replace(/,/g,'') );
-            output[ 'deposit' ] = parseInt( 
-                    mission.getElementsByTagName( 'font' )[0].textContent
-                    .split(/:/g)[1]
-                    .split(/ /g)[1].replace(/,/g,'') 
-                    );
+            // no critter
+            if ( bf.length === 9 && output.image.indexOf( 'vip' ) === -1 ) {
+                // bf size 9 means a package/expl transport
+                output[ 'amount' ] = parseInt( bf[1].textContent );
+                output[ 'sector' ] = bf[3].textContent;
+                output[ 'coords' ] = bf[4].textContent.split( /[\[,\]]/g );
+                output[ 'coords' ] = { 
+                    'x': parseInt( output[ 'coords'][0] ), 
+                    'y': parseInt( output[ 'coords'][1] ) 
+                    }; //split coords in x and y.
+                output[ 'locId' ] = Sector.getLocation( 
+                    Sector.getId( output.sector ), output.coords.x, 
+                    output.coords.y );
+                output[ 'timeLimit' ] = parseInt( bf[5].textContent );
+                output[ 'reward' ] = parseInt( bf[6].textContent.replace(/,/g,'') );
+                output[ 'deposit' ] = parseInt( 
+                        mission.getElementsByTagName( 'font' )[0].textContent
+                        .split(/:/g)[1]
+                        .split(/ /g)[1].replace(/,/g,'') 
+                        );
+            } else if ( bf.length === 9 ) {
+                // bf size 9 and vip in the image means VIP action trip.
+                output[ 'amount' ] = parseInt( bf[1].textContent );
+                output[ 'sector' ] = bf[3].textContent;
+                output[ 'coords' ] = bf[4].textContent.split( /[\[,\]]/g );
+                output[ 'coords' ] = { 
+                    'x': parseInt( output[ 'coords'][0] ), 
+                    'y': parseInt( output[ 'coords'][1] ) 
+                    }; //split coords in x and y.
+                output[ 'locId' ] = Sector.getLocation( 
+                    Sector.getId( output.sector ), output.coords.x, 
+                    output.coords.y );
+                output[ 'timeLimit' ] = parseInt( bf[5].textContent );
+                output[ 'reward' ] = parseInt( bf[6].textContent.replace(/,/g,'') );
+                output[ 'deposit' ] = parseInt( 
+                        mission.getElementsByTagName( 'font' )[1].textContent
+                        .split(/:/g)[1]
+                        .split(/ /g)[1].replace(/,/g,'') 
+                        );
+            }
+            if ( bf.length === 8 ) {
+                // bf size 8 means a VIP transport.
+                output[ 'sector' ] = bf[2].textContent;
+                output[ 'coords' ] = bf[3].textContent.split( /[\[,\]]/g );
+                output[ 'coords' ] = { 
+                    'x': parseInt( output[ 'coords'][0] ), 
+                    'y': parseInt( output[ 'coords'][1] ) 
+                    }; //split coords in x and y.
+                output[ 'locId' ] = Sector.getLocation( 
+                    Sector.getId( output.sector ), output.coords.x, 
+                    output.coords.y );
+                output[ 'timeLimit' ] = parseInt( bf[4].textContent );
+                output[ 'reward' ] = parseInt( bf[5].textContent.replace(/,/g,'') );
+                output[ 'deposit' ] = parseInt( 
+                        mission.getElementsByTagName( 'font' )[1].textContent
+                        .split(/:/g)[1]
+                        .split(/ /g)[1].replace(/,/g,'') 
+                        );
+
+            }
         }
         
         // output[ 'acceptTime' ] = bf[8];
@@ -291,6 +337,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 	if ( bbpage ) {
         output[ 'acceptTime' ] = Math.floor( Date.now() / 1000 );
     }
+    console.log(output);
 	return output
 }
 
