@@ -40,7 +40,6 @@
 		}
 
 		function clickedMission( premium, mutationList, observer ) {
-            console.log( this,premium, mutationList, observer );
 			if ( this.getElementsByTagName( 'div' )[ this
                 .getElementsByTagName('div').length - 1].textContent 
                 == 'NOT OFFERED' ) {

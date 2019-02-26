@@ -226,7 +226,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
         }            
         let td = mission.getElementsByTagName( 'td' );
         let bf = mission.getElementsByTagName( 'b' );
-        console.log( bf.length );
+        // console.log( bf.length );
         output[ 'image' ] = td[0].firstChild.src;
         output[ 'locId' ] = Mission.getLocIdFromImage( output[ 'image' ] );
         
@@ -326,7 +326,6 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                         .split(/:/g)[1]
                         .split(/ /g)[1].replace(/,/g,'') 
                         );
-
             }
         }
         
@@ -336,7 +335,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 	if ( bbpage ) {
         output[ 'acceptTime' ] = Math.floor( Date.now() / 1000 );
     }
-    console.log(output);
+    // console.log(output);
 	return output
 }
 
