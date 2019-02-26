@@ -332,6 +332,7 @@ Mission.updateMission = function ( mission, data ) {
 		}
 		data[ ukey + 'm' + mission.locId ].reward += mission.reward;
 		data[ ukey + 'm' + mission.locId ].deposit += mission.deposit;
+   		data[ ukey + 'm' + mission.locId ].total += 1;
 	}
 	return data
 }
