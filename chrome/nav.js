@@ -1121,7 +1121,7 @@ function showMissions( data ) {
 					}
 					
 					var a;
-					a = document.evaluate( "../table[contains(@id, " + _navTable.id + ")]//tr/td//a[contains(@onclick, '" + mission.locId + "')]" ,
+					a = document.evaluate( "../table[contains(@id, " + _navTable.id + ")]//tr/td//a[contains(@onclick, '(" + mission.locId + ")')]" ,
 					   _navTable, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
 					   null ).singleNodeValue;
 					//catches for transport targets, only applies if the mission target is
