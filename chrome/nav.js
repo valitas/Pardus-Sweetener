@@ -1085,7 +1085,6 @@ function showMissions( data ) {
 		}
 
 		var _navTable;
-		var stdCommandElement;
 
 		for( var i = 0; i < list.length; i++ ) {
 			var mission = data[ ukey + 'm' + list[ i ] ];
@@ -1122,17 +1121,17 @@ function showMissions( data ) {
 					}
 					
 					var a;
-					if (userloc == mission.locId) {
-						if (!stdCommandElement) {
-							stdCommandElement = document.getElementById("stdCommand");
-						}
-						a = stdCommandElement;
-					} 
-					else {
-						a = document.evaluate( "../table[contains(@id, " + _navTable.id + ")]//tr/td//a[contains(@onclick, '" + mission.locId + "')]" ,
-								   _navTable, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
-								   null ).singleNodeValue;	
+					a = document.evaluate( "../table[contains(@id, " + _navTable.id + ")]//tr/td//a[contains(@onclick, '" + mission.locId + "')]" ,
+					   _navTable, null, XPathResult.ANY_UNORDERED_NODE_TYPE,
+					   null ).singleNodeValue;
+					//catches for transport targets, only applies if the mission target is
+					//where the pilot is and
+					// there's a standard command (i.e., starbase/planet -- or building, though those should be
+					//irrelevant here)
+					if (a == null && userloc == mission.locId) {
+						a = document.getElementById("stdCommand");
 					}
+
 					if ( a ) {
 						var reddiv = document.createElement( 'div' );
 						reddiv.className = 'sweetener-mission';
