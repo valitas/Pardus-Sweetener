@@ -679,7 +679,9 @@ function showpath( event ){
 			n += -Math.sign(selectedy)*navSizeHor;
 
 		var cur_tile = navidx[ 'tdNavField' + n ];
-		highlightTileInPath( cur_tile );
+		if (!cur_tile.classList.contains('navImpassable')) {
+			highlightTileInPath( cur_tile );
+		}
 	}
 }
 
