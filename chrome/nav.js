@@ -593,8 +593,8 @@ function updatePathfinding() {
 }
 
 //manages the navigation co-ords grid.
-function updateNavigationGrid() {
 
+function updateNavigationGrid() {
 	//yes, pardus is a mess
 	navtable = doc.getElementById( 'navareatransition' );
 	if ( !navtable )
@@ -602,10 +602,8 @@ function updateNavigationGrid() {
 	if ( !navtable )
 		return;
 
-	//console.log("updating navigation grid")
 	if( !config.navigationCoordinates ) {
 		//remove the navgiation grid, reset the nav area
-		//console.log("nav coords not set")
 		Array.from(document.getElementsByClassName("coordGrid")).forEach( f => f.remove() )
 		navtable.parentNode.parentNode.parentNode.style.padding = ""
 		//spaceChart.className = ""; // should remove this but would need to check if it's there first...
@@ -625,73 +623,72 @@ function updateNavigationGrid() {
 		spaceChart.className = "sweetener-grid";
 	}
 
-
 	//adding space, maybe make optional
 	//honestly i find it a bit nauseating
 	//navtable.style.borderSpacing = "1px";
 
-	//removing old grid
+	//removing old griders so we can replace them
+	//they call this "job security"
+	//todo: optimize by reducing number of replacements to only when the pilot actually moves
+	//todo: optimize by only popping and shifting elements as needed?
 	Array.from(document.getElementsByClassName("coordGrid")).forEach( f => f.remove() )
 
-	//
+	//general formatting
 	var _trs = spaceChart.getElementsByTagName("tr")
 	var topD = _trs[0].children[1];
 	var bottomD = _trs[_trs.length-1].children[1];
 	var leftD = _trs[2].children[0];
 	var rightD = _trs[2].children[2];
+	leftD.style.position = "relative";
+	rightD.style.position = "relative";
 
 	//guesstimate nav size
-	//console.log(Array.from(_trs))
-
-	var navAreaDimensions = [ _trs[3].children.length, _trs.length - 4 ];
-	//console.log(navAreaDimensions)
-	//get user's current coordinates
-	var _pilotCoords = getCurrentCoords();
-	var columns = [];
-	for (var i = 0; i < navAreaDimensions[0]; i ++ ) {
-		columns.push(_pilotCoords.col + i - Math.floor(navAreaDimensions[0] / 2))
-	}
-	var rows = []
-	for (var i = 0; i < navAreaDimensions[1]; i ++ ) {
-		rows.push(_pilotCoords.row + i - Math.floor(navAreaDimensions[1] / 2))
-	}
-	
+	var navAreaDimensions = [ _trs[3].children.length, navtable.getElementsByTagName("tr").length ];
+	//in case people play on sizes other than 64
+	//tile sizes are nf = 64, nf96 = 96, nf128 = 128
+	var navTileSize = {'nf' : 64, 'nf96' : 96, 'nf128' : 128}[_trs[3].children[0].getElementsByTagName('img')[0].className];
 	//use nav size to figure out what numbers should be
 	//store the numbers as 2 arrays - one for row (aka y) and one for colum (x)
+	//get user's current coordinates
+	var _pilotCoords = getCurrentCoords();
+	var _columns = [];
+	for (var i = 0; i < navAreaDimensions[0]; i ++ ) {
+		_columns.push(_pilotCoords.col + i - Math.floor(navAreaDimensions[0] / 2))
+	}
+	var _rows = [];
+	for (var i = 0; i < navAreaDimensions[1]; i ++ ) {
+		_rows.push(_pilotCoords.row + i - Math.floor(navAreaDimensions[1] / 2))
+	}
+	
+	//defining girders
+	var topDiv = document.createElement("div");
+	var bottomDiv = document.createElement("div");
+	var leftDiv = document.createElement("div");
+	var rightDiv = document.createElement("div");
+
+	topDiv.className = "coordGrid coordGridTop";
+	bottomDiv.className = "coordGrid coordGridBottom";
+	leftDiv.className = "coordGrid coordGridLeft";
+	rightDiv.className = "coordGrid coordGridRight";
+
+	//dynamic setting spacing. would prefer to inject to CSS rather than per element but oh well.
+	topDiv.style.width = navTileSize + "px";
+	bottomDiv.style.width = navTileSize + "px";
+	leftDiv.style.lineHeight = navTileSize + "px";
+	rightDiv.style.lineHeight = navTileSize + "px";
 	
 	//for all the numbers, add girders (wrong word?) to the nav box area thing
-	
-	//begin adding the numbers for rows and colums
-	//test values
-	var topDiv = document.createElement("div");
-	topDiv.className = "coordGrid coordGridTop";
-	var bottomDiv = document.createElement("div");
-	bottomDiv.className = "coordGrid coordGridBottom";
-
-	var leftDiv = document.createElement("div");
-	leftDiv.className = "coordGrid coordGridRight";
-	var rightDiv = document.createElement("div");
-	rightDiv.className = "coordGrid coordGridRight";
-	
-
-	columns.forEach(e=>{
+	_columns.forEach(e=>{
 		addGirder(e, topDiv, topD)
 		addGirder(e, bottomDiv,bottomD)
 	});
 
-	//add rows divs
-	rows.forEach(e=>{
+	_rows.forEach(e=>{
 		addGirder(e, leftDiv, leftD)
 		addGirder(e, rightDiv,rightD)
 	});
-	
-	//end adding the numbers
 
-	//console.log(topD)
-	//console.log(bottomD)
-
-	//asserts if there is already a grid, and reapplies
-	//grid is made by adding table 
+	//minor helper function
 	function addGirder(number, element, parent) {
 		element.innerText = number;
 		parent.innerHTML += element.outerHTML //thanks i hate this
