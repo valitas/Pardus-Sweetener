@@ -23,9 +23,13 @@ div.sweetener-mission {
 	cursor: default;
 }
 
+div.coordGrid {
+	position: relative;
+}
+
 div.coordGridTop {
 	padding-right: 1px;
-	position: relative;
+	padding-bottom: 1px;
 	left: 15px;
 	width: 64px;
 	height: 0;
@@ -34,14 +38,26 @@ div.coordGridTop {
 	margin-top: -8px;
 }
 
+div.coordGridBottom {
+	padding-right: 1px;
+	padding-bottom: 1px;
+	left: 15px;
+	width: 64px;
+	height: 0;
+	display: inline-block;
+	text-align: center;
+	margin-top: -8px;
+	bottom: 19px;
+    left: -15px;
+
+}
+
 div.coordGridLeft {
-	position: relative;
 	top: 8px;
 	left: 12px;
 }
 
 div.coordGridRight {
-	position: relative;
 	top: 8px;
 	left: -12px;
 }

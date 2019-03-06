@@ -594,12 +594,108 @@ function updatePathfinding() {
 
 //manages the navigation co-ords grid.
 function updateNavigationGrid() {
-	if( !config.navigationCoordinates) {
+
+	//yes, pardus is a mess
+	navtable = doc.getElementById( 'navareatransition' );
+	if ( !navtable )
+		navtable = doc.getElementById( 'navarea' );
+	if ( !navtable )
+		return;
+
+	//console.log("updating navigation grid")
+	if( !config.navigationCoordinates ) {
 		//remove the navgiation grid, reset the nav area
+		//console.log("nav coords not set")
+		Array.from(document.getElementsByClassName("coordGrid")).forEach( f => f.remove() )
+		navtable.parentNode.parentNode.parentNode.style.padding = ""
+		//spaceChart.className = ""; // should remove this but would need to check if it's there first...
+		//navtable.style.borderSpacing = "";
 		return;
 	}
+	var spaceChart = document.getElementById("tdSpaceChart")
+	if (!spaceChart) {
+		//console.log("no spaceChart i guess you're in dock?")
+		return;
+	}
+	
+	if (!spaceChart.className) {
+		//overall style changes
+		//maybe add only to bottom and right?
+		navtable.parentNode.parentNode.parentNode.style.padding = "15px"
+		spaceChart.className = "sweetener-grid";
+	}
+
+
+	//adding space, maybe make optional
+	//honestly i find it a bit nauseating
+	//navtable.style.borderSpacing = "1px";
+
+	//removing old grid
+	Array.from(document.getElementsByClassName("coordGrid")).forEach( f => f.remove() )
+
+	//
+	var _trs = spaceChart.getElementsByTagName("tr")
+	var topD = _trs[0].children[1];
+	var bottomD = _trs[_trs.length-1].children[1];
+	var leftD = _trs[2].children[0];
+	var rightD = _trs[2].children[2];
+
+	//guesstimate nav size
+	//console.log(Array.from(_trs))
+
+	var navAreaDimensions = [ _trs[3].children.length, _trs.length - 4 ];
+	//console.log(navAreaDimensions)
+	//get user's current coordinates
+	var _pilotCoords = getCurrentCoords();
+	var columns = [];
+	for (var i = 0; i < navAreaDimensions[0]; i ++ ) {
+		columns.push(_pilotCoords.col + i - Math.floor(navAreaDimensions[0] / 2))
+	}
+	var rows = []
+	for (var i = 0; i < navAreaDimensions[1]; i ++ ) {
+		rows.push(_pilotCoords.row + i - Math.floor(navAreaDimensions[1] / 2))
+	}
+	
+	//use nav size to figure out what numbers should be
+	//store the numbers as 2 arrays - one for row (aka y) and one for colum (x)
+	
+	//for all the numbers, add girders (wrong word?) to the nav box area thing
+	
+	//begin adding the numbers for rows and colums
+	//test values
+	var topDiv = document.createElement("div");
+	topDiv.className = "coordGrid coordGridTop";
+	var bottomDiv = document.createElement("div");
+	bottomDiv.className = "coordGrid coordGridBottom";
+
+	var leftDiv = document.createElement("div");
+	leftDiv.className = "coordGrid coordGridRight";
+	var rightDiv = document.createElement("div");
+	rightDiv.className = "coordGrid coordGridRight";
+	
+
+	columns.forEach(e=>{
+		addGirder(e, topDiv, topD)
+		addGirder(e, bottomDiv,bottomD)
+	});
+
+	//add rows divs
+	rows.forEach(e=>{
+		addGirder(e, leftDiv, leftD)
+		addGirder(e, rightDiv,rightD)
+	});
+	
+	//end adding the numbers
+
+	//console.log(topD)
+	//console.log(bottomD)
+
 	//asserts if there is already a grid, and reapplies
 	//grid is made by adding table 
+	function addGirder(number, element, parent) {
+		element.innerText = number;
+		parent.innerHTML += element.outerHTML //thanks i hate this
+	}
 }
 
 // Given the TD corresponding to a tile, update its style and that of the image
