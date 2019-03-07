@@ -168,7 +168,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
             // if LocId = 0, we have a (expl)transport or vip mission
             let c = 0; // counter
             if ( isNaN( parseInt( td[3].textContent.replace('Exp: ','') ) ) ) {
-               // No number in td[3], so VIP transport and 
+               // No number in td[3], so VIP transport and or WH clean,
                // one bf tag less and no amount.
                c = c - 1; 
             } else {
@@ -305,6 +305,25 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                 output[ 'reward' ] = parseInt( bf[6].textContent.replace(/,/g,'') );
                 output[ 'deposit' ] = parseInt( 
                         mission.getElementsByTagName( 'font' )[1].textContent
+                        .split(/:/g)[1]
+                        .split(/ /g)[1].replace(/,/g,'') 
+                        );
+            } 
+            if ( bf.length === 7 ) {
+                // WH clear      
+                output[ 'sector' ] = bf[1].textContent;
+                output[ 'coords' ] = bf[2].textContent.split( /[\[,\]]/g );
+                output[ 'coords' ] = { 
+                    'x': parseInt( output[ 'coords'][0] ), 
+                    'y': parseInt( output[ 'coords'][1] ) 
+                    }; //split coords in x and y.
+                output[ 'locId' ] = Sector.getLocation( 
+                    Sector.getId( output.sector ), output.coords.x, 
+                    output.coords.y );
+                output[ 'timeLimit' ] = parseInt( bf[3].textContent );
+                output[ 'reward' ] = parseInt( bf[4].textContent.replace(/,/g,'') );
+                output[ 'deposit' ] = parseInt( 
+                        mission.getElementsByTagName( 'font' )[0].textContent
                         .split(/:/g)[1]
                         .split(/ /g)[1].replace(/,/g,'') 
                         );

@@ -3,6 +3,7 @@ td.navClear { position: relative; }
 td.navBuilding { position: relative; }
 td.navPlanet {position: relative;}
 td.navStarbase {position: relative;}
+td.navWormhole {position: relative;}
 
 /* Text in a circle.  Or oval, sausage-like thingie, if it's a long text. */
 div.sweetener-mission {
@@ -21,4 +22,20 @@ div.sweetener-mission {
 	padding: 2px;
 	text-align: center;
 	cursor: default;
+}
+
+td.sweetener-routeplanner {
+    background-color: rgb( 255, 105, 180 ); 
+}
+.sweetener-routeplanner a {
+    opacity: 0.85;
+}
+
+.sweetener-routeplanner img {
+    position: absolute;
+    background-color: rgba(255, 105, 180, 0.15);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }

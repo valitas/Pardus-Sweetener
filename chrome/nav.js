@@ -86,13 +86,10 @@ var config, configured, userloc, ajax, shiplinks,
 // references to the tiles that have been highlighted, so we can undo the
 // highlighting quickly.  navscanXEval is an XPathEvaluator for quickly finding
 // all TDs of a a table; it's precompiled because we do this many times, every
-// time we update tileidx.
-var navtable, navidx, highlightedTiles, navTilesXEval;
+// time we update tileidx. `highlightedRPTiles` is as above, but for the
+// routeplanning.
+var navtable, navidx, highlightedTiles, navTilesXEval, highlightedRPTiles;
 
-//these fields must match those in options.js and map.js
-var fields = ["Space", "Nebula", "Virus", "Energy", "Asteroid", "Exotic"];
-var travelCosts;
-  
 //milliseconds
 var oneHour = 3600000;
 var halfHour = 1800000;
@@ -116,15 +113,12 @@ function start() {
 	cs.addKey( 'pathfindingEnabled' );
 	cs.addKey( 'clockD' );
 	cs.addKey( 'displayNavigationEnabled' );
-	
-	//for minimap navigation
-	var uni = ({a:"Artemis", o:"Orion", p:"Pegasus"})[Universe.getServer(doc).substr(0, 1)];
-	fields.forEach(function (f) {
-		cs.addKey( 'travelCost' + uni + f);
-	});
 	cs.addKey( 'miniMapNavigation' );
 	cs.addKey( 'clockStim' );
 	cs.addKey( 'missionDisplay' );
+    
+    let ukey = Universe.getServer( document ).substr( 0, 1 );
+    cs.addKey( ukey + 'storedPath' );
 
 	shiplinks = new ShipLinks.Controller
 		( 'table/tbody/tr/td[position() = 2]/a', matchShipId );
@@ -151,7 +145,7 @@ function applyConfiguration() {
 
 		let ukey = Universe.getServer( doc ).substr( 0, 1 );
 		if ( config.displayNavigationEnabled ) {
-			let name = ukey + 'savedPath';
+			let name = ukey + 'storedPath';
 			chrome.storage.local.get( name , updateRoutePlanner );
 		}
 		if ( config.missionDisplay ) {
@@ -219,7 +213,7 @@ function onGameMessage( event ) {
 
 	let ukey = Universe.getServer ( doc ).substr( 0, 1 );
 	if ( config.displayNavigationEnabled ) {
-		let name = ukey + 'savedPath';
+		let name = ukey + 'storedPath';
 		chrome.storage.local.get( name , updateRoutePlanner );
 	}
 	if ( config.missionDisplay ) {
@@ -519,19 +513,13 @@ function configureMinimap( sector ) {
 	// just configure it, and remember the pertinent variables.
 	minimap = new SectorMap();
 	minimap.setCanvas( canvas, div );
-	if (config.miniMapNavigation) {
-		//setup travel costs to pass to minimap
-		var travelCosts = {};
-		var uni = ({a:"Artemis", o:"Orion", p:"Pegasus"})[Universe.getServer(doc).substr(0, 1)];
-		fields.forEach(function (f) {
-			travelCosts[f] = config["travelCost" + uni + f];
-		});
-
-		minimap.enablePathfinding(travelCosts);
-	}
 	minimap.configure( sector, size );
 	minimapContainer = container;
 	minimapSector = sector;
+
+	if (config.miniMapNavigation) {
+		minimap.enablePathfinding();
+	}
 
 	// And draw the map.
 	refreshMinimap();
@@ -593,7 +581,7 @@ function updatePathfinding() {
 // Given the TD corresponding to a tile, update its style and that of the image
 // inside it for path highlighting.
 
-function highlightTileInPath( td, type ) {
+function highlightTileInPath( td ) {
 	// Pardus does things messy, as usual.  If a tile is empty, then pardus
 	// inserts the background image as a IMG child of the TD.  If the tile
 	// is not empty though (has a building or NPC), then the background
@@ -603,23 +591,23 @@ function highlightTileInPath( td, type ) {
 	var bimg = td.style.backgroundImage;
 	if( bimg ) {
 		// don't do this twice
-		if( !HIGHLIGHTED_RX.test(bimg) )
-			if (!type) {
+		if( !HIGHLIGHTED_RX.test(bimg) ) {
+			// if (!type) {
 				td.style.backgroundImage =
-				'linear-gradient(to bottom, rgba(255,105,180,0.15), rgba(255,105,180,0.15)),' +
-				bimg;
-			} else {
-				td.style.backgroundImage =
-				'radial-gradient(rgba(255,105,180,0.15),rgba(255,125,180,0.15)), ' +
-				bimg;
+				'linear-gradient(to bottom, rgba(255,105,180,0.15), rgba(255,105,180,0.15)),' 
+                + bimg;
+			// } else {
+				// td.style.backgroundImage =
+				// 'radial-gradient(rgba(255,105,180,0.15),rgba(255,125,180,0.15)), '
+				// + bimg;
 			}
 	}
 	else {
-			if ( !type ) {
-				if ( !td.style.backgroundColor ) 
+			// if ( !type ) {
+				if ( !td.style.backgroundColor ) {
 					td.style.backgroundColor = 'rgba(255,105,180,1)';
-			} else {
-				td.style.backgroundColor = 'rgba(255,125,180,1)';
+			// } else {
+				// td.style.backgroundColor = 'rgba(255,125,180,1)';
 			}
 			var img = td.firstElementChild;
 			img.style.opacity = 0.85;
@@ -634,15 +622,13 @@ function clearHighlightTileInPath( td ) {
 	if( bimg ) {
 		var m = UNHIGHLIGHT_RX.exec( bimg );
 		if( m ) {
-			td.style.backgroundImage = m[0].replace( 'linear-gradient(rgba(255, 105, 180, 0.15), rgba(255, 105, 180, 0.15)),', '');
+			td.style.backgroundImage = m[1];
 		}
 	}
 	else {
-		if ( td.style.backgroundColor === 'rgb(255, 105, 180)' ) {
-			td.style.backgroundColor = null;
-			var img = td.firstElementChild;
-			img.style.opacity = null;
-		}
+        td.style.backgroundColor = null;
+        var img = td.firstElementChild;
+        img.style.opacity = null;
 	}
 }
 
@@ -1002,8 +988,18 @@ function getTimeDiff ( time1, time2 ) {
 
 //planned route highlighter
 function updateRoutePlanner( data ) {
+    if ( highlightedRPTiles ) {
+        // Clear up first
+        for( let i=0; i < highlightedRPTiles.length; i++ ) {
+            highlightedRPTiles[i].setAttribute( 'class', 
+                highlightedRPTiles[i].getAttribute( 'class' ).replace(
+                'sweetener-routeplanner', '') );
+        }
+    }
+    highlightedRPTiles = [];
+        
 	let ukey = Universe.getServer ( doc ).substr( 0, 1 );
-	let idList = data[ ukey + 'savedPath' ];
+	let idList = data[ ukey + 'storedPath' ];
 
 	if ( !idList || idList.length === 0 )
 		return;
@@ -1027,7 +1023,8 @@ function updateRoutePlanner( data ) {
 	idList.sort();
 	for ( var j = 0; j < a.length; j++ ) {
 		if ( a[ j ].getAttribute( 'onclick' ) !== null && idList.includes( parseInt( a[ j ].getAttribute( 'onclick' ).split(/[()]/g)[1] ) ) ) {
-			highlightTileInPath( a[ j ].parentNode, 'route' );
+            a[ j ].parentNode.setAttribute( 'class' , a[ j ].parentNode.getAttribute( 'class' ) + ' sweetener-routeplanner' );
+			highlightedRPTiles.push( a[ j ].parentNode );
 		}
 	}
 }
@@ -1111,9 +1108,14 @@ function showMissions( data ) {
 			//might be a bit slow for people who have lots of missions?
 			if (mission.locId) {
 				if ( Sector.getIdFromLocation( userloc ) === Sector.getIdFromLocation( mission.locId ) ) {
-					// let coords = Sector.getCoords( Sector.getIdFromLocation( mission.locId ), mission.locId );
-					// minimap.markTile( minimap.get2DContext(), coords.x, coords.y ,'"#fff"');
-					if ( !_navTable ) {
+					
+                    if ( minimap ) {
+                        // display of red mission markers
+                        let coords = Sector.getCoords( Sector.getIdFromLocation( mission.locId ), mission.locId );
+                        minimap.markTile( minimap.get2DContext(), coords.x, coords.y ,'#ff0000');
+					}
+                    
+                    if ( !_navTable ) {
 						_navTable = document.getElementById( 'navareatransition' );
 						if (!_navTable) {
 							_navTable = document.getElementById( 'navarea' );

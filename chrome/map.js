@@ -19,6 +19,14 @@ SectorMap.prototype = {
 
 	configure: function( sector, maxPixelSize ) {
 		this.sector = sector;
+		this.ukey = Universe.getServer ( document ).substr( 0, 1 );
+        // `savedPath` is the path saved in this script, used to plot the 
+        // route you might take and are investigating with your mouse.
+        // `storedPath` is the path you decide to follow, by clicking the mouse,
+        // and this subsequently *stored* in chrome.storage. This path is 
+        // displayed on the nav area.
+        this.savedPath = [];
+        this.storedPath = [];
 
 		var cols = sector.width, rows = sector.height, tiles = sector.tiles;
 
@@ -59,6 +67,20 @@ SectorMap.prototype = {
 			this.initCanvas();
 		}
 		
+        // re-adding stored path to our map.
+        chrome.storage.local.get( [ this.ukey + 'storedPath' ], getPath.bind( this ) );     
+        function getPath( data ) {
+            if ( data[ this.ukey + 'storedPath' ] ) {
+               for ( var i = 0; i < data[ this.ukey + 'storedPath' ].length; i++ ) {
+                    let coords = Sector.getCoords( 
+                            Sector.getId( this.sector.sector ),
+                            data[ this.ukey + 'storedPath' ][i] );
+                    this.storedPath.push ( [coords.x, coords.y] );
+                }
+            }
+            this.drawSavedPath( this.get2DContext(), this.storedPath );
+        }
+
 		var universe = Universe.getServer( document );
 		chrome.storage.local.get( [ universe + 'advSkills' ], setVisc.bind( this, universe ) );
 		function setVisc( universe, data ) {
@@ -101,11 +123,9 @@ SectorMap.prototype = {
 	},
 	
 	//attach events for mouseover path calculation
-	enablePathfinding: function(travelCosts) {
-		this.travelCosts = travelCosts;
+	enablePathfinding: function() {
 		this.attachMouseEvents(this.canvas);
 		this.distanceDiv.style.display = "block";
-		this.savedPath = [];
 	},
 
 	// Just gets the 2D context of the canvas. You'll want this to
@@ -120,10 +140,10 @@ SectorMap.prototype = {
 	clear: function( ctx ) {
 		ctx.drawImage( this.bgCanvas, 0, 0 );
 		this.distanceDiv.innerHTML = "&nbsp;<br>&nbsp;";
-		if (this.mouselock) {
-			this.drawSavedPath(ctx);
-		}
-	},
+//		if (this.mouselock) {
+			this.drawSavedPath(ctx, this.storedPath );
+	//	}
+    },
 
 	// This draws a marker on a tile.
 	markTile: function( ctx, col, row, style ) {
@@ -149,10 +169,16 @@ SectorMap.prototype = {
 	},
 	
 	// This draws the saved path, for if we navigate with the minimap locked
-	drawSavedPath: function ( ctx ) {
-		this.savedPath.forEach(function (e) {
-			this.markTile(ctx, e[0], e[1], "#080");
-		}.bind(this));
+	drawSavedPath: function ( ctx, path ) {
+        if (!path) {
+            this.savedPath.forEach(function (e) {
+                this.markTile(ctx, e[0], e[1], "#080");
+            }.bind(this));
+        } else {
+            path.forEach(function (e) {
+            this.markTile(ctx, e[0], e[1], "#880");
+            }.bind(this));
+        }
 	},
 
 	// This sets the current ship coords, for navigation
@@ -274,16 +300,15 @@ SectorMap.prototype = {
 	attachMouseEvents: function (canvas) {
 		canvas.addEventListener('click', function (e) {
 			//lock if unlocked, unlock and clear if locked
-			var ukey = Universe.getServer ( document ).substr( 0, 1 );
 			if (this.mouselock) {
 				this.clear(this.get2DContext());
 				this.markShipTile(this.get2DContext());
-				chrome.storage.local.remove( [ ukey + 'savedPath' ] );
+				chrome.storage.local.remove( [ this.ukey + 'storedPath' ] );
 			} else {		
 				let save = {};
-				save[ ukey + 'savedPath' ] = [];
+				save[ this.ukey + 'storedPath' ] = [];
 				for ( var i = 0; i < this.savedPath.length; i++ ) {
-					save[ ukey + 'savedPath' ].push (
+					save[ this.ukey + 'storedPath' ].push (
 						Sector.getLocation( 
 							Sector.getId( this.sector.sector ) ,
 							this.savedPath[ i ][ 0 ],
@@ -337,8 +362,8 @@ SectorMap.prototype = {
 		this.markShipTile(this.get2DContext());
 		
 		//these fields must match those in options.js and map.js
-		var fields = ["Space", "Nebula", "Virus", "Energy", "Asteroid", "Exotic"];
-		var travelCosts = this.travelCosts;
+		//var fields = ["Space", "Nebula", "Virus", "Energy", "Asteroid", "Exotic"];
+		//var travelCosts = this.travelCosts;
 
 		var speed = getSpeed.call( this );
 
