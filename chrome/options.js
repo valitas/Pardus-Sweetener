@@ -6,10 +6,6 @@
 (function( doc ) {
 
 var controls, extraControls, port;
-var unis = ["Artemis", "Orion", "Pegasus"];
-var fields = ["Space", "Nebula", "Virus", "Energy", "Asteroid", "Exotic"]; //must match those in nav.js and map.js
-var drives = [["Custom", 1000], ["Nuclear", 1], ["Fusion", 2], ["Ion", 3], ["Anti-Matter", 4], ["Hyper", 5], ["Interphased", 6]];
-var moveSpeeds = [11, 16, 18, 20, 25, 36, 10]; //same order as fields
 
 function start() {
 	doc.addEventListener( 'DOMContentLoaded', onDOMContentLoaded );
@@ -30,9 +26,6 @@ function onDOMContentLoaded() {
 		extraControls[ key ] = doc.getElementById( key );
 	}
 	
-	// Generate the travel costs table in miniMapNavigation
-	generateMiniMapNavigationTable();
-
 	// Find the rest of the controls, save references to them in
 	// controls, and install event listeners.
 	//
@@ -81,19 +74,11 @@ function onDOMContentLoaded() {
 	setupControls ( 'input', onNumericControlInput,
 		'autobotsArtemisPoints', 'autobotsOrionPoints',
 		'autobotsPegasusPoints' );
-	unis.forEach(function (e) {
-		fields.forEach(function (f) {
-			setupControls('input', onNumericControlInput, 'travelCost' + e + f);
-		});
-	});
 
 	// 4. Selects
 	setupControls ( 'change', onControlInput,
 		'alarmSound', 'autobotsArtemisPreset', 'autobotsOrionPreset',
 		'autobotsPegasusPreset', 'miniMapPlacement', 'adoctor', 'odoctor', 'pdoctor' ); 
-	unis.forEach(function (e) {
-		setupControls('input', onNumericControlInput, 'miniMapNavigationPreset' + e);
-	});
 
 	// 5. Selects that we store as numbers, cause we use the value
 	setupControls ( 'change', onNumericControlInput,
@@ -128,20 +113,6 @@ function onDOMContentLoaded() {
 	controls.odoctor.addEventListener('change', doctorListener);
 	controls.pdoctor.addEventListener('change', doctorListener);
 
-	unis.forEach(function (uni) {
-		var e = controls["miniMapNavigationPreset" + uni];
-		['change', 'input'].forEach(function (evt) {
-			e.addEventListener(evt, function () {
-				onMiniMapNavigationPresetChange(uni);
-			});
-		});
-		fields.forEach(function (f) {
-			controls['travelCost' + uni + f].addEventListener('input', function () {
-				onMiniMapNavigationPointsChange(uni);
-			});
-		});
-	});
-	
 	function wireAutobotsPreset( preset, points ) {
 		var
 		presetListener =
@@ -183,64 +154,6 @@ function onDOMContentLoaded() {
 
 	// Install a click handler that we'll use to show/collapse sections.
 	doc.body.addEventListener( 'click', onBodyClick, null );
-}
-
-function generateMiniMapNavigationTable() {
-	var tb = doc.getElementById("miniMapNavigationCosts");
-	//header
-	var tr = doc.createElement("tr");
-	{
-		["Universe", "Drive"].concat(fields).forEach(function (e) {
-			var td = doc.createElement("td");
-			td.innerText = e;
-			tr.appendChild(td);
-		});
-	}
-	tb.appendChild(tr);
-	
-	//rest of the owl
-	unis.forEach(function (e) {
-		var tr = doc.createElement("tr");
-		{
-			var td = doc.createElement("td");
-			td.innerText = e;
-			tr.appendChild(td);
-			
-			var td = doc.createElement("td");
-			var dropdown = doc.createElement("select");
-			{
-				dropdown.id = "miniMapNavigationPreset" + e;
-				drives.forEach(function (e) {
-					var opt = doc.createElement("option");
-					{
-						opt.innerText = e[0];
-						opt.value = e[1];
-					}
-					dropdown.appendChild(opt);
-				});
-				
-			}
-			td.appendChild(dropdown);
-			tr.appendChild(td);
-			
-			
-			fields.forEach(function (f) {
-				var td = doc.createElement("td");
-				{
-					var box = doc.createElement("input");
-					box.id = "travelCost" + e + f;
-					box.type = "text";
-					box.setAttribute("moveSpeed", moveSpeeds[fields.indexOf(f)]);
-					box.setAttribute("universe", e);
-					box.setAttribute("fieldType", f);
-					box.size = 3;
-					td.appendChild(box);
-				}
-				tr.appendChild(td);
-			});
-		}
-		tb.appendChild(tr);
-	});
 }
 
 function onBodyClick( event ) {

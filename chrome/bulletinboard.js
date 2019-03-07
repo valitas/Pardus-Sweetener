@@ -25,16 +25,28 @@
 			missions = document.getElementById( 'div_missions' ).getElementsByTagName( 'table' );
 		}
 
-		for( var i = 0; i < missions.length; i++) {
+        var obsConfig = { attributes: true, childList: true, subtree: true };
+
+        for( var i = 0; i < missions.length; i++) {
 			if ( !premium && i % 2 === 1 ) { continue; }
 			if ( premium && i === 0 ) { continue; }
+            
+            var obs = new MutationObserver( clickedMission.bind( missions[i], premium ) );
 				
-			let a = missions[i].getElementsByTagName( 'a' );		
-			a[ a.length - 1 ].addEventListener( 'click', clickedMission.bind( missions[i], premium ) );
+			// let a = missions[i].getElementsByTagName( 'a' );		
+			// a[ a.length - 1 ].addEventListener( 'click', clickedMission.bind( missions[i], premium ) );
+            let divs = missions[ i ].getElementsByTagName( 'div' );
+            obs.observe( divs[ divs.length - 1], obsConfig );
 		}
 
-		function clickedMission( premium ) {
-			var mission = Mission.parseMission( this, premium, true );
+		function clickedMission( premium, mutationList, observer ) {
+			if ( this.getElementsByTagName( 'div' )[ this
+                .getElementsByTagName('div').length - 1].textContent 
+                == 'NOT OFFERED' ) {
+                    return;
+                }
+            
+            var mission = Mission.parseMission( this, premium, true );
 			let get = [ ukey + 'm' + mission.locId, ukey + 'mlist' ];
 			chrome.storage.local.get( get, storeMission.bind( null, mission ) );
 		}
