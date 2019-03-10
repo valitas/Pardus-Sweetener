@@ -401,7 +401,7 @@ function onInstalled( details ) {
 			orionOnlineListEnabled: false,
 			overrideAmbushRounds: false,
 			pathfindingEnabled: true,
-			navigationCoordinates: true,
+			navigationCoordinates: false,
 			pegasusOnlineList: '',
 			pegasusOnlineListEnabled: false,
 			personalQLArtemis: '',
