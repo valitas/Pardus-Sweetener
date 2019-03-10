@@ -3,7 +3,7 @@
   "sector": "Sigma Draconis",
   "width": 25,
   "height": 20,
-  "tiles": "bbbbbbbbbbbbbbbbbbeebbbbbbbbbbbbbbbbbbbbeeeeeeebbbeebbbbbbbbbbbeeeffoooeebbeeeebeebbbbeeefffooofeebbeefeeeeebbbeffffffeeeebbbbeeffffeebeegggfoeebbbbbbbbeeffffebefgggggebbbbbbbbbbeffffeeefgggggeebeeeeebbbefffffeeefggggfeeeffeebbeefffffebefgggfffffeeebbeeffffffebefffggffeeebbbbeggggfffeeeffgggeeebbbbbeeggggffffffffgggebbbbbbbefggggfffffeeefffebbbbbbbeeegggfffffebeeffebbbbbbbbbefffggffeebeeffeebbbbbbbbefffggfeebbeffeeebbbbbbbbeeefffeebbbeffebbbbbbbbbbbbeeeeebbbbefeebbbbbbbbbbbbbbbbbbbbbeeebbbbbbbbb",
+  "tiles": "bbbbbbbbbbbbbbbbbbeebbbbbbbbbbbbbbbbbbbbeeeeeeebbbeebbbbbbbbbbbeeeffoooeebbeeeebeebbbbeeefffooofeebbeefeeeeebbbeffffffeeeebbbbeeffffeebeegggfoeebbbbbbbbeeffffebefgggggebbbbbbbbbbeffffeeefgggggeebeeeeebbbefffffeeefggggfeeeffeebbeefffffebefgggfffffeeebbeeffffffebefffggffeeebbbbeggggfffeeeffgggeeebbbbbeeggggffffffffgggebbbbbbbefggggfffffeeefffebbbbbbbeeegggfffffebeeffebbbbbbbbbefffggffeebbeffeebbbbbbbbefffggfeebbeefeeebbbbbbbbeeefffeebbbeffebbbbbbbbbbbbeeeeebbbbefeebbbbbbbbbbbbbbbbbbbbbeeebbbbbbbbb",
   "beacons": {
     "PO 4-991": { "type": "wh", "x": 0, "y": 2 },
     "Miayack": { "type": "wh", "x": 24, "y": 7 },
