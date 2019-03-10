@@ -61,7 +61,7 @@ function onDOMContentLoaded() {
 		'fitAmbushRounds', 'miniMap', 'miniMapNavigation', 'sendmsgShowAlliance',
 		'artemisOnlineListEnabled', 'orionOnlineListEnabled',
 		'pegasusOnlineListEnabled', 'pathfindingEnabled','displayNavigationEnabled',
-		'missionDisplay'
+		'missionDisplay', 'navigationCoordinates'
 	);
 
 	// 2. Free-form strings

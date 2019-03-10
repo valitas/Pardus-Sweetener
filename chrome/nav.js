@@ -111,6 +111,7 @@ function start() {
 	cs.addKey( 'navBountyBoardLink' );
 	cs.addKey( 'navFlyCloseLink' );
 	cs.addKey( 'pathfindingEnabled' );
+	cs.addKey( 'navigationCoordinates' );
 	cs.addKey( 'clockD' );
 	cs.addKey( 'displayNavigationEnabled' );
 	cs.addKey( 'miniMapNavigation' );
@@ -142,6 +143,7 @@ function applyConfiguration() {
 		updateMinimap();
 
 		updatePathfinding();
+		updateNavigationGrid();
 
 		let ukey = Universe.getServer( doc ).substr( 0, 1 );
 		if ( config.displayNavigationEnabled ) {
@@ -206,7 +208,7 @@ function onGameMessage( event ) {
 	updateLocationLinks();
 
 	updateMinimap();
-
+	updateNavigationGrid();
 	updatePathfinding();
 	addDrugTimer();
 	addStimTimer();
@@ -578,6 +580,109 @@ function updatePathfinding() {
 	navtable.addEventListener( 'mouseout', clearpath, false);
 }
 
+//manages the navigation co-ords grid.
+
+function updateNavigationGrid() {
+	//yes, pardus is a mess
+	navtable = doc.getElementById( 'navareatransition' );
+	if ( !navtable )
+		navtable = doc.getElementById( 'navarea' );
+	if ( !navtable )
+		return;
+
+	if( !config.navigationCoordinates ) {
+		//remove the navgiation grid, reset the nav area
+		Array.from(document.getElementsByClassName("coordGrid")).forEach( f => f.remove() )
+		navtable.parentNode.parentNode.parentNode.style.padding = ""
+		//spaceChart.className = ""; // should remove this but would need to check if it's there first...
+		//navtable.style.borderSpacing = "";
+		return;
+	}
+	var spaceChart = document.getElementById("tdSpaceChart")
+	if (!spaceChart) {
+		//console.log("no spaceChart i guess you're in dock?")
+		return;
+	}
+	
+	if (!spaceChart.className) {
+		//overall style changes
+		//maybe add only to bottom and right?
+		navtable.parentNode.parentNode.parentNode.style.padding = "15px"
+		spaceChart.className = "sweetener-grid";
+	}
+
+	//adding space, maybe make optional
+	//honestly i find it a bit nauseating
+	//navtable.style.borderSpacing = "1px";
+
+	//removing old griders so we can replace them
+	//they call this "job security"
+	//todo: optimize by reducing number of replacements to only when the pilot actually moves
+	//todo: optimize by only popping and shifting elements as needed?
+	Array.from(document.getElementsByClassName("coordGrid")).forEach( f => f.remove() )
+
+	//general formatting
+	var _trs = spaceChart.getElementsByTagName("tr")
+	var topD = _trs[0].children[1];
+	var bottomD = _trs[_trs.length-1].children[1];
+	var leftD = _trs[2].children[0];
+	var rightD = _trs[2].children[2];
+	leftD.style.position = "relative";
+	rightD.style.position = "relative";
+
+	//guesstimate nav size
+	var navAreaDimensions = [ _trs[3].children.length, navtable.getElementsByTagName("tr").length ];
+	//in case people play on sizes other than 64
+	//tile sizes are nf = 64, nf96 = 96, nf128 = 128
+	var navTileSize = {'nf' : 64, 'nf96' : 96, 'nf128' : 128}[_trs[3].children[0].getElementsByTagName('img')[0].className];
+	//use nav size to figure out what numbers should be
+	//store the numbers as 2 arrays - one for row (aka y) and one for colum (x)
+	//get user's current coordinates
+	var _pilotCoords = getCurrentCoords();
+	var _columns = [];
+	for (var i = 0; i < navAreaDimensions[0]; i ++ ) {
+		_columns.push(_pilotCoords.col + i - Math.floor(navAreaDimensions[0] / 2))
+	}
+	var _rows = [];
+	for (var i = 0; i < navAreaDimensions[1]; i ++ ) {
+		_rows.push(_pilotCoords.row + i - Math.floor(navAreaDimensions[1] / 2))
+	}
+	
+	//defining girders
+	var topDiv = document.createElement("div");
+	var bottomDiv = document.createElement("div");
+	var leftDiv = document.createElement("div");
+	var rightDiv = document.createElement("div");
+
+	topDiv.className = "coordGrid coordGridTop";
+	bottomDiv.className = "coordGrid coordGridBottom";
+	leftDiv.className = "coordGrid coordGridLeft";
+	rightDiv.className = "coordGrid coordGridRight";
+
+	//dynamic setting spacing. would prefer to inject to CSS rather than per element but oh well.
+	topDiv.style.width = navTileSize + "px";
+	bottomDiv.style.width = navTileSize + "px";
+	leftDiv.style.lineHeight = navTileSize + "px";
+	rightDiv.style.lineHeight = navTileSize + "px";
+	
+	//for all the numbers, add girders (wrong word?) to the nav box area thing
+	_columns.forEach(e=>{
+		addGirder(e, topDiv, topD)
+		addGirder(e, bottomDiv,bottomD)
+	});
+
+	_rows.forEach(e=>{
+		addGirder(e, leftDiv, leftD)
+		addGirder(e, rightDiv,rightD)
+	});
+
+	//minor helper function
+	function addGirder(number, element, parent) {
+		element.innerText = number;
+		parent.innerHTML += element.outerHTML //thanks i hate this
+	}
+}
+
 // Given the TD corresponding to a tile, update its style and that of the image
 // inside it for path highlighting.
 
@@ -639,6 +744,11 @@ function showpath( event ){
 	if( !cell )
 		return;
 
+	//checks if the cell's stringified ID contains nav field. 
+	//captures null IDs for compatibility with navigation coords, hopefully.
+	if( !(cell.getAttribute('id') + "").includes('tdNavField') ) {
+		return;
+	}
 	if( cell.classList.contains('navImpassable') )
 		return;
 

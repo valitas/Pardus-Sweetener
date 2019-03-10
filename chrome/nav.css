@@ -24,6 +24,37 @@ div.sweetener-mission {
 	cursor: default;
 }
 
+div.coordGrid {
+	position: relative;
+	text-align: center;
+}
+
+div.coordGridTop {
+	padding-bottom: 1px;
+	left: 15px;
+	height: 0;
+	display: inline-block;
+	margin-top: -4px;
+}
+
+div.coordGridBottom {
+	padding-bottom: 1px;
+	left: -15px;
+	height: 0;
+	display: inline-block;
+	bottom: 12px;
+}
+
+div.coordGridLeft {
+	top: 6px;
+	left: 12px;
+}
+
+div.coordGridRight {
+	top: 6px;
+	left: -12px;
+}
+
 td.sweetener-routeplanner {
     background-color: rgb( 255, 105, 180 ); 
 }
