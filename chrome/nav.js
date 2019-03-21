@@ -158,8 +158,6 @@ function applyConfiguration() {
 		}
         if ( config.displayVisited ) {
             chrome.storage.local.get( [ ukey + 'visit' ], highlightVisited );
-        } else {
-            chrome.storage.local.remove( [ ukey + 'visit' ] );
         }
 	}
 	else {
@@ -230,8 +228,6 @@ function onGameMessage( event ) {
 	}
     if ( config.displayVisited ) {
         chrome.storage.local.get( [ ukey + 'visit' ], highlightVisited );
-    } else {
-        chrome.storage.local.remove( [ ukey + 'visit' ] );
     }
     configured = true;
 }
@@ -1164,9 +1160,8 @@ function highlightVisited( data ) {
     } else {
         var decayTime = 1000*config.displayVisitedDecay;
     }
-    // directly save that we are on this tile;
+    // directly add that we are on this tile;
     data[ ukey + 'visit' ][ userloc ] = Date.now();
-    chrome.storage.local.set( data );
 
     // highlight the tiles according to the time visited
     var locs = Object.keys( data[ ukey + 'visit' ] );
@@ -1182,6 +1177,10 @@ function highlightVisited( data ) {
             continue;
         let loc = a[i].getAttribute('onclick').split(/\(|\)/g)[1];
         if ( locs.includes( loc ) ) {
+            if ( Date.now() - data[ ukey + 'visit' ][ loc ] > decayTime*3 ) {
+                delete data[ ukey + 'visit' ][ loc ];
+                continue;
+            }
             let red = 0;
             let green = 255;
             let fade = Math.round((255 / decayTime) * ( Date.now() 
@@ -1198,6 +1197,7 @@ function highlightVisited( data ) {
             }
         }
     }
+    chrome.storage.local.set( data );
 }
 
 // mission display
