@@ -1177,7 +1177,6 @@ function highlightVisited( data ) {
 		return;    
     
     var a = navtable.getElementsByTagName( 'a' );
-    var div = doc.createElement( 'div' );
     for ( var i=0; i< a.length; i++ ) {
         if (!a[i].getAttribute('onclick'))
             continue;
