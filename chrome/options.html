@@ -70,12 +70,7 @@
       Show the recipient's alliance name when composing a private message
      </label>
     </p>
-    <p>
-     <input type="checkbox" id="missionDisplay">
-     <label for="missionDisplay">
-      Store and display missions on nav screen.
-     </label>
-    </p>   </div>
+  </div>
   </section>
 
   <section>
@@ -92,8 +87,22 @@
      <label for="navigationCoordinates">
       Add a coordinates grid to nav area.
      </label>
+     <br/>
+     <input type="checkbox" id="displayVisited">
+     <label for="displayVisited">
+      Enable highlighting of the recently visited tiles.
+     </label>
+     <label for="displayVisited">
+      Decay time (seconds): 
+     </label>
+     <input type="number" id="displayVisitedDecay" disabled>
     </p>
-
+    <p>
+     <input type="checkbox" id="missionDisplay">
+     <label for="missionDisplay">
+      Store and display missions on nav screen.
+     </label>
+    </p> 
      <input type="checkbox" id="miniMap">
      <label for="miniMap">
       Show a small map of the current sector

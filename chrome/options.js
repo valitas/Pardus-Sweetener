@@ -61,7 +61,7 @@ function onDOMContentLoaded() {
 		'fitAmbushRounds', 'miniMap', 'miniMapNavigation', 'sendmsgShowAlliance',
 		'artemisOnlineListEnabled', 'orionOnlineListEnabled',
 		'pegasusOnlineListEnabled', 'pathfindingEnabled','displayNavigationEnabled',
-		'missionDisplay', 'navigationCoordinates'
+		'missionDisplay', 'navigationCoordinates', 'displayVisited'
 	);
 
 	// 2. Free-form strings
@@ -73,7 +73,7 @@ function onDOMContentLoaded() {
 	// 3. Numeric fields
 	setupControls ( 'input', onNumericControlInput,
 		'autobotsArtemisPoints', 'autobotsOrionPoints',
-		'autobotsPegasusPoints' );
+		'autobotsPegasusPoints', 'displayVisitedDecay');
 
 	// 4. Selects
 	setupControls ( 'change', onControlInput,
@@ -148,6 +148,8 @@ function onDOMContentLoaded() {
 			controls.orionOnlineList );
 	wireQLControls( controls.pegasusOnlineListEnabled,
 			controls.pegasusOnlineList );
+    wireQLControls( controls.displayVisited,
+            controls.displayVisitedDecay );
 
 	// Request the configuration
 	chrome.storage.local.get( Object.keys( controls ), onConfigurationReady );
@@ -307,6 +309,10 @@ function updateControlState( control, value ) {
 			updateMiniMapControlsDisable();
 		case 'miniMapNavigation':
 			updateMiniMapNavigationDisable();
+            break;
+        case 'displayVisited':
+            updateVisitedDisable()
+            break;
 		}
 		break;
 	case 'select-one':
@@ -314,6 +320,7 @@ function updateControlState( control, value ) {
 		break;
 	case 'text':
 	case 'textarea':
+    case 'number':
 		control.value = value;
 	}
 }
@@ -438,6 +445,10 @@ function updateOnlineListControlsDisable() {
 
 function updateMiniMapControlsDisable() {
 	controls.miniMapPlacement.disabled = !controls.miniMap.checked;
+}
+
+function updateVisitedDisable() {
+	controls.displayVisitedDecay.disabled = !controls.displayVisited.checked;
 }
 
 // Start the ball
