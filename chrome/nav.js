@@ -158,6 +158,8 @@ function applyConfiguration() {
 		}
         if ( config.displayVisited ) {
             chrome.storage.local.get( [ ukey + 'visit' ], highlightVisited );
+        } else {
+            chrome.storage.local.remove( [ ukey + 'visit' ] );
         }
 	}
 	else {
@@ -228,6 +230,8 @@ function onGameMessage( event ) {
 	}
     if ( config.displayVisited ) {
         chrome.storage.local.get( [ ukey + 'visit' ], highlightVisited );
+    } else {
+        chrome.storage.local.remove( [ ukey + 'visit' ] );
     }
     configured = true;
 }
@@ -1160,8 +1164,27 @@ function highlightVisited( data ) {
     } else {
         var decayTime = 1000*config.displayVisitedDecay;
     }
-    // directly add that we are on this tile;
+    
+    //maybe have the visited tiles be sorted by age rather than an object
+    //makes for faster removing of old tiles, better performance
+    /*(data[ ukey + 'visit' ].push([ [ userloc ],Date.now() ]);
+    for (var i = 0; i < data[ ukey + 'visit' ].length; i++) {
+        if (Date.now() - data[ ukey + 'visit' ][i][1] >= decayTime) {
+            data[ ukey + 'visit'].splice(0, i);
+            break;
+        }
+    }*/
+
+    // directly save that we are on this tile;
     data[ ukey + 'visit' ][ userloc ] = Date.now();
+
+    //clear out old tiles. kind of slow due to iterating over every tile every time
+    for (var location in data[ ukey + 'visit' ]) {
+        if (Date.now() - data[ ukey + 'visit' ][location] >= decayTime) {
+           delete data[ ukey + 'visit'][location];
+        }
+    }
+    chrome.storage.local.set( data );
 
     // highlight the tiles according to the time visited
     var locs = Object.keys( data[ ukey + 'visit' ] );
@@ -1172,32 +1195,34 @@ function highlightVisited( data ) {
 		return;    
     
     var a = navtable.getElementsByTagName( 'a' );
+    //todo: add a special case soemtime for user's location which may not always have an onclick()
+    //iterates over all onclick tiles and checks if the tile is in the recently visited list.
+    //adds colouring as appropriate
     for ( var i=0; i< a.length; i++ ) {
         if (!a[i].getAttribute('onclick'))
             continue;
         let loc = a[i].getAttribute('onclick').split(/\(|\)/g)[1];
         if ( locs.includes( loc ) ) {
-            if ( Date.now() - data[ ukey + 'visit' ][ loc ] > decayTime*3 ) {
-                delete data[ ukey + 'visit' ][ loc ];
-                continue;
-            }
+        	let decayProportion = Math.round(10 * (Date.now() - data[ ukey + 'visit' ][ loc ]) / decayTime) / 10 ;
+        	if (decayProportion >= 1) {
+    		}
             let red = 0;
             let green = 255;
-            let fade = Math.round((255 / decayTime) * ( Date.now() 
-                - data[ ukey + 'visit' ][ loc ] ) );
+            let opacity = Math.max( 0.5, 0.9 - decayProportion ); // don't go too transparent
+            let fade = Math.min( 220, Math.round( 255 * decayProportion )); // don't go full colour
             red += fade;
             green -= fade;
+
             setClass( a[i].parentNode );
             setClass( a[i].firstChild );
             
             function setClass( node ) {
                 let cl = node.getAttribute( 'class' );
                 node.setAttribute( 'class', cl + ' sweetener-visited' );
-                    node.style.backgroundColor = 'rgb( '+red+', '+green+', 0 )'; 
+                    node.style.backgroundColor = 'rgba( '+red+', '+green+', 0, ' +opacity+ ' )'; 
             }
         }
     }
-    chrome.storage.local.set( data );
 }
 
 // mission display
