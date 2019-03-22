@@ -1206,7 +1206,7 @@ function highlightVisited( data ) {
         	let decayProportion = Math.round(10 * (Date.now() - data[ ukey + 'visit' ][ loc ]) / decayTime) / 10 ;
             let red = 0;
             let green = 255;
-            //let opacity = Math.max( 0.5, 1.1 - decayProportion ); // don't go too transparent
+            let opacity = Math.max( 0.5, 1.1 - decayProportion ); // don't go too transparent
             let fade = Math.min( 220, Math.round( 255 * decayProportion )); // don't go full colour
             red += fade;
             green -= fade;
@@ -1217,7 +1217,7 @@ function highlightVisited( data ) {
             function setClass( node ) {
                 let cl = node.getAttribute( 'class' );
                 node.setAttribute( 'class', cl + ' sweetener-visited' );
-                    node.style.backgroundColor = 'rgba( '+red+', '+green+', 0 )'; 
+                    node.style.backgroundColor = 'rgba( '+red+', '+green+', 0, ' +opacity+ ' )'; 
             }
         }
     }
