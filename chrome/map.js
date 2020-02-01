@@ -370,10 +370,10 @@ SectorMap.prototype = {
 		var tc = {
 			b: -1,
 			'f': this.VISC[ 'f' ] - speed, // fuel -> space
-			'g': this.VISC[ 'g' ] - speed, // nebula gas
+			'g': this.VISC[ 'g' ] - speed - ( this.Navigation > 1 ? 1 : 0), // nebula gas
 			'v': this.VISC[ 'v' ] - speed,
-			'e': this.VISC[ 'e' ] - speed,
-			'o': this.VISC[ 'o' ] - speed, // ore -> asteriods
+			'e': this.VISC[ 'e' ] - speed - ( this.Navigation > 2 ? 1 : 0),
+			'o': this.VISC[ 'o' ] - speed - ( this.Navigation > 0 ? 1 : 0), // ore -> asteriods
 			'm': this.VISC[ 'm' ] - speed  // Exotic Matter
 		};
 		
@@ -491,10 +491,10 @@ SectorMap.prototype = {
 			speed -= parseInt( moveField[0].textContent );
 			speed += this.VISC[ currentTileType ];
 			
-			if ( ( this.Navigation == 1 && currentTileType == 'o' )
-				|| ( this.Navigation == 2 && currentTileType == 'g' )
-			    || ( this.Navigation == 3 && currentTileType == 'e' ) ) {
-					speed += 1;
+			if ( ( this.Navigation > 0 && currentTileType == 'o' )
+				|| ( this.Navigation > 1 && currentTileType == 'g' )
+			    || ( this.Navigation > 2 && currentTileType == 'e' ) ) {
+					speed -= 1;
 				}
 			return speed;
 		}
