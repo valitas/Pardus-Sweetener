@@ -340,7 +340,7 @@ var chrome, PSClock;
 	}
   
   }
-
+  /*
   function stunned( data ) {
 	  let td = this.createElement( 'td' );
 	  let btn = this.createElement( 'button' );
@@ -372,6 +372,7 @@ var chrome, PSClock;
 		  http.send(params);
 	  }
   }
+  */
 
   // Sounding the alarm is a little less straightforward than just
   // sending a message to the extension, because we need to keep a
