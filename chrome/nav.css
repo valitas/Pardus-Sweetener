@@ -8,6 +8,7 @@ td.navXhole {position: relative;}
 td.navYhole {position: relative;}
 td.navWreck {position: relative;}
 td.navSquad {position: relative;}
+td.navResearchStation {position: relative;}
 
 /* Text in a circle.  Or oval, sausage-like thingie, if it's a long text. */
 div.sweetener-mission {
