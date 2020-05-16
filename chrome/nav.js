@@ -105,6 +105,7 @@ function start() {
 	cs.addKey( 'miniMapPlacement' );
 
 	cs.addKey( 'navEquipmentLink' );
+	cs.addKey( 'navWeaponLink' );
 	cs.addKey( 'navShipyardLink' );
 	cs.addKey( 'navCrewQuartersLink' );
 	cs.addKey( 'navTradeLink' );
