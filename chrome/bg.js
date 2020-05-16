@@ -392,6 +392,7 @@ function onInstalled( details ) {
 			navBulletinBoardLink: true,
 			navCrewQuartersLink: false,
 			navEquipmentLink: true,
+			navWeaponLink: true,
 			navFlyCloseLink: true,
 			navHackLink: true,
 			navShipLinks: true,
@@ -464,7 +465,7 @@ function onInstalled( details ) {
 			'alarmCombat', 'desktopCombat', 'desktopAlly', 'desktopPM',
 			'clockAP', 'clockB', 'clockP', 'clockS',
 			'pvpMissileAutoAll', 'pvpHighestRounds', 'pvbMissileAutoAll',
-			'displayDamage', 'navEquipmentLink', 'navHackLink', 'navShipLinks',
+			'displayDamage', 'navEquipmentLink', 'navWeaponLink', 'navHackLink', 'navShipLinks',
 			'allianceQLsArtemisEnabled', 'allianceQLsOrionEnabled',
 			'allianceQLsPegasusEnabled', 'miniMap', 'sendmsgShowAlliance', 'missionDisplay'
 		];

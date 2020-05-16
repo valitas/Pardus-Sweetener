@@ -51,7 +51,7 @@ function onDOMContentLoaded() {
 		'clockP', 'clockS', 'clockL', 'clockE', 'clockN', 'clockZ', 'clockR', 'clockD', 'clockStim',
 		'pvpMissileAutoAll', 'pvpHighestRounds', 'pvmMissileAutoAll',
 		'pvmHighestRounds', 'pvbMissileAutoAll', 'displayDamage', 'autobots',
-		'navShipLinks', 'navEquipmentLink', 'navTradeLink',
+		'navShipLinks', 'navEquipmentLink', 'navWeaponLink', 'navTradeLink',
 		'navBlackMarketLink', 'navHackLink', 'navBulletinBoardLink',
 		'navBountyBoardLink', 'navShipyardLink', 'navCrewQuartersLink',
 		'navFlyCloseLink', 'allianceQLsArtemisEnabled',
