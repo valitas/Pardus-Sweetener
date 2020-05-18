@@ -301,8 +301,8 @@ var PSClock = (function() {
 		// This is not a timer per se, it just displays current UTC
 		UTC: {
 			// ... and we call it "GMT" because people get confused otherwise
-			label: 'GMT',
-			title: 'Greenwich Mean Time',
+			label: 'UTC',
+			title: 'Coordinated Universal Time (Succesor of Greenwich Mean Time)',
 
 			update: function( now ) {
 				var t = now % 86400;
@@ -372,7 +372,7 @@ var PSClock = (function() {
 	// have these names, as keys in timerMixins. But this defines the
 	// order in which we render them.
 	var TIMERS =
-	    [ 'AP', 'B', 'P', 'S', 'L', 'E', 'N', 'Z', 'R', 'D', 'UTC', 'Stim'];
+	    [ 'AP', 'P', 'S', 'B', 'L', 'E', 'N', 'Z', 'D','Stim', 'UTC', 'R'];
 
 	// Creates an instance of the clock object.
 	function PSClock( doc ) {

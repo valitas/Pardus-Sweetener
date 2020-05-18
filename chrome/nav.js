@@ -7,50 +7,56 @@
 
 var LOCATION_LINKS = {
 		planet: [
-			{ key: 'navEquipmentLink',
+/*			{ key: 'navEquipmentLink',
 			  text: 'Ship equipment',
-			  url: 'ship_equipment.php' },
-			{ key: 'navTradeLink',
+			  url: 'ship_equipment.php' },*/
+/*			{ key: 'navTradeLink',
 			  text: 'Trade with planet',
-			  url: 'planet_trade.php' },
+			  url: 'planet_trade.php' },*/
+			  { key: 'navBulletinBoardLink',
+			  text: 'Bulletin Board',
+			  url: 'bulletin_board.php' },
 			{ key: 'navBlackMarketLink',
-			  text: 'Black market',
+			  text: 'Black Market',
 			  url: 'blackmarket.php' },
 			{ key: 'navHackLink',
-			  text: 'Hack information',
+			  text: 'Hack Information',
 			  url: 'hack.php' },
-			{ key: 'navBulletinBoardLink',
-			  text: 'Bulletin board',
-			  url: 'bulletin_board.php' },
 			{ key: 'navBountyBoardLink',
-			  text: 'Bounty board',
+			  text: 'Bounty Board',
 			  url: 'bounties.php' },
+			  { key: 'navWeaponLink',
+			  text: 'Ship Weapons',
+			  url: 'ship_equipment.php?sort=weapon' },			  
 			{ key: 'navShipyardLink',
 			  text: 'Shipyard',
 			  url: 'shipyard.php' },
 			{ key: 'navCrewQuartersLink',
-			  text: 'Crew quarters',
+			  text: 'Crew Quarters',
 			  url: 'crew_quarters.php' }
 		],
 		starbase: [
-			{ key: 'navEquipmentLink',
+/*			{ key: 'navEquipmentLink',
 			  text: 'Ship equipment',
-			  url: 'ship_equipment.php' },
-			{ key: 'navTradeLink',
-			  text: 'Trade with starbase',
-			  url: 'starbase_trade.php' },
-			{ key: 'navBlackMarketLink',
-			  text: 'Black market',
-			  url: 'blackmarket.php' },
-			{ key: 'navHackLink',
-			  text: 'Hack information',
-			  url: 'hack.php' },
+			  url: 'ship_equipment.php' },*/
+/*			{ key: 'navTradeLink',
+			  text: 'Trade with starbaset',
+			  url: 'planet_trade.php' },*/			  
 			{ key: 'navBulletinBoardLink',
-			  text: 'Bulletin board',
+	 		  text: 'Bulletin Board',
 			  url: 'bulletin_board.php' },
-			{ key: 'navBountyBoardLink',
-			  text: 'Bounty board',
+		    { key: 'navBlackMarketLink',
+			  text: 'Black Market',
+			  url: 'blackmarket.php' },
+		    { key: 'navHackLink',
+			  text: 'Hack Information',
+			  url: 'hack.php' },
+		    { key: 'navBountyBoardLink',
+			  text: 'Bounty Board',
 			  url: 'bounties.php' },
+			  { key: 'navWeaponLink',
+			  text: 'Ship Weapons',
+			  url: 'ship_equipment.php?sort=weapon' },			  
 			{ key: 'navShipyardLink',
 			  text: 'Shipyard',
 			  url: 'shipyard.php' },
@@ -58,11 +64,11 @@ var LOCATION_LINKS = {
 			  text: 'Fly close',
 			  url: 'main.php?entersb=1' } ],
 		building: [
-			{ key: 'navTradeLink',
+/*			{ key: 'navTradeLink',
 			  text: 'Trade with building',
-			  url: 'building_trade.php' },
+			  url: 'building_trade.php' },*/
 			{ key: 'navHackLink',
-			  text: 'Hack information',
+			  text: 'Hack Information',
 			  url: 'hack.php' }
 		]
 	};
@@ -897,7 +903,7 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 	}
 	else {
 		// We have data, display current addiction
-		timerDiv.appendChild( doc.createTextNode('Drugs/stims used:') );
+		timerDiv.appendChild( doc.createTextNode('Drug used:') );
 		timerDiv.appendChild( doc.createElement('br') );
 
 		diff = getTimeDiff(
@@ -911,7 +917,7 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 
 		if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
 			timerDiv.appendChild(
-				doc.createTextNode('Drug/stim free in:') );
+				doc.createTextNode('Drug free in:') );
 			timerDiv.appendChild( doc.createElement('br') );
 			diff = getTimeDiff(
 				data[ ukey + 'drugTimerClear'], Date.now() );
@@ -972,7 +978,7 @@ function displayStimTimer ( ukey, usebtn, data ) {
 	}
 	else {
 		// We have data, display current addiction
-		timerDiv.appendChild( doc.createTextNode('Stims used:') );
+		timerDiv.appendChild( doc.createTextNode('Stim used:') );
 		timerDiv.appendChild( doc.createElement('br') );
 
 		diff = getTimeDiff(
@@ -1046,7 +1052,7 @@ function usedDrugs2( amount, ukey, data ) {
 	if (data[ ukey + 'drugTimerClear'] > now )
 		data[ ukey + 'drugTimerClear'] += amount * oneHour;
 	else {
-		var lastTick = new Date().setUTCHours(0,59,3,0); 
+		var lastTick = new Date().setUTCHours(0,29,3,0); 
 		lastTick += oneHour * Math.floor((now - lastTick) / oneHour);
 		data[ ukey + 'drugTimerClear' ] = amount * oneHour + lastTick;
 	}
@@ -1262,12 +1268,28 @@ function showMissions( data ) {
 		tr = t.appendChild( document.createElement( 'tr' ) );
 		var td = tr.appendChild( document.createElement( 'td' ) );
 		td.style = "background-image:url('//static.pardus.at/img/stdhq/panel.png');background-repeat:repeat-y;text-align:left;";
-		var div = td.appendChild( document.createElement( 'div' ) );
-		div.style = "margin:0 18px;";
+		var div1 = td.appendChild( document.createElement( 'div' ) );
+		div1.id = 'missionDisplayTitle';
+		div1.textContent = 'Mission List';
+		div1.style = "text-align:center;"
+		var div = div1.appendChild( document.createElement( 'div' ) );
+		div.style= "margin:0 18px;";
 		t.appendChild( document.getElementById( 'cargo' ).firstChild.lastChild.cloneNode( true ) );
 		
 		var tInside = div.appendChild( document.createElement( 'table' ) );
 		tInside.width = '100%';
+		tr = tInside.appendChild ( document.createElement( 'tr' ) );
+		tr.style = "text-align:center;";
+		tr.id = 'missionDisplaySeparator';
+						
+		td = tr.appendChild( document.createElement( 'td' ) );
+		td.textContent = 'Type';
+		td = tr.appendChild( document.createElement( 'td' ) );
+		td.textContent = 'Target';
+		td = tr.appendChild( document.createElement( 'td' ) );
+		td.textContent = 'Reward';
+		td = tr.appendChild( document.createElement( 'td' ) );
+		td.textContent = 'Total';
 		
 		while ( document.getElementById( 'sweetener-mission' ) ) {
 			document.removeChild( document.getElementById( 'sweetener-mission' ) ); 
@@ -1278,11 +1300,14 @@ function showMissions( data ) {
 		for( var i = 0; i < list.length; i++ ) {
 			var mission = data[ ukey + 'm' + list[ i ] ];
 			tr = tInside.appendChild ( document.createElement( 'tr' ) );
+			tr.id = 'missionDisplayContent';
+			tr.style = 'text-align:center;'
+
 						
 			td = tr.appendChild( document.createElement( 'td' ) );
 			var img = td.appendChild( document.createElement( 'img' ) );
 			img.src = mission.image;
-			img.height = 16;
+			img.height = 32;
 			td = tr.appendChild( document.createElement( 'td' ) );
 			if ( mission.locId > 0 ) {
 				td.textContent = mission.sector + " [" + mission.coords.x + ',' + mission.coords.y + ']' ;
@@ -1335,11 +1360,12 @@ function showMissions( data ) {
 			}
 		}
 		tr = tInside.appendChild( document.createElement( 'tr' ) );
+		tr.id = 'MissionClear';
 		td = tr.appendChild(  document.createElement( 'td' ) );
 		td.setAttribute( 'colspan', 4 );
 		td.align = 'center';
 		var btn = td.appendChild( document.createElement( 'button' ) );
-		btn.textContent = 'clear';
+		btn.textContent = 'Clear';
 		btn.addEventListener( 'click', Mission.clearMissionStorage.bind( 
 			null, function() { 
 				document.getElementById( 'missionDisplayTable' ).remove(); 
