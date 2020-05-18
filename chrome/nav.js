@@ -7,12 +7,6 @@
 
 var LOCATION_LINKS = {
 		planet: [
-/*			{ key: 'navEquipmentLink',
-			  text: 'Ship equipment',
-			  url: 'ship_equipment.php' },*/
-/*			{ key: 'navTradeLink',
-			  text: 'Trade with planet',
-			  url: 'planet_trade.php' },*/
 			  { key: 'navBulletinBoardLink',
 			  text: 'Bulletin Board',
 			  url: 'bulletin_board.php' },
@@ -35,26 +29,20 @@ var LOCATION_LINKS = {
 			  text: 'Crew Quarters',
 			  url: 'crew_quarters.php' }
 		],
-		starbase: [
-/*			{ key: 'navEquipmentLink',
-			  text: 'Ship equipment',
-			  url: 'ship_equipment.php' },*/
-/*			{ key: 'navTradeLink',
-			  text: 'Trade with starbaset',
-			  url: 'planet_trade.php' },*/			  
+		starbase: [		  
 			{ key: 'navBulletinBoardLink',
 	 		  text: 'Bulletin Board',
 			  url: 'bulletin_board.php' },
-		    { key: 'navBlackMarketLink',
+			{ key: 'navBlackMarketLink',
 			  text: 'Black Market',
 			  url: 'blackmarket.php' },
-		    { key: 'navHackLink',
+		        { key: 'navHackLink',
 			  text: 'Hack Information',
 			  url: 'hack.php' },
-		    { key: 'navBountyBoardLink',
+		        { key: 'navBountyBoardLink',
 			  text: 'Bounty Board',
 			  url: 'bounties.php' },
-			  { key: 'navWeaponLink',
+			{ key: 'navWeaponLink',
 			  text: 'Ship Weapons',
 			  url: 'ship_equipment.php?sort=weapon' },			  
 			{ key: 'navShipyardLink',
@@ -64,9 +52,6 @@ var LOCATION_LINKS = {
 			  text: 'Fly close',
 			  url: 'main.php?entersb=1' } ],
 		building: [
-/*			{ key: 'navTradeLink',
-			  text: 'Trade with building',
-			  url: 'building_trade.php' },*/
 			{ key: 'navHackLink',
 			  text: 'Hack Information',
 			  url: 'hack.php' }
