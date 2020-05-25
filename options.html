@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <title>Pardus Sweetener T Options</title>
+  <link rel="stylesheet" type="text/css" href="options.css">
+  <script type="text/javascript" src="options.js"></script>
+ </head>
+ <body>
+  <section>
+   <h3>General</h3>
+
+   <div>
+    <p>
+     <input type="checkbox" id="navShipLinks">
+     <label for="navShipLinks">
+      Adds links to Attack and Trade with other ships on your tile.
+     </label>
+     <br>
+     <input type="checkbox" id="navWeaponLink">
+     <label for="navWeaponLink">
+      Adds a link to Weapons at planets and starbases.
+     <br>    
+     <input type="checkbox" id="navBlackMarketLink">
+     <label for="navBlackMarketLink">
+      Adds a link to the Black Market at planets and starbases.
+     </label>
+     <br>
+     <input type="checkbox" id="navHackLink">
+     <label for="navHackLink">
+      Adds a link to Hack Information at planets, starbases, and
+      buildings
+     </label>
+     <br>
+     <input type="checkbox" id="navBulletinBoardLink">
+     <label for="navBulletinBoardLink">
+      Adds a link to the Bulletin Board at planets and starbases.
+     </label>
+     <br>
+     <input type="checkbox" id="navBountyBoardLink">
+     <label for="navBountyBoardLink">
+      Adds a link to the Bounty Board at planets and starbases.
+     </label>
+     <br>
+     <input type="checkbox" id="navShipyardLink">
+     <label for="navShipyardLink">
+      Adds a link to the Shipyard at planets and starbases.
+     </label>
+     <br>
+     <input type="checkbox" id="navCrewQuartersLink">
+     <label for="navCrewQuartersLink">
+      Adds a link to the Crew Quarters at planets.
+     </label>
+     <br>
+     <input type="checkbox" id="navFlyCloseLink">
+     <label for="navFlyCloseLink">
+      Adds a link to Fly Close to starbases.
+     </label>
+    </p>
+
+    <p>
+     <input type="checkbox" id="sendmsgShowAlliance">
+     <label for="sendmsgShowAlliance">
+      Show the recipient's alliance name when composing a private message.
+     </label>
+    </p>
+  </div>
+  </section>
+
+  <section>
+   <h3>Navigation and Minimap</h3>
+   <div>
+
+    <p>
+     <input type="checkbox" id="pathfindingEnabled">
+     <label for="pathfindingEnabled">
+      Enable highlighting of the ship path in the navigation area.
+     </label>
+     <br>
+     <input type="checkbox" id="navigationCoordinates">
+     <label for="navigationCoordinates">
+      Add a coordinates grid to the navigation area.
+     </label>
+     <br/>
+     <input type="checkbox" id="displayVisited">
+     <label for="displayVisited">
+      Enable highlighting of the recently visited tile. 
+     </label>
+     <label for="displayVisited">
+      Decay time (seconds) (Default: 3 minutes): 
+     </label>
+     <input type="number" id="displayVisitedDecay" disabled>
+    </p>
+    <p>
+     <input type="checkbox" id="missionDisplay">
+     <label for="missionDisplay">
+      Store and display missions on the navigation screen.
+     </label>
+    </p> 
+     <input type="checkbox" id="miniMap">
+     <label for="miniMap">
+      Show a small map of the current sector.
+     </label>
+     <select id="miniMapPlacement">
+      <option value="topright">Above the "Cargo box"</option>
+      <option value="statusbox">Inside the "Status box"</option>
+      <option value="navbox">Under the Navigation Area</option>
+      <option value="navboxXL">Under the Navigation Area (Party Size)</option>
+     </select>
+     <br>
+     <input type="checkbox" id="miniMapNavigation">
+     <label for="miniMapNavigation">
+      Calculate travel cost and route when hovering over the minimap.
+     </label>
+	 <br/>
+	 <input type="checkbox" id="displayNavigationEnabled">
+     <label for="displayNavigationEnabled">
+      Show calculated travel path on the navigation when clicking the minimap.
+     </label>
+   </div>
+  </section>
+
+  <section>
+   <h3>Alarms and Notifications</h3>
+
+   <div>
+    <p>
+     The audible alarm can draw your attention when certain events occur.  It
+     can also compel others to appease your computer with a hammer, if you leave
+     it logged into Pardus while you are not around to snooze it.
+    </p>
+
+    <p>
+     <input type="checkbox" id="muteAlarm">
+     <label for="muteAlarm">Mute alarm, regardless of settings below.</label>
+    </p>
+
+    <p>
+     Alarm sound:
+     <select id="alarmSound">
+      <option value="buzz">Buzzer</option>
+      <option value="dive">Dive horn</option>
+      <option value="missile">Missile alert</option>
+      <option value="power">Power plant</option>
+      <option value="timex">Timex</option>
+     </select>
+     <input id="testAlarm" type="button" value="Test">
+    </p>
+
+    <p>
+     <input type="checkbox" id="alarmCombat">
+     <label for="alarmCombat">Sound the alarm on combat.</label>
+     <br>
+     <input type="checkbox" id="alarmWarning">
+     <label for="alarmWarning">
+      Sound the alarm when warning messages are displayed (e.g. "new ACS
+      entries")
+     </label>
+     <br>
+     <input type="checkbox" id="alarmAlly">
+     <label for="alarmAlly">
+      Sound the alarm when alliance messages arrive.
+     </label>
+     <br>
+     <input type="checkbox" id="alarmPM">
+     <label for="alarmPM">
+      Sound the alarm when private messages arrive.
+     </label>
+     <br>
+     <input type="checkbox" id="alarmMission">
+     <label for="alarmMission">Sound the alarm on mission events.</label>
+     <br>
+     <input type="checkbox" id="alarmTrade">
+     <label for="alarmTrade">Sound the alarm on trade.</label>
+     <br>
+     <input type="checkbox" id="alarmPayment">
+     <label for="alarmPayment">Sound the alarm on payments.</label>
+    </p>
+
+    <p>
+     Desktop notifications are subtler and convenient when you are at your
+     computer, just not watching the Pardus tab.
+    </p>
+
+    <p>
+     <input id="testNotification" type="button"
+            value="See a sample desktop notification">
+    </p>
+
+    <p>
+     <input type="checkbox" id="desktopCombat">
+     <label for="desktopCombat">
+      Show a desktop notification on combat.
+     </label>
+     <br>
+     <input type="checkbox" id="desktopWarning">
+     <label for="desktopWarning">
+      Show a desktop notification when warning messages are displayed
+      (e.g. "new ACS entries")
+     </label>
+     <br>
+     <input type="checkbox" id="desktopAlly">
+     <label for="desktopAlly">
+      Show a desktop notification when alliance messages arrive.
+     </label>
+     <br>
+     <input type="checkbox" id="desktopPM">
+     <label for="desktopPM">
+      Show a desktop notification when private messages arrive.
+     </label>
+     <br>
+     <input type="checkbox" id="desktopMission">
+     <label for="desktopMission">
+      Show a desktop notification on mission events.
+     </label>
+     <br>
+     <input type="checkbox" id="desktopTrade">
+     <label for="desktopTrade">
+      Show a desktop notification on trade.
+     </label>
+     <br>
+     <input type="checkbox" id="desktopPayment">
+     <label for="desktopPayment">
+      Show a desktop notification on payments.
+     </label>
+    </p>
+   </div>
+  </section>
+
+  <section>
+   <h3>Combat</h3>
+   <div>
+    <p>
+     <input type="checkbox" id="pvpMissileAutoAll">
+     <label for="pvpMissileAutoAll">
+      Fire all missiles by default in "Player vs Player" combat.
+     </label>
+     <br>
+     <input type="checkbox" id="pvpHighestRounds">
+     <label for="pvpHighestRounds">
+      Preselect the highest number of rounds you can attack for in
+      "Player vs Player" combat.
+     </label>
+     <br>
+     <input type="checkbox" id="pvmMissileAutoAll">
+     <label for="pvmMissileAutoAll">
+      Fire all missiles by default in "Player vs NPC" combat.
+     </label>
+     <br>
+     <input type="checkbox" id="pvmHighestRounds">
+     <label for="pvmHighestRounds">
+      Preselect the highest number of rounds you can attack for in
+      "Player vs NPC" combat.
+     </label>
+     <br>
+     <input type="checkbox" id="pvbMissileAutoAll">
+     <label for="pvbMissileAutoAll">
+      Fire all missiles by default in "Player vs Building" combat.
+     </label>
+     <br>
+     <input type="checkbox" id="displayDamage">
+     <label for="displayDamage">
+      Display damage taken after combat rounds.
+     </label>
+    </p>
+
+    <p>
+     Robot autofill fills the "use robots" field with the amount needed to
+     repair your ship's armour.  For this, you need to configure your ship's
+     armour points and strength.
+    </p>
+
+    <p>
+     <input type="checkbox" id="autobots">
+     <label for="autobots">
+      Enable robot autofill.
+     </label>
+    </p>
+
+    <p class="artemis">
+     <label for="autobotsArtemisPreset">Preset:</label>
+     <select id="autobotsArtemisPreset">
+      <option value="0">Custom</option>
+      <optgroup label="Standard Ships">
+       <option value="225">Sabre</option>
+       <option value="135">Rustclaw</option>
+       <option value="285">Interceptor</option>
+       <option value="300">Lanner Mini</option>
+       <option value="210">Harrier</option>
+       <option value="390">Mercury</option>
+       <option value="195">Hercules</option>
+       <option value="390_B">Lanner</option>
+       <option value="480">Hawk</option>
+       <option value="450">Gargantua</option>
+       <option value="405">Behemoth</option>
+       <option value="510">Liberator</option>
+       <option value="330">Leviathan</option>
+      </optgroup>
+      <optgroup label="Federation Ships">
+       <option value="240">Wasp</option>
+       <option value="255">Adder</option>
+       <option value="270">Thunderbird</option>
+       <option value="405_B">Viper DC</option>
+       <option value="210_C">Babel Transporter</option>
+       <option value="375">Piranha</option>
+       <option value="510_B">Nighthawk</option>
+       <option value="540">Nighthawk Deluxe</option>
+       <option value="390_C">Mantis</option>
+       <option value="345">Extender</option>
+       <option value="585">Gauntlet</option>
+       <option value="720">Doomstar</option>
+       <option value="990">War Nova</option>
+      </optgroup>
+      <optgroup label="Empire Ships">
+       <option value="270_B">Ficon</option>
+       <option value="60">Tyrant</option>
+       <option value="225_B">Spectre</option>
+       <option value="405_C">Shadow SC</option>
+       <option value="375_B">Venom</option>
+       <option value="285_B">Constrictor</option>
+       <option value="525">Phantom ASC</option>
+       <option value="495">Dominator</option>
+       <option value="465">Boa UC</option>
+       <option value="540_B">Mooncrusher</option>
+      </optgroup>
+      <optgroup label="Union Ships">
+       <option value="210_B">Rustfire</option>
+       <option value="330_B">Marauder</option>
+       <option value="90">Junker IV</option>
+       <option value="285_C">Slider</option>
+       <option value="195_B">El Padre</option>
+       <option value="420">Chitin</option>
+       <option value="390_D">Horpor</option>
+       <option value="630">Scorpion</option>
+      </optgroup>
+      <optgroup label="TSS Ships">
+       <option value="420_B">Rover</option>
+       <option value="495_B">Reaper</option>
+       <option value="390_E">Blood Lanner</option>
+       <option value="600">Sudden Death</option>
+       <option value="705">Harvester</option>
+      </optgroup>
+      <optgroup label="EPS Ships">
+       <option value="330_C">Trident</option>
+       <option value="360">Celeus</option>
+       <option value="480_B">Pantagruel</option>
+       <option value="405_D">Vulcan</option>
+       <option value="500">Nano</option>
+       <option value="540_C">Liberator EPS</option>
+      </optgroup>
+     </select>
+     <label for="autobotsArtemisPoints">Armour points:</label>
+     <input id="autobotsArtemisPoints" type="text" size="3">
+     <label for="autobotsArtemisStrength">Armour strength:</label>
+     <select id="autobotsArtemisStrength">
+      <option value="180">I</option>
+      <option value="90">II</option>
+      <option value="60">III</option>
+      <option value="45">IV</option>
+      <option value="36">V</option>
+      <option value="30">VI</option>
+      <option value="26">VII</option>
+     </select>
+    </p>
+
+    <p class="orion">
+     <label for="autobotsOrionPreset">Preset:</label>
+     <select id="autobotsOrionPreset">
+      <option value="0">Custom</option>
+      <optgroup label="Standard Ships">
+       <option value="225">Sabre</option>
+       <option value="135">Rustclaw</option>
+       <option value="285">Interceptor</option>
+       <option value="300">Lanner Mini</option>
+       <option value="210">Harrier</option>
+       <option value="390">Mercury</option>
+       <option value="195">Hercules</option>
+       <option value="390_B">Lanner</option>
+       <option value="480">Hawk</option>
+       <option value="450">Gargantua</option>
+       <option value="405">Behemoth</option>
+       <option value="510">Liberator</option>
+       <option value="330">Leviathan</option>
+      </optgroup>
+      <optgroup label="Federation Ships">
+       <option value="240">Wasp</option>
+       <option value="255">Adder</option>
+       <option value="270">Thunderbird</option>
+       <option value="405_B">Viper DC</option>
+       <option value="210_C">Babel Transporter</option>
+       <option value="375">Piranha</option>
+       <option value="510_B">Nighthawk</option>
+       <option value="540">Nighthawk Deluxe</option>
+       <option value="390_C">Mantis</option>
+       <option value="345">Extender</option>
+       <option value="585">Gauntlet</option>
+       <option value="720">Doomstar</option>
+       <option value="990">War Nova</option>
+      </optgroup>
+      <optgroup label="Empire Ships">
+       <option value="270_B">Ficon</option>
+       <option value="60">Tyrant</option>
+       <option value="225_B">Spectre</option>
+       <option value="405_C">Shadow SC</option>
+       <option value="375_B">Venom</option>
+       <option value="285_B">Constrictor</option>
+       <option value="525">Phantom ASC</option>
+       <option value="495">Dominator</option>
+       <option value="465">Boa UC</option>
+       <option value="540_B">Mooncrusher</option>
+      </optgroup>
+      <optgroup label="Union Ships">
+       <option value="210_B">Rustfire</option>
+       <option value="330_B">Marauder</option>
+       <option value="90">Junker IV</option>
+       <option value="285_C">Slider</option>
+       <option value="195_B">El Padre</option>
+       <option value="420">Chitin</option>
+       <option value="390_D">Horpor</option>
+       <option value="630">Scorpion</option>
+      </optgroup>
+      <optgroup label="TSS Ships">
+       <option value="420_B">Rover</option>
+       <option value="495_B">Reaper</option>
+       <option value="390_E">Blood Lanner</option>
+       <option value="600">Sudden Death</option>
+       <option value="705">Harvester</option>
+      </optgroup>
+      <optgroup label="EPS Ships">
+       <option value="330_C">Trident</option>
+       <option value="360">Celeus</option>
+       <option value="480_B">Pantagruel</option>
+       <option value="405_D">Vulcan</option>
+       <option value="500">Nano</option>
+       <option value="540_C">Liberator EPS</option>
+      </optgroup>
+     </select>
+     <label for="autobotsOrionPoints">Armour points:</label>
+     <input id="autobotsOrionPoints" type="text" size="3">
+     <label for="autobotsOrionStrength">Armour strength:</label>
+     <select id="autobotsOrionStrength">
+      <option value="180">I</option>
+      <option value="90">II</option>
+      <option value="60">III</option>
+      <option value="45">IV</option>
+      <option value="36">V</option>
+      <option value="30">VI</option>
+      <option value="26">VII</option>
+     </select>
+    </p>
+
+    <p class="pegasus">
+     <label for="autobotsPegasusPreset">Preset:</label>
+     <select id="autobotsPegasusPreset">
+      <option value="0">Custom</option>
+      <optgroup label="Standard Ships">
+       <option value="225">Sabre</option>
+       <option value="135">Rustclaw</option>
+       <option value="285">Interceptor</option>
+       <option value="300">Lanner Mini</option>
+       <option value="210">Harrier</option>
+       <option value="390">Mercury</option>
+       <option value="195">Hercules</option>
+       <option value="390_B">Lanner</option>
+       <option value="480">Hawk</option>
+       <option value="450">Gargantua</option>
+       <option value="405">Behemoth</option>
+       <option value="510">Liberator</option>
+       <option value="330">Leviathan</option>
+      </optgroup>
+      <optgroup label="Federation Ships">
+       <option value="240">Wasp</option>
+       <option value="255">Adder</option>
+       <option value="270">Thunderbird</option>
+       <option value="405_B">Viper DC</option>
+       <option value="210_C">Babel Transporter</option>
+       <option value="375">Piranha</option>
+       <option value="510_B">Nighthawk</option>
+       <option value="540">Nighthawk Deluxe</option>
+       <option value="390_C">Mantis</option>
+       <option value="345">Extender</option>
+       <option value="585">Gauntlet</option>
+       <option value="720">Doomstar</option>
+       <option value="990">War Nova</option>
+      </optgroup>
+      <optgroup label="Empire Ships">
+       <option value="270_B">Ficon</option>
+       <option value="60">Tyrant</option>
+       <option value="225_B">Spectre</option>
+       <option value="405_C">Shadow SC</option>
+       <option value="375_B">Venom</option>
+       <option value="285_B">Constrictor</option>
+       <option value="525">Phantom ASC</option>
+       <option value="495">Dominator</option>
+       <option value="465">Boa UC</option>
+       <option value="540_B">Mooncrusher</option>
+      </optgroup>
+      <optgroup label="Union Ships">
+       <option value="210_B">Rustfire</option>
+       <option value="330_B">Marauder</option>
+       <option value="90">Junker IV</option>
+       <option value="285_C">Slider</option>
+       <option value="195_B">El Padre</option>
+       <option value="420">Chitin</option>
+       <option value="390_D">Horpor</option>
+       <option value="630">Scorpion</option>
+      </optgroup>
+      <optgroup label="TSS Ships">
+       <option value="420_B">Rover</option>
+       <option value="495_B">Reaper</option>
+       <option value="390_E">Blood Lanner</option>
+       <option value="600">Sudden Death</option>
+       <option value="705">Harvester</option>
+      </optgroup>
+      <optgroup label="EPS Ships">
+       <option value="330_C">Trident</option>
+       <option value="360">Celeus</option>
+       <option value="480_B">Pantagruel</option>
+       <option value="405_D">Vulcan</option>
+       <option value="500">Nano</option>
+       <option value="540_C">Liberator EPS</option>
+      </optgroup>
+     </select>
+     <label for="autobotsPegasusPoints">Armour points:</label>
+     <input id="autobotsPegasusPoints" type="text" size="3">
+     <label for="autobotsPegasusStrength">Armour strength:</label>
+     <select id="autobotsPegasusStrength">
+      <option value="180">I</option>
+      <option value="90">II</option>
+      <option value="60">III</option>
+      <option value="45">IV</option>
+      <option value="36">V</option>
+      <option value="30">VI</option>
+      <option value="26">VII</option>
+     </select>
+    </p>
+
+   </div>
+  </section>
+
+  <section>
+   <h3>Ambush</h3>
+   <div>
+    <p>
+     <div>
+      <input type="checkbox" id="fitAmbushRounds">
+      <label for="fitAmbushRounds">
+       Fix QLs with more rounds than you can set, so you set for your maximum
+       rounds.
+      </label>
+     </div>
+
+     <div>
+      <input type="checkbox" id="overrideAmbushRounds">
+      <label for="overrideAmbushRounds">
+       Always select the maximum rounds that you can set.
+       <strong>This will override the rounds in any quicklist.</strong>
+      </label>
+     </div>
+    </p>
+
+    <p>
+     Alliance quicklists are obtained from the in-game <em>My Alliance</em>
+     page; see
+     <a target="_blank"
+    href="https://github.com/valitas/Pardus-Sweetener/wiki/Quick-lists">here</a>
+     for details.
+    </p>
+
+    <p class="artemis">
+     <input type="checkbox" id="allianceQLsArtemisEnabled">
+     <label for="allianceQLsArtemisEnabled">
+      Use alliance QLs in Artemis
+     </label>
+     <br>
+     <input type="checkbox" id="personalQLArtemisEnabled">
+     <label for="personalQLArtemisEnabled">
+      Use personal QL in Artemis
+     </label>
+     <br>
+     <textarea id="personalQLArtemis" rows="3" disabled
+         placeholder="Artemis quicklist"></textarea>
+    </p>
+
+    <p class="orion">
+     <input type="checkbox" id="allianceQLsOrionEnabled">
+     <label for="allianceQLsOrionEnabled">
+      Use alliance QLs in Orion
+     </label>
+     <br>
+     <input type="checkbox" id="personalQLOrionEnabled">
+     <label for="personalQLOrionEnabled">
+      Use personal QL in Orion
+     </label>
+     <br>
+     <textarea id="personalQLOrion" rows="3" disabled
+               placeholder="Orion quicklist" ></textarea>
+    </p>
+
+    <p class="pegasus">
+     <input type="checkbox" id="allianceQLsPegasusEnabled">
+     <label for="allianceQLsPegasusEnabled">
+      Use alliance QLs in Pegasus
+     </label>
+     <br>
+     <input type="checkbox" id="personalQLPegasusEnabled">
+     <label for="personalQLPegasusEnabled">
+      Use personal QL in Pegasus
+     </label>
+     <br>
+     <textarea id="personalQLPegasus" rows="3" disabled
+               placeholder="Pegasus quicklist"></textarea>
+    </p>
+
+   </div>
+  </section>
+
+  <section>
+   <h3>Online List Highlighting</h3>
+
+   <div>
+    <p>
+     Highlight specific pilots in the online list. Write one name per line, or
+     separate names with commas.
+    </p>
+
+    <p class="artemis">
+     <input type="checkbox" id="artemisOnlineListEnabled">
+     <label for="artemisOnlineListEnabled">
+      Enable highlighting in Artemis.
+     </label>
+     <br>
+     <textarea id="artemisOnlineList" rows="4" disabled></textarea>
+    </p>
+
+    <p class="orion">
+     <input type="checkbox" id="orionOnlineListEnabled">
+     <label for="orionOnlineListEnabled">
+      Enable highlighting in Orion.
+     </label>
+     <br>
+     <textarea id="orionOnlineList" rows="4" disabled></textarea>
+    </p>
+
+    <p class="pegasus">
+     <input type="checkbox" id="pegasusOnlineListEnabled">
+     <label for="pegasusOnlineListEnabled">
+      Enable highlighting in Pegasus.
+     </label>
+     <br>
+     <textarea id="pegasusOnlineList" rows="4" disabled></textarea>
+    </p>
+   </div>
+  </section>
+
+  <section>
+   <h3>Clocks</h3>
+
+   <div>
+    <p>
+     Countdowns to recurring in-game events. For these to be accurate, your
+     computer's clock and time zone should be set correctly.  Modern operating
+     systems can keep your clock on the correct time automatically; see
+     <a target="_blank"
+    href="http://www.ehow.com/how_7550535_sync-clock-server.html">this
+      article</a>
+     for a quick rundown.
+    </p>
+
+    <p>
+     <input type="checkbox" id="clockUTC">
+     <label for="clockUTC">
+      Show the current Universal Coordinated Time (UTC)
+     </label>
+     <br>
+     <input type="checkbox" id="clockAP">
+     <label for="clockAP">
+      Show the time remaining to the next 24 APs.
+     </label>
+     <br>
+     <input type="checkbox" id="clockP">
+     <label for="clockP">
+      Show the time remaining to the next planet tick.
+     </label>
+     <br>
+     <input type="checkbox" id="clockS">
+     <label for="clockS">
+      Show the time remaining to the next starbase tick.
+     </label>
+     <br>
+     <input type="checkbox" id="clockB">
+     <label for="clockB">
+      Show the time remaining to the next building tick.
+     </label>
+     <br>
+     <input type="checkbox" id="clockL">
+     <label for="clockL">
+      Show the time remaining to the next armour repair by your space leech.
+     </label>
+     <br>
+     <input type="checkbox" id="clockE">
+     <label for="clockE">
+      Show the time remaining to the next e-matter regeneration.
+     </label>
+     <br>
+     <input type="checkbox" id="clockN">
+     <label for="clockN">
+      Show the time remaining to the next roaming NPC movement (exluding Z-Fleet, Lucidi, Preywinder and Glowprawn)
+     </label>
+     <br>
+     <input type="checkbox" id="clockZ">
+     <label for="clockZ">
+      Show the time remaining to the next movement for Z-Fleet, Lucidi, Preywinder and Glowprawn.
+     </label>
+     <br>
+     <input type="checkbox" id="clockR">
+     <label for="clockR">
+      Show the time remaining to the next server reset.
+     </label>
+    </p>
+   </div>
+
+
+  </section>
+  <section>
+    <h3>Drugs and Stims </h3>
+    <div>Controls for drugs and stim clocks</div>
+    <div class="setting">
+    <p>
+    <input type="checkbox" id="clockD" />
+    <label for="clockD">
+     Show the time remaining to being undrugged.
+    </label>
+     <br>
+     <input type="checkbox" id="clockStim">
+     <label for="clockStim">
+      Show the time remaining to being unstimmed.
+     </label>
+     <br>
+     Doctors:
+     <p class="artemis">
+       <select id="adoctor">
+        <option value="NoDoc">None</option>
+        <option value="Primary">Primary</option>
+        <option value="Secondary">Secondary</option>
+       </select>
+      <input id="aresetDrugAndStim" alt="a" type="button" value="Reset clocks">
+     </p>
+     <p class="orion">
+       <select id="odoctor">
+        <option value="NoDoc">None</option>
+        <option value="Primary">Primary</option>
+        <option value="Secondary">Secondary</option>
+        </select>
+      <input id="oresetDrugAndStim" alt="o" type="button" value="Reset clocks">
+      </p>
+      <p class="pegasus">
+       <select id="pdoctor">
+        <option value="NoDoc">None</option>
+        <option value="Primary">Primary</option>
+        <option value="Secondary">Secondary</option>
+       </select>
+       <input id="presetDrugAndStim" alt="p" universe="test" type="button" value="Reset clocks">
+      </p>
+     <br>
+   </p>
+   </div>
+  </section>
+  <section>
+   <h3>About</h3>
+
+   <div>
+    <div><img src="icons/64.png"></div>
+
+    <p>Version <span id="version"></span></p>
+
+    <p>
+     Please report bugs and request enhancements in the
+     <a href="http://forum.pardus.at/index.php?showtopic=62190"
+  target="_blank">Pardus Forum</a>
+     or the
+     <a href="https://github.com/tsunder/Pardus-Sweetener"
+  target="_blank">GitHub repository</a>.
+    </p>
+
+    <p>
+     Copyright © 2011-2020 Val and the Pardus Sweetener contributors.
+     This software is free to use and modify: see legal notice in the file
+     README.md included in the software package, or read it
+     <a href="https://github.com/tsunder/Pardus-Sweetener#credits-and-legal-notices"
+        target="_blank">online</a>.
+    </p>
+
+    <p>DISCLAIMER: This software is without warranty.</p>
+
+    <p>The sound samples included with the software were obtained
+     from <a href="http://freesound.org/" target="_blank">freesound.org</a>
+     and are licensed under the
+     <a href="http://creativecommons.org/licenses/sampling+/1.0/"
+        target="_blank">Creative Commons Sampling Plus 1.0 License</a>.
+     Individual credits:
+    </p>
+
+    <ul>
+     <li>The alarm clock sound by user Timbre:
+      <a href="http://www.freesound.org/samplesViewSingle.php?id=72558"
+         target="_blank">Buzzer</a></li>
+     <li>The submarine dive horn by user CGEffex:
+      <a href="http://www.freesound.org/samplesViewSingle.php?id=104882"
+         target="_blank">Dive horn</a></li>
+     <li>The alarm sound commonly heard in movies when something goes wrong on some type of aircraft, by user guitarguy1985 (Nick Oakman):
+      <a href="http://www.freesound.org/samplesViewSingle.php?id=57806"
+         target="_blank">Missile alert</a></li>
+     <li>The submarine power plant alarm by user Rfriend:
+      <a href="http://www.freesound.org/samplesViewSingle.php?id=26962"
+         target="_blank">Power plant</a></li>
+     <li>The wrist watch alarm by user Corsica_S (Tim Kahn):
+      <a href="http://www.freesound.org/samplesViewSingle.php?id=18632"
+         target="_blank">Timex</a></li>
+    </ul>
+
+    <p>
+     Pardus is Copyright © 2003-2020 Bayer &amp; Szell OG. The author of this
+     software is not affiliated with Bayer &amp; Szell OG.
+    </p>
+   </div>
+  </section>
+ </body>
+</html>
