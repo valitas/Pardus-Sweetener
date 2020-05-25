@@ -7,7 +7,7 @@
       "all_frames": true,
       "js": [ "cfgset.js", "shiplinks.js", "sector.js", "map.js", "universe.js",  "missions.js", "nav.js" ],
       "css": [ "nav.css" ],
-      "matches": [ "*://*.pardus.at/main.php*" ]
+      "matches": [ "*://*.pardus.at/main.php*", "*://*.pardus.at/game.php*" ]
    }, {
       "all_frames": true,
       "js": [ "cfgset.js", "universe.js", "shiplinks.js", "missions.js", "combat.js" ],
@@ -72,7 +72,7 @@
       "default_title": "Change Pardus Sweetener settings"
    },
    "permissions": [ "notifications", "storage", "*://*.pardus.at/*" ],
-   "version": "9.7.9",
+   "version": "9.12.9",
    "web_accessible_resources": [ 
 		"icons/16.png", 
 		"icons/48.png",

@@ -472,13 +472,6 @@ function onInstalled( details ) {
 			cfg[ key ] = ( localStorage[key] != 'false' );
 		}
 
-		// These three are now just one.  They all defaulted to true.
-		// If all three were disabled, we disable the new option.
-		cfg[ 'navTradeLink' ] =
-			!( localStorage[ 'navPlanetTradeLink' ] == 'false' &&
-			   localStorage[ 'navSBTradeLink' ] == 'false' &&
-			   localStorage[ 'navBldgTradeLink' ] == 'false' );
-
 		// These two were renamed.  They defaulted to true.
 		cfg[ 'navBlackMarketLink' ] = localStorage[ 'navBMLink' ] != 'false';
 		cfg[ 'navBulletinBoardLink' ] = localStorage[ 'navBBLink' ] != 'false';
