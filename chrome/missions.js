@@ -124,8 +124,19 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 		output[ 'faction' ] === undefined ? output[ 'faction' ] = 'n' : output[ 'faction' ] = output[ 'faction' ].split( /factions/g )[ 1 ][ 6 ];//check for neutral vs faction.
 		output[ 'type' ] = data[1].firstChild.title[ 0 ];
 		
-		bbpage ? output[ 'timeLimit'] = parseInt( data[3].textContent ) : null;
-		
+        if (bbpage) {output[ 'timeLimit'] = "Complete in\n" + parseInt( data[3].textContent ) + " Min";
+    } else {
+        var timeLeft = (data[3].textContent).split(" ");
+        var hh = parseInt(timeLeft[0]);
+        var mm = parseInt(timeLeft[1]);
+        var ss = parseInt(timeLeft[2]);
+        var minutesLeft = (+hh) * 60 + (+mm);
+        function picker(minutesLeft) {
+            if (minutesLeft < 1) {return ss + " Sec"}
+            else {return minutesLeft + " Min"}
+        }
+        output[ 'timeLimit'] = "Complete in\n" + picker(minutesLeft);
+    }
 		output[ 'sector'] = data[5].textContent;
 		output[ 'image' ] = data[1].firstChild.src;
 		if ( output.sector !== '-' ) {  
@@ -143,10 +154,19 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 				output[ 'amount' ] = parseInt( data[ 2 ].textContent.split( /\//g )[ 1 ] );
 			}	
 
-		}
+        }
 		output[ 'reward'] = parseInt( data[7].textContent.replace(/,/g,'') );
 		output[ 'deposit'] = parseInt( data[8].textContent.replace(/,/g,'') );
-		output[ 'id' ] = data[9].firstChild.id;
+        output[ 'id' ] = data[9].firstChild.id;
+        var CurrentDT = new Date();
+        var CurrentHours = CurrentDT.getHours();
+        var CurrentHoursS = ("0" + CurrentHours).slice(-2);
+        var CurrentMinutes = CurrentDT.getMinutes();
+        var CurrentMinutesS = ("0" + CurrentMinutes).slice(-2);
+        var CurrentSeconds = CurrentDT.getSeconds();
+        var CurrentSecondsS = ("0" + CurrentSeconds).slice(-2);
+        var CurrentTime = CurrentHoursS + ":" + CurrentMinutesS + ":" + CurrentSecondsS;
+        output[ 'acceptTime' ] = "Updated\n" + CurrentTime;
 	} else if ( bbpage ) {
 		//Non-premium bb page.
         
@@ -183,7 +203,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 			output[ 'locId' ] = Sector.getLocation( 
                 Sector.getId( output.sector ), output.coords.x, 
                 output.coords.y );
-            output[ 'timeLimit' ] = parseInt( bf[ c+4 ].textContent );
+            output[ 'timeLimit' ] = "Complete in\n" + parseInt( bf[ c+4 ].textContent ) + " Min";
       		output[ 'reward' ] = parseInt( bf[ c+5 ].textContent.replace(/,/g,'') );
             output[ 'deposit' ] = 0;//argh VIP transport and action trip 
                 //have different HTML
@@ -200,13 +220,13 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                 output[ 'locId' ] = Sector.getLocation( 
                     Sector.getId( output.sector ), output.coords.x, 
                     output.coords.y );
-                output[ 'timeLimit' ] = parseInt( bf[ 3 ].textContent );
+                output[ 'timeLimit' ] = "Complete in\n" + parseInt( bf[ 3 ].textContent ) + " Min";
                 output[ 'reward'] = parseInt( bf[ 4 ].textContent.replace(/,/g,'') );
             } else {
                 // number in td[3], so not targetted.
                 output[ 'amount' ] = parseInt( td[3].textContent );
                 output[ 'amountDone'] = 0;
-                output[ 'timeLimit'] = parseInt( bf[2].textContent );
+                output[ 'timeLimit'] = "Complete in\n" + parseInt( bf[2].textContent ) + " Min";
                 output[ 'reward' ] = parseInt( bf[1].textContent.replace(/,/,'') );
             }
             output[ 'deposit' ] = parseInt( 
@@ -237,7 +257,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
             if( bf.length === 6 ) {
                 // bf size 6 means a untargetted critter 
                 output[ 'locId' ] = Mission.getLocIdFromImage( output.image );
-                output[ 'timeLimit' ] = parseInt( bf[2].textContent );
+                output[ 'timeLimit' ] = "Complete in\n" + parseInt( bf[2].textContent ) + " Min";
                 let temp = bf[3].textContent.split(/\//g);
                 output[ 'amountDone' ] = parseInt( temp[0] );
                 output[ 'amount' ] = parseInt( temp[1] );
@@ -260,7 +280,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                 output[ 'locId' ] = Sector.getLocation( 
                     Sector.getId( output.sector ), output.coords.x, 
                     output.coords.y );
-                output[ 'timeLimit' ] = parseInt( bf[4].textContent );
+                output[ 'timeLimit' ] = "Complete in\n" + parseInt( bf[4].textContent ) + " Min";
                 output[ 'reward' ] = parseInt( bf[5].textContent.replace(/,/g,'') );
                 output[ 'deposit' ] = parseInt( 
                         mission.getElementsByTagName( 'font' )[0].textContent
@@ -282,7 +302,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                 output[ 'locId' ] = Sector.getLocation( 
                     Sector.getId( output.sector ), output.coords.x, 
                     output.coords.y );
-                output[ 'timeLimit' ] = parseInt( bf[5].textContent );
+                output[ 'timeLimit' ] = "Complete in\n" + parseInt( bf[5].textContent ) + " Min";
                 output[ 'reward' ] = parseInt( bf[6].textContent.replace(/,/g,'') );
                 output[ 'deposit' ] = parseInt( 
                         mission.getElementsByTagName( 'font' )[0].textContent
@@ -301,7 +321,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                 output[ 'locId' ] = Sector.getLocation( 
                     Sector.getId( output.sector ), output.coords.x, 
                     output.coords.y );
-                output[ 'timeLimit' ] = parseInt( bf[5].textContent );
+                output[ 'timeLimit' ] = "Complete in\n" + parseInt( bf[5].textContent ) + " Min";
                 output[ 'reward' ] = parseInt( bf[6].textContent.replace(/,/g,'') );
                 output[ 'deposit' ] = parseInt( 
                         mission.getElementsByTagName( 'font' )[1].textContent
@@ -320,7 +340,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                 output[ 'locId' ] = Sector.getLocation( 
                     Sector.getId( output.sector ), output.coords.x, 
                     output.coords.y );
-                output[ 'timeLimit' ] = parseInt( bf[3].textContent );
+                output[ 'timeLimit' ] = "Complete in\n" + parseInt( bf[3].textContent ) + " Min";
                 output[ 'reward' ] = parseInt( bf[4].textContent.replace(/,/g,'') );
                 output[ 'deposit' ] = parseInt( 
                         mission.getElementsByTagName( 'font' )[0].textContent
@@ -339,7 +359,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                 output[ 'locId' ] = Sector.getLocation( 
                     Sector.getId( output.sector ), output.coords.x, 
                     output.coords.y );
-                output[ 'timeLimit' ] = parseInt( bf[4].textContent );
+                output[ 'timeLimit' ] = "Complete in\n" + parseInt( bf[4].textContent ) + " Min";
                 output[ 'reward' ] = parseInt( bf[5].textContent.replace(/,/g,'') );
                 output[ 'deposit' ] = parseInt( 
                         mission.getElementsByTagName( 'font' )[1].textContent
@@ -348,14 +368,33 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                         );
             }
         }
-        
-        // output[ 'acceptTime' ] = bf[8];
-    }    
+        var getbfLength = bf.length;
+        var bfLast = getbfLength - 1;
+        var bfAcceptTime = bf[bfLast].textContent;
+        var bfAcceptTimePreview = bfAcceptTime.slice(-8);
+        var bfAcceptTimeFinal = ('0'+bfAcceptTimePreview).slice(-8); //This code can be used to get the last "<b>" that contains AcceptTime
+/*        var CurrentDT = new Date();
+        var CurrentHours = CurrentDT.getHours();
+        var CurrentHoursS = ("0" + CurrentHours).slice(-2);
+        var CurrentMinutes = CurrentDT.getMinutes();
+        var CurrentMinutesS = ("0" + CurrentMinutes).slice(-2);
+        var CurrentSeconds = CurrentDT.getSeconds();
+        var CurrentSecondsS = ("0" + CurrentSeconds).slice(-2);
+        var CurrentTime = CurrentHoursS + ":" + CurrentMinutesS + ":" + CurrentSecondsS;*/ //This can give current time for an update.
+        output[ 'acceptTime' ] = "Started\n" + bfAcceptTimeFinal;
+    }
 
 	if ( bbpage ) {
-        output[ 'acceptTime' ] = Math.floor( Date.now() / 1000 );
-    }
-    // console.log(output);
+        var d = new Date();   
+        var h1 = d.getHours();
+        var h = ('0'+ h1).slice(-2);
+        var m1 = d.getMinutes();
+        var m = ('0'+ m1).slice(-2);
+        var s1 = d.getSeconds();
+        var s = ('0'+ s1).slice(-2);
+        output[ 'acceptTime' ] = "Started\n" +  h + ":" + m + ":" + s;
+          }
+/*    console.log(output);*/
 	return output
 }
 
