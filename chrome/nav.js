@@ -716,11 +716,8 @@ function highlightTileInPath( td ) {
 			}
 	}
 	else {
-			// if ( !type ) {
-				if ( !td.style.backgroundColor ) {
-					td.style.backgroundColor = 'rgba(255,105,180,1)';
-			// } else {
-				// td.style.backgroundColor = 'rgba(255,125,180,1)';
+			if ( !td.style.backgroundColor ) {
+				td.style.backgroundColor = 'rgba(255,105,180,1)';
 			}
 			var img = td.firstElementChild;
 			img.style.opacity = 0.85;
@@ -1203,7 +1200,6 @@ function highlightVisited( data ) {
         	let decayProportion = Math.round(10 * (Date.now() - data[ ukey + 'visit' ][ loc ]) / decayTime) / 10 ;
             let red = 0;
             let green = 255;
-            let opacity = Math.max( 0.5, 1.1 - decayProportion ); // don't go too transparent
             let fade = Math.min( 220, Math.round( 255 * decayProportion )); // don't go full colour
             red += fade;
             green -= fade;
@@ -1216,6 +1212,7 @@ function highlightVisited( data ) {
                 node.setAttribute( 'class', cl + ' sweetener-visited' );
                     node.style.backgroundColor = 'rgba( '+red+', '+green+', 0, ' +opacity+ ' )'; 
             }
+		    let opacity = Math.max( 0.5, .7 * (1-decayProportion) ); // don't go too transparent
         }
     }
 }
