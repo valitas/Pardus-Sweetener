@@ -1,4 +1,4 @@
-// Pardus Sweetener
+// Pardus Sweetener S
 // The wiring of the options page.
 
 'use strict';
