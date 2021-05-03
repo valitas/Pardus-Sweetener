@@ -1,4 +1,5 @@
 Pardus Sweetner S
+[![Mozilla Add-on](https://img.shields.io/amo/v/pardus-sweetener-s.svg)](https://addons.mozilla.org/firefox/addon/pardus-sweetener-s/)
 
 This is fork for personal use. It did add features that you can read about here: ([Pull Request #105](https://github.com/Tsunder/Pardus-Sweetener/pull/105))
 
