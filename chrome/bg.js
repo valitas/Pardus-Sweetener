@@ -391,13 +391,11 @@ function onInstalled( details ) {
 			navBountyBoardLink: false,
 			navBulletinBoardLink: true,
 			navCrewQuartersLink: false,
-			navEquipmentLink: true,
 			navWeaponLink: true,
 			navFlyCloseLink: true,
 			navHackLink: true,
 			navShipLinks: true,
 			navShipyardLink: false,
-			navTradeLink: true,
 			orionOnlineList: '',
 			orionOnlineListEnabled: false,
 			overrideAmbushRounds: false,
@@ -465,7 +463,7 @@ function onInstalled( details ) {
 			'alarmCombat', 'desktopCombat', 'desktopAlly', 'desktopPM',
 			'clockAP', 'clockB', 'clockP', 'clockS',
 			'pvpMissileAutoAll', 'pvpHighestRounds', 'pvbMissileAutoAll',
-			'displayDamage', 'navEquipmentLink', 'navWeaponLink', 'navHackLink', 'navShipLinks',
+			'displayDamage', 'navWeaponLink', 'navHackLink', 'navShipLinks',
 			'allianceQLsArtemisEnabled', 'allianceQLsOrionEnabled',
 			'allianceQLsPegasusEnabled', 'miniMap', 'sendmsgShowAlliance', 'missionDisplay'
 		];
@@ -473,13 +471,6 @@ function onInstalled( details ) {
 			key = keys[ i ];
 			cfg[ key ] = ( localStorage[key] != 'false' );
 		}
-
-		// These three are now just one.  They all defaulted to true.
-		// If all three were disabled, we disable the new option.
-		cfg[ 'navTradeLink' ] =
-			!( localStorage[ 'navPlanetTradeLink' ] == 'false' &&
-			   localStorage[ 'navSBTradeLink' ] == 'false' &&
-			   localStorage[ 'navBldgTradeLink' ] == 'false' );
 
 		// These two were renamed.  They defaulted to true.
 		cfg[ 'navBlackMarketLink' ] = localStorage[ 'navBMLink' ] != 'false';

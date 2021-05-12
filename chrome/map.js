@@ -476,7 +476,7 @@ SectorMap.prototype = {
 		}
 		this.drawSavedPath(this.get2DContext());
 		this.markShipTile(this.get2DContext());
-		this.distanceDiv.innerHTML = "Distance to " + this.sector.sector + " [" + loc.x + ", " + loc.y + "]: " + apsSpent + " APs<br>&nbsp;"; //innerHTML to accomodate infinity symbol
+		this.distanceDiv.innerHTML = "Distance to " + this.sector.sector + " [" + loc.x + ", " + loc.y + "]:<br>" + apsSpent + " APs<br>&nbsp;"; //innerHTML to accomodate infinity symbol
 		
 		// I put the function at the end to keep clutter down. Currently only used in drawpath.
 		function getSpeed() {

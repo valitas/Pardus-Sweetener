@@ -7,68 +7,53 @@
 
 var LOCATION_LINKS = {
 		planet: [
-			{ key: 'navEquipmentLink',
-			  text: 'Ship equipment',
-			  url: 'ship_equipment.php' },
 			{ key: 'navWeaponLink',
-			  text: 'Weapons',
-			  url: 'ship_equipment.php?sort=weapon' },
-			{ key: 'navTradeLink',
-			  text: 'Trade with planet',
-			  url: 'planet_trade.php' },
-			{ key: 'navBlackMarketLink',
-			  text: 'Black market',
-			  url: 'blackmarket.php' },
-			{ key: 'navHackLink',
-			  text: 'Hack information',
-			  url: 'hack.php' },
+			  text: 'Armory',
+			  url: 'ship_equipment.php?sort=weapon' },	
 			{ key: 'navBulletinBoardLink',
-			  text: 'Bulletin board',
+	 		  text: 'Bulletin Board',
 			  url: 'bulletin_board.php' },
-			{ key: 'navBountyBoardLink',
-			  text: 'Bounty board',
-			  url: 'bounties.php' },
-			{ key: 'navShipyardLink',
-			  text: 'Shipyard',
-			  url: 'shipyard.php' },
+		    { key: 'navBlackMarketLink',
+			  text: 'Black Market',
+			  url: 'blackmarket.php' },
 			{ key: 'navCrewQuartersLink',
-			  text: 'Crew quarters',
-			  url: 'crew_quarters.php' }
-		],
-		starbase: [
-			{ key: 'navEquipmentLink',
-			  text: 'Ship equipment',
-			  url: 'ship_equipment.php' },
-			{ key: 'navWeaponLink',
-			  text: 'Weapons',
-			  url: 'ship_equipment.php?sort=weapon' },
-			{ key: 'navTradeLink',
-			  text: 'Trade with starbase',
-			  url: 'starbase_trade.php' },
-			{ key: 'navBlackMarketLink',
-			  text: 'Black market',
-			  url: 'blackmarket.php' },
+			  text: 'Crew Quarters',
+			  url: 'crew_quarters.php' },
 			{ key: 'navHackLink',
-			  text: 'Hack information',
-			  url: 'hack.php' },
-			{ key: 'navBulletinBoardLink',
-			  text: 'Bulletin board',
-			  url: 'bulletin_board.php' },
-			{ key: 'navBountyBoardLink',
-			  text: 'Bounty board',
-			  url: 'bounties.php' },
+			  text: 'Hack Terminal',
+			  url: 'hack.php' },		  
 			{ key: 'navShipyardLink',
 			  text: 'Shipyard',
 			  url: 'shipyard.php' },
+			{ key: 'navBountyBoardLink',
+			  text: 'Bounty Board',
+			  url: 'bounties.php' },	
+		],
+		starbase: [	  
+			{ key: 'navWeaponLink',
+			  text: 'Armory',
+			  url: 'ship_equipment.php?sort=weapon' },	
+			{ key: 'navBulletinBoardLink',
+	 		  text: 'Bulletin Board',
+			  url: 'bulletin_board.php' },
+		    { key: 'navBlackMarketLink',
+			  text: 'Black Market',
+			  url: 'blackmarket.php' },
+		    { key: 'navHackLink',
+			  text: 'Hack Terminal',
+			  url: 'hack.php' },		  
+			{ key: 'navShipyardLink',
+			  text: 'Shipyard',
+			  url: 'shipyard.php' },
+			{ key: 'navBountyBoardLink',
+			  text: 'Bounty Board',
+			  url: 'bounties.php' },	
 			{ key: 'navFlyCloseLink',
-			  text: 'Fly close',
+			  text: 'Fly Close',
 			  url: 'main.php?entersb=1' } ],
 		building: [
-			{ key: 'navTradeLink',
-			  text: 'Trade with building',
-			  url: 'building_trade.php' },
 			{ key: 'navHackLink',
-			  text: 'Hack information',
+			  text: 'Hack Terminal',
 			  url: 'hack.php' }
 		]
 	};
@@ -103,12 +88,9 @@ function start() {
 	cs.addKey( 'navShipLinks' );
 	cs.addKey( 'miniMap' );
 	cs.addKey( 'miniMapPlacement' );
-
-	cs.addKey( 'navEquipmentLink' );
 	cs.addKey( 'navWeaponLink' );
 	cs.addKey( 'navShipyardLink' );
 	cs.addKey( 'navCrewQuartersLink' );
-	cs.addKey( 'navTradeLink' );
 	cs.addKey( 'navBlackMarketLink' );
 	cs.addKey( 'navHackLink' );
 	cs.addKey( 'navBulletinBoardLink' );
@@ -415,6 +397,7 @@ function configureMinimap( sector ) {
 	// Create the div that will hold distance calculations
 	div = doc.createElement( 'div' );
 	div.style.paddingTop = '4px';
+	div.style.height = '48px';
 	div.style.display = 'none';
 
 	// Figure out where to place the map and what size it should be.
@@ -518,7 +501,7 @@ function configureMinimap( sector ) {
 		container = doc.createElement( 'div' );
 		container.style.textAlign = 'center';
 		container.style.width = '208px';
-		container.style.margin = '0 2px 24px auto';
+		container.style.margin = '0 2px 0px auto';
 		canvas.style.border = '1px outset #a0b1c9';
 		container.appendChild( canvas );
 		container.appendChild( div );
@@ -904,7 +887,7 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 	}
 	else {
 		// We have data, display current addiction
-		timerDiv.appendChild( doc.createTextNode('Drugs/stims used:') );
+		timerDiv.appendChild( doc.createTextNode('Drug used:') );
 		timerDiv.appendChild( doc.createElement('br') );
 
 		diff = getTimeDiff(
@@ -918,7 +901,7 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 
 		if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
 			timerDiv.appendChild(
-				doc.createTextNode('Drug/stim free in:') );
+				doc.createTextNode('Drug free in:') );
 			timerDiv.appendChild( doc.createElement('br') );
 			diff = getTimeDiff(
 				data[ ukey + 'drugTimerClear'], Date.now() );
@@ -1271,39 +1254,96 @@ function showMissions( data ) {
 		tr = t.appendChild( document.createElement( 'tr' ) );
 		var td = tr.appendChild( document.createElement( 'td' ) );
 		td.style = "background-image:url('//static.pardus.at/img/stdhq/panel.png');background-repeat:repeat-y;text-align:left;";
-		var div = td.appendChild( document.createElement( 'div' ) );
-		div.style = "margin:0 18px;";
+		var div1 = td.appendChild( document.createElement( 'div' ) );
+		div1.id = 'missionDisplayTitle';
+		div1.textContent = 'Mission List';
+		div1.style = "text-align:center; font-weight: bold; font-size:16px"
+		var div = div1.appendChild( document.createElement( 'div' ) );
+		div.style= "margin:0 18px;";
 		t.appendChild( document.getElementById( 'cargo' ).firstChild.lastChild.cloneNode( true ) );
 		
 		var tInside = div.appendChild( document.createElement( 'table' ) );
 		tInside.width = '100%';
+		tr = tInside.appendChild ( document.createElement( 'tr' ) );
+		tr.style = "text-align:center; font-weight:bold;";
+		tr.id = 'missionDisplaySeparator';
+						
+		td = tr.appendChild( document.createElement( 'td' ) );
+		td.textContent = 'Type';
+		td = tr.appendChild( document.createElement( 'td' ) );
+		td.textContent = 'Target';
+		td = tr.appendChild( document.createElement( 'td' ) );
+		td.textContent = 'Reward';
+		td = tr.appendChild( document.createElement( 'td' ) );
+		td.textContent = 'Total';
+/*		td = tr.appendChild( document.createElement( 'td' ) );
+		td.textContent = 'Time';*/
 		
 		while ( document.getElementById( 'sweetener-mission' ) ) {
 			document.removeChild( document.getElementById( 'sweetener-mission' ) ); 
 		}
 
 		var _navTable;
+		function nFormatter(num) {
+			if (num >= 1000000000) {
+			   return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G';
+			}
+			if (num >= 1000000) {
+			   return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+			}
+			if (num >= 1000) {
+			   return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+			}
+			return num;
+	   }
 
 		for( var i = 0; i < list.length; i++ ) {
 			var mission = data[ ukey + 'm' + list[ i ] ];
 			tr = tInside.appendChild ( document.createElement( 'tr' ) );
+			tr.id = 'missionDisplayContent';
+			tr.style = 'text-align:center;';
+
 						
 			td = tr.appendChild( document.createElement( 'td' ) );
+			td.id = "MissionImageValue";
 			var img = td.appendChild( document.createElement( 'img' ) );
 			img.src = mission.image;
-			img.height = 16;
+			img.height = 32;
 			td = tr.appendChild( document.createElement( 'td' ) );
 			if ( mission.locId > 0 ) {
 				td.textContent = mission.sector + " [" + mission.coords.x + ',' + mission.coords.y + ']' ;
 			} else {
 				td.textContent = mission.amountDone + '/' + mission.amount;
 			}
+			td.id = "MissionCoordsValue";
 			td = tr.appendChild( document.createElement( 'td' ) );
-			td.textContent = mission.reward;
+			td.textContent = nFormatter(mission.reward);
+/*			var img2 = document.createElement( 'img' );
+			img2.src = "https://static.pardus.at/img/stdhq/chat/credits_16x16.png";
+			img2.height = 8;*/
+			td.id = "MissionRewardValue";
 			td = tr.appendChild( document.createElement( 'td' ) );
 			td.textContent = mission.total;
-			/*td = tr.appendChild( document.createElement( 'td' ) );
-			td.textContent = mission.acceptTime + mission.;*/
+			td.id = "MissionTotalValue";
+			tr = tInside.appendChild ( document.createElement( 'tr' ) );
+			tr.style = "text-align:center;";
+			td = tr.appendChild( document.createElement( 'td' ) );
+			td.setAttribute( 'colspan', 2 );
+			td.style = 'text-align:center; font-weight:bold;white-space:pre;'
+			td.id = "MissionTime";
+			td.textContent = mission.timeLimit;
+/*			td = tr.appendChild( document.createElement( 'td' ) );
+			td.textContent = 'Time: ';
+			td.style = 'text-align:center; font-weight:bold;'
+			td.id = "MissionTime";
+			td = tr.appendChild( document.createElement( 'td' ) );
+			td.textContent = mission.timeLimit + ' Min';
+			td.id = "MissionTimeValue";*/
+			td = tr.appendChild( document.createElement( 'td' ) );
+			td.setAttribute( 'colspan', 2 );
+			td.style = 'text-align:center; font-weight:bold;white-space:pre;';
+			td.id = "MissionAccepted";
+			td.textContent = mission.acceptTime;
 
 			//adds a little red dot to all tiles that have a mission going to them
 			//might be a bit slow for people who have lots of missions?
@@ -1344,11 +1384,12 @@ function showMissions( data ) {
 			}
 		}
 		tr = tInside.appendChild( document.createElement( 'tr' ) );
+		tr.id = 'MissionClear';
 		td = tr.appendChild(  document.createElement( 'td' ) );
-		td.setAttribute( 'colspan', 4 );
+		td.setAttribute( 'colspan', 5 );
 		td.align = 'center';
 		var btn = td.appendChild( document.createElement( 'button' ) );
-		btn.textContent = 'clear';
+		btn.textContent = 'Clear';
 		btn.addEventListener( 'click', Mission.clearMissionStorage.bind( 
 			null, function() { 
 				document.getElementById( 'missionDisplayTable' ).remove(); 
@@ -1356,7 +1397,10 @@ function showMissions( data ) {
 				list ) );
 		
 		if ( !document.getElementById( 'missionDisplayTable' ) ) {
-			document.getElementById( 'cargo' ).parentNode.insertBefore( t, document.getElementById( 'cargo' ) );
+			var BRRR = document.createElement('br');
+			BRRR.style = 'line-height:2';
+			document.getElementById( 'cargo' ).insertAdjacentElement("afterend", t );
+			document.getElementById( 'cargo' ).insertAdjacentElement("afterend", BRRR );
 		}
 		function clearMissionStorage( list, data ) {
 			for( var i = 0; i < list.length; i++ ) {
