@@ -1,17 +1,3 @@
-Pardus Sweetner S
-
-[![Mozilla Add-on](https://img.shields.io/amo/v/pardus-sweetener-s.svg)](https://addons.mozilla.org/firefox/addon/pardus-sweetener-s/)
-
-This is fork for personal use. It did add features that you can read about here: ([Pull Request #105](https://github.com/Tsunder/Pardus-Sweetener/pull/105))
-
-I will update this from time to time to keep up with any new updates brought up by Tsunder, Val or BartKieviet. At least until, and if, all or most important features get added to Sweetner S.
-
-Legal Notice: I reserve the rights over the code I have written, and this part of the readme should have more weight than any other legal notice in this repository. But I give Tsunder, Val, and BartKieviet the right to use it on their original work without asking AND to redistribute it or grant permissions to other developers to use. Anyone else, I'd prefer to be asked for permissions. Free to use without asking or further steps for personal, non-commercial, use.
-
-Disclaimer: No warranties.
-
-Below is the original readme from Tsunder version:
-
 ![Pardus Sweetener Logo](https://github.com/valitas/Pardus-Sweetener/blob/master/chrome/icons/128.png?raw=true)
 Pardus Sweetener T 
 ================

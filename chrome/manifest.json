@@ -61,7 +61,7 @@
    },
    "manifest_version": 2,
    "minimum_chrome_version": "42",
-   "name": "Pardus Sweetener S",
+   "name": "Pardus Sweetener T",
    "options_ui": {
       "chrome_style": true,
       "page": "options.html"
@@ -69,7 +69,7 @@
    "page_action": {
       "default_icon": "icons/19.png",
       "default_popup": "popup.html",
-      "default_title": "Change Pardus Sweetener S settings"
+      "default_title": "Change Pardus Sweetener T settings"
    },
    "permissions": [ "notifications", "storage", "*://*.pardus.at/*" ],
    "version": "9.7.9",
