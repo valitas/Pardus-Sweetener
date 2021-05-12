@@ -125,7 +125,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 		output[ 'faction' ] === undefined ? output[ 'faction' ] = 'n' : output[ 'faction' ] = output[ 'faction' ].split( /factions/g )[ 1 ][ 6 ];//check for neutral vs faction.
 		output[ 'type' ] = data[1 + syndicate_member_offset].firstChild.title[ 0 ];
 		
-        if (bbpage) {output[ 'timeLimit'] = "Complete in\n" + parseInt(data[3 + syndicate_member_offset].textContent) + " Min";
+        if (bbpage) {output[ 'timeLimit'] = parseInt(data[3 + syndicate_member_offset].textContent);
     } else {
         var timeLeft = (data[3 + syndicate_member_offset].textContent).split(" ");
         var hh = parseInt(timeLeft[0]);
@@ -134,9 +134,9 @@ Mission.parseMission = function( mission, premium, bbpage ) {
         var minutesLeft = (+hh) * 60 + (+mm);
         function picker(minutesLeft) {
             if (minutesLeft < 1) {return ss + " Sec"}
-            else {return minutesLeft + " Min"}
+            else {return minutesLeft}
         }
-        output[ 'timeLimit'] = "Complete in\n" + picker(minutesLeft);
+        output[ 'timeLimit'] = picker(minutesLeft);
     }
 		output[ 'sector'] = data[5 + syndicate_member_offset].textContent;
 		output[ 'image' ] = data[1 + syndicate_member_offset].firstChild.src;
@@ -204,7 +204,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
 			output[ 'locId' ] = Sector.getLocation( 
                 Sector.getId( output.sector ), output.coords.x, 
                 output.coords.y );
-            output[ 'timeLimit' ] = "Complete in\n" + parseInt( bf[ c+4 ].textContent ) + " Min";
+            output[ 'timeLimit' ] = parseInt( bf[ c+4 ].textContent );
       		output[ 'reward' ] = parseInt( bf[ c+5 ].textContent.replace(/,/g,'') );
             output[ 'deposit' ] = 0;//argh VIP transport and action trip 
                 //have different HTML
@@ -221,13 +221,13 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                 output[ 'locId' ] = Sector.getLocation( 
                     Sector.getId( output.sector ), output.coords.x, 
                     output.coords.y );
-                output[ 'timeLimit' ] = "Complete in\n" + parseInt( bf[ 3 ].textContent ) + " Min";
+                output[ 'timeLimit' ] = parseInt( bf[ 3 ].textContent );
                 output[ 'reward'] = parseInt( bf[ 4 ].textContent.replace(/,/g,'') );
             } else {
                 // number in td[3], so not targetted.
                 output[ 'amount' ] = parseInt( td[3].textContent );
                 output[ 'amountDone'] = 0;
-                output[ 'timeLimit'] = "Complete in\n" + parseInt( bf[2].textContent ) + " Min";
+                output[ 'timeLimit'] = parseInt( bf[2].textContent );
                 output[ 'reward' ] = parseInt( bf[1].textContent.replace(/,/,'') );
             }
             output[ 'deposit' ] = parseInt( 
@@ -258,7 +258,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
             if( bf.length === 6 ) {
                 // bf size 6 means a untargetted critter 
                 output[ 'locId' ] = Mission.getLocIdFromImage( output.image );
-                output[ 'timeLimit' ] = "Complete in\n" + parseInt( bf[2].textContent ) + " Min";
+                output[ 'timeLimit' ] = parseInt( bf[2].textContent );
                 let temp = bf[3].textContent.split(/\//g);
                 output[ 'amountDone' ] = parseInt( temp[0] );
                 output[ 'amount' ] = parseInt( temp[1] );
@@ -281,7 +281,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                 output[ 'locId' ] = Sector.getLocation( 
                     Sector.getId( output.sector ), output.coords.x, 
                     output.coords.y );
-                output[ 'timeLimit' ] = "Complete in\n" + parseInt( bf[4].textContent ) + " Min";
+                output[ 'timeLimit' ] = parseInt( bf[4].textContent );
                 output[ 'reward' ] = parseInt( bf[5].textContent.replace(/,/g,'') );
                 output[ 'deposit' ] = parseInt( 
                         mission.getElementsByTagName( 'font' )[0].textContent
@@ -303,7 +303,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                 output[ 'locId' ] = Sector.getLocation( 
                     Sector.getId( output.sector ), output.coords.x, 
                     output.coords.y );
-                output[ 'timeLimit' ] = "Complete in\n" + parseInt( bf[5].textContent ) + " Min";
+                output[ 'timeLimit' ] = parseInt( bf[5].textContent );
                 output[ 'reward' ] = parseInt( bf[6].textContent.replace(/,/g,'') );
                 output[ 'deposit' ] = parseInt( 
                         mission.getElementsByTagName( 'font' )[0].textContent
@@ -322,7 +322,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                 output[ 'locId' ] = Sector.getLocation( 
                     Sector.getId( output.sector ), output.coords.x, 
                     output.coords.y );
-                output[ 'timeLimit' ] = "Complete in\n" + parseInt( bf[5].textContent ) + " Min";
+                output[ 'timeLimit' ] = parseInt( bf[5].textContent );
                 output[ 'reward' ] = parseInt( bf[6].textContent.replace(/,/g,'') );
                 output[ 'deposit' ] = parseInt( 
                         mission.getElementsByTagName( 'font' )[1].textContent
@@ -341,7 +341,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                 output[ 'locId' ] = Sector.getLocation( 
                     Sector.getId( output.sector ), output.coords.x, 
                     output.coords.y );
-                output[ 'timeLimit' ] = "Complete in\n" + parseInt( bf[3].textContent ) + " Min";
+                output[ 'timeLimit' ] = parseInt( bf[3].textContent );
                 output[ 'reward' ] = parseInt( bf[4].textContent.replace(/,/g,'') );
                 output[ 'deposit' ] = parseInt( 
                         mission.getElementsByTagName( 'font' )[0].textContent
@@ -360,7 +360,7 @@ Mission.parseMission = function( mission, premium, bbpage ) {
                 output[ 'locId' ] = Sector.getLocation( 
                     Sector.getId( output.sector ), output.coords.x, 
                     output.coords.y );
-                output[ 'timeLimit' ] = "Complete in\n" + parseInt( bf[4].textContent ) + " Min";
+                output[ 'timeLimit' ] = parseInt( bf[4].textContent );
                 output[ 'reward' ] = parseInt( bf[5].textContent.replace(/,/g,'') );
                 output[ 'deposit' ] = parseInt( 
                         mission.getElementsByTagName( 'font' )[1].textContent
