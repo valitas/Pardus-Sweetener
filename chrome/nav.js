@@ -8,7 +8,7 @@
 var LOCATION_LINKS = {
 		planet: [
 			{ key: 'navWeaponLink',
-			  text: 'Armory',
+			  text: 'Weapons',
 			  url: 'ship_equipment.php?sort=weapon' },	
 			{ key: 'navBulletinBoardLink',
 	 		  text: 'Bulletin Board',
@@ -20,7 +20,7 @@ var LOCATION_LINKS = {
 			  text: 'Crew Quarters',
 			  url: 'crew_quarters.php' },
 			{ key: 'navHackLink',
-			  text: 'Hack Terminal',
+			  text: 'Hack',
 			  url: 'hack.php' },		  
 			{ key: 'navShipyardLink',
 			  text: 'Shipyard',
@@ -31,7 +31,7 @@ var LOCATION_LINKS = {
 		],
 		starbase: [	  
 			{ key: 'navWeaponLink',
-			  text: 'Armory',
+			  text: 'Weapons',
 			  url: 'ship_equipment.php?sort=weapon' },	
 			{ key: 'navBulletinBoardLink',
 	 		  text: 'Bulletin Board',
@@ -40,7 +40,7 @@ var LOCATION_LINKS = {
 			  text: 'Black Market',
 			  url: 'blackmarket.php' },
 		    { key: 'navHackLink',
-			  text: 'Hack Terminal',
+			  text: 'Hack',
 			  url: 'hack.php' },		  
 			{ key: 'navShipyardLink',
 			  text: 'Shipyard',
@@ -53,7 +53,7 @@ var LOCATION_LINKS = {
 			  url: 'main.php?entersb=1' } ],
 		building: [
 			{ key: 'navHackLink',
-			  text: 'Hack Terminal',
+			  text: 'Hack',
 			  url: 'hack.php' }
 		]
 	};
