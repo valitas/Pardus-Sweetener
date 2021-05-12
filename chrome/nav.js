@@ -1024,8 +1024,7 @@ function usedDrugs( useform, ukey ) {
 }
 
 function usedDrugs2( amount, ukey, data ) {
-	if (!data[ ukey + 'drugTimerClear'] ) {
-		data = new Object();
+	if (data[ ukey + 'drugTimerClear']  == null) {
 		data[ ukey + 'drugTimerClear'] = 0;
 		data[ ukey + 'extraDrug'] = 0;
 	}
@@ -1053,6 +1052,8 @@ function usedStims( useform, ukey ) {
 	if ( amount > 0 ) {
 
 		//29 is the resid of green stims.
+		// *2 is a bad way to do this because doctor and refined stims
+		// too bad!
 		if (useform.elements.resid.value == 29 )
 			amount *= 2;
 
@@ -1064,8 +1065,7 @@ function usedStims( useform, ukey ) {
 
 
 function usedStims2( amount, ukey, data ) {
-	if (!data[ ukey + 'stimTimerClear'] ) {
-		data = new Object();
+	if (data[ ukey + 'stimTimerClear']  == null) {
 		data[ ukey + 'stimTimerClear'] = 0;
 		data[ ukey + 'extraStim'] = 0;
 	}
