@@ -453,8 +453,7 @@ function usedDrugs( tr ) {
 }
 
 function usedDrugs2( amount, ukey, data ) {
-	if (!data[ ukey + 'drugTimerClear'] ) {
-		data = new Object();
+	if (data[ ukey + 'drugTimerClear']  == null ) {
 		data[ ukey + 'drugTimerClear'] = 0;
 		data[ ukey + 'extraDrug'] = 0;
 	}
@@ -503,8 +502,7 @@ function usedStims( tr ) {
 
 function usedStims2( amount,ukey, data ) {
 	var now = Date.now();
-	if (!data[ ukey + 'stimTimerClear'] ) {
-		data = new Object();
+	if (data[ ukey + 'stimTimerClear'] == null) {
 		data[ ukey + 'stimTimerClear'] = 0;
 		data[ ukey + 'extraStim'] = 0;
 	}
