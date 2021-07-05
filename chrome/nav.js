@@ -7,68 +7,53 @@
 
 var LOCATION_LINKS = {
 		planet: [
-			{ key: 'navEquipmentLink',
-			  text: 'Ship equipment',
-			  url: 'ship_equipment.php' },
 			{ key: 'navWeaponLink',
 			  text: 'Weapons',
-			  url: 'ship_equipment.php?sort=weapon' },
-			{ key: 'navTradeLink',
-			  text: 'Trade with planet',
-			  url: 'planet_trade.php' },
-			{ key: 'navBlackMarketLink',
-			  text: 'Black market',
-			  url: 'blackmarket.php' },
-			{ key: 'navHackLink',
-			  text: 'Hack information',
-			  url: 'hack.php' },
+			  url: 'ship_equipment.php?sort=weapon' },	
 			{ key: 'navBulletinBoardLink',
-			  text: 'Bulletin board',
+	 		  text: 'Bulletin Board',
 			  url: 'bulletin_board.php' },
-			{ key: 'navBountyBoardLink',
-			  text: 'Bounty board',
-			  url: 'bounties.php' },
-			{ key: 'navShipyardLink',
-			  text: 'Shipyard',
-			  url: 'shipyard.php' },
+		    { key: 'navBlackMarketLink',
+			  text: 'Black Market',
+			  url: 'blackmarket.php' },
 			{ key: 'navCrewQuartersLink',
-			  text: 'Crew quarters',
-			  url: 'crew_quarters.php' }
-		],
-		starbase: [
-			{ key: 'navEquipmentLink',
-			  text: 'Ship equipment',
-			  url: 'ship_equipment.php' },
-			{ key: 'navWeaponLink',
-			  text: 'Weapons',
-			  url: 'ship_equipment.php?sort=weapon' },
-			{ key: 'navTradeLink',
-			  text: 'Trade with starbase',
-			  url: 'starbase_trade.php' },
-			{ key: 'navBlackMarketLink',
-			  text: 'Black market',
-			  url: 'blackmarket.php' },
+			  text: 'Crew Quarters',
+			  url: 'crew_quarters.php' },
 			{ key: 'navHackLink',
-			  text: 'Hack information',
-			  url: 'hack.php' },
-			{ key: 'navBulletinBoardLink',
-			  text: 'Bulletin board',
-			  url: 'bulletin_board.php' },
-			{ key: 'navBountyBoardLink',
-			  text: 'Bounty board',
-			  url: 'bounties.php' },
+			  text: 'Hack',
+			  url: 'hack.php' },		  
 			{ key: 'navShipyardLink',
 			  text: 'Shipyard',
 			  url: 'shipyard.php' },
+			{ key: 'navBountyBoardLink',
+			  text: 'Bounty Board',
+			  url: 'bounties.php' },	
+		],
+		starbase: [	  
+			{ key: 'navWeaponLink',
+			  text: 'Weapons',
+			  url: 'ship_equipment.php?sort=weapon' },	
+			{ key: 'navBulletinBoardLink',
+	 		  text: 'Bulletin Board',
+			  url: 'bulletin_board.php' },
+		    { key: 'navBlackMarketLink',
+			  text: 'Black Market',
+			  url: 'blackmarket.php' },
+		    { key: 'navHackLink',
+			  text: 'Hack',
+			  url: 'hack.php' },		  
+			{ key: 'navShipyardLink',
+			  text: 'Shipyard',
+			  url: 'shipyard.php' },
+			{ key: 'navBountyBoardLink',
+			  text: 'Bounty Board',
+			  url: 'bounties.php' },	
 			{ key: 'navFlyCloseLink',
-			  text: 'Fly close',
+			  text: 'Fly Close',
 			  url: 'main.php?entersb=1' } ],
 		building: [
-			{ key: 'navTradeLink',
-			  text: 'Trade with building',
-			  url: 'building_trade.php' },
 			{ key: 'navHackLink',
-			  text: 'Hack information',
+			  text: 'Hack',
 			  url: 'hack.php' }
 		]
 	};
@@ -103,12 +88,9 @@ function start() {
 	cs.addKey( 'navShipLinks' );
 	cs.addKey( 'miniMap' );
 	cs.addKey( 'miniMapPlacement' );
-
-	cs.addKey( 'navEquipmentLink' );
 	cs.addKey( 'navWeaponLink' );
 	cs.addKey( 'navShipyardLink' );
 	cs.addKey( 'navCrewQuartersLink' );
-	cs.addKey( 'navTradeLink' );
 	cs.addKey( 'navBlackMarketLink' );
 	cs.addKey( 'navHackLink' );
 	cs.addKey( 'navBulletinBoardLink' );
@@ -415,6 +397,7 @@ function configureMinimap( sector ) {
 	// Create the div that will hold distance calculations
 	div = doc.createElement( 'div' );
 	div.style.paddingTop = '4px';
+	div.style.height = '48px';
 	div.style.display = 'none';
 
 	// Figure out where to place the map and what size it should be.
@@ -518,7 +501,7 @@ function configureMinimap( sector ) {
 		container = doc.createElement( 'div' );
 		container.style.textAlign = 'center';
 		container.style.width = '208px';
-		container.style.margin = '0 2px 24px auto';
+		container.style.margin = '0 2px 0px auto';
 		canvas.style.border = '1px outset #a0b1c9';
 		container.appendChild( canvas );
 		container.appendChild( div );
@@ -904,7 +887,7 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 	}
 	else {
 		// We have data, display current addiction
-		timerDiv.appendChild( doc.createTextNode('Drugs/stims used:') );
+		timerDiv.appendChild( doc.createTextNode('Drug used:') );
 		timerDiv.appendChild( doc.createElement('br') );
 
 		diff = getTimeDiff(
@@ -918,7 +901,7 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 
 		if (data[ ukey + 'drugTimerClear'] > Date.now() ) {
 			timerDiv.appendChild(
-				doc.createTextNode('Drug/stim free in:') );
+				doc.createTextNode('Drug free in:') );
 			timerDiv.appendChild( doc.createElement('br') );
 			diff = getTimeDiff(
 				data[ ukey + 'drugTimerClear'], Date.now() );
@@ -1255,7 +1238,7 @@ function showMissions( data ) {
 		document.getElementById( 'aCmdCleanWh' ).addEventListener( 'click' , Mission.removeMission.bind( null, data, userloc ) );
 	}
 	
-	function displayMissions( list, data ) {
+		function displayMissions( list, data ) {
 		// DOM stuff below.
 		
 		var t = document.createElement( 'table' );
@@ -1271,13 +1254,28 @@ function showMissions( data ) {
 		tr = t.appendChild( document.createElement( 'tr' ) );
 		var td = tr.appendChild( document.createElement( 'td' ) );
 		td.style = "background-image:url('//static.pardus.at/img/stdhq/panel.png');background-repeat:repeat-y;text-align:left;";
+		var div1 = td.appendChild( document.createElement( 'div' ) );
+		div1.id = 'missionDisplayTitle';
+		div1.textContent = 'Active Missions';
+		div1.style = "text-align:center; font-size:16px"
 		var div = td.appendChild( document.createElement( 'div' ) );
 		div.style = "margin:0 18px;";
 		t.appendChild( document.getElementById( 'cargo' ).firstChild.lastChild.cloneNode( true ) );
 		
 		var tInside = div.appendChild( document.createElement( 'table' ) );
 		tInside.width = '100%';
-		
+		tr = tInside.appendChild ( document.createElement( 'tr' ) );
+		tr.id = 'missionDisplaySeparator';
+		td = tr.appendChild( document.createElement( 'td' ) );
+		td.textContent = 'Type';
+		td = tr.appendChild( document.createElement( 'td' ) );
+		td.textContent = 'Target';
+		td = tr.appendChild( document.createElement( 'td' ) );
+		td.textContent = 'Reward';
+		td = tr.appendChild( document.createElement( 'td' ) );
+		td.textContent = '#';
+
+
 		while ( document.getElementById( 'sweetener-mission' ) ) {
 			document.removeChild( document.getElementById( 'sweetener-mission' ) ); 
 		}
@@ -1302,8 +1300,6 @@ function showMissions( data ) {
 			td.textContent = mission.reward;
 			td = tr.appendChild( document.createElement( 'td' ) );
 			td.textContent = mission.total;
-			/*td = tr.appendChild( document.createElement( 'td' ) );
-			td.textContent = mission.acceptTime + mission.;*/
 
 			//adds a little red dot to all tiles that have a mission going to them
 			//might be a bit slow for people who have lots of missions?
@@ -1348,7 +1344,7 @@ function showMissions( data ) {
 		td.setAttribute( 'colspan', 4 );
 		td.align = 'center';
 		var btn = td.appendChild( document.createElement( 'button' ) );
-		btn.textContent = 'clear';
+		btn.textContent = 'Clear';
 		btn.addEventListener( 'click', Mission.clearMissionStorage.bind( 
 			null, function() { 
 				document.getElementById( 'missionDisplayTable' ).remove(); 

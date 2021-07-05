@@ -69,7 +69,7 @@
    "page_action": {
       "default_icon": "icons/19.png",
       "default_popup": "popup.html",
-      "default_title": "Change Pardus Sweetener settings"
+      "default_title": "Change Pardus Sweetener T settings"
    },
    "permissions": [ "notifications", "storage", "*://*.pardus.at/*" ],
    "version": "9.7.9",
