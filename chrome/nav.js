@@ -880,13 +880,68 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 			} 
 		}
 
+
+	//set up usage prediction
+	var drugestimation = doc.createElement('span')
+	drugestimation.id = "drugestimate"
+	drugestimation.textContent = "0"
+	timerDiv.appendChild( doc.createTextNode('Estimate: ') );
+	timerDiv.appendChild( drugestimation)
+	timerDiv.appendChild( doc.createTextNode(' APs') );
+	let TC = 2; //need to parse from ASP overview 
+	var drugusefield =usebtn.parentNode.querySelector("input[name='amount']")
+	drugusefield.addEventListener('input',(event)=>{
+		//drug estimation calculator
+		// TODO med and tc track
+		// TODO reverse calculating drugginess
+		
+		let tons = parseInt (drugusefield.value)
+		if (!(tons > 0)) {drugestimation.textContent = 0; return;}
+		let drugginess = 0 //tonsdrugged - tripcontrollevel;
+		let minroll = 0
+		let maxroll = 0
+		for (drugnum = drugginess; drugnum < drugginess + tons; drugnum++) {
+			if (drugnum < 1) {
+				minroll += 200
+				maxroll += 250
+			} else {
+				minroll += Math.max(0, 200 - 8 * drugnum)
+				minroll += Math.max(0, 250 - 8 * drugnum)
+			}
+
+		}
+		drugestimation.textContent = `${minroll} - ${maxroll}`
+	})
+
+
+// var count_start_point = drugs_taken;
+// if (trip_control) count_start_point -= meditation_level;
+// 
+// for (i = count_start_point; i < count_start_point + drugs_to_consume; i++) {
+    // drugNumber = i+1+meditation_level;
+    // if (i < 0) {
+        // max_roll +=250;
+        // min_roll +=200;
+		// console.log("Drug number " + drugNumber + "\tfree roll (200 to 250)");
+    // }
+    // else {
+        // max_roll += Math.max(0, 250 - 8 * i);
+        // min_roll += Math.max(0, 200 - 8 * i);
+		// console.log("Drug number " + drugNumber + "\tmin: " + Math.max(0, 200 - 8 * i) + "\tmax: " + Math.max(0, 250 - 8 * i));
+    // }
+// }
 	if (!data[ ukey + 'drugTimerClear'] ) {
 		// No data, so make some nice comments
 		timerDiv.appendChild(
 			doc.createTextNode('No drugs used yet.') );
 	}
 	else {
+		//set up prediction
+
+		timerDiv.appendChild( doc.createElement('br') );
+
 		// We have data, display current addiction
+		
 		timerDiv.appendChild( doc.createTextNode('Drug used:') );
 		timerDiv.appendChild( doc.createElement('br') );
 
