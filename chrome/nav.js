@@ -888,27 +888,39 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 	timerDiv.appendChild( doc.createTextNode('Estimate: ') );
 	timerDiv.appendChild( drugestimation)
 	timerDiv.appendChild( doc.createTextNode(' APs') );
-	let TC = 2; //need to parse from ASP overview 
+	let doctorpredict = 8
+	let doctorType =  chrome.storage.sync.get(ukey + 'doctor',(obj)=>{return obj;})||"None"
+	if (doctorType == "Primary") 
+		{ doctorpredict = 4 }
+	else if (doctorType == "Secondary")
+		{ doctorpredict = 6 }
+
+	let TC =  chrome.storage.sync.get(ukey + 'TC',(obj)=>{return obj;}) ||5 // || ["None",0] 
+
 	var drugusefield =usebtn.parentNode.querySelector("input[name='amount']")
 	drugusefield.addEventListener('input',(event)=>{
 		//drug estimation calculator
-		// TODO med and tc track
+		// TODO med and tc track - put on overview page
 		// TODO reverse calculating drugginess
-		
+		// TODO doctor effects
+		// TODO calculate average as an option/ show on alt hover
 		let tons = parseInt (drugusefield.value)
 		if (!(tons > 0)) {drugestimation.textContent = 0; return;}
-		let drugginess = 0 //tonsdrugged - tripcontrollevel;
+		let drugginess = 0 - TC
 		let minroll = 0
 		let maxroll = 0
-		for (drugnum = drugginess; drugnum < drugginess + tons; drugnum++) {
+
+		//would prefer to do this without a for loop but the math is beyond me
+		for (var drugnum = drugginess; drugnum < drugginess + tons; drugnum++) {
 			if (drugnum < 1) {
 				minroll += 200
 				maxroll += 250
 			} else {
+				//this won't work with doctor, probably.
 				minroll += Math.max(0, 200 - 8 * drugnum)
-				minroll += Math.max(0, 250 - 8 * drugnum)
+				maxroll += Math.max(0, 250 - doctorpredict * drugnum)
+				//maybe optimization to break loop if max roll <= 0, aka at 32 drugs
 			}
-
 		}
 		drugestimation.textContent = `${minroll} - ${maxroll}`
 	})
