@@ -890,7 +890,7 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 	timerDiv.appendChild( doc.createTextNode(' APs') );
 	let doctorpredict = 8
 	
-	//getting advanced skills, to be used in estimation
+	//getting advanced skills and doctor, to be used in estimation
 	var skills = []
 	var doctorType = ""
 	let universe = Universe.getServer( document );
@@ -900,25 +900,27 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 		doctorType = data[ukey + 'doctor']
 	}
 
-	//let TC =  chrome.storage.sync.get(ukey + 'TC',(obj)=>{return obj;}) ||5 // || ["None",0] 
-
 	var drugusefield =usebtn.parentNode.querySelector("input[name='amount']")
 	drugusefield.addEventListener('input',(event)=>{
 		
 		// drug estimation calculator
-		// TODO med and tc track - put on overview page
+		// med and tc track - put on overview page
+
 		// already done via advskills.js. apparently that is an old page!
 		// not a fan of having both ukey and universe but oh well.
-		// TODO reverse calculating drugginess
-		// -- eh, it works. now i want to make the timers update live.
-		// TODO doctor effects
+		
+		// reverse calculating drugginess
+		// eh, it works. now i want to make the timers update live.
+		// or when ticks past
+		
+		// doctor effects
 		// predicting doctor effects is ????? need help
+		
 		// TODO calculate average as an option/ show on alt hover
 		let tons = parseInt (drugusefield.value)
 		if (!(tons > 0)) {drugestimation.textContent = 0; return;}
+		
 		//skills 21 is mediation, skills 30 is TC. product is effective TC
-		//technically drugginess can be calculated before this i think?
-		//drugginess can change if a tick passes between page loads i guess
 		let drugginess = 0 - (skills.length > 0 ? skills[21] * skills[30] : 0)
 
 		let minroll = 0
