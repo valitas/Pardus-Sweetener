@@ -896,7 +896,9 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 	let universe = Universe.getServer( document );
 	chrome.storage.local.get( [universe + 'advSkills',ukey + 'doctor'], getAdvSkills.bind(this,universe,ukey))
 	function getAdvSkills(universe, ukey, data) {
-		skills = data[universe + 'advSkills']
+		if (data[universe + 'advSkills']) {
+			skills =data[universe + 'advSkills']
+		}
 		doctorType = data[ukey + 'doctor']
 	}
 

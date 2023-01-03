@@ -72,10 +72,16 @@
       "default_title": "Change Pardus Sweetener T settings"
    },
    "permissions": [ "notifications", "storage", "*://*.pardus.at/*" ],
-   "version": "9.8.0",
+   "version": "9.8.1",
    "web_accessible_resources": [ 
 		"icons/16.png", 
 		"icons/48.png",
 		"icons/down.png"
-		]
+		],
+   "browser_specific_settings": {
+     "gecko": {
+       "id": "pardussweetenerT@github.com",
+       "strict_min_version": "42.0"
+     }
+}
 }
