@@ -889,26 +889,52 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 	timerDiv.appendChild( drugestimation)
 	timerDiv.appendChild( doc.createTextNode(' APs') );
 	let doctorpredict = 8
-	let doctorType =  chrome.storage.sync.get(ukey + 'doctor',(obj)=>{return obj;})||"None"
-	if (doctorType == "Primary") 
-		{ doctorpredict = 4 }
-	else if (doctorType == "Secondary")
-		{ doctorpredict = 6 }
+	
+	//getting advanced skills, to be used in estimation
+	var skills = []
+	var doctorType = ""
+	let universe = Universe.getServer( document );
+	chrome.storage.local.get( [universe + 'advSkills',ukey + 'doctor'], getAdvSkills.bind(this,universe,ukey))
+	function getAdvSkills(universe, ukey, data) {
+		skills = data[universe + 'advSkills']
+		doctorType = data[ukey + 'doctor']
+	}
 
-	let TC =  chrome.storage.sync.get(ukey + 'TC',(obj)=>{return obj;}) ||5 // || ["None",0] 
+	//let TC =  chrome.storage.sync.get(ukey + 'TC',(obj)=>{return obj;}) ||5 // || ["None",0] 
 
 	var drugusefield =usebtn.parentNode.querySelector("input[name='amount']")
 	drugusefield.addEventListener('input',(event)=>{
-		//drug estimation calculator
+		
+		// drug estimation calculator
 		// TODO med and tc track - put on overview page
+		// already done via advskills.js. apparently that is an old page!
+		// not a fan of having both ukey and universe but oh well.
 		// TODO reverse calculating drugginess
+		// -- eh, it works. now i want to make the timers update live.
 		// TODO doctor effects
+		// predicting doctor effects is ????? need help
 		// TODO calculate average as an option/ show on alt hover
 		let tons = parseInt (drugusefield.value)
 		if (!(tons > 0)) {drugestimation.textContent = 0; return;}
-		let drugginess = 0 - TC
+		//skills 21 is mediation, skills 30 is TC. product is effective TC
+		//technically drugginess can be calculated before this i think?
+		//drugginess can change if a tick passes between page loads i guess
+		let drugginess = 0 - (skills.length > 0 ? skills[21] * skills[30] : 0)
+
 		let minroll = 0
 		let maxroll = 0
+
+		let diff = getTimeDiff(data[ ukey + 'drugTimerClear'], Date.now() )
+		drugginess += diff['hr']
+
+		//this is probably wildly inaccurate LOL
+		//probably better to just add a +- drug counter when doctor is in effect?
+		//literally only useful for like 6 people
+		//all of whom are not me.
+		if (doctorType == "Primary") 
+			{ doctorpredict = 4 }
+		else if (doctorType == "Secondary")
+			{ doctorpredict = 6 }
 
 		//would prefer to do this without a for loop but the math is beyond me
 		for (var drugnum = drugginess; drugnum < drugginess + tons; drugnum++) {

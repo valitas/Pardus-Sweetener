@@ -23,6 +23,7 @@
 	var universe = Universe.getServer( document );
 	toSave[ universe + 'advSkills'] = advSkills;
 	chrome.storage.local.set( toSave );
+	//chrome.storage.local.get( ukey + 'advSkills', function (skills) {console.log(skills)})
 	/* Yes it's an array, if the table wasn't a coding crime, I would've made it a dictionary. 
 	But here's the list:
 	0	Combat Mastery 
