@@ -77,11 +77,5 @@
 		"icons/16.png", 
 		"icons/48.png",
 		"icons/down.png"
-		],
-   "browser_specific_settings": {
-     "gecko": {
-       "id": "pardussweetenerT@github.com",
-       "strict_min_version": "42.0"
-     }
-}
+		]
 }
