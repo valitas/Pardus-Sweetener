@@ -925,7 +925,7 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 		let maxroll = 0
 
 		let diff = getTimeDiff(data[ ukey + 'drugTimerClear'], Date.now() )
-		drugginess += diff['hr']
+		drugginess += Math.max(0,diff['hr'])
 
 		//this is probably wildly inaccurate LOL
 		//probably better to just add a +- drug counter when doctor is in effect?
@@ -970,6 +970,7 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 // }
 	if (!data[ ukey + 'drugTimerClear'] ) {
 		// No data, so make some nice comments
+		timerDiv.appendChild( doc.createElement('br') );
 		timerDiv.appendChild(
 			doc.createTextNode('No drugs used yet.') );
 	}
@@ -1181,6 +1182,7 @@ function usedStims2( amount, ukey, data ) {
 
 function getTimeDiff ( time1, time2 ) {
 	// Fucntion returns an object with keys 'day', 'hr', 'min', 'sec' which are the time differences between input 1 and 2.
+	// should we make it so this can only have 0/positive numbers?
 	var diff = new Object()
 
 	diff [ 'sec' ] = (Math.floor( time1 / 1000 ) - Math.floor( time2 / 1000 ) ) % 60 ;
