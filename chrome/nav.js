@@ -880,13 +880,107 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 			} 
 		}
 
+
+	//set up usage prediction
+	var drugestimation = doc.createElement('span')
+	drugestimation.id = "drugestimate"
+	drugestimation.textContent = "0"
+	timerDiv.appendChild( doc.createTextNode('Estimate: ') );
+	timerDiv.appendChild( drugestimation)
+	timerDiv.appendChild( doc.createTextNode(' APs') );
+	let doctorpredict = 8
+	
+	//getting advanced skills, to be used in estimation
+	var skills = []
+	var doctorType = ""
+	let universe = Universe.getServer( document );
+	chrome.storage.local.get( [universe + 'advSkills',ukey + 'doctor'], getAdvSkills.bind(this,universe,ukey))
+	function getAdvSkills(universe, ukey, data) {
+		skills = data[universe + 'advSkills']
+		doctorType = data[ukey + 'doctor']
+	}
+
+	//let TC =  chrome.storage.sync.get(ukey + 'TC',(obj)=>{return obj;}) ||5 // || ["None",0] 
+
+	var drugusefield =usebtn.parentNode.querySelector("input[name='amount']")
+	drugusefield.addEventListener('input',(event)=>{
+		
+		// drug estimation calculator
+		// TODO med and tc track - put on overview page
+		// already done via advskills.js. apparently that is an old page!
+		// not a fan of having both ukey and universe but oh well.
+		// TODO reverse calculating drugginess
+		// -- eh, it works. now i want to make the timers update live.
+		// TODO doctor effects
+		// predicting doctor effects is ????? need help
+		// TODO calculate average as an option/ show on alt hover
+		let tons = parseInt (drugusefield.value)
+		if (!(tons > 0)) {drugestimation.textContent = 0; return;}
+		//skills 21 is mediation, skills 30 is TC. product is effective TC
+		//technically drugginess can be calculated before this i think?
+		//drugginess can change if a tick passes between page loads i guess
+		let drugginess = 0 - (skills.length > 0 ? skills[21] * skills[30] : 0)
+
+		let minroll = 0
+		let maxroll = 0
+
+		let diff = getTimeDiff(data[ ukey + 'drugTimerClear'], Date.now() )
+		drugginess += Math.max(0,diff['hr'])
+
+		//this is probably wildly inaccurate LOL
+		//probably better to just add a +- drug counter when doctor is in effect?
+		//literally only useful for like 6 people
+		//all of whom are not me.
+		if (doctorType == "Primary") 
+			{ doctorpredict = 4 }
+		else if (doctorType == "Secondary")
+			{ doctorpredict = 6 }
+
+		//would prefer to do this without a for loop but the math is beyond me
+		for (var drugnum = drugginess; drugnum < drugginess + tons; drugnum++) {
+			if (drugnum < 1) {
+				minroll += 200
+				maxroll += 250
+			} else {
+				//this won't work with doctor, probably.
+				minroll += Math.max(0, 200 - 8 * drugnum)
+				maxroll += Math.max(0, 250 - doctorpredict * drugnum)
+				//maybe optimization to break loop if max roll <= 0, aka at 32 drugs
+			}
+		}
+		drugestimation.textContent = `${minroll} - ${maxroll}`
+	})
+
+
+// var count_start_point = drugs_taken;
+// if (trip_control) count_start_point -= meditation_level;
+// 
+// for (i = count_start_point; i < count_start_point + drugs_to_consume; i++) {
+    // drugNumber = i+1+meditation_level;
+    // if (i < 0) {
+        // max_roll +=250;
+        // min_roll +=200;
+		// console.log("Drug number " + drugNumber + "\tfree roll (200 to 250)");
+    // }
+    // else {
+        // max_roll += Math.max(0, 250 - 8 * i);
+        // min_roll += Math.max(0, 200 - 8 * i);
+		// console.log("Drug number " + drugNumber + "\tmin: " + Math.max(0, 200 - 8 * i) + "\tmax: " + Math.max(0, 250 - 8 * i));
+    // }
+// }
 	if (!data[ ukey + 'drugTimerClear'] ) {
 		// No data, so make some nice comments
+		timerDiv.appendChild( doc.createElement('br') );
 		timerDiv.appendChild(
 			doc.createTextNode('No drugs used yet.') );
 	}
 	else {
+		//set up prediction
+
+		timerDiv.appendChild( doc.createElement('br') );
+
 		// We have data, display current addiction
+		
 		timerDiv.appendChild( doc.createTextNode('Drug used:') );
 		timerDiv.appendChild( doc.createElement('br') );
 
@@ -1088,6 +1182,7 @@ function usedStims2( amount, ukey, data ) {
 
 function getTimeDiff ( time1, time2 ) {
 	// Fucntion returns an object with keys 'day', 'hr', 'min', 'sec' which are the time differences between input 1 and 2.
+	// should we make it so this can only have 0/positive numbers?
 	var diff = new Object()
 
 	diff [ 'sec' ] = (Math.floor( time1 / 1000 ) - Math.floor( time2 / 1000 ) ) % 60 ;
