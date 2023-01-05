@@ -921,15 +921,16 @@ function displayDrugTimer ( ukey, usebtn, data ) {
 		// TODO calculate average as an option/ show on alt hover
 		let tons = parseInt (drugusefield.value)
 		if (!(tons > 0)) {drugestimation.textContent = 0; return;}
-		
+
 		//skills 21 is mediation, skills 30 is TC. product is effective TC
 		let drugginess = 0 - (skills.length > 0 ? skills[21] * skills[30] : 0)
 
 		let minroll = 0
 		let maxroll = 0
 
+		//reverse engineering number of ticks drugged because lol
 		let diff = getTimeDiff(data[ ukey + 'drugTimerClear'], Date.now() )
-		drugginess += Math.max(0,diff['hr'])
+		drugginess += Math.max( 0, diff[ 'hr' ]) + (diff[ 'min' ] > -1 || diff[ 'sec' ] > -1 ? 1 : 0 )
 
 		//this is probably wildly inaccurate LOL
 		//probably better to just add a +- drug counter when doctor is in effect?
