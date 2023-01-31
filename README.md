@@ -1,8 +1,6 @@
 ![Pardus Sweetener Logo](https://github.com/valitas/Pardus-Sweetener/blob/master/chrome/icons/128.png?raw=true)
 Pardus Sweetener T 
 ================
-Downloads:
-
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/oljkdelpabjlpofhomedemighchghfik.svg)](https://chrome.google.com/webstore/detail/oljkdelpabjlpofhomedemighchghfik) [![Mozilla Add-on](https://img.shields.io/amo/v/pardus-sweetener-t.svg)](https://addons.mozilla.org/firefox/addon/pardus-sweetener-t/)
 
 Pardus Sweetener T is a continuation publication of the browser extension Pardus Sweetener that enhances the user
