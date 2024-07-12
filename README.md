@@ -1,67 +1,55 @@
 ![Pardus Sweetener Logo](https://github.com/valitas/Pardus-Sweetener/blob/master/chrome/icons/128.png?raw=true)
-Pardus Sweetener T 
-================
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/oljkdelpabjlpofhomedemighchghfik.svg)](https://chrome.google.com/webstore/detail/oljkdelpabjlpofhomedemighchghfik) [![Mozilla Add-on](https://img.shields.io/amo/v/pardus-sweetener-t.svg)](https://addons.mozilla.org/firefox/addon/pardus-sweetener-t/)
 
-Pardus Sweetener T is a continuation publication of the browser extension Pardus Sweetener that enhances the user
-interface of the online space game [Pardus](https://www.pardus.at/).
+# Pardus Sweetener
 
-List of new features:
- * Tick based drug and stim clocks ([Tsunder](https://github.com/Tsunder/Pardus-Sweetener))
- * Minimal-cost pathfinder and AP calculator to the minimap ([Kui](https://github.com/likuilin/Pardus-Sweetener))
- * Missions tracker ([BartKieviet](https://github.com/BartKieviet))
+[![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/ejnppkfdhdnchkcdblfddedelmbpoklo)](https://chromewebstore.google.com/detail/ejnppkfdhdnchkcdblfddedelmbpoklo)
+[![SGPvP Mozilla Add-on Version](https://img.shields.io/amo/v/pardus-sweetener)
+](https://addons.mozilla.org/en-US/firefox/addon/pardus-sweetener/)
 
-Install
--------
+Pardus Sweetener enhances the user interface of the browser game
+[Pardus](https://www.pardus.at/).
 
-* [Pardus Sweetener Chrome Extension](https://chrome.google.com/webstore/detail/oljkdelpabjlpofhomedemighchghfik)
-* [Pardus Sweetener Firefox Add-on](https://addons.mozilla.org/en-GB/firefox/addon/pardus-sweetener-t/)
+## Installation
 
-Features
---------
+Follow the instructions of the web store for your browser:
+
+* [Install Pardus Sweetener Extension for Chrome](https://chrome.google.com/webstore/detail/ejnppkfdhdnchkcdblfddedelmbpoklo)
+* [Install Pardus Sweetener Add-on for Firefox](https://addons.mozilla.org/en-GB/firefox/addon/pardus-sweetener/)
+
+## Features
 
  * Audible alarm on combat and user-configurable game events
  * Desktop notifications on combat and user-configurable game events
- * Minimap of current sector in the nav screen, with minimal-cost pathfinder and AP calculator built in
+ * Minimap of current sector in the nav screen, with minimal-cost pathfinder and
+   AP calculator
  * Robot autofill in NPC combat screen
  * Missile and rounds autoselect in combat screens
  * Stored personal and alliance quicklists
- * Clocks for different game "ticks", a la Pardus Clock
  * Links to attack and trade with other ships in the nav screen
  * Links to bulletin board, black market, etc. in the nav screen
  * Highlighting of the path that the ship will take to a tile
  * Highlighting of names of interest on the online list
+ * Clocks for game ticks and drug and stim intake
+ * Missions tracker
 
-Credits and legal notices
--------------------------
+## Credits and legal notices
 
-Tsunder's modifications are WTFPL version 2
+This software was originally written by [Val](https://github.com/valitas), and
+includes contributions by [Tsunder](https://github.com/Tsunder),
+[Kui](https://github.com/likuilin), and
+[BartKieviet](https://github.com/BartKieviet).
 
-Kui's modifications to the original code are licensed CC BY-NC. 
+The extension is now distributed under the MIT license, see LICENSE.txt, except
+for the file `kui.js` which is distributed under the Creative Commons
+Attribution-Non Commercial license (see comments in the file).  Code by Tsunder,
+if you identify it from the commit log, may be used alternatively under the more
+permissive WTFPL version 2 license.
 
-The original code is in the public domain, and its license is below:
+### About the sound samples
 
-The author of this software wishes to remain somewhat anonymous, but
-you can contact her as val@dssrzs.org.
-
-LEGAL NOTICE: I, the anonymous author, but still very much the
-copyright holder of this work, hereby release it into the public
-domain. This applies worldwide. In case this is not legally possible,
-I grant any entity the right to use this work for any purpose, without
-any conditions, unless such conditions are required by law.
-
-Translation: Do what you please with this code. May you have fun with
-it, and live a long and happy life.
-
-DISCLAIMER: This software is without warranty.
-
-About the sound samples
------------------------
-
-The sound samples included with the software were obtained from
-freesound.org, and are licensed under the Creative Commons Sampling
-Plus 1.0 License.  You can read this license at:
-http://creativecommons.org/licenses/sampling+/1.0/
+The sound samples included with the software were obtained from freesound.org,
+and are licensed under the Creative Commons Sampling Plus 1.0 License.  You can
+read this license at: http://creativecommons.org/licenses/sampling+/1.0/
 
 Individual credits:
 
