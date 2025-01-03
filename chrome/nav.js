@@ -154,20 +154,20 @@ function applyConfiguration() {
 		// start() because we didn't want to receive messages from the
 		// game until we were properly configured.  But now we are.
 
-		navTilesXEval = doc.createExpression( 'tbody/tr/td', null );
-		highlightedTiles = [];
+		navTilesXEval = doc.createExpression('tbody/tr/td', null)
+		highlightedTiles = []
 
 		// Insert a bit of script to execute in the page's context
 		// and send us what we need. And add a listener to receive
 		// the call.  This will call us back immediately, and
 		// again whenever a partial refresh completes.
-		doc.defaultView.addEventListener( 'message', onGameMessage );
-		var script = doc.createElement( 'script' );
-		script.type = 'text/javascript';
-		script.textContent = "(function() {var fn=function(){window.postMessage({pardus_sweetener:1,loc:typeof(userloc)=='undefined'?null:userloc,ajax:typeof(ajax)=='undefined'?null:ajax,navSizeVer:typeof(navSizeVer)=='undefined'?null:navSizeVer,navSizeHor:typeof(navSizeHor)=='undefined'?null:navSizeHor,fieldsTotal:typeof(fieldsTotal)=='undefined'?null:fieldsTotal,tileRes:typeof(tileRes)=='undefined'?null:tileRes},window.location.origin);};if(typeof(addUserFunction)=='function')addUserFunction(fn);fn();})();";
-		doc.body.appendChild( script );
+		doc.defaultView.addEventListener('message', onGameMessage)
+		const script = doc.createElement('script')
+		script.src = chrome.runtime.getURL('postvars.js')
+		script.onload = function () { this.remove(); }
+		doc.head.appendChild(script)
 
-		configured = true;
+		configured = true
 	}
 }
 

@@ -1,11 +1,26 @@
 {
+   "action": {
+      "default_icon": {
+         "16": "icons/16.png",
+         "24": "icons/24.png",
+         "32": "icons/32.png",
+         "48": "icons/48.png"
+      },
+      "default_title": "Pardus Sweetener",
+      "default_popup": "popup.html"
+   },
    "background": {
-      "persistent": false,
-      "scripts": [
-         "bg.js"
-      ]
+      "service_worker": "svcworker.js",
+      "type": "module"
    },
    "content_scripts": [
+      {
+         "all_frames": true,
+         "js": [ "v11.js" ],
+         "matches": [
+            "*://*.pardus.at/main.php*"
+         ]
+      },
       {
          "all_frames": true,
          "js": [
@@ -147,26 +162,23 @@
    },
    "description": "User interface enhancements for the browser game Pardus.",
    "icons": {
-      "128": "icons/128.png",
       "16": "icons/16.png",
+      "24": "icons/24.png",
+      "32": "icons/32.png",
       "48": "icons/48.png",
-      "64": "icons/64.png"
+      "128": "icons/128.png"
    },
    "manifest_version": 3,
-   "minimum_chrome_version": "88",
+   "minimum_chrome_version": "109",
    "name": "Pardus Sweetener",
    "options_ui": {
       "page": "options.html",
       "open_in_tab": false
    },
-   "page_action": {
-      "default_icon": "icons/19.png",
-      "default_popup": "popup.html",
-      "default_title": "Change Pardus Sweetener settings"
-   },
    "permissions": [
       "notifications",
       "storage",
+      "offscreen",
       "*://*.pardus.at/*"
    ],
    "version": "11",
@@ -174,6 +186,7 @@
    "web_accessible_resources": [
       {
          "resources": [
+            "postvars.js",
             "icons/16.png",
             "icons/48.png",
             "icons/down.png"
