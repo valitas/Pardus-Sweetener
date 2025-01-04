@@ -273,7 +273,6 @@ function onSectionClick(event) {
 }
 
 function finishConfiguration(items) {
-  console.log("finishing config", items);
   for (let key in items) {
     const control = controls[key];
     if (control) {
