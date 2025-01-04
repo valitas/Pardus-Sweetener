@@ -281,6 +281,12 @@ function finishConfiguration(items) {
     }
   }
 
+  // This is a bit of a hack. I think there must be a way to handle defaults
+  // more correctly.
+  if (controls.displayVisitedDecay.value === "") {
+    controls.displayVisitedDecay.value = 180;
+  }
+
   // Listen for changes in configuration.
   chrome.storage.onChanged.addListener(onConfigurationChange);
 

@@ -56,3 +56,8 @@ textarea {
     width: 590px;
     overflow-y: scroll;
 }
+
+input#displayVisitedDecay {
+    width: 4em;
+    text-align: right;
+}
