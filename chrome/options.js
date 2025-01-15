@@ -1,15 +1,20 @@
 // Pardus Sweetener
 // The wiring of the options page.
 
+//import ensureOffscreenDocument from "./prepoffscr.js";
+
+console.log("options module loading");
+
 const controls = {};
 const extraControls = {};
 const port = chrome.runtime.connect();
-port.onMessage.addListener(onPortMessage);
+port.onMessage.addListener(onMessage);
 setUp();
 
 // end of execution at module load
 
 function setUp() {
+  console.log("options module setup");
   let i, end;
 
   // Find all these elements in the document, save references to
@@ -305,15 +310,26 @@ function onConfigurationChange(changes, area) {
   }
 }
 
-function onPortMessage(msg) {
+function onMessage(msg) {
+  console.log("options onMessage", msg);
   if (msg.hasOwnProperty("alarmState")) {
     extraControls.testAlarm.value = msg.alarmState ? "Stop" : "Test";
   }
 }
 
 function onTestAlarmClick() {
+  console.log("options onTestAlarmClick");
   const message = { alarm: extraControls.testAlarm.value === "Test" };
   port.postMessage(message);
+
+  /*// Post a message directly to the offscreen page
+  ensureOffscreenDocument().then(() => {
+    chrome.runtime.sendMessage({
+      type: "testAlarmClick",
+      target: "offscreen",
+      data: "clicked in options",
+    });
+    });*/
 }
 
 function onTestNotificationClick() {

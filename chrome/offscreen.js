@@ -5,12 +5,12 @@
 //
 // Because why would anyone want to do that, right? (¬_¬)
 //
-// This page listens for messages from chrome.runtime with property `target` set
-// to `"offscreen"`. Other messages are ignored.
+// This page listens for messages from runtime with property `target` set to
+// `"offscreen"`. Other messages are ignored.
 //
-// To play a sample, the extension sends us a message with the property `play`
-// set to the name of one of the samples in the directory `sounds`, without path
-// or file extension. To stop playback, that property is missing or `null`.
+// To play a sample, runtime sends us a message with property `play` set to the
+// name of one of the samples in the directory `sounds` (without path or file
+// extension). To stop playback, that property is missing or null.
 
 // The Audio element
 const audio = new Audio();
@@ -22,10 +22,9 @@ let sampleName;
 // True if the sample above is already playing.
 let playing = false;
 
-// If the audio has been asked to start playing the sample above, and just
-// hasn't started yet, this is a promise that will resolve when playback starts,
-// or reject if playback can't start. Otherwise, if audio is already playing, or
-// if playback hasn't even been requested, this is null.
+// If the audio element has been asked to start playing the sample above, but
+// just hasn't started yet, then this is a promise that will resolve to `true`
+// when playback has started, or to `false` if playback startup was aborted.
 let ongoingStartup = null;
 
 chrome.runtime.onMessage.addListener(handleMessage);
@@ -35,23 +34,34 @@ chrome.runtime.onMessage.addListener(handleMessage);
 function handleMessage(request, sender, sendResponse) {
   if (request.target !== "offscreen") return;
 
-  // Message property `play` should be a string specifying the name of the
-  // sample to play, or null to stop the sound.
+  // When reading the code below, bear in mind that this function reports the
+  // resulting state of the alarm by calling `sendResponse(state)`, where the
+  // state is `true` if the alarm is playing, `false` if it's not. And,
+  // importantly, `sendResponse` may be called immediately, or the function may
+  // return without calling it but arrange for it to be called when a promise
+  // resolves in the future.
+  //
+  // And, in that latter case, we have to return `true` here, so that Chrome
+  // knows to keep `sendResponse` valid beyond the execution of this function.
+
+  // Message property `play` is a string specifying the name of the sample to
+  // play, or null to stop the sound.
   const requestPlay = request.play;
 
   if (!requestPlay) {
-    // we're to stop the alarm. That's easier.
+    // We are to stop the alarm.
     if (playing) {
       audio.pause();
       playing = false;
     } else if (ongoingStartup) {
-      // XXX this should cause pending promises to reject, which should adjust
-      // the state. It's going to be a bitch to test though :(
-      // Setting to null should not be necessary. But, until I can test...
       audio.load();
+      // XXX load() should cause pending promises to reject, which should adjust
+      // the state, so it shouldn't be necessary to set ongoingStartup. But it's
+      // going to be a bitch to test if that's really the case, so, until
+      // then... :(
       ongoingStartup = null;
       console.debug(
-        "offscreen WAS STARTING TO PLAY, rare case. we called load to abort.",
+        "offscreen RARE CASE: asked to stop while playback was starting, called audio.load() to abort",
       );
     }
 
@@ -62,7 +72,7 @@ function handleMessage(request, sender, sendResponse) {
   // Else we are to start the alarm.
 
   if (requestPlay === sampleName) {
-    // The right sample is already set.
+    // The correct sample is already set.
 
     if (playing) {
       // And it's already playing, nothing more to do.
@@ -70,14 +80,15 @@ function handleMessage(request, sender, sendResponse) {
       return;
     }
 
-    // Else...
+    // Else the correct sample is set but not playing yet...
     if (ongoingStartup) {
-      // it's starting to play already, just wait and respond.
-      console.debug("offscreen WAS ALREADY STARTING, rare. we kept waiting");
-      ongoingStartup.then(
-        () => sendResponse(true),
-        () => sendResponse(false),
+      // but it's starting to play already. Just wait and respond.
+      console.debug(
+        "offscreen RARE CASE: asked to start while playback was already starting, we'll wait and respond",
       );
+      // XXX ongoingStartup should resolve to true if audio started, false it
+      // startup was aborted (not reject). Find a way to test this.
+      ongoingStartup.then((result) => sendResponse(result));
       return true;
     }
 
@@ -91,7 +102,7 @@ function handleMessage(request, sender, sendResponse) {
       playing = false;
     }
 
-    // Set the right sample. load() should force any pending promises to reject.
+    // Set the correct sample. load() should force pending promises to reject.
     sampleName = requestPlay;
     audio.src = `sounds/${sampleName}.ogg`;
     audio.load();
@@ -111,12 +122,11 @@ function handleMessage(request, sender, sendResponse) {
     () => {
       // if playback can't start, report it, and resolve to false so that other
       // code waiting knows.
-      console.debug("offscreen LOAD ABORTED, rare");
+      console.debug("offscreen RARE CASE: playback startup aborted");
       ongoingStartup = null;
       sendResponse(false);
       return false;
     },
   );
-
   return true;
 }

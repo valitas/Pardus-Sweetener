@@ -1,199 +1,138 @@
 {
-   "action": {
-      "default_icon": {
-         "16": "icons/16.png",
-         "24": "icons/24.png",
-         "32": "icons/32.png",
-         "48": "icons/48.png"
-      },
-      "default_title": "Pardus Sweetener",
-      "default_popup": "popup.html"
-   },
-   "background": {
-      "service_worker": "svcworker.js",
-      "type": "module"
-   },
-   "content_scripts": [
-      {
-         "all_frames": true,
-         "js": [ "v11.js" ],
-         "matches": [
-            "*://*.pardus.at/main.php*"
-         ]
-      },
-      {
-         "all_frames": true,
-         "js": [
-            "cfgset.js",
-            "shiplinks.js",
-            "sector.js",
-            "map.js",
-            "universe.js",
-            "missions.js",
-            "nav.js"
-         ],
-         "css": [
-            "nav.css"
-         ],
-         "matches": [
-            "*://*.pardus.at/main.php*"
-         ]
-      },
-      {
-         "all_frames": true,
-         "js": [
-            "cfgset.js",
-            "universe.js",
-            "shiplinks.js",
-            "missions.js",
-            "combat.js"
-         ],
-         "matches": [
-            "*://*.pardus.at/ship2ship_combat.php*",
-            "*://*.pardus.at/ship2opponent_combat.php*",
-            "*://*.pardus.at/building.php*"
-         ]
-      },
-      {
-         "all_frames": true,
-         "js": [
-            "slicer.js",
-            "myalliance.js"
-         ],
-         "matches": [
-            "*://*.pardus.at/myalliance.php*"
-         ]
-      },
-      {
-         "all_frames": true,
-         "js": [
-            "cfgset.js",
-            "universe.js",
-            "ambush.js"
-         ],
-         "matches": [
-            "*://*.pardus.at/ambush.php*"
-         ]
-      },
-      {
-         "all_frames": false,
-         "js": [
-            "sendmsg.js"
-         ],
-         "matches": [
-            "*://*.pardus.at/sendmsg.php*"
-         ]
-      },
-      {
-         "all_frames": false,
-         "js": [
-            "universe.js",
-            "clock.js",
-            "sector.js",
-            "game.js"
-         ],
-         "matches": [
-            "*://*.pardus.at/game.php*"
-         ]
-      },
-      {
-         "all_frames": true,
-         "js": [
-            "cfgset.js",
-            "universe.js",
-            "onlinelist.js"
-         ],
-         "matches": [
-            "*://*.pardus.at/statistics.php?display=onlinelist"
-         ]
-      },
-      {
-         "all_frames": true,
-         "js": [
-            "universe.js",
-            "advskills.js"
-         ],
-         "matches": [
-            "*://*.pardus.at/overview_advanced_skills.php"
-         ]
-      },
-      {
-         "all_frames": true,
-         "js": [
-            "cfgset.js",
-            "universe.js",
-            "sector.js",
-            "missions.js",
-            "bulletinboard.js"
-         ],
-         "matches": [
-            "*://*.pardus.at/bulletin_board.php*"
-         ]
-      },
-      {
-         "all_frames": true,
-         "js": [
-            "cfgset.js",
-            "universe.js",
-            "sector.js",
-            "missions.js",
-            "jobs.js"
-         ],
-         "matches": [
-            "*://*.pardus.at/overview_jobs.php*"
-         ]
-      },
-      {
-         "all_frames": true,
-         "js": [
-            "cfgset.js",
-            "universe.js",
-            "missions.js",
-            "planetsb.js"
-         ],
-         "matches": [
-            "*://*.pardus.at/planet.php*",
-            "*://*.pardus.at/starbase.php*"
-         ]
-      }
-   ],
-   "content_security_policy": {
-      "extension_pages": "script-src 'self'"
-   },
-   "description": "User interface enhancements for the browser game Pardus.",
-   "icons": {
+  "action": {
+    "default_icon": {
       "16": "icons/16.png",
       "24": "icons/24.png",
       "32": "icons/32.png",
-      "48": "icons/48.png",
-      "128": "icons/128.png"
-   },
-   "manifest_version": 3,
-   "minimum_chrome_version": "109",
-   "name": "Pardus Sweetener",
-   "options_ui": {
-      "page": "options.html",
-      "open_in_tab": false
-   },
-   "permissions": [
-      "notifications",
-      "storage",
-      "offscreen",
-      "*://*.pardus.at/*"
-   ],
-   "version": "11",
-   "version_name": "11-rc1",
-   "web_accessible_resources": [
-      {
-         "resources": [
-            "postvars.js",
-            "icons/16.png",
-            "icons/48.png",
-            "icons/down.png"
-         ],
-         "matches": [
-            "*://*.pardus.at/*"
-         ]
-      }
-   ]
+      "48": "icons/48.png"
+    },
+    "default_title": "Pardus Sweetener",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "svcworker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": ["v11.js"],
+      "matches": ["*://*.pardus.at/main.php*"]
+    },
+    {
+      "all_frames": true,
+      "js": [
+        "cfgset.js",
+        "shiplinks.js",
+        "sector.js",
+        "map.js",
+        "universe.js",
+        "missions.js",
+        "nav.js"
+      ],
+      "css": ["nav.css"],
+      "matches": ["*://*.pardus.at/main.php*"]
+    },
+    {
+      "all_frames": true,
+      "js": [
+        "cfgset.js",
+        "universe.js",
+        "shiplinks.js",
+        "missions.js",
+        "combat.js"
+      ],
+      "matches": [
+        "*://*.pardus.at/ship2ship_combat.php*",
+        "*://*.pardus.at/ship2opponent_combat.php*",
+        "*://*.pardus.at/building.php*"
+      ]
+    },
+    {
+      "all_frames": true,
+      "js": ["slicer.js", "myalliance.js"],
+      "matches": ["*://*.pardus.at/myalliance.php*"]
+    },
+    {
+      "all_frames": true,
+      "js": ["cfgset.js", "universe.js", "ambush.js"],
+      "matches": ["*://*.pardus.at/ambush.php*"]
+    },
+    {
+      "all_frames": false,
+      "js": ["sendmsg.js"],
+      "matches": ["*://*.pardus.at/sendmsg.php*"]
+    },
+    {
+      "all_frames": false,
+      "js": ["universe.js", "clock.js", "sector.js", "game.js"],
+      "matches": ["*://*.pardus.at/game.php*"]
+    },
+    {
+      "all_frames": true,
+      "js": ["cfgset.js", "universe.js", "onlinelist.js"],
+      "matches": ["*://*.pardus.at/statistics.php?display=onlinelist"]
+    },
+    {
+      "all_frames": true,
+      "js": ["universe.js", "advskills.js"],
+      "matches": ["*://*.pardus.at/overview_advanced_skills.php"]
+    },
+    {
+      "all_frames": true,
+      "js": [
+        "cfgset.js",
+        "universe.js",
+        "sector.js",
+        "missions.js",
+        "bulletinboard.js"
+      ],
+      "matches": ["*://*.pardus.at/bulletin_board.php*"]
+    },
+    {
+      "all_frames": true,
+      "js": ["cfgset.js", "universe.js", "sector.js", "missions.js", "jobs.js"],
+      "matches": ["*://*.pardus.at/overview_jobs.php*"]
+    },
+    {
+      "all_frames": true,
+      "js": ["cfgset.js", "universe.js", "missions.js", "planetsb.js"],
+      "matches": [
+        "*://*.pardus.at/planet.php*",
+        "*://*.pardus.at/starbase.php*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'"
+  },
+  "description": "User interface enhancements for the browser game Pardus.",
+  "icons": {
+    "16": "icons/16.png",
+    "24": "icons/24.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "manifest_version": 3,
+  "minimum_chrome_version": "116",
+  "name": "Pardus Sweetener",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "permissions": ["notifications", "storage", "offscreen", "*://*.pardus.at/*"],
+  "version": "11",
+  "version_name": "11-rc1",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "postvars.js",
+        "icons/16.png",
+        "icons/48.png",
+        "icons/down.png"
+      ],
+      "matches": ["*://*.pardus.at/*"]
+    }
+  ]
 }
