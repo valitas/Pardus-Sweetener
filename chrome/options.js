@@ -3,8 +3,6 @@
 
 //import ensureOffscreenDocument from "./prepoffscr.js";
 
-console.log("options module loading");
-
 const controls = {};
 const extraControls = {};
 const port = chrome.runtime.connect();
@@ -14,7 +12,6 @@ setUp();
 // end of execution at module load
 
 function setUp() {
-  console.log("options module setup");
   let i, end;
 
   // Find all these elements in the document, save references to
@@ -311,14 +308,12 @@ function onConfigurationChange(changes, area) {
 }
 
 function onMessage(msg) {
-  console.log("options onMessage", msg);
   if (msg.hasOwnProperty("alarmState")) {
     extraControls.testAlarm.value = msg.alarmState ? "Stop" : "Test";
   }
 }
 
 function onTestAlarmClick() {
-  console.log("options onTestAlarmClick");
   const message = { alarm: extraControls.testAlarm.value === "Test" };
   port.postMessage(message);
 
@@ -334,6 +329,7 @@ function onTestAlarmClick() {
 
 function onTestNotificationClick() {
   const message = {
+    target: "worker",
     desktopNotification: "You requested a sample desktop notification.",
     timeout: 4000,
   };

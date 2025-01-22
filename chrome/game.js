@@ -1,43 +1,73 @@
-'use strict';
+"use strict";
 
 // Let Emacs know of these.
 var chrome, PSClock;
 
-(function( document ) {
-
-  var CLOCK_CONFIG_KEYS =
-      [ 'clockUTC', 'clockAP', 'clockB', 'clockP', 'clockS',
-	'clockL', 'clockE', 'clockN', 'clockZ', 'clockR', 'clockD', 'clockStim' ],
-      INDICATOR_CONFIG_KEYS =
-      [ 'alarmCombat', 'alarmAlly', 'alarmWarning', 'alarmPM',
-        'alarmMission', 'alarmTrade', 'alarmPayment',
-        'desktopCombat', 'desktopAlly', 'desktopWarning', 'desktopPM',
-        'desktopMission', 'desktopTrade','desktopPayment' ],
-      INDICATORS =
-      { 'icon_amsg.png':    'Ally',
-        'icon_combat.png':  'Combat',
-        'icon_mission.png': 'Mission',
-        'icon_msg.png':     'PM',
-        'icon_pay.png':     'Payment',
-        'icon_trade.png':   'Trade',
-        'gnome-error.png':  'Warning',
-        'gnome-info.png':   'Info' },
-      IGNORE_WORDS = 
-      [ 'Sorry', 'Maintenance', 'once per second', 'failed', 'unsuccessful', 'that quickly', 'Auto-Pilot failure', 'uninhabited' ];
+(function (document) {
+  var CLOCK_CONFIG_KEYS = [
+      "clockUTC",
+      "clockAP",
+      "clockB",
+      "clockP",
+      "clockS",
+      "clockL",
+      "clockE",
+      "clockN",
+      "clockZ",
+      "clockR",
+      "clockD",
+      "clockStim",
+    ],
+    INDICATOR_CONFIG_KEYS = [
+      "alarmCombat",
+      "alarmAlly",
+      "alarmWarning",
+      "alarmPM",
+      "alarmMission",
+      "alarmTrade",
+      "alarmPayment",
+      "desktopCombat",
+      "desktopAlly",
+      "desktopWarning",
+      "desktopPM",
+      "desktopMission",
+      "desktopTrade",
+      "desktopPayment",
+    ],
+    INDICATORS = {
+      "icon_amsg.png": "Ally",
+      "icon_combat.png": "Combat",
+      "icon_mission.png": "Mission",
+      "icon_msg.png": "PM",
+      "icon_pay.png": "Payment",
+      "icon_trade.png": "Trade",
+      "gnome-error.png": "Warning",
+      "gnome-info.png": "Info",
+    },
+    IGNORE_WORDS = [
+      "Sorry",
+      "Maintenance",
+      "once per second",
+      "failed",
+      "unsuccessful",
+      "that quickly",
+      "Auto-Pilot failure",
+      "uninhabited",
+    ];
 
   var configured = false,
-      msgframeLoaded = false,
-      lastRefresh = 0,
-      alarmPort = null,
-      desktopNotificationShown = false,
-      msgframe,
-      msgframeURL,
-      clock,
-      clockConfig,
-      indicatorConfig,
-      indicators,
-      indicatorsFound,
-      characterName;
+    msgframeLoaded = false,
+    lastRefresh = 0,
+    alarmPort = null,
+    desktopNotificationShown = false,
+    msgframe,
+    msgframeURL,
+    clock,
+    clockConfig,
+    indicatorConfig,
+    indicators,
+    indicatorsFound,
+    characterName;
 
   go();
 
@@ -46,14 +76,14 @@ var chrome, PSClock;
 
   function go() {
     var keys;
-    msgframe = document.getElementById( 'msgframe' );
-    if( msgframe ) {
+    msgframe = document.getElementById("msgframe");
+    if (msgframe) {
       // Request configuration.
-      keys = CLOCK_CONFIG_KEYS.concat( INDICATOR_CONFIG_KEYS );
-      chrome.storage.local.get( keys, onConfigurationReady );
+      keys = CLOCK_CONFIG_KEYS.concat(INDICATOR_CONFIG_KEYS);
+      chrome.storage.local.get(keys, onConfigurationReady);
 
       // Schedule this check to run twice a minute.
-      document.defaultView.setInterval( onMsgFrameCheck, 30000 );
+      document.defaultView.setInterval(onMsgFrameCheck, 30000);
 
       // Listen for the msgframe loading.
       //
@@ -63,44 +93,44 @@ var chrome, PSClock;
       // script there, or using the webNavigation thing?
       //
       // https://bugs.webkit.org/show_bug.cgi?id=33604
-      msgframe.addEventListener( 'load', onMsgFrameLoad, false );
+      msgframe.addEventListener("load", onMsgFrameLoad, false);
 
       // And trigger an immediate call if we missed the load event altogether.
       try {
-        if ( msgframe.contentDocument.location.pathname == '/msgframe.php' &&
-             msgframe.contentDocument.readyState == 'complete' )
+        if (
+          msgframe.contentDocument.location.pathname == "/msgframe.php" &&
+          msgframe.contentDocument.readyState == "complete"
+        )
           msgframeLoaded = true;
-      }
-      catch( e ) {}
+      } catch (e) {}
     }
   }
 
-  function onConfigurationReady( items ) {
+  function onConfigurationReady(items) {
     var i, end, key;
 
     configured = true;
 
     // Store the initial configurations
     clockConfig = {};
-    for ( i = 0, end = CLOCK_CONFIG_KEYS.length; i < end; i++ ) {
-      key = CLOCK_CONFIG_KEYS[ i ];
-      clockConfig[ key ] = items[ key ];
+    for (i = 0, end = CLOCK_CONFIG_KEYS.length; i < end; i++) {
+      key = CLOCK_CONFIG_KEYS[i];
+      clockConfig[key] = items[key];
     }
     indicatorConfig = {};
-    for ( i = 0, end = INDICATOR_CONFIG_KEYS.length; i < end; i++ ) {
-      key = INDICATOR_CONFIG_KEYS[ i ];
-      indicatorConfig[ key ] = items[ key ];
+    for (i = 0, end = INDICATOR_CONFIG_KEYS.length; i < end; i++) {
+      key = INDICATOR_CONFIG_KEYS[i];
+      indicatorConfig[key] = items[key];
     }
 
     // Act on configuration changes
-    chrome.storage.onChanged.addListener( onConfigurationChange );
+    chrome.storage.onChanged.addListener(onConfigurationChange);
 
     // If the msgframe loaded before we were ready, sort it out.
-    if ( msgframeLoaded )
-      onMsgFrameLoad( null );
+    if (msgframeLoaded) onMsgFrameLoad(null);
   }
 
-  function onMsgFrameLoad( event ) {
+  function onMsgFrameLoad(event) {
     var doc, i, end, key;
 
     msgframeLoaded = true;
@@ -108,41 +138,38 @@ var chrome, PSClock;
     // This shouldn't happen, configuration should occur before the frame
     // loads. Still.  If it does happen, we'll be called again by
     // onConfigurationReady.
-    if ( !configured )
-      return;
+    if (!configured) return;
 
     try {
       doc = msgframe.contentDocument;
       lastRefresh = Date.now();
-    }
-    catch( e ) {
+    } catch (e) {
       // This is a security error: when the msg frame fails to load, we can't
       // access contentDocument because that would be "cross-domain".  That's
       // fine.  We didn't update lastRefresh, that's all we need.
     }
 
-    if ( doc ) {
+    if (doc) {
       msgframeURL = doc.location.toString();
-      scanMsgFrame( doc );
-	  // Initialise the clock instance
-	  clock = new PSClock( doc );
-      for ( i = 0, end = CLOCK_CONFIG_KEYS.length; i < end; i++ ) {
-	    key = CLOCK_CONFIG_KEYS[ i ];
-	    setClockConfigurationEntry( key, clockConfig[ key ] );
+      scanMsgFrame(doc);
+      // Initialise the clock instance
+      clock = new PSClock(doc);
+      for (i = 0, end = CLOCK_CONFIG_KEYS.length; i < end; i++) {
+        key = CLOCK_CONFIG_KEYS[i];
+        setClockConfigurationEntry(key, clockConfig[key]);
       }
-	  clock.start();
-	  // This changes the z-index of the clock so the notification icons, if
-	  // any, cover the clock if they overlap. Because we think notifications
-	  // are more important than clocks.
-	  clock.sink( indicatorsFound );
-    }
-    else {
+      clock.start();
+      // This changes the z-index of the clock so the notification icons, if
+      // any, cover the clock if they overlap. Because we think notifications
+      // are more important than clocks.
+      clock.sink(indicatorsFound);
+    } else {
       // We lose the reference to the clock. It would be nice to cancel the
       // interval that refreshes it, but by now the window that held the
       // interval is probably dead (hopefully).
       clock = null;
-	  indicators = {};
-	  indicatorsFound = false;
+      indicators = {};
+      indicatorsFound = false;
     }
 
     notify();
@@ -152,193 +179,179 @@ var chrome, PSClock;
   // a reload.
   function onMsgFrameCheck() {
     var now = Date.now();
-    if ( now - lastRefresh > 60000 && msgframeURL ) {
+    if (now - lastRefresh > 60000 && msgframeURL) {
       try {
-        msgframe.contentWindow.location.replace( msgframeURL );
-      }
-      catch( e ) {}
+        msgframe.contentWindow.location.replace(msgframeURL);
+      } catch (e) {}
     }
   }
 
-  function setClockConfigurationEntry( key, value ) {
-    if ( clockConfig.hasOwnProperty( key ) ) {
-      clockConfig[ key ] = value;
+  function setClockConfigurationEntry(key, value) {
+    if (clockConfig.hasOwnProperty(key)) {
+      clockConfig[key] = value;
 
       // Clocks are named AP, P, S, etc. Keys are clockAP, clockP, clockS, etc.
-      clock.setEnabled( key.substr(5), value );
+      clock.setEnabled(key.substr(5), value);
     }
   }
 
-  function onConfigurationChange( changes, area ) {
-    if ( area == 'local' ) {
+  function onConfigurationChange(changes, area) {
+    if (area == "local") {
       var indicatorConfigChanged = false;
 
-      for ( var key in changes ) {
-        if ( indicatorConfig.hasOwnProperty( key )) {
-          indicatorConfig[ key ] = changes[ key ].newValue;
+      for (var key in changes) {
+        if (indicatorConfig.hasOwnProperty(key)) {
+          indicatorConfig[key] = changes[key].newValue;
           indicatorConfigChanged = true;
-        }
-        else
-          setClockConfigurationEntry( key, changes[key].newValue );
+        } else setClockConfigurationEntry(key, changes[key].newValue);
       }
 
-	  if ( indicatorConfigChanged )
-	    notify();
-	}
+      if (indicatorConfigChanged) notify();
+    }
   }
 
   function notify() {
-	var message = {};
+    var message = { target: "worker" };
 
-	setAlarm( testIndicators( 'alarm' ) );
+    setAlarm(testIndicators("alarm"));
 
-	if ( testIndicators( 'desktop' ) ) {
-	  message.desktopNotification = indicatorsToHuman();
-	  chrome.runtime.sendMessage( message, function(){} );
+    if (testIndicators("desktop")) {
+      message.desktopNotification = indicatorsToHuman();
+      chrome.runtime.sendMessage(message, function () {});
       desktopNotificationShown = true;
-	}
-	else {
+    } else {
       // Check if notification shown; if so, hide (don't send a message telling
       // the backend to hide a notification that isn't shown, that'll wake it
       // for nothing.
       //
       // All this is a bit of a mess and should be rewritten, really.
-      if ( desktopNotificationShown ) {
-		message.desktopNotification = null;
-		chrome.runtime.sendMessage( message, function(){} );
-	  }
+      if (desktopNotificationShown) {
+        message.desktopNotification = null;
+        chrome.runtime.sendMessage(message, function () {});
+      }
 
       desktopNotificationShown = false;
-	}
-
+    }
   }
 
-  function testIndicators( prefix ) {
-	for ( var suffix in indicators ) {
-	  if ( indicatorConfig[ prefix + suffix ] )
-		return true;
-	}
+  function testIndicators(prefix) {
+    for (var suffix in indicators) {
+      if (indicatorConfig[prefix + suffix]) return true;
+    }
 
-	return false;
+    return false;
   }
 
   // XXX - this should be on bg
   function indicatorsToHuman() {
-	var a = [], pendings, warn, notifs, stuff;
+    var a = [],
+      pendings,
+      warn,
+      notifs,
+      stuff;
 
-	if ( indicators[ 'Warning' ] )
-	  warn = 'There is a game warning you should see in the message frame.';
-	else if ( indicators[ 'Info' ] )
-	  warn = 'There is some information for you in the message frame.';
+    if (indicators["Warning"])
+      warn = "There is a game warning you should see in the message frame.";
+    else if (indicators["Info"])
+      warn = "There is some information for you in the message frame.";
 
-	if ( indicators[ 'Ally' ] )
-	  a.push( 'alliance' );
-	if ( indicators[ 'PM' ] )
-	  a.push( 'private' );
-	if ( a.length > 0 ) {
-	  pendings = 'unread ' + a.join(' and ') + ' messages';
-	  a.length = 0;
-	}
+    if (indicators["Ally"]) a.push("alliance");
+    if (indicators["PM"]) a.push("private");
+    if (a.length > 0) {
+      pendings = "unread " + a.join(" and ") + " messages";
+      a.length = 0;
+    }
 
-	if ( indicators[ 'Trade' ] || indicators[ 'Payment' ] )
-	  a.push( 'money' );
-	if ( indicators[ 'Mission' ] )
-	  a.push( 'mission' );
-	if ( a.length > 0 ) {
-	  notifs = a.join(' and ') + ' notifications';
-	  a.length = 0;
-	}
+    if (indicators["Trade"] || indicators["Payment"]) a.push("money");
+    if (indicators["Mission"]) a.push("mission");
+    if (a.length > 0) {
+      notifs = a.join(" and ") + " notifications";
+      a.length = 0;
+    }
 
-	if ( pendings )
-	  a.push( pendings );
-	if ( notifs )
-	  a.push( notifs );
-	if ( a.length > 0 ) {
-	  stuff = a.join(', and ') + '.';
-	  a.length = 0;
-	}
+    if (pendings) a.push(pendings);
+    if (notifs) a.push(notifs);
+    if (a.length > 0) {
+      stuff = a.join(", and ") + ".";
+      a.length = 0;
+    }
 
-	if ( warn )
-	  a.push( warn );
+    if (warn) a.push(warn);
 
-	if ( indicators[ 'Combat' ] || stuff ) {
-	  if ( characterName )
-		a.push( ( warn ? 'And your' : 'Your' ) +
-                ' character ' + characterName );
-	  else
+    if (indicators["Combat"] || stuff) {
+      if (characterName)
+        a.push((warn ? "And your" : "Your") + " character " + characterName);
+      else
         // XXX - can this happen?
-		a.push( ( warn ? 'And a' : 'A' ) + ' character of yours' );
+        a.push((warn ? "And a" : "A") + " character of yours");
 
-	  if ( indicators[ 'Combat' ] ) {
-		a.push( 'has been fighting with someone.' );
-		if ( stuff ) {
-		  if ( characterName )
-			a.push( characterName + ' also has' );
-		  else
+      if (indicators["Combat"]) {
+        a.push("has been fighting with someone.");
+        if (stuff) {
+          if (characterName) a.push(characterName + " also has");
+          else
             // XXX - can this happen?
-			a.push( 'You also have' );
-		  a.push( stuff );
-		}
-	  }
-	  else {
-		a.push( 'has' );
-		a.push( stuff );
-	  }
-	}
+            a.push("You also have");
+          a.push(stuff);
+        }
+      } else {
+        a.push("has");
+        a.push(stuff);
+      }
+    }
 
-	return a.join( ' ' );
+    return a.join(" ");
   }
 
-  function scanMsgFrame( doc ) {
+  function scanMsgFrame(doc) {
     var imgs;
 
-	indicators = {};
-	indicatorsFound = false;
-	imgs = doc.getElementsByTagName( 'img' );
-	for ( var i = 0, end = imgs.length; i < end; i++ ) {
-	  var m = /\/([^/]+)$/.exec( imgs[i].src );
-	  if ( m ) {
-		var suffix = INDICATORS[ m[1] ];
-		if ( suffix ) {
-		  indicators[ suffix ] = indicatorsFound = true;
-		}
-	  }
-	}
-
-	// And get the character name while we're at it.
-
-	var u = doc.getElementById( 'universe' );
-	if ( u ) {
-		var m = /:\s+(.*)$/.exec( u.alt );
-		if ( m ) {
-			characterName = m[ 1 ];
-		}
-		var Ukey = u.alt[0];
-	}
-
-	if ( indicators[ 'Warning' ] ) {
-    var indicatorText = doc.getElementsByTagName('font')[0].textContent.toLocaleLowerCase();
-    if ( indicatorText.includes ('alliance command station log') ) {
-      var _link = document.createElement("a");
-      _link.href = "/acs_log.php";
-      _link.target = "blank";
-      _link.innerText = "→ Open ACS Log";
-      doc.getElementsByTagName('font')[0].appendChild(_link)
-    }
-		if ( indicatorText.includes('stun') ) {
-			chrome.storage.local.get(
-				Ukey + 'loc', stunned.bind( doc ) );
-		}
-    else {
-      for ( var word in IGNORE_WORDS ) {
-        if ( indicatorText.includes( IGNORE_WORDS[ word ].toLocaleLowerCase() ) ) {
-         delete indicators[ 'Warning' ];
-         indicatorsFound = indicators.length > 0;
+    indicators = {};
+    indicatorsFound = false;
+    imgs = doc.getElementsByTagName("img");
+    for (var i = 0, end = imgs.length; i < end; i++) {
+      var m = /\/([^/]+)$/.exec(imgs[i].src);
+      if (m) {
+        var suffix = INDICATORS[m[1]];
+        if (suffix) {
+          indicators[suffix] = indicatorsFound = true;
         }
       }
     }
-	}
-  
+
+    // And get the character name while we're at it.
+
+    var u = doc.getElementById("universe");
+    if (u) {
+      var m = /:\s+(.*)$/.exec(u.alt);
+      if (m) {
+        characterName = m[1];
+      }
+      var Ukey = u.alt[0];
+    }
+
+    if (indicators["Warning"]) {
+      var indicatorText = doc
+        .getElementsByTagName("font")[0]
+        .textContent.toLocaleLowerCase();
+      if (indicatorText.includes("alliance command station log")) {
+        var _link = document.createElement("a");
+        _link.href = "/acs_log.php";
+        _link.target = "blank";
+        _link.innerText = "→ Open ACS Log";
+        doc.getElementsByTagName("font")[0].appendChild(_link);
+      }
+      if (indicatorText.includes("stun")) {
+        chrome.storage.local.get(Ukey + "loc", stunned.bind(doc));
+      } else {
+        for (var word in IGNORE_WORDS) {
+          if (indicatorText.includes(IGNORE_WORDS[word].toLocaleLowerCase())) {
+            delete indicators["Warning"];
+            indicatorsFound = indicators.length > 0;
+          }
+        }
+      }
+    }
   }
   /*
   function stunned( data ) {
@@ -379,23 +392,21 @@ var chrome, PSClock;
   // connection open to it for as long as we want the alarm ringing.
   // This function takes care of this.
 
-  function setAlarm( state ) {
-	if ( state ) {
-	  // Bring the noise
-	  if ( !alarmPort ) {
-		alarmPort = chrome.runtime.connect();
-		alarmPort.postMessage({ alarm: true });
-	  }
-	  // else it's already on. Never mind then.
-	}
-	else {
-	  if ( alarmPort ) {
-		// Just disconnect, the extension will shut the alarm.
-		alarmPort.disconnect();
-		alarmPort = null;
-	  }
-	  // else it isn't on, nop.
-	}
+  function setAlarm(state) {
+    if (state) {
+      // Bring the noise
+      if (!alarmPort) {
+        alarmPort = chrome.runtime.connect();
+        alarmPort.postMessage({ alarm: true });
+      }
+      // else it's already on. Never mind then.
+    } else {
+      if (alarmPort) {
+        // Just disconnect, the extension will shut the alarm.
+        alarmPort.disconnect();
+        alarmPort = null;
+      }
+      // else it isn't on, nop.
+    }
   }
-
-})( document );
+})(document);

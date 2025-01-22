@@ -5,24 +5,18 @@
 
 import prepareOffscreen from "./prepoffscr.js";
 
-console.log("svcworker loaded");
-
-// We set an initial value for config here because, in this particular page, we
-// have no guarantee that onConfigurationReady will be called with a full
-// config.  The very first time the extension runs, it'll be called with an
-// empty 'items', then onInstall will complete and trigger
-// onConfigurationChange. These defaults will then be overwritten with sensible
-// values anyway, but we need config to have the properties by the time
-// onConfigurationChange is called, because of the logic in that function.
+// Minimal default config. Will be overwritten with sensible values.
 const config = { muteAlarm: null, alarmSound: null };
 
 // The collection of alarm-triggering pages currently open, see alarm stuff
 // below.
 const connections = [];
 
-let audio, currentSoundId, notificationTimer;
+// Is the alarm ringing right now?
+let alarmRinging = false;
 
-console.log("svcworker starting");
+let notificationTimer;
+
 chrome.storage.onChanged.addListener(onConfigurationChange);
 chrome.runtime.onInstalled.addListener(onInstalled);
 chrome.runtime.onMessage.addListener(onMessage);
@@ -30,10 +24,7 @@ chrome.runtime.onConnect.addListener(onConnect);
 
 chrome.storage.local.get(["muteAlarm", "alarmSound"]).then(finishConfiguration);
 
-console.log("svcworker started");
-
 function finishConfiguration(items) {
-  console.log("svcworker finish config", items);
   for (const key in items) {
     config[key] = items[key];
   }
@@ -41,11 +32,7 @@ function finishConfiguration(items) {
 }
 
 function onConfigurationChange(changes, area) {
-  console.log("svcworker onConfigurationChange", changes, area);
-
-  if (area !== "local") {
-    return;
-  }
+  if (area !== "local") return;
 
   let updated = false;
   for (const key in changes) {
@@ -97,9 +84,14 @@ function onConfigurationChange(changes, area) {
   }
 }
 
+// This worker listens for messages from runtime with property `target` set to
+// `"worker"`. Other messages are ignored.
+
 function onMessage(request, sender, sendResponse) {
-  console.log("svcworker onMessage", request, sender);
-  let asyncResponse = false;
+  if (request.target !== "worker") {
+    console.debug("svcworker IGNORING message", request);
+    return;
+  }
 
   if (sender.tab) {
     // Show the page action for all tabs sending us messages. This
@@ -107,10 +99,12 @@ function onMessage(request, sender, sendResponse) {
     showAction(sender.tab.id);
   }
 
-  if (request.hasOwnProperty("requestMap")) {
+  if (request.requestMap !== undefined) {
     getMap(request.requestMap).then(sendResponse);
-    asyncResponse = true;
-  } else if (request.hasOwnProperty("desktopNotification")) {
+    return true;
+  }
+
+  if (request.desktopNotification !== undefined) {
     if (request.desktopNotification) {
       showDesktopNotification(
         request.title || "Meanwhile, in Pardus...",
@@ -123,8 +117,6 @@ function onMessage(request, sender, sendResponse) {
       sendResponse(false);
     }
   }
-
-  return asyncResponse;
 }
 
 const NORMAL_ACTION_ICON = {
@@ -179,7 +171,6 @@ async function getMap(sectorName) {
 // can monitor that to stop the alarm if appropriate.
 
 function onConnect(port) {
-  console.log("svcworker onConnect");
   const connection = {
     // the ID of the port
     port: port,
@@ -198,15 +189,9 @@ function onConnect(port) {
   connections.push(connection);
   port.onMessage.addListener(messageListener);
   port.onDisconnect.addListener(disconnectListener);
-  console.log(
-    "svcworker added connection",
-    connection,
-    `talking to ${connections.length} ports`,
-  );
 }
 
 function onPortMessage(connection, message) {
-  console.log("svcworker onPortMessage", connection, message);
   for (const key in message) {
     switch (key) {
       case "alarm":
@@ -214,46 +199,35 @@ function onPortMessage(connection, message) {
         updateAlarmState();
         break;
       case "watchAlarm":
-        // assignment, not comparison:
         connection.watchAlarm = !!message.watchAlarm;
         if (connection.watchAlarm) {
-          // and give it an immediate update
-          var state =
-            audio && audio.readyState == 4 && !audio.paused ? true : false;
-          connection.port.postMessage({ alarmState: state });
+          connection.port.postMessage({ alarmState: alarmRinging });
         }
     }
   }
 }
 
 function onPortDisconnect(connection) {
-  console.log("scvworker onPortDisconnect", connection);
   var index = connections.indexOf(connection);
   if (index !== -1) {
     connections.splice(index, 1);
-    console.log(
-      "svcworker removed connection",
-      connection,
-      `talking to ${connections.length} ports`,
-    );
   }
   updateAlarmState();
 }
 
 async function updateAlarmState() {
   const wanted = alarmWanted();
-  console.log(`svcworker pinging offscreen: wanted = ${wanted}`);
   if (wanted) {
     await prepareOffscreen();
     const state = await chrome.runtime.sendMessage({
       target: "offscreen",
       play: config.alarmSound,
     });
-    console.log(`svcworker: alarm is now ${state}`);
+    postAlarmState(state);
   } else {
     try {
       // Post a message to shut up.
-      await chrome.runtime.sendMessage({
+      const state = await chrome.runtime.sendMessage({
         target: "offscreen",
         play: null,
       });
@@ -261,49 +235,8 @@ async function updateAlarmState() {
       // This happens when no one was listening. We don't care, if the offscreen
       // document wasn't open, the alarm is not ringing anyway.
     }
+    postAlarmState(false);
   }
-}
-
-// This function turns the alarm on and off as needed. Old messy ancient
-// version, remove XXX
-function updateAlarmStateOld() {
-  if (alarmWanted()) {
-    // Bring the noise
-    if (audio) {
-      if (currentSoundId == config.alarmSound) {
-        if (audio.readyState == 4) {
-          if (audio.paused) {
-            audio.play();
-            postAlarmState(true);
-          }
-          // else do nothing, we were already playing
-        }
-        // else do nothing, the canplay listener will call us again.
-      } else {
-        // We need to change the sound id
-        setAlarmSound();
-      }
-    } else {
-      // No audio yet, create it
-      audio = new Audio();
-      audio.loop = true;
-      audio.addEventListener("canplaythrough", onAudioCanPlayThrough);
-      setAlarmSound();
-      // and return now. the canplay listener will call us again.
-    }
-  } else {
-    // Shut it
-    if (audio && audio.readyState == 4 && !audio.paused) {
-      audio.pause();
-      audio.currentTime = 0;
-      postAlarmState(false);
-    }
-    // otherwise do nothing, the alarm isn't playing
-  }
-}
-
-function onAudioCanPlayThrough() {
-  updateAlarmState();
 }
 
 // Figure out whether the alarm should be playing now.
@@ -313,14 +246,6 @@ function alarmWanted() {
       if (connections[i].alarm) return true;
   }
   return false;
-}
-
-// This is always called when audio already exists, we make sure of that.
-function setAlarmSound() {
-  var soundId = config.alarmSound;
-
-  audio.src = "sounds/" + soundId + ".ogg";
-  currentSoundId = soundId;
 }
 
 function postAlarmState(state) {
@@ -342,12 +267,12 @@ function showDesktopNotification(title, text, timeout) {
   };
 
   if (notificationTimer) {
-    window.clearTimeout(notificationTimer);
+    clearTimeout(notificationTimer);
     notificationTimer = undefined;
   }
 
   if (timeout > 0 && timeout < 20000) {
-    notificationTimer = window.setTimeout(onNotificationExpired, timeout);
+    notificationTimer = setTimeout(onNotificationExpired, timeout);
   }
 
   chrome.notifications.clear("pardus-sweetener", function () {});
@@ -356,7 +281,7 @@ function showDesktopNotification(title, text, timeout) {
 
 function clearDesktopNotification() {
   if (notificationTimer) {
-    window.clearTimeout(notificationTimer);
+    clearTimeout(notificationTimer);
     notificationTimer = undefined;
   }
 
@@ -371,10 +296,8 @@ function onNotificationExpired() {
 function onInstalled(details) {
   if (details.reason === "install") {
     setDefaultConfig().then(() =>
-      console.log("Pardus Sweetener installed its default configuration"),
+      console.debug("Pardus Sweetener installed its default configuration"),
     );
-  } else {
-    console.log(`ignored install notification for ${details.reason}`);
   }
 }
 

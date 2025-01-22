@@ -16,11 +16,6 @@
   "content_scripts": [
     {
       "all_frames": true,
-      "js": ["v11.js"],
-      "matches": ["*://*.pardus.at/main.php*"]
-    },
-    {
-      "all_frames": true,
       "js": [
         "cfgset.js",
         "shiplinks.js",

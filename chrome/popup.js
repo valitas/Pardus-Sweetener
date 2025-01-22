@@ -1,9 +1,7 @@
-console.log("popup module loading");
-
 // All simple booleans, and all bound to a checkbox.  This simplifies
 // things a bit.  Keep muteAlarm as first element (see loop in
 // updateAlarmControlsDisable).
-var CONFIG_KEYS = [
+const CONFIG_KEYS = [
   "muteAlarm",
   "alarmCombat",
   "alarmWarning",
@@ -18,7 +16,6 @@ setUp();
 // end of load execution
 
 function setUp() {
-  console.log("popup module setup");
   controls = {};
 
   for (let i = 0, end = CONFIG_KEYS.length; i < end; i++) {
@@ -50,7 +47,7 @@ function finishConfiguration(items) {
   // Connect to the extension. We need a connection to drive the
   // alarm test.
   port = chrome.runtime.connect();
-  port.onMessage.addListener(onMessage);
+  port.onMessage.addListener(onPortMessage);
   port.postMessage({ watchAlarm: true });
 }
 
@@ -107,8 +104,7 @@ function updateAlarmControlsDisable() {
 	}*/
 }
 
-function onMessage(message) {
-  console.log("popup onMessage", message);
+function onPortMessage(message) {
   testAlarm.value = message.alarmState ? "Stop Alarm" : "Test Alarm";
 }
 
