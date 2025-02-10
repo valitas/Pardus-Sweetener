@@ -10,7 +10,6 @@
     "default_popup": "popup.html"
   },
   "background": {
-    "service_worker": "bg.js",
     "scripts": ["bg.js"],
     "type": "module"
   },

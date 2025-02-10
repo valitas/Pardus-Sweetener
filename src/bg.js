@@ -2,6 +2,10 @@
 // alarm, display notifications, and obtain sector maps from JSON files
 // installed with the extension.
 
+import Alarm from "./alarm.js";
+
+let alarm = new Alarm();
+
 // Minimal default config. Will be overwritten with sensible values.
 const config = { muteAlarm: null, alarmSound: null };
 
@@ -164,11 +168,6 @@ async function getMap(sectorName) {
 // This takes care of the case when one of the pages goes away: user closed the
 // popup, closed the tab, whatever. This causes the port to disconnect, and we
 // can monitor that to stop the alarm if appropriate.
-//
-// SOURCE CONTROL NOTE: the actual audio functionality here is a mock-up, it
-// doesn't actually play a sound, just writes on the console "alarm on," "alarm
-// off." The actual implementations are in browser-specific branches of the
-// source tree. See the file DEVELOPER-README.txt for details.
 
 function onConnect(port) {
   const connection = {
@@ -215,12 +214,12 @@ function onPortDisconnect(connection) {
   updateAlarm();
 }
 
-// Portable alarm mock-up
+// The Firefox implementation of the audio alarm is short and sane: just tell
+// the instance of Alarm whether to start or stop.
 async function updateAlarm() {
-  const wanted = alarmWanted();
-  console.log("bg audio mockup: alarm is %s", wanted ? "on" : "off");
-  alarmRinging = wanted;
-  const state = wanted ? config.alarmSound : null;
+  const rq = alarmWanted() ? config.alarmSound : null;
+  const state = await alarm.play(rq);
+  alarmRinging = !!state;
   postAlarmState(state);
 }
 
