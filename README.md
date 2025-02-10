@@ -1,4 +1,4 @@
-![Pardus Sweetener Logo](https://github.com/valitas/Pardus-Sweetener/blob/master/chrome/icons/128.png?raw=true)
+![Pardus Sweetener Logo](https://github.com/valitas/Pardus-Sweetener/blob/master/src/icons/128.png?raw=true)
 
 # Pardus Sweetener
 
@@ -53,15 +53,15 @@ read this license at: http://creativecommons.org/licenses/sampling+/1.0/
 
 Individual credits:
 
- * The alarm clock sound (buzz.ogg) by user Timbre:
+ * The alarm clock sound `buzz.oga` by user Timbre:
    http://www.freesound.org/samplesViewSingle.php?id=72558
- * The submarine dive horn (dive.ogg) by user CGEffex:
+ * The submarine dive horn `dive.oga` by user CGEffex:
    http://www.freesound.org/samplesViewSingle.php?id=104882
  * The alarm sound commonly heard in movies when something goes wrong
-   on some type of aircraft (missile.ogg) by user guitarguy1985 (Nick
+   on some type of aircraft `missile.oga` by user guitarguy1985 (Nick
    Oakman):
    http://www.freesound.org/samplesViewSingle.php?id=57806
- * The submarine power plant alarm (power.ogg) by user Rfriend:
+ * The submarine power plant alarm `power.oga` by user Rfriend:
    http://www.freesound.org/samplesViewSingle.php?id=26962
- * The wrist watch alarm (timex.ogg) by user Corsica_S (Tim Kahn):
+ * The wrist watch alarm `timex.oga` by user Corsica_S (Tim Kahn):
    http://www.freesound.org/samplesViewSingle.php?id=18632
