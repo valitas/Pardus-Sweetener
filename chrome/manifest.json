@@ -14,6 +14,12 @@
     "scripts": ["bg.js"],
     "type": "module"
   },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{729b8d6b-0efe-4fcb-8e1e-c41dcc859c32}",
+      "strict_min_version": "112.0"
+    }
+  },
   "content_scripts": [
     {
       "all_frames": true,
