@@ -2,6 +2,8 @@
 // alarm, display notifications, and obtain sector maps from JSON files
 // installed with the extension.
 
+import prepareOffscreen from "./prepoffscr.js";
+
 // Minimal default config. Will be overwritten with sensible values.
 const config = { muteAlarm: null, alarmSound: null };
 
@@ -164,11 +166,6 @@ async function getMap(sectorName) {
 // This takes care of the case when one of the pages goes away: user closed the
 // popup, closed the tab, whatever. This causes the port to disconnect, and we
 // can monitor that to stop the alarm if appropriate.
-//
-// SOURCE CONTROL NOTE: the actual audio functionality here is a mock-up, it
-// doesn't actually play a sound, just writes on the console "alarm on," "alarm
-// off." The actual implementations are in browser-specific branches of the
-// source tree. See the file DEVELOPER-README.txt for details.
 
 function onConnect(port) {
   const connection = {
@@ -215,13 +212,33 @@ function onPortDisconnect(connection) {
   updateAlarm();
 }
 
-// Portable alarm mock-up
+// Insane Chrome implementation: message the offscreen page to start and stop
+// the alarm if needed. And for that, got to make sure there is an offscreen
+// page to begin with.
 async function updateAlarm() {
   const wanted = alarmWanted();
-  console.log("bg audio mockup: alarm is %s", wanted ? "on" : "off");
-  alarmRinging = wanted;
-  const state = wanted ? config.alarmSound : null;
-  postAlarmState(state);
+  if (wanted) {
+    await prepareOffscreen();
+    const state = await chrome.runtime.sendMessage({
+      target: "offscreen",
+      play: config.alarmSound,
+    });
+    alarmRinging == !!state;
+    postAlarmState(state);
+  } else {
+    try {
+      // Post a message to shut up.
+      await chrome.runtime.sendMessage({
+        target: "offscreen",
+        play: null,
+      });
+    } catch (x) {
+      // This happens when no one was listening. We don't care, if the offscreen
+      // document wasn't open, the alarm is not ringing anyway.
+    }
+    alarmRinging == false;
+    postAlarmState(null);
+  }
 }
 
 // Figure out whether the alarm should be playing now.
