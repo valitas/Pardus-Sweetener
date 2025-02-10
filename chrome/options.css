@@ -1,5 +1,10 @@
 /* Mimic the look and feel of Chrome settings page (ca. Chrome 29). */
 
+body {
+    font-family: system-ui, sans-serif;
+    font-size: 75%;
+}
+
 body > section {
     min-width: 620px;
     box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.2);

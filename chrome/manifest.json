@@ -11,6 +11,7 @@
   },
   "background": {
     "service_worker": "svcworker.js",
+    "scripts": ["svcworker.js"],
     "type": "module"
   },
   "content_scripts": [
@@ -110,15 +111,14 @@
     "128": "icons/128.png"
   },
   "manifest_version": 3,
-  "minimum_chrome_version": "116",
   "name": "Pardus Sweetener",
   "options_ui": {
     "page": "options.html",
     "open_in_tab": false
   },
-  "permissions": ["notifications", "storage", "offscreen", "*://*.pardus.at/*"],
+  "permissions": ["notifications", "storage"],
+  "host_permissions": ["*://*.pardus.at/*"],
   "version": "11",
-  "version_name": "11-rc1",
   "web_accessible_resources": [
     {
       "resources": [

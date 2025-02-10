@@ -1,9 +1,6 @@
-// This is the extension proper, the event page.  We've taken most
-// functionality out from it. What remains is code to sound the alarm,
-// display notifications, and obtain sector maps from JSON files
+// This is the extension's background script. It contains code to sound the
+// alarm, display notifications, and obtain sector maps from JSON files
 // installed with the extension.
-
-import prepareOffscreen from "./prepoffscr.js";
 
 // Minimal default config. Will be overwritten with sensible values.
 const config = { muteAlarm: null, alarmSound: null };
@@ -22,14 +19,12 @@ chrome.runtime.onInstalled.addListener(onInstalled);
 chrome.runtime.onMessage.addListener(onMessage);
 chrome.runtime.onConnect.addListener(onConnect);
 
-chrome.storage.local.get(["muteAlarm", "alarmSound"]).then(finishConfiguration);
-
-function finishConfiguration(items) {
+chrome.storage.local.get(["muteAlarm", "alarmSound"]).then((items) => {
   for (const key in items) {
     config[key] = items[key];
   }
-  updateAlarmState();
-}
+  updateAlarm();
+});
 
 function onConfigurationChange(changes, area) {
   if (area !== "local") return;
@@ -43,7 +38,7 @@ function onConfigurationChange(changes, area) {
   }
 
   if (updated) {
-    updateAlarmState();
+    updateAlarm();
   } else {
     // If alliance QLs are disabled, fix the configuration. XXX I'm not sure
     // doing this here is the best idea, why are we not doing this in
@@ -169,6 +164,11 @@ async function getMap(sectorName) {
 // This takes care of the case when one of the pages goes away: user closed the
 // popup, closed the tab, whatever. This causes the port to disconnect, and we
 // can monitor that to stop the alarm if appropriate.
+//
+// SOURCE CONTROL NOTE: the actual audio functionality here is a mock-up, it
+// doesn't actually play a sound, just writes on the console "alarm on," "alarm
+// off." The actual implementations are in browser-specific branches of the
+// source tree. See the file DEVELOPER-README.txt for details.
 
 function onConnect(port) {
   const connection = {
@@ -196,7 +196,7 @@ function onPortMessage(connection, message) {
     switch (key) {
       case "alarm":
         connection.alarm = !!message.alarm;
-        updateAlarmState();
+        updateAlarm();
         break;
       case "watchAlarm":
         connection.watchAlarm = !!message.watchAlarm;
@@ -212,31 +212,16 @@ function onPortDisconnect(connection) {
   if (index !== -1) {
     connections.splice(index, 1);
   }
-  updateAlarmState();
+  updateAlarm();
 }
 
-async function updateAlarmState() {
+// Portable alarm mock-up
+async function updateAlarm() {
   const wanted = alarmWanted();
-  if (wanted) {
-    await prepareOffscreen();
-    const state = await chrome.runtime.sendMessage({
-      target: "offscreen",
-      play: config.alarmSound,
-    });
-    postAlarmState(state);
-  } else {
-    try {
-      // Post a message to shut up.
-      const state = await chrome.runtime.sendMessage({
-        target: "offscreen",
-        play: null,
-      });
-    } catch (x) {
-      // This happens when no one was listening. We don't care, if the offscreen
-      // document wasn't open, the alarm is not ringing anyway.
-    }
-    postAlarmState(false);
-  }
+  console.log("svcworker audio mockup: alarm is %s", wanted ? "on" : "off");
+  alarmRinging = wanted;
+  const state = wanted ? config.alarmSound : null;
+  postAlarmState(state);
 }
 
 // Figure out whether the alarm should be playing now.
