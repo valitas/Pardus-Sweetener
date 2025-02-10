@@ -84,7 +84,7 @@ function onConfigurationChange(changes, area) {
 
 function onMessage(request, sender, sendResponse) {
   if (request.target !== "worker") {
-    console.debug("svcworker IGNORING message", request);
+    console.debug("bg IGNORING message", request);
     return;
   }
 
@@ -218,7 +218,7 @@ function onPortDisconnect(connection) {
 // Portable alarm mock-up
 async function updateAlarm() {
   const wanted = alarmWanted();
-  console.log("svcworker audio mockup: alarm is %s", wanted ? "on" : "off");
+  console.log("bg audio mockup: alarm is %s", wanted ? "on" : "off");
   alarmRinging = wanted;
   const state = wanted ? config.alarmSound : null;
   postAlarmState(state);
