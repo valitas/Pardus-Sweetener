@@ -25,59 +25,92 @@ chrome.storage.local.get(["muteAlarm", "alarmSound"]).then((items) => {
   for (const key in items) {
     config[key] = items[key];
   }
-  updateAlarm();
+  setIcon();
+  setAlarm();
 });
+
+const NORMAL_ACTION_ICON = {
+  16: "icons/16.png",
+  24: "icons/24.png",
+  32: "icons/32.png",
+};
+const MUTED_ACTION_ICON = {
+  16: "icons/16mute.png",
+  24: "icons/24mute.png",
+  32: "icons/32mute.png",
+};
+
+function setIcon() {
+  const icon = config.muteAlarm ? MUTED_ACTION_ICON : NORMAL_ACTION_ICON;
+  chrome.action.setIcon({ path: icon });
+}
 
 function onConfigurationChange(changes, area) {
   if (area !== "local") return;
 
-  let updated = false;
-  for (const key in changes) {
-    if (config.hasOwnProperty(key)) {
-      config[key] = changes[key].newValue;
-      updated = true;
+  let updateAlarm = false;
+
+  {
+    const change = changes.muteAlarm;
+    if (change) {
+      if (config.muteAlarm !== change.newValue) {
+        config.muteAlarm = change.newValue;
+        setIcon();
+        updateAlarm = true;
+      }
     }
   }
 
-  if (updated) {
-    updateAlarm();
-  } else {
-    // If alliance QLs are disabled, fix the configuration. XXX I'm not sure
-    // doing this here is the best idea, why are we not doing this in
-    // options.js?
-    const items = {};
-    let save = false;
-
-    {
-      const change = changes["allianceQLsArtemisEnabled"];
-      if (change && !change.newValue) {
-        items.allianceQLsArtemis = [];
-        items.allianceQLsArtemisMTime = 0;
-        save = true;
+  {
+    const change = changes.alarmSound;
+    if (change) {
+      if (config.alarmSound !== change.newValue) {
+        config.alarmSound = change.newValue;
+        updateAlarm = true;
       }
     }
+  }
 
-    {
-      const change = changes["allianceQLsOrionEnabled"];
-      if (change && !change.newValue) {
-        items.allianceQLsOrion = [];
-        items.allianceQLsOrionMTime = 0;
-        save = true;
-      }
-    }
+  if (updateAlarm) {
+    setAlarm();
+    return;
+  }
 
-    {
-      const change = changes["allianceQLsArtemisEnabled"];
-      if (change && !change.newValue) {
-        items.allianceQLsPegasus = [];
-        items.allianceQLsPegasusMTime = 0;
-        save = true;
-      }
-    }
+  // If alliance QLs are disabled, fix the configuration. XXX I'm not sure
+  // doing this here is the best idea, why are we not doing this in
+  // options.js?
+  const items = {};
+  let save = false;
 
-    if (save) {
-      chrome.storage.local.set(items);
+  {
+    const change = changes.allianceQLsArtemisEnabled;
+    if (change && !change.newValue) {
+      items.allianceQLsArtemis = [];
+      items.allianceQLsArtemisMTime = 0;
+      save = true;
     }
+  }
+
+  {
+    const change = changes.allianceQLsOrionEnabled;
+    if (change && !change.newValue) {
+      items.allianceQLsOrion = [];
+      items.allianceQLsOrionMTime = 0;
+      save = true;
+    }
+  }
+
+  {
+    const change = changes.allianceQLsArtemisEnabled;
+    if (change && !change.newValue) {
+      items.allianceQLsPegasus = [];
+      items.allianceQLsPegasusMTime = 0;
+      save = true;
+    }
+  }
+
+  if (save) {
+    chrome.storage.local.set(items);
   }
 }
 
@@ -88,12 +121,6 @@ function onMessage(request, sender, sendResponse) {
   if (request.target !== "worker") {
     console.debug("bg IGNORING message", request);
     return;
-  }
-
-  if (sender.tab) {
-    // Show the page action for all tabs sending us messages. This
-    // is slightly iffy but hey, it works.
-    showAction(sender.tab.id);
   }
 
   if (request.requestMap !== undefined) {
@@ -114,28 +141,6 @@ function onMessage(request, sender, sendResponse) {
       sendResponse(false);
     }
   }
-}
-
-const NORMAL_ACTION_ICON = {
-  16: "icons/16.png",
-  24: "icons/24.png",
-  32: "icons/32.png",
-};
-const MUTED_ACTION_ICON = {
-  16: "icons/16mute.png",
-  24: "icons/24mute.png",
-  32: "icons/32mute.png",
-};
-
-function showAction(tabId) {
-  let icon;
-  if (config && config.muteAlarm) {
-    icon = MUTED_ACTION_ICON;
-  } else {
-    icon = NORMAL_ACTION_ICON;
-  }
-  chrome.action.setIcon({ path: icon, tabId: tabId });
-  // chrome.action.show(tabId) enable?
 }
 
 async function getMap(sectorName) {
@@ -193,7 +198,7 @@ function onPortMessage(connection, message) {
     switch (key) {
       case "alarm":
         connection.alarm = !!message.alarm;
-        updateAlarm();
+        setAlarm();
         break;
       case "watchAlarm":
         connection.watchAlarm = !!message.watchAlarm;
@@ -209,13 +214,13 @@ function onPortDisconnect(connection) {
   if (index !== -1) {
     connections.splice(index, 1);
   }
-  updateAlarm();
+  setAlarm();
 }
 
 // Insane Chrome implementation: message the offscreen page to start and stop
 // the alarm if needed. And for that, got to make sure there is an offscreen
 // page to begin with.
-async function updateAlarm() {
+async function setAlarm() {
   const wanted = alarmWanted();
   if (wanted) {
     await prepareOffscreen();
