@@ -1,14 +1,4 @@
 {
-  "action": {
-    "default_icon": {
-      "16": "icons/16.png",
-      "24": "icons/24.png",
-      "32": "icons/32.png",
-      "48": "icons/48.png"
-    },
-    "default_title": "Pardus Sweetener",
-    "default_popup": "popup.html"
-  },
   "background": {
     "scripts": ["bg.js"],
     "type": "module"
@@ -120,6 +110,15 @@
   "options_ui": {
     "page": "options.html",
     "open_in_tab": false
+  },
+  "page_action": {
+    "default_icon": {
+      "19": "icons/19.png",
+      "38": "icons/38.png"
+    },
+    "default_title": "Pardus Sweetener",
+    "default_popup": "popup.html",
+    "show_matches": ["*://*.pardus.at/*"]
   },
   "permissions": ["notifications", "storage"],
   "host_permissions": ["*://*.pardus.at/*"],

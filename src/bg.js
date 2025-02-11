@@ -44,7 +44,11 @@ const MUTED_ACTION_ICON = {
 
 function setIcon() {
   const icon = config.muteAlarm ? MUTED_ACTION_ICON : NORMAL_ACTION_ICON;
-  chrome.action.setIcon({ path: icon });
+  chrome.tabs.query({ url: "*://*.pardus.at/*" }).then((tabs) => {
+    for (const tab of tabs) {
+      chrome.pageAction.setIcon({ tabId: tab.id, path: icon });
+    }
+  });
 }
 
 function onConfigurationChange(changes, area) {
