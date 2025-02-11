@@ -306,6 +306,21 @@ function onInstalled(details) {
       console.debug("Pardus Sweetener installed its default configuration"),
     );
   }
+
+  // Setting default_state in the manifest makes this unnecessary
+  // chrome.action.disable();
+
+  chrome.declarativeContent.onPageChanged.removeRules(undefined, () => {
+    let rule = {
+      conditions: [
+        new chrome.declarativeContent.PageStateMatcher({
+          pageUrl: { hostSuffix: "pardus.at" },
+        }),
+      ],
+      actions: [new chrome.declarativeContent.ShowAction()],
+    };
+    chrome.declarativeContent.onPageChanged.addRules([rule]);
+  });
 }
 
 async function setDefaultConfig() {

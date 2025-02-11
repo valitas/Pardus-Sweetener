@@ -7,7 +7,8 @@
       "48": "icons/48.png"
     },
     "default_title": "Pardus Sweetener",
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_state": "disabled"
   },
   "background": {
     "service_worker": "bg.js",
@@ -116,7 +117,12 @@
     "page": "options.html",
     "open_in_tab": false
   },
-  "permissions": ["notifications", "storage", "offscreen"],
+  "permissions": [
+    "declarativeContent",
+    "notifications",
+    "storage",
+    "offscreen"
+  ],
   "host_permissions": ["*://*.pardus.at/*"],
   "version": "11",
   "version_name": "11-rc3",
