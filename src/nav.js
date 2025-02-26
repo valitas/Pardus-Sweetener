@@ -516,16 +516,17 @@ function configureMinimap(sector) {
   // just configure it, and remember the pertinent variables.
   minimap = new SectorMap();
   minimap.setCanvas(canvas, div);
-  minimap.configure(sector, size);
-  minimapContainer = container;
-  minimapSector = sector;
+  minimap.configure(sector, size).then(() => {
+    minimapContainer = container;
+    minimapSector = sector;
 
-  if (config.miniMapNavigation) {
-    minimap.enablePathfinding();
-  }
+    if (config.miniMapNavigation) {
+      minimap.enablePathfinding();
+    }
 
-  // And draw the map.
-  refreshMinimap();
+    // And draw the map.
+    refreshMinimap();
+  });
 }
 
 function getCurrentSectorName() {
