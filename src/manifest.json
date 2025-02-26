@@ -125,7 +125,6 @@
   ],
   "host_permissions": ["*://*.pardus.at/*"],
   "version": "11",
-  "version_name": "11-rc3",
   "web_accessible_resources": [
     {
       "resources": [
