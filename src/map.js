@@ -10,143 +10,173 @@
 //
 // And so, since it's 2013 and that, we use the HTML5 Canvas.
 
-function SectorMap() {}
-SectorMap.prototype = {
-  configure: function (sector, maxPixelSize) {
-    this.sector = sector;
-    this.ukey = Universe.getServer(document).substr(0, 1);
-    // `savedPath` is the path saved in this script, used to plot the route you
-    // might take and are investigating with your mouse. `storedPath` is the
-    // path you decide to follow, by clicking the mouse, and this subsequently
-    // *stored* in chrome.storage. This path is displayed on the nav area.
-    this.savedPath = [];
-    this.storedPath = [];
+class SectorMap {
+  #canvas;
+  #bgCanvas;
+  #distanceDiv;
+  #sector;
+  #ukey;
+  #cols;
+  #rows;
+  #configured = false;
+  #navigation = 0;
+  #visc;
 
-    var cols = sector.width,
+  // dimensions in pixels
+  #tileSize;
+  #width;
+  #height;
+
+  // Whether to draw a grid. This is false if the map is too small to have a
+  // grid.
+  #grid;
+
+  #mouseX = -1;
+  #mouseY = -1;
+  #shipX = -1;
+  #shipY = -1;
+  #mouselock = false;
+
+  // The path displayed ephemerally on the minimap while you hover the pointer
+  // over it.
+  #savedPath;
+
+  // The path "fixed" by clicking the mouse. This is stored in chrome.storage,
+  // and highlighted on the nav area, too.
+  #storedPath;
+
+  // Wait for completion to be sure the minimap is configured
+  async configure(sector, maxPixelSize) {
+    this.#sector = sector;
+    this.#ukey = Universe.getServer(document).substr(0, 1);
+    this.#savedPath = [];
+    this.#storedPath = [];
+
+    const cols = sector.width,
       rows = sector.height,
       tiles = sector.tiles;
 
-    if (tiles.length != cols * rows) {
+    if (tiles.length !== cols * rows) {
       throw new Error("Tile data and map dimensions do not match");
     }
 
     if (cols > rows) {
       // This is a wide map. We use cols to determine
       // size. Height will be less than required.
-      this.computeGrid(cols, maxPixelSize);
+      this.#computeGrid(cols, maxPixelSize);
     } else {
       // A tall map, use rows instead.
-      this.computeGrid(rows, maxPixelSize);
+      this.#computeGrid(rows, maxPixelSize);
     }
 
-    if (this.grid) {
-      this.width = cols * (this.tileSize + 1) - 1;
-      this.height = rows * (this.tileSize + 1) - 1;
+    if (this.#grid) {
+      this.#width = cols * (this.#tileSize + 1) - 1;
+      this.#height = rows * (this.#tileSize + 1) - 1;
     } else {
-      this.width = cols * this.tileSize;
-      this.height = rows * this.tileSize;
+      this.#width = cols * this.#tileSize;
+      this.#height = rows * this.#tileSize;
     }
-    this.cols = cols;
-    this.rows = rows;
-    this.configured = true;
+    this.#cols = cols;
+    this.#rows = rows;
+    this.#configured = true;
 
-    //mouseover support
-    this.mouseX = -1;
-    this.mouseY = -1;
-    this.shipX = -1;
-    this.shipY = -1;
-    this.mouselock = false;
+    if (this.#canvas) {
+      this.#initCanvas();
+    }
 
-    if (this.canvas) {
+    const universe = Universe.getServer(document);
+    const storedPathKey = `${this.#ukey}storedPath`;
+    const advSkillsKey = `${universe}advSkills`;
+
+    // get configuration
+    const { [storedPathKey]: storedPath, [advSkillsKey]: advSkills } =
+      await chrome.storage.local.get([storedPathKey, advSkillsKey]);
+
+    // restore the path to highlight, if any
+    if (storedPath) {
+      const sid = Sector.getId(this.#sector.sector);
+      for (const tid of storedPath) {
+        const { x: x, y: y } = Sector.getCoords(sid, tid);
+        this.#storedPath.push([x, y]);
+      }
+    }
+    this.#drawSavedPath(this.get2DContext(), this.#storedPath);
+
+    // parse Navigation adv. skill and set movement costs
+    const visc = {
+      f: 11, // space
+      g: 16, // nebula
+      v: 18, // viral cloud
+      e: 20, // energy
+      o: 25, // asteriods
+      m: 36, // ematter
+    };
+
+    if (advSkills) {
+      this.#navigation = advSkills[41];
+      // checking if it's set first
+      if (this.#navigation > 0) {
+        visc["o"] -= 1;
+      }
+      if (this.#navigation > 1) {
+        visc["g"] -= 1;
+      }
+      if (this.#navigation > 2) {
+        visc["e"] -= 1;
+      }
+    } else {
+      this.#navigation = 0;
+    }
+    this.#visc = visc;
+    //console.debug("navigation %d visc %o", this.#navigation, visc);
+  }
+
+  setCanvas(canvas, div) {
+    this.#canvas = canvas;
+    this.#distanceDiv = div;
+
+    if (this.#configured) {
       this.initCanvas();
     }
-
-    // re-adding stored path to our map.
-    chrome.storage.local.get([this.ukey + "storedPath"], getPath.bind(this));
-    function getPath(data) {
-      if (data[this.ukey + "storedPath"]) {
-        for (var i = 0; i < data[this.ukey + "storedPath"].length; i++) {
-          let coords = Sector.getCoords(
-            Sector.getId(this.sector.sector),
-            data[this.ukey + "storedPath"][i],
-          );
-          this.storedPath.push([coords.x, coords.y]);
-        }
-      }
-      this.drawSavedPath(this.get2DContext(), this.storedPath);
-    }
-
-    var universe = Universe.getServer(document);
-    chrome.storage.local.get(
-      [universe + "advSkills"],
-      setVisc.bind(this, universe),
-    );
-    function setVisc(universe, data) {
-      var VISC = {
-        f: 11, // fuel -> space
-        g: 16, // nebula gas
-        v: 18,
-        e: 20,
-        o: 25, // ore -> asteriods
-        m: 36, // Exotic Matter
-      };
-
-      // Parsing Navigation adv. skill.
-      if (data[universe + "advSkills"]) {
-        // checking if it's set first
-        if (data[universe + "advSkills"][41] > 0) {
-          VISC["o"] -= 1;
-        }
-        if (data[universe + "advSkills"][41] > 1) {
-          VISC["g"] -= 1;
-        }
-        if (data[universe + "advSkills"][41] > 2) {
-          VISC["e"] -= 1;
-        }
-        this.Navigation = data[universe + "advSkills"][41]; // saving the number for our speed calculation later
-      } else {
-        this.Navigation = 0;
-      }
-      this.VISC = VISC;
-    }
-  },
-
-  setCanvas: function (canvas, div) {
-    this.canvas = canvas;
-    this.distanceDiv = div;
-
-    if (this.configured) {
-      this.initCanvas();
-    }
-  },
+  }
 
   //attach events for mouseover path calculation
-  enablePathfinding: function () {
-    this.attachMouseEvents(this.canvas);
-    this.distanceDiv.style.display = "block";
-  },
+  enablePathfinding() {
+    this.#attachMouseEvents(this.#canvas);
+    this.#distanceDiv.style.display = "block";
+  }
+
+  // This sets the current ship coords, for navigation
+  setShipCoords(col, row) {
+    this.#shipX = col;
+    this.#shipY = row;
+  }
+
+  // This marks the current ship tile
+  markShipTile(ctx) {
+    this.markTile(ctx, this.#shipX, this.#shipY, "#0f0");
+  }
 
   // Just gets the 2D context of the canvas. You'll want this to
   // clear the map and mark tiles.
-  get2DContext: function () {
-    return this.canvas.getContext("2d");
-  },
+  get2DContext() {
+    return this.#canvas.getContext("2d");
+  }
 
-  // This "clears" the canvas, restoring the sector map. So this
-  // effectively draws the sector map. The idea being: you'll want
-  // to clear, then overlay dynamic stuff on the "background" map.
-  clear: function (ctx) {
-    ctx.drawImage(this.bgCanvas, 0, 0);
-    this.distanceDiv.innerHTML = "&nbsp;<br>&nbsp;";
-    //		if (this.mouselock) {
-    this.drawSavedPath(ctx, this.storedPath);
-    //	}
-  },
+  // This "clears" the canvas, restoring the sector map. So this effectively
+  // draws the sector map. The idea being: you'll want to clear, then overlay
+  // dynamic stuff on the "background" map.
+  clear(ctx) {
+    ctx.drawImage(this.#bgCanvas, 0, 0);
+    // XXX remove this bullshit!!!
+    this.#distanceDiv.innerHTML = "&nbsp;<br>&nbsp;";
+    this.#drawSavedPath(ctx, this.#storedPath);
+  }
 
   // This draws a marker on a tile.
-  markTile: function (ctx, col, row, style) {
-    var grid = this.grid,
-      size = this.tileSize,
+  markTile(ctx, col, row, style) {
+    var grid = this.#grid,
+      size = this.#tileSize,
       gstep = grid ? size + 1 : size,
       x = col * gstep,
       y = row * gstep;
@@ -166,54 +196,41 @@ SectorMap.prototype = {
 
     ctx.fillStyle = style;
     ctx.fillRect(x, y, size, size);
-  },
+  }
 
-  // This draws the saved path, for if we navigate with the minimap locked
-  drawSavedPath: function (ctx, path) {
-    if (!path) {
-      this.savedPath.forEach(
-        function (e) {
-          this.markTile(ctx, e[0], e[1], "#080");
-        }.bind(this),
-      );
+  #drawSavedPath(ctx, path) {
+    let style;
+
+    if (path) {
+      style = "#880";
     } else {
-      path.forEach(
-        function (e) {
-          this.markTile(ctx, e[0], e[1], "#880");
-        }.bind(this),
-      );
+      path = this.#savedPath;
+      style = "#080";
     }
-  },
 
-  // This sets the current ship coords, for navigation
-  setShipCoords: function (col, row) {
-    this.shipX = col;
-    this.shipY = row;
-  },
-
-  // This marks the current ship tile
-  markShipTile: function (ctx) {
-    this.markTile(ctx, this.shipX, this.shipY, "#0f0");
-  },
+    for (const [x, y] of path) {
+      this.markTile(ctx, x, y, style);
+    }
+  }
 
   // Convert pixel x,y coordinates on the canvas to map row,col.
-  // For this purpose, if the map has a grid, points on the grid are
-  // assumed to belong on the tile to the right/bottom.
-  xyToColRow: function (x, y) {
-    var gstep = this.grid ? this.tileSize + 1 : this.tileSize;
+  //
+  // For this purpose, if the map has a grid, points on the grid are assumed to
+  // belong on the tile to the right/bottom.
+  xyToColRow(x, y) {
+    var gstep = this.#grid ? this.#tileSize + 1 : this.#tileSize;
 
     x = Math.floor(x / gstep);
     y = Math.floor(y / gstep);
 
-    if (y < 0 || y >= this.sector.height || x < 0 || x >= this.sector.width)
+    if (y < 0 || y >= this.#sector.height || x < 0 || x >= this.#sector.width)
       return null;
     return { x: x, y: y };
-  },
+  }
 
-  // Below is "private" stuff which you shouldn't need to use from
-  // outside this object.
+  // Below is private stuff only used within this object.
 
-  COLOUR: {
+  static #COLOUR = {
     b: "#158", // hard energy
     e: "#0e2944", // energy
     f: "#000", // fuel
@@ -221,17 +238,17 @@ SectorMap.prototype = {
     m: "#0c0", // exotic matter
     o: "#666", // ore
     v: "#ee0", // viral
-  },
+  };
 
-  initCanvas: function () {
-    this.canvas.width = this.width;
-    this.canvas.height = this.height;
+  #initCanvas() {
+    this.#canvas.width = this.#width;
+    this.#canvas.height = this.#height;
     // We actually paint most of the map here
-    this.setupBgCanvas();
-  },
+    this.#setupBgCanvas();
+  }
 
-  setupBgCanvas: function () {
-    var doc = this.canvas.ownerDocument;
+  #setupBgCanvas() {
+    var doc = this.#canvas.ownerDocument;
     if (!doc) {
       // We can't draw anyway
       return;
@@ -243,21 +260,21 @@ SectorMap.prototype = {
       px0,
       row,
       col,
-      rows = this.rows,
-      cols = this.cols,
+      rows = this.#rows,
+      cols = this.#cols,
       c,
-      sector = this.sector,
+      sector = this.#sector,
       data = sector.tiles,
-      width = this.width,
-      height = this.height,
-      size = this.tileSize,
-      grid = this.grid,
-      colour = this.COLOUR,
+      width = this.#width,
+      height = this.#height,
+      size = this.#tileSize,
+      grid = this.#grid,
+      colour = SectorMap.#COLOUR,
       canvas = doc.createElement("canvas");
 
     canvas.width = width;
     canvas.height = height;
-    this.bgCanvas = canvas;
+    this.#bgCanvas = canvas;
 
     ctx = canvas.getContext("2d");
 
@@ -309,258 +326,7 @@ SectorMap.prototype = {
       }
       this.markTile(ctx, beacon.x, beacon.y, style);
     }
-  },
-
-  //attach the mouse events for path calculation
-  attachMouseEvents: function (canvas) {
-    canvas.addEventListener(
-      "click",
-      function (e) {
-        //lock if unlocked, unlock and clear if locked
-        if (this.mouselock) {
-          this.clear(this.get2DContext());
-          this.markShipTile(this.get2DContext());
-          chrome.storage.local.remove([this.ukey + "storedPath"]);
-        } else {
-          let save = {};
-          save[this.ukey + "storedPath"] = [];
-          for (var i = 0; i < this.savedPath.length; i++) {
-            save[this.ukey + "storedPath"].push(
-              Sector.getLocation(
-                Sector.getId(this.sector.sector),
-                this.savedPath[i][0],
-                this.savedPath[i][1],
-              ),
-            );
-          }
-          chrome.storage.local.set(save);
-        }
-        this.mouselock = !this.mouselock;
-      }.bind(this),
-    );
-
-    ["mousemove", "click"].forEach(
-      function (evt) {
-        canvas.addEventListener(
-          evt,
-          function (e) {
-            //determine client location, and calculate path to it if needed
-            if (this.mouselock) return;
-
-            var rect = canvas.getBoundingClientRect(),
-              scaleX = canvas.width / rect.width,
-              scaleY = canvas.height / rect.height;
-            var loc = this.xyToColRow(
-              (e.clientX - rect.left) * scaleX,
-              (e.clientY - rect.top) * scaleY,
-            );
-            if (!loc) return;
-
-            if (loc.x != this.mouseX || loc.y != this.mouseY) {
-              this.drawPath(loc);
-
-              //if there's a waypoint, why not draw it
-              for (var n in this.sector.beacons) {
-                var e = this.sector.beacons[n];
-                if (e.x == loc.x && e.y == loc.y)
-                  this.distanceDiv.innerHTML +=
-                    (e.type == "wh" ? "Wormhole to " : "") + n;
-              }
-            }
-          }.bind(this),
-        );
-      }.bind(this),
-    );
-
-    canvas.addEventListener(
-      "mouseout",
-      function (e) {
-        //clear the map when mouse leaves it
-        if (this.mouselock) return;
-
-        this.clear(this.get2DContext());
-        this.markShipTile(this.get2DContext());
-        this.mouseX = -1;
-        this.mouseY = -1;
-      }.bind(this),
-    );
-  },
-
-  //draw the path from the current ship location to the mouse location, and
-  //calculate AP costs for it
-  drawPath: function (loc) {
-    this.clear(this.get2DContext());
-    this.markShipTile(this.get2DContext());
-
-    //these fields must match those in options.js and map.js
-    //var fields = ["Space", "Nebula", "Virus", "Energy", "Asteroid", "Exotic"];
-    //var travelCosts = this.travelCosts;
-
-    var speed = getSpeed.call(this);
-
-    var tc = {
-      b: -1,
-      f: this.VISC["f"] - speed, // fuel -> space
-      g: this.VISC["g"] - speed - (this.Navigation > 1 ? 1 : 0), // nebula gas
-      v: this.VISC["v"] - speed,
-      e: this.VISC["e"] - speed - (this.Navigation > 2 ? 1 : 0),
-      o: this.VISC["o"] - speed - (this.Navigation > 0 ? 1 : 0), // ore -> asteriods
-      m: this.VISC["m"] - speed, // Exotic Matter
-    };
-
-    //here, we do a BFS across the entire sector with respect to the cost, stopping when either the state is the same for 100 AP's (unreachable) or we've reached the location
-    var i, j;
-    var bfsState = [];
-    var costFromTile = []; //quickly lookup the cost of travelling from any tile, without string fluffery
-
-    for (i = 0; i < this.sector.height; i++) {
-      bfsState.push([]);
-      costFromTile.push([]);
-      for (j = 0; j < this.sector.width; j++) {
-        bfsState[i].push([-1, -1, -1]); //[previous X, previous Y, distance]
-        costFromTile[i].push(
-          ~~tc[this.sector.tiles.charAt(i * this.sector.width + j)],
-        );
-      }
-    }
-    bfsState[this.shipY][this.shipX] = [0, this.shipY, this.shipX]; //mark current location as zero distance
-
-    var apsSpent = 0;
-    //if current tile is unreachable, then lol
-    if (costFromTile[loc.y][loc.x] != -1) {
-      var unreachableCounter = 0; //reset on map state change, incremented on 1AP spent, marked unreachable when it reaches 100
-      while (unreachableCounter < 100) {
-        //copy bfsState
-        var nextBfsState = [];
-        for (i = 0; i < this.sector.height; i++) {
-          nextBfsState.push([]);
-          for (j = 0; j < this.sector.width; j++)
-            nextBfsState[i].push(bfsState[i][j].slice());
-        }
-
-        for (i = 0; i < this.sector.height; i++)
-          for (j = 0; j < this.sector.width; j++) {
-            if (bfsState[i][j][0] == -1) continue; //not visited yet
-
-            var processPath = function (curX, curY, nextX, nextY, isDiagonal) {
-              //isDiagonal is used to favor non-diagonal movement when costs are equal, because humans click those easier
-              if (
-                nextX < 0 ||
-                nextX >= this.sector.height ||
-                nextY < 0 ||
-                nextY >= this.sector.width
-              )
-                return;
-
-              var cost = bfsState[curX][curY][0] + costFromTile[curX][curY];
-              if (costFromTile[nextX][nextY] == -1) return; //the way is blocked, cannot go
-              if (cost > apsSpent) return; //too much cost currently
-
-              if (
-                nextBfsState[nextX][nextY][0] == -1 ||
-                nextBfsState[nextX][nextY][0] > cost ||
-                (nextBfsState[nextX][nextY][0] == cost && !isDiagonal)
-              ) {
-                nextBfsState[nextX][nextY] = [cost, curX, curY];
-                if (
-                  nextBfsState[nextX][nextY].join(",") !=
-                  bfsState[nextX][nextY].join(",")
-                )
-                  unreachableCounter = 0;
-              }
-            }.bind(this);
-
-            processPath(i, j, i - 1, j - 1, true);
-            processPath(i, j, i - 1, j, false);
-            processPath(i, j, i - 1, j + 1, true);
-            processPath(i, j, i, j - 1, false);
-            processPath(i, j, i, j + 1, false);
-            processPath(i, j, i + 1, j - 1, true);
-            processPath(i, j, i + 1, j, false);
-            processPath(i, j, i + 1, j + 1, true);
-          }
-
-        bfsState = nextBfsState;
-
-        /* //uncomment to debug
-				var d = "";
-				for (i=0;i<this.sector.height;i++) {
-					for (j=0;j<this.sector.width;j++) {
-						d += bfsState[i][j][0] + "\t";
-					}
-					d += "\n"
-				}
-				console.log(d);
-				//*/
-
-        //break if we've found a path
-        if (bfsState[loc.y][loc.x][0] != -1) break;
-
-        unreachableCounter++;
-        apsSpent++;
-
-        if (apsSpent >= 10000) break; //sanity check
-      }
-    }
-
-    var endState = bfsState[loc.y][loc.x];
-    if (endState[0] == -1) {
-      apsSpent = "&infin;";
-      this.savedPath = [[loc.x, loc.y]];
-    } else {
-      //if we have found a path, we know it's min length because all the previous iterations did not end here.
-      //now we iterate backwards until we get to the ship
-      i = loc.y;
-      j = loc.x;
-      var path = [];
-      var sanityCheck = 0;
-      while (!(i == this.shipY && j == this.shipX) && sanityCheck++ < 10000) {
-        path.push([j, i]);
-        var state = bfsState[i][j];
-        i = state[1];
-        j = state[2];
-      }
-      path.push([this.shipX, this.shipY]);
-      this.savedPath = path;
-    }
-    this.drawSavedPath(this.get2DContext());
-    this.markShipTile(this.get2DContext());
-    this.distanceDiv.innerHTML =
-      "Distance to " +
-      this.sector.sector +
-      " [" +
-      loc.x +
-      ", " +
-      loc.y +
-      "]:<br>" +
-      apsSpent +
-      " APs<br>&nbsp;"; //innerHTML to accomodate infinity symbol
-
-    // I put the function at the end to keep clutter down. Currently only used in drawpath.
-    function getSpeed() {
-      // function calculates speed (as in the Pardus Manual), allowing for boost, stims, etc. XXX still needs to be tested with legendary.
-
-      let currentTileType =
-        this.sector.tiles[this.shipX + this.sector.width * this.shipY];
-      let moveField = document.getElementById("tdStatusMove").childNodes;
-      let speed = 0;
-      if (moveField.length > 1) {
-        //something modifies our speed
-        speed -= parseInt(moveField[1].childNodes[0].textContent);
-      }
-      speed -= parseInt(moveField[0].textContent);
-      speed += this.VISC[currentTileType];
-
-      if (
-        (this.Navigation > 0 && currentTileType == "o") ||
-        (this.Navigation > 1 && currentTileType == "g") ||
-        (this.Navigation > 2 && currentTileType == "e")
-      ) {
-        speed -= 1;
-      }
-      return speed;
-    }
-  },
+  }
 
   // Compute the tile size and whether we'll draw grid lines.
   //
@@ -576,7 +342,7 @@ SectorMap.prototype = {
   // We want thin 1px grid lines if the tiles are big enough. When
   // the map is so large that the tiles become tiny, we don't want
   // to waste pixels in those.
-  computeGrid: function (tiles, maxPixels) {
+  #computeGrid(tiles, maxPixels) {
     if (!(tiles > 0 && maxPixels > 0)) {
       throw new Error("Invalid parameters");
     }
@@ -603,7 +369,298 @@ SectorMap.prototype = {
       grid = true;
     }
 
-    this.tileSize = size;
-    this.grid = grid;
-  },
-};
+    this.#tileSize = size;
+    this.#grid = grid;
+  }
+
+  #attachMouseEvents(canvas) {
+    canvas.addEventListener("mousemove", (e) => this.#setPath(e, canvas));
+    canvas.addEventListener("click", (e) => {
+      this.#lockPath();
+      this.#setPath(e, canvas);
+    });
+    canvas.addEventListener("mouseout", () => this.#mouseOut());
+  }
+
+  // This handler can be a bit slow on big sectors / slow browsers. Try and
+  // speed it up if you ever have time.
+  #setPath(e, canvas) {
+    //determine client location, and calculate path to it if needed
+    if (this.#mouselock) return;
+
+    const rect = canvas.getBoundingClientRect(),
+      scaleX = canvas.width / rect.width,
+      scaleY = canvas.height / rect.height;
+    const loc = this.xyToColRow(
+      (e.clientX - rect.left) * scaleX,
+      (e.clientY - rect.top) * scaleY,
+    );
+    if (!loc) return;
+
+    if (loc.x !== this.#mouseX || loc.y !== this.#mouseY) {
+      this.#drawPath(loc);
+
+      //if there's a waypoint, why not draw it
+      for (const n in this.#sector.beacons) {
+        const b = this.#sector.beacons[n];
+        if (b.x === loc.x && b.y === loc.y) {
+          // I hate this so much
+          this.#distanceDiv.innerHTML +=
+            (b.type === "wh" ? "Wormhole to " : "") + n;
+          break;
+        }
+      }
+    }
+  }
+
+  //lock if unlocked, unlock and clear if locked
+  #lockPath() {
+    const storageKey = this.#ukey + "storedPath";
+    if (this.#mouselock) {
+      const ctx = this.get2DContext();
+      this.clear(ctx);
+      this.markShipTile(ctx);
+      chrome.storage.local.remove([storageKey]);
+      this.#mouselock = false;
+    } else {
+      const sid = Sector.getId(this.#sector.sector);
+      const a = [];
+      for (let i = 0, end = this.#savedPath.length; i < end; i++) {
+        const p = this.#savedPath[i];
+        a.push(Sector.getLocation(sid, p[0], p[1]));
+      }
+      chrome.storage.local.set({ [storageKey]: a });
+      this.#mouselock = true;
+    }
+  }
+
+  // clear the map when mouse leaves it
+  #mouseOut() {
+    if (this.#mouselock) return;
+
+    let ctx = this.get2DContext();
+    this.clear(ctx);
+    this.markShipTile(ctx);
+    this.#mouseX = -1;
+    this.#mouseY = -1;
+  }
+
+  //draw the path from the current ship location to the mouse location, and
+  //calculate AP costs for it
+  #drawPath(loc) {
+    const ctx = this.get2DContext();
+    this.clear(ctx);
+    this.markShipTile(ctx);
+
+    //these fields must match those in options.js and map.js
+    //var fields = ["Space", "Nebula", "Virus", "Energy", "Asteroid", "Exotic"];
+    //var travelCosts = this.travelCosts;
+
+    if (!this.#sector.mc) {
+      // Compute the cost of movement from each tile in the map. This should be
+      // done only once per sector, review this.
+
+      const speed = this.#getSpeed();
+
+      var tc = {
+        b: -1,
+        f: this.#visc["f"] - speed, // fuel -> space
+        g: this.#visc["g"] - speed - (this.#navigation > 1 ? 1 : 0), // nebula gas
+        v: this.#visc["v"] - speed,
+        e: this.#visc["e"] - speed - (this.#navigation > 2 ? 1 : 0),
+        o: this.#visc["o"] - speed - (this.#navigation > 0 ? 1 : 0), // ore -> asteriods
+        m: this.#visc["m"] - speed, // Exotic Matter
+      };
+
+      const mc = new Uint8Array(this.#sector.width * this.#sector.height);
+      const tiles = this.#sector.tiles;
+      for (let i = 0; i < tiles.length; i++) {
+        const c = tiles.charAt(i);
+        let n = tc[c];
+        if (n === -1) n = 0;
+        mc[i] = n;
+      }
+      this.#sector.mc = mc;
+    }
+
+    const route = SectorMap.#findRoute(
+      this.#sector,
+      this.#shipX,
+      this.#shipY,
+      loc.x,
+      loc.y,
+    );
+
+    let apsSpent;
+    if (!route) {
+      apsSpent = "&infin;";
+      this.#savedPath = [[loc.x, loc.y]];
+    } else {
+      apsSpent = 0;
+      for (let i = 0, end = route.length - 1; i < end; i++) {
+        const [x, y] = route[i];
+        const w = this.#sector.width;
+        const mc = this.#sector.mc;
+        apsSpent += mc[y * w + x];
+      }
+      this.#savedPath = route;
+    }
+    this.#drawSavedPath(ctx);
+    this.markShipTile(ctx);
+    this.#distanceDiv.innerHTML =
+      "Distance to " +
+      this.#sector.sector +
+      " [" +
+      loc.x +
+      ", " +
+      loc.y +
+      "]:<br>" +
+      apsSpent +
+      " APs<br>&nbsp;"; //innerHTML to accomodate infinity symbol
+  }
+
+  // Calculates speed (as in the Pardus Manual), allowing for boost, stims, etc.
+  // XXX still needs to be tested with legendary.
+  // Currently only used in drawpath.
+  #getSpeed() {
+    let currentTileType =
+      this.#sector.tiles[this.#shipX + this.#sector.width * this.#shipY];
+    let moveField = document.getElementById("tdStatusMove").childNodes;
+    let speed = 0;
+    if (moveField.length > 1) {
+      //something modifies our speed
+      speed -= parseInt(moveField[1].childNodes[0].textContent);
+    }
+    speed -= parseInt(moveField[0].textContent);
+    speed += this.#visc[currentTileType];
+
+    if (
+      (this.#navigation > 0 && currentTileType === "o") ||
+      (this.#navigation > 1 && currentTileType === "g") ||
+      (this.#navigation > 2 && currentTileType === "e")
+    ) {
+      speed -= 1;
+    }
+    return speed;
+  }
+
+  static #findRoute(map, startX, startY, endX, endY) {
+    const width = map.width;
+    const height = map.height;
+    const mc = map.mc;
+
+    // Helper function to get tile value at coordinates
+    const getTile = (x, y) => {
+      if (x < 0 || x >= width || y < 0 || y >= height) return 0;
+      return mc[y * width + x];
+    };
+
+    // Check if start or end are impassable or out of bounds
+    if (getTile(startX, startY) === 0 || getTile(endX, endY) === 0) {
+      return null;
+    }
+
+    // If start and end are the same
+    if (startX === endX && startY === endY) {
+      return [[startX, startY]];
+    }
+
+    // Possible movements (8 directions)
+    const directions = [
+      [0, -1],
+      [0, 1],
+      [-1, 0],
+      [1, 0], // up, down, left, right
+      [-1, -1],
+      [1, -1],
+      [-1, 1],
+      [1, 1], // diagonals
+    ];
+
+    // Heuristic function (Euclidean distance)
+    const heuristic = (x1, y1, x2, y2) => {
+      const dx = Math.abs(x1 - x2);
+      const dy = Math.abs(y1 - y2);
+      return Math.sqrt(dx * dx + dy * dy);
+    };
+
+    // Priority queue for A* algorithm
+    const openSet = new PriorityQueue();
+    openSet.enqueue([startX, startY], 0);
+
+    // Track visited nodes and their costs
+    const cameFrom = new Map();
+    const gScore = new Map(); // Cost from start to current
+    const fScore = new Map(); // Estimated total cost (g + h)
+
+    gScore.set(`${startX},${startY}`, 0);
+    fScore.set(`${startX},${startY}`, heuristic(startX, startY, endX, endY));
+
+    while (!openSet.isEmpty()) {
+      const [currentX, currentY] = openSet.dequeue();
+
+      if (currentX === endX && currentY === endY) {
+        // Reconstruct path
+        const path = [];
+        let current = `${endX},${endY}`;
+        while (current) {
+          const [x, y] = current.split(",").map(Number);
+          path.push([x, y]);
+          current = cameFrom.get(current);
+        }
+        return path.reverse();
+      }
+
+      // Check all 8 directions
+      for (const [dx, dy] of directions) {
+        const nextX = currentX + dx;
+        const nextY = currentY + dy;
+        const nextTile = getTile(nextX, nextY);
+
+        if (nextTile === 0) continue; // Skip impassable tiles
+
+        // Calculate movement cost (uses tile cost of destination)
+        const tentativeGScore =
+          gScore.get(`${currentX},${currentY}`) + nextTile;
+
+        const nextKey = `${nextX},${nextY}`;
+        if (tentativeGScore < (gScore.get(nextKey) ?? Infinity)) {
+          cameFrom.set(nextKey, `${currentX},${currentY}`);
+          gScore.set(nextKey, tentativeGScore);
+          fScore.set(
+            nextKey,
+            tentativeGScore + heuristic(nextX, nextY, endX, endY),
+          );
+          openSet.enqueue([nextX, nextY], fScore.get(nextKey));
+        }
+      }
+    }
+
+    // No path found
+    return null;
+  }
+}
+
+// Simple Priority Queue implementation
+class PriorityQueue {
+  constructor() {
+    this.values = [];
+  }
+
+  enqueue(val, priority) {
+    this.values.push({ val, priority });
+    this.sort();
+  }
+
+  dequeue() {
+    return this.values.shift().val;
+  }
+
+  sort() {
+    this.values.sort((a, b) => a.priority - b.priority);
+  }
+
+  isEmpty() {
+    return this.values.length === 0;
+  }
+}

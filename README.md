@@ -39,11 +39,9 @@ includes contributions by [Tsunder](https://github.com/Tsunder),
 [Kui](https://github.com/likuilin), and
 [BartKieviet](https://github.com/BartKieviet).
 
-The extension is now distributed under the MIT license, see LICENSE.txt, except
-for the file `kui.js` which is distributed under the Creative Commons
-Attribution-Non Commercial license (see comments in the file).  Code by Tsunder,
-if you identify it from the commit log, may be used alternatively under the more
-permissive WTFPL version 2 license.
+The extension is now distributed under the MIT license, see LICENSE.txt. Code by
+Tsunder, if you identify it from the commit log, may be used alternatively under
+the more permissive WTFPL version 2 license.
 
 ### About the sound samples
 
