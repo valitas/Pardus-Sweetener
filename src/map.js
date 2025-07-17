@@ -405,8 +405,8 @@ class SectorMap {
         const b = this.#sector.beacons[n];
         if (b.x === loc.x && b.y === loc.y) {
           // I hate this so much
-          this.#distanceDiv.innerHTML +=
-            (b.type === "wh" ? "Wormhole to " : "") + n;
+          let s = b.type === "wh" ? ` Wormhole to ${n}` : ` ${n}`;
+          this.#distanceDiv.textContent += s;
           break;
         }
       }
@@ -493,7 +493,7 @@ class SectorMap {
 
     let apsSpent;
     if (!route) {
-      apsSpent = "&infin;";
+      apsSpent = "∞";
       this.#savedPath = [[loc.x, loc.y]];
     } else {
       apsSpent = 0;
@@ -507,16 +507,7 @@ class SectorMap {
     }
     this.#drawSavedPath(ctx);
     this.markShipTile(ctx);
-    this.#distanceDiv.innerHTML =
-      "Distance to " +
-      this.#sector.sector +
-      " [" +
-      loc.x +
-      ", " +
-      loc.y +
-      "]:<br>" +
-      apsSpent +
-      " APs<br>&nbsp;"; //innerHTML to accomodate infinity symbol
+    this.#distanceDiv.textContent = `Distance to ${this.#sector.sector} [${loc.x},${loc.y}]: ${apsSpent} AP`;
   }
 
   // Calculates speed (as in the Pardus Manual), allowing for boost, stims, etc.
