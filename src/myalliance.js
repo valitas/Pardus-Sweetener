@@ -218,7 +218,7 @@ function processTabstyleTable( table, qls ) {
 		// visible where we parsed a QL.
 		child = spans[0].firstChild;
 		icon = document.createElement( 'img' );
-		icon.src = chrome.extension.getURL( 'icons/16.png' );
+		icon.src = chrome.runtime.getURL( 'icons/16.png' );
 		icon.alt = name;
 		icon.title = name;
 		spans[ 0 ].insertBefore( icon, child );

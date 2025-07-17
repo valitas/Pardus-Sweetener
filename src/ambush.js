@@ -107,7 +107,7 @@ function addQLsUI() {
 	tr = doc.createElement( 'tr' );
 	th = doc.createElement( 'th' );
 	img = doc.createElement( 'img' );
-	img.src = chrome.extension.getURL( 'icons/16.png' );
+	img.src = chrome.runtime.getURL( 'icons/16.png' );
 	img.style.verticalAlign = 'middle';
 	img.style.position = 'relative';
 	img.style.top = '-2px';
@@ -247,7 +247,7 @@ function addQLUI( container, qlname, ql ) {
 	container.appendChild( input );
 
 	img = doc.createElement( 'img' );
-	img.src = chrome.extension.getURL( 'icons/down.png' );
+	img.src = chrome.runtime.getURL( 'icons/down.png' );
 	img.alt = 'view';
 	img.title = 'Copy ' + qlname + ' to quicklist field below';
 	img.style.verticalAlign = 'middle';
